@@ -12,6 +12,7 @@ libraryDependencies ++= Seq(
   ws,
   specs2 % Test
 )
+unmanagedJars in Compile += file("./lib/ecatWsClient.jar")
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
