@@ -4,6 +4,7 @@
 
 # Home page
 GET     /booking/results/from-:from/to-:to                         controllers.Application.bookingCategories(from:LocalDate,to:LocalDate)
+GET     /dumpxml/:from/:to                         controllers.Application.dumpXml(from,to)
 
 
 # Map static resources from the /public folder to the /assets URL path

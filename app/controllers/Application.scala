@@ -1,22 +1,13 @@
 package controllers
 
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.xml.ws.BindingProvider
-
 import async.client.ObmenSait
-import play.api._
 import play.api.mvc._
-
 class Application extends Controller {
 
 
- //TODO: delete
-//  def index = Action {
-//    Ok(views.html.index("Your new application is ready."))
-//  }
-
-
+// TODO: create and maintain proxy outside the controller
   val proxy ={
     val srv = new ObmenSait().getObmenSaitSoap()
     val req_ctx =  srv.asInstanceOf[BindingProvider].getRequestContext
@@ -25,18 +16,16 @@ class Application extends Controller {
     srv
   }
 
-  private val  df = DateTimeFormatter.ofPattern("yyyyMMdd");
-
   //TODO: think of correct name for this.
   //return the rendered booking template here
   def bookingCategories(from: LocalDate,to: LocalDate) = Action {
-    //Just forwarding XML from 1C
-    val hhmmss = "000000"
-    val _from = df.format(from) + hhmmss
-    val _to = df.format(to) + hhmmss
-    val s = proxy.getNomSvobod(_from, _to)
-    Ok(s"Success from =$from, to=$to\n$s")
+    Ok(s"Success from =$from, to=$to")
+  }
 
+  def dumpXml(from:String, to:String)= Action{
+      //Just forwarding XML from 1C
+      val s = proxy.getNomSvobod(from, to)
+      Ok(s" from =$from, to=$to\n$s")
   }
 
 }
