@@ -3,7 +3,9 @@ package controllers
 import java.time.LocalDate
 import javax.xml.ws.BindingProvider
 import async.client.ObmenSait
+import ecat.model.Hotel
 import play.api.mvc._
+
 class Application extends Controller {
 
 
@@ -25,7 +27,9 @@ class Application extends Controller {
   def dumpXml(from:String, to:String)= Action{
       //Just forwarding XML from 1C
       val s = proxy.getNomSvobod(from, to)
-      Ok(s" from =$from, to=$to\n$s")
+      //parsing xml to model case classes
+      val h = Hotel.fromXml(scala.xml.XML.loadString(s))
+      Ok(s" from =$from, to=$to\n$s\n$h")
   }
 
 }
