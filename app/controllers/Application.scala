@@ -1,10 +1,14 @@
 package controllers
 
-import java.time.LocalDate
+import java.time.{LocalDateTime, LocalTime, LocalDate}
 import javax.xml.ws.BindingProvider
 import async.client.ObmenSait
-import ecat.model.Hotel
+import ecat.model.{Tariff, Room, Category, Hotel}
+import play.api.libs.json.Json
 import play.api.mvc._
+import play.cache.Cache
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class Application extends Controller {
 
@@ -24,12 +28,31 @@ class Application extends Controller {
     Ok(s"Success from =$from, to=$to")
   }
 
-  def dumpXml(from:String, to:String)= Action{
+  //to be removed
+  def dumpXml(from:String, to:String)= Action.async{
       //Just forwarding XML from 1C
-      val s = proxy.getNomSvobod(from, to)
+      Future(proxy.getNomSvobod(from, to)).map{s=>
       //parsing xml to model case classes
       val h = Hotel.fromXml(scala.xml.XML.loadString(s))
-      Ok(s" from =$from, to=$to\n$s\n$h")
+        Ok(s" from =$from, to=$to\n$s\n$h")
+      }
+
+  }
+
+  //TBD: parse dates on rcv(format://ГГГГММДДЧЧММСС)
+  def getAvailableRooms(from:String, to:String)= Action.async{
+    Future(proxy.getNomSvobod(from, to)).map{s=>
+      val hotels = Hotel.fromXml(scala.xml.XML.loadString(s))
+      Ok(Json.toJson(hotels))
+    }
+  }
+
+  def getDummyJson = Action {
+  val tariff = Tariff("tarif_id","tariff_name", LocalDateTime.now(), LocalDateTime.now().plusDays(20), 10, 2, 2, 2)
+  val room = Room(1,2,1,true,"wtf",3,Seq("with a smell of a homless","partially flooded"))
+  val cat = Category("cat_id","cat_name",Seq(room,room.copy(number = 3,twin = false,options = Nil)), Seq(tariff))
+    val h = Hotel("some_id","Ekaterina", LocalTime.NOON,LocalTime.MIDNIGHT,Seq(cat, cat.copy(id="id2")))
+    Ok(Json.toJson(h))
   }
 
 }

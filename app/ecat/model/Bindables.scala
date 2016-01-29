@@ -1,6 +1,6 @@
 package ecat.model
 
-import Formatters.{dateFormatter =>fmt}
+import ecat.util.DateTimeFormatters.{dateFormatter =>fmt}
 import java.time.LocalDate
 import play.api.mvc.PathBindable.Parsing
 
