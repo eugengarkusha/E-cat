@@ -28,15 +28,9 @@ class Application extends Controller {
     Ok(s"Success from =$from, to=$to")
   }
 
-  //to be removed
   def dumpXml(from:String, to:String)= Action.async{
       //Just forwarding XML from 1C
-      Future(proxy.getNomSvobod(from, to)).map{s=>
-      //parsing xml to model case classes
-      val h = Hotel.fromXml(scala.xml.XML.loadString(s))
-        Ok(s" from =$from, to=$to\n$s\n$h")
-      }
-
+      Future(proxy.getNomSvobod(from, to)).map(Ok(_))
   }
 
   //TBD: parse dates on rcv(format://ГГГГММДДЧЧММСС)
