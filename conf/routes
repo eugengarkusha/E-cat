@@ -7,6 +7,7 @@ GET     /booking/results/from-:from/to-:to                         controllers.A
 GET     /dumpxml/:from/:to                         controllers.Application.dumpXml(from,to)
 GET     /rooms/:from/:to                         controllers.Application.getAvailableRooms(from,to)
 GET     /dummyjson                                  controllers.Application.getDummyJson
+GET     /                                  controllers.Application.main
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

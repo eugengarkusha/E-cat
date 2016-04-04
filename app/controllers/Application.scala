@@ -42,11 +42,15 @@ class Application extends Controller {
   }
 
   def getDummyJson = Action {
-  val tariff = Tariff("tarif_id","tariff_name", LocalDateTime.now(), LocalDateTime.now().plusDays(20), 10, 2, 2, 2)
-  val room = Room(1,2,1,true,"wtf",3,Seq("with a smell of a homless","partially flooded"))
-  val cat = Category("cat_id","cat_name",Seq(room,room.copy(number = 3,twin = false,options = Nil)), Seq(tariff))
-    val h = Hotel("some_id","Ekaterina", LocalTime.NOON,LocalTime.MIDNIGHT,Seq(cat, cat.copy(id="id2")))
-    Ok(Json.toJson(h))
+    val tariff = Tariff("tarif_id","tariff_name", LocalDateTime.now(), LocalDateTime.now().plusDays(20), 10, 2, 2, 2)
+    val room = Room(1,2,1,true,"wtf",3,Seq("with a smell of a homless","partially flooded"))
+    val cat = Category("cat_id","cat_name",Seq(room,room.copy(number = 3,twin = false,options = Nil)), Seq(tariff))
+      val h = Hotel("some_id","Ekaterina", LocalTime.NOON,LocalTime.MIDNIGHT,Seq(cat, cat.copy(id="id2")))
+      Ok(Json.toJson(h))
+  }
+
+  def main = Action{
+    Ok(views.html.index.apply())
   }
 
 }
