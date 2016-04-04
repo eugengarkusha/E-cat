@@ -50,7 +50,10 @@ class Application extends Controller {
   }
 
   def main = Action{
-    Ok(views.html.index.apply())
+    Ok(views.html.index())
+  }
+  def ekaterina = Action{
+    Ok(views.html.pages.hotels.ekaterina.ekaterina())
   }
 
 }

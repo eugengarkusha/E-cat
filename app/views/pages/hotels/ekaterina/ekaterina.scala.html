@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Отель Екатерина</title>
-  <link rel="stylesheet" href="../../../css/normalize.css">
-  <link rel="stylesheet" href="../../../icon/flaticon.css">
-  <link rel="stylesheet" href="../../../css/selectric.css">
-  <link rel="stylesheet" href="../../../css/jquery.datetimepicker.css">
-  <link rel="stylesheet" href="../../../js/vegas/vegas.min.css">
-  <link rel="stylesheet" href="../../../js/lightGallery/css/lightgallery.css">
-  <link rel="stylesheet" href="../../../css/style.css">
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  @views.html.commoncss.render
 </head>
 
 <body class="page-hotel-ekaterina">
@@ -330,16 +316,8 @@
 
   </footer>
 
-  <script src="../../../js/jquery-1.12.0.min.js"></script>
-  <script src="../../../js/jquery.scroolly.min.js"></script>
-  <script src="../../../js/jquery.selectric.min.js"></script>
-  <script src="../../../js/moment.js"></script>
-  <script src="../../../js/jquery.datetimepicker.min.js"></script>
-  <script src="../../../js/vegas/vegas.min.js"></script>
-  <script src="../../../js/lightGallery/js/lightgallery.min.js"></script>
-  <script src="../../../js/lightGallery/js/lg-thumbnail.min.js"></script>
-  <script src="../../../js/lightGallery/js/lg-fullscreen.min.js"></script>
-  <script src="../../../js/main.js"></script>
+  @views.html.commonscripts.render
+
   <script>
 
     $(window).load(function () {
