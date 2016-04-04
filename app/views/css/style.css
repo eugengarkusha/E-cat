@@ -1,0 +1,1358 @@
+@import url(https://fonts.googleapis.com/css?family=Great+Vibes);
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+html {
+  height: 100%;
+  box-sizing: border-box;
+  font-size: 10px; }
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit; }
+
+html, body, .wrapper {
+  height: 100%; }
+
+body .wrapper {
+  height: auto;
+  min-height: 100%;
+  margin-bottom: -13rem;
+  font: 1.35em/1.5 "Droid Sans", Arial, Helvetica, sans-serif;
+  color: #a6a6a6;
+  background: #fff; }
+
+img {
+  width: 100%;
+  height: auto; }
+
+.clearfix:after {
+  content: '.';
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0; }
+
+::selection {
+  color: #fff;
+  background: #b19261; }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+  padding-top: 40px; }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  height: 30px;
+  width: 8px;
+  border: 1px solid #b19261;
+  background: #b19261; }
+
+a {
+  text-decoration: none;
+  color: inherit; }
+  a:active {
+    text-decoration: underline; }
+
+.btn-read {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #b19261;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.4rem;
+  background-color: #b19261;
+  color: #fff;
+  transition: all 0.3s ease; }
+  .btn-read:hover {
+    color: #b19261;
+    background-color: #fff; }
+
+blockquote {
+  font-family: "Droid Sans", Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.95rem;
+  background: #f7f7f7;
+  padding: 2rem;
+  margin: 2rem 0;
+  border-left: 5px solid #b19261; }
+  blockquote cite {
+    display: block;
+    font-size: 1.43rem;
+    line-height: 2.28rem;
+    font-style: normal;
+    color: #b19261; }
+    blockquote cite:before {
+      display: block;
+      content: "";
+      float: left;
+      margin: 1.4rem 0.7rem 0 0;
+      width: 1rem;
+      height: 0.1rem;
+      background: #b19261; }
+
+.tooltip {
+  position: absolute;
+  width: 9rem;
+  height: 6rem;
+  top: 0;
+  left: -3px;
+  opacity: 0;
+  padding: 0.6rem;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  background-color: #b19261;
+  color: #fff;
+  word-wrap: break-word;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease; }
+  .tooltip:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 10px 0 10px;
+    border-color: #b19261 transparent transparent transparent;
+    bottom: -0.9rem;
+    left: 3.2rem; }
+
+.header-main-wrapper {
+  position: relative;
+  height: 12.6rem;
+  margin: 0 auto;
+  z-index: 1000; }
+
+.header-main {
+  position: relative;
+  width: 100%;
+  max-width: 117rem;
+  height: 5rem;
+  margin: 0 auto;
+  padding: 3rem 2rem 0;
+  background: #fff;
+  transition: height 0.3s ease; }
+
+.logo {
+  position: relative;
+  display: block;
+  height: 4.2rem;
+  border-bottom: 1px solid #000;
+  margin: 0 auto;
+  font-size: 2.6rem;
+  line-height: 1.6;
+  text-align: center;
+  z-index: 1001; }
+  .logo .logo-first-word {
+    color: #b19261; }
+  .logo .logo-first-word:after {
+    content: '';
+    width: 20rem;
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    margin-left: -10rem;
+    border-bottom: 1px solid #000; }
+  .logo .logo-second-word {
+    color: #000; }
+  .logo .stars {
+    position: absolute;
+    display: none;
+    left: 50%;
+    bottom: -4.2rem;
+    margin-left: -4.4rem;
+    color: #b19261;
+    font-size: 1.43rem;
+    z-index: 3; }
+    .logo .stars i[class^="flaticon-"]:before {
+      font-size: 1.43rem;
+      margin-left: 0; }
+    .logo .stars .star-1 {
+      position: relative;
+      top: -1.6rem;
+      left: 0.2rem; }
+    .logo .stars .star-2 {
+      position: relative;
+      top: -0.5rem;
+      left: -0.1rem; }
+    .logo .stars .star-4 {
+      position: relative;
+      top: -0.4rem;
+      left: 0; }
+    .logo .stars .star-5 {
+      position: relative;
+      top: -1.5rem;
+      left: -0.2rem; }
+  .logo:before {
+    position: absolute;
+    top: -4rem;
+    left: 50%;
+    margin-left: -6rem;
+    display: block;
+    content: '';
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 2px rgba(0, 0, 0, 0.2);
+    z-index: 1; }
+  .logo:after {
+    position: absolute;
+    content: "E";
+    font-size: 4.68rem;
+    line-height: 8rem;
+    font-family: "Great Vibes", Arial, Helvetica, sans-serif;
+    width: 8rem;
+    height: 8rem;
+    background: #b19261;
+    left: 50%;
+    top: -2rem;
+    margin-left: -4rem;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #b19261;
+    z-index: 2; }
+  .logo:before, .logo:after, .logo .stars {
+    display: none; }
+
+.header-main-menu {
+  position: fixed;
+  top: 12.6rem;
+  right: -19rem;
+  width: 18rem;
+  background: #f7f7f7;
+  border-left: 1px solid #b19261;
+  transition: all 0.6s ease; }
+  .header-main-menu .current {
+    border-bottom: 4px solid #b19261; }
+  .header-main-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+    .header-main-menu ul li {
+      position: relative; }
+    .header-main-menu ul a {
+      display: block;
+      padding: 0 2.2rem;
+      text-align: center;
+      line-height: 3.5rem;
+      border-bottom: 1px solid #b19261;
+      color: #000;
+      transition: all 0.3s ease; }
+    .header-main-menu ul a:hover {
+      color: #b19261; }
+  .header-main-menu .sub-menu {
+    border-bottom: 1px solid #b19261; }
+  .header-main-menu .sub-menu li {
+    background: #fff; }
+    .header-main-menu .sub-menu li a {
+      line-height: 4rem;
+      border-bottom-color: #f7f7f7;
+      transition: all 0.3s ease; }
+    .header-main-menu .sub-menu li a:hover {
+      color: #fff;
+      background: #b19261; }
+  .header-main-menu.slide {
+    right: 0;
+    z-index: 1001; }
+  .header-main-menu .menu-center {
+    display: none;
+    width: 12rem; }
+
+.main-menu-handle {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  float: right;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  text-align: center;
+  line-height: 3.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+  color: #fff;
+  background: #b19261; }
+  .main-menu-handle:after, .main-menu-handle span:before, .main-menu-handle span:after {
+    transition: all 0.3s ease; }
+  .main-menu-handle span:before {
+    position: absolute;
+    content: "";
+    width: 3rem;
+    height: 0.2rem;
+    left: 0.5rem;
+    top: 1.4rem;
+    background: #fff; }
+  .main-menu-handle span:after {
+    position: absolute;
+    content: "";
+    width: 3rem;
+    height: 0.2rem;
+    left: 0.5rem;
+    top: 2.6rem;
+    background: #fff; }
+  .main-menu-handle:after {
+    position: absolute;
+    content: "";
+    width: 3rem;
+    height: 0.2rem;
+    left: 0.5rem;
+    top: 2rem;
+    background: #fff; }
+  .main-menu-handle.active:after {
+    width: 0; }
+  .main-menu-handle.active span:before {
+    transform: rotate(-45deg);
+    top: 2rem; }
+  .main-menu-handle.active span:after {
+    transform: rotate(45deg);
+    top: 2rem; }
+
+.sticky {
+  position: fixed;
+  top: 0;
+  height: 6rem;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1); }
+  .sticky .header-main-menu {
+    top: 6rem; }
+  .sticky .main-menu-handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 2rem;
+    margin-top: 1rem; }
+  .sticky .logo {
+    width: 12rem;
+    border-bottom-color: transparent; }
+  .sticky .logo-first-word, .sticky .logo-second-word {
+    display: none; }
+  .sticky .stars, .sticky .logo:before, .sticky .logo:after {
+    display: block; }
+
+main {
+  max-width: 117rem;
+  position: relative;
+  margin: 0 auto 5rem;
+  padding: 0 1.5rem 16rem; }
+  main.main-fluid {
+    padding-top: 3rem;
+    max-width: 100%; }
+  main h1 {
+    position: relative;
+    padding-bottom: 1rem;
+    text-align: center;
+    font-size: 2.86rem;
+    font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    line-height: 5rem;
+    color: #000; }
+  main h1:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid #000;
+    bottom: 0;
+    left: 0; }
+  main h1:after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transform: rotate(-45deg);
+    background: white;
+    border: 1px solid #b19261;
+    box-shadow: 0 0 0 5px white;
+    left: 50%;
+    margin-left: -5px;
+    bottom: -7px; }
+  main p {
+    font-size: 1.35rem;
+    text-align: justify; }
+  main .main-section img {
+    display: block;
+    max-width: 40rem;
+    margin: 0.6rem auto 0; }
+  main .booking-form {
+    width: 32rem;
+    margin: 4rem auto; }
+    main .booking-form legend {
+      text-align: center;
+      font-size: 2.4rem;
+      font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+      color: #000; }
+    main .booking-form input, main .booking-form select {
+      display: block;
+      width: 100%;
+      height: 4.2rem;
+      margin: 1rem 0;
+      padding: 0 1rem;
+      background: #fff;
+      outline: none;
+      border: 1px solid #c2c2c2;
+      border-bottom-width: 3px;
+      color: #000;
+      cursor: pointer; }
+    main .booking-form .check-col {
+      display: inline-block;
+      width: 49%; }
+      main .booking-form .check-col input {
+        background-color: #fff; }
+    main .booking-form select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none; }
+    main .booking-form label {
+      position: relative;
+      display: block;
+      font-size: 1.4rem; }
+    main .booking-form .flaticon-calendar-icons {
+      position: absolute;
+      right: 1rem;
+      bottom: -3.7rem; }
+    main .booking-form .submit-button {
+      position: relative;
+      width: 7rem;
+      height: 7rem;
+      margin: 3rem auto 1.3rem;
+      background: #e8e8e8;
+      border: 1px solid #c2c2c2;
+      transform: rotate(45deg);
+      transition: background-color 0.6s ease;
+      cursor: pointer; }
+      main .booking-form .submit-button:hover {
+        background: #fff; }
+      main .booking-form .submit-button:hover input {
+        background: #947A50; }
+      main .booking-form .submit-button input {
+        position: absolute;
+        top: -0.4rem;
+        left: 0.6rem;
+        width: 5.6rem;
+        height: 5.6rem;
+        border: none;
+        background: #b19261;
+        color: #fff;
+        transition: background-color 0.6s ease; }
+      main .booking-form .submit-button span {
+        position: absolute;
+        top: 2.2rem;
+        left: 0.6rem;
+        transform: rotate(-45deg);
+        color: #fff; }
+
+.slider {
+  display: none; }
+
+.slider.vegas-container {
+  position: absolute;
+  width: 100%; }
+
+.pagination-box {
+  margin: 40px 0 30px;
+  text-align: center; }
+  .pagination-box ul {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    .pagination-box ul li {
+      float: left;
+      margin: 0 0.2rem; }
+      .pagination-box ul li.active span {
+        top: -2.5rem;
+        opacity: 1; }
+      .pagination-box ul li.active a {
+        background-color: #b19261; }
+    .pagination-box ul a {
+      position: relative;
+      display: block;
+      width: 4rem;
+      height: 0.6rem;
+      background: #a6a6a6;
+      transition: all 0.3s ease; }
+      .pagination-box ul a:hover {
+        background-color: #b19261; }
+      .pagination-box ul a span {
+        position: absolute;
+        top: -3.5rem;
+        left: -0.1rem;
+        width: 4rem;
+        height: 2.4rem;
+        line-height: 2.4rem;
+        opacity: 0;
+        color: #b19261;
+        background: #fff;
+        transition: all 0.3s ease; }
+        .pagination-box ul a span:hover {
+          top: -2.5rem;
+          opacity: 1; }
+      .pagination-box ul a:hover span {
+        top: -2.8rem;
+        opacity: 1; }
+
+.main-title {
+  position: relative; }
+  .main-title .main-heading {
+    width: 100%;
+    height: 14.4rem;
+    margin-top: 0;
+    padding-top: 1.5rem;
+    line-height: 3rem;
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.5);
+    background: url(../img/in_bg.jpg) center top fixed no-repeat; }
+  .main-title ul {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    list-style: none;
+    margin: 0 0 0 -8.5rem;
+    padding: 0; }
+    .main-title ul .flaticon-arrow {
+      color: #b19261;
+      text-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.8); }
+      .main-title ul .flaticon-arrow:before {
+        margin-left: 1rem;
+        margin-right: 0.4rem;
+        font-size: 1.2rem; }
+    .main-title ul li {
+      display: inline-block; }
+      .main-title ul li:last-child a {
+        color: #b19261; }
+    .main-title ul a {
+      font-size: 1.4rem;
+      color: #fff;
+      text-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.8);
+      transition: all 0.3s ease; }
+      .main-title ul a:hover {
+        color: #b19261; }
+
+.contact-box {
+  width: 32rem;
+  margin: 3rem auto;
+  border: 1px solid #c0c0c0; }
+  .contact-box h2, .contact-box h3, .contact-box p {
+    text-align: center;
+    color: #000; }
+
+.form-reply fieldset {
+  border: none; }
+.form-reply textarea {
+  width: 100%;
+  height: 15rem;
+  margin-top: 1rem;
+  border: 1px solid #c2c2c2;
+  border-bottom-width: 3px; }
+.form-reply input[type="submit"] {
+  width: 9rem;
+  margin: 1rem auto;
+  border: none;
+  background-color: #b19261;
+  color: #fff;
+  transition: all 0.3s ease; }
+  .form-reply input[type="submit"]:hover {
+    background-color: #fff;
+    color: #b19261;
+    border: 1px solid #b19261; }
+.form-reply.booking-form {
+  width: 100%; }
+  .form-reply.booking-form .form-col {
+    padding: 0 1rem; }
+  .form-reply.booking-form input {
+    cursor: text; }
+  .form-reply.booking-form input[type="submit"] {
+    cursor: pointer; }
+
+.main-footer {
+  position: relative;
+  height: 13rem;
+  padding: 2.5rem 1rem 0;
+  background: #b19261; }
+  .main-footer .scroll-up {
+    position: absolute;
+    top: -2.2rem;
+    left: 50%;
+    margin-left: -2.25rem;
+    background: #b19261;
+    width: 4.5rem;
+    height: 4.5rem;
+    transform: rotate(-45deg);
+    cursor: pointer;
+    transition: all 0.3s ease; }
+    .main-footer .scroll-up:before, .main-footer .scroll-up:after {
+      width: 17px;
+      height: 1px;
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 16px;
+      background: white;
+      transition: all 0.3s ease; }
+    .main-footer .scroll-up:before {
+      transform: rotate(0); }
+    .main-footer .scroll-up:after {
+      left: 1.8rem;
+      top: 2.5rem;
+      transform: rotate(-90deg); }
+
+.main-footer-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: "Droid Sans", Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
+  color: #fff; }
+  .main-footer-items li {
+    margin-bottom: 0.6rem; }
+  .main-footer-items a {
+    text-decoration: underline;
+    transition: color 0.3s ease; }
+    .main-footer-items a:hover {
+      color: #a6a6a6; }
+
+.social-icons {
+  position: absolute;
+  top: 5rem;
+  right: 0.5rem; }
+  .social-icons a {
+    position: relative;
+    display: inline-block;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 0.2rem;
+    border: 1px solid white;
+    text-align: center;
+    font-size: 2rem;
+    line-height: 3.5rem;
+    color: white;
+    transition: all 0.3s ease; }
+    .social-icons a:hover {
+      color: #a6a6a6; }
+    .social-icons a:before {
+      margin-left: 0; }
+
+.page-hotel-ekaterina .main-section {
+  max-height: 83vh;
+  overflow-y: scroll; }
+
+.rooms-row {
+  text-align: center; }
+
+.room-thumbnail {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.8rem;
+  padding: 0 2rem;
+  width: 100%;
+  cursor: pointer; }
+  .room-thumbnail img {
+    transition: all 0.3s ease; }
+  .room-thumbnail:hover img {
+    transform: scale(1.2, 1.2); }
+  .room-thumbnail:hover a.detail {
+    background-color: #fff;
+    color: #b19261; }
+  .room-thumbnail a {
+    display: block;
+    overflow: hidden; }
+  .room-thumbnail a:first-child {
+    max-height: 28rem; }
+  .room-thumbnail .room-thumbnail-description {
+    text-align: left; }
+    .room-thumbnail .room-thumbnail-description h3 {
+      position: relative;
+      margin-top: -3.3rem;
+      margin-bottom: -1rem;
+      padding: 0 0.5rem 0.5rem;
+      font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+      color: black;
+      font-size: 1.4em;
+      font-weight: normal;
+      background-color: rgba(255, 255, 255, 0.6); }
+    .room-thumbnail .room-thumbnail-description p {
+      margin-bottom: 0;
+      position: relative; }
+      .room-thumbnail .room-thumbnail-description p:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        bottom: -1.4rem;
+        border-top: 1px solid #c2aa83; }
+    .room-thumbnail .room-thumbnail-description .detail {
+      position: relative;
+      float: right;
+      padding: 0.3rem .5rem;
+      border: 1px solid #b19261;
+      text-align: right;
+      color: #fff;
+      background-color: #b19261;
+      transition: all 0.3s ease; }
+      .room-thumbnail .room-thumbnail-description .detail:hover {
+        background-color: #fff;
+        color: #b19261; }
+  .room-thumbnail .room-thumbnail-price {
+    position: absolute;
+    display: none;
+    top: 131px;
+    left: 50%; }
+
+.page-reservation .booking-from .input[type="checkbox"] {
+  display: inline; }
+.page-reservation .reservation-hotel {
+  display: none; }
+
+.page-gallery .gallery {
+  list-style: none;
+  padding: 0;
+  max-width: 117rem;
+  margin: 3rem auto; }
+  .page-gallery .gallery li {
+    height: 17.4rem;
+    overflow: hidden; }
+  .page-gallery .gallery a {
+    position: relative;
+    height: 16.7rem; }
+    .page-gallery .gallery a .gallery-caption {
+      position: absolute;
+      display: none;
+      background: rgba(0, 0, 0, 0.4);
+      border: 6px solid #b19261;
+      text-align: center;
+      color: white;
+      font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+      -webkit-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.8);
+      box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.8);
+      width: 100%;
+      height: 100%; }
+    .page-gallery .gallery a span {
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      border-top: 1px solid white;
+      border-bottom: 1px solid white;
+      min-width: 220px;
+      line-height: 30px; }
+
+.mfp-with-zoom .mfp-container,
+.mfp-with-zoom.mfp-bg {
+  opacity: 0;
+  -webkit-backface-visibility: hidden;
+  /* ideally, transition speed should match zoom duration */
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out; }
+
+.mfp-with-zoom.mfp-ready .mfp-container {
+  opacity: 1; }
+
+.mfp-with-zoom.mfp-ready.mfp-bg {
+  opacity: 0.8; }
+
+.mfp-with-zoom.mfp-removing .mfp-container,
+.mfp-with-zoom.mfp-removing.mfp-bg {
+  opacity: 0; }
+
+.page-blog .blog-section, .page-post .blog-section {
+  padding: 5rem 0 1rem; }
+.page-blog .blog-article, .page-post .blog-article {
+  padding-bottom: 3rem;
+  margin-bottom: 4rem;
+  border-bottom: 1px solid #c2c2c2; }
+  .page-blog .blog-article h2 a, .page-post .blog-article h2 a {
+    font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 2.4rem;
+    color: #b19261;
+    transition: all 0.3s ease; }
+    .page-blog .blog-article h2 a:hover, .page-post .blog-article h2 a:hover {
+      color: #000; }
+  .page-blog .blog-article p, .page-post .blog-article p {
+    line-height: 2.4rem; }
+.page-blog .article-heading-box-link img, .page-post .article-heading-box-link img {
+  display: block;
+  border: 1px solid #b19261;
+  transition: all 0.3s ease; }
+.page-blog .article-heading-box-link:hover img, .page-post .article-heading-box-link:hover img {
+  border-color: #000; }
+.page-blog .blog-article-details, .page-post .blog-article-details {
+  width: 100%;
+  margin-top: 0.8rem; }
+  .page-blog .blog-article-details div, .page-post .blog-article-details div {
+    float: left;
+    width: 33%;
+    font-size: 1.3rem; }
+  .page-blog .blog-article-details .article-details-author, .page-blog .blog-article-details .article-details-comments, .page-post .blog-article-details .article-details-author, .page-post .blog-article-details .article-details-comments {
+    color: #000; }
+    .page-blog .blog-article-details .article-details-author:hover, .page-blog .blog-article-details .article-details-comments:hover, .page-post .blog-article-details .article-details-author:hover, .page-post .blog-article-details .article-details-comments:hover {
+      text-decoration: underline; }
+.page-blog .blog-aside-box, .page-post .blog-aside-box {
+  border: 1px solid #b19261;
+  margin-bottom: 2.6rem; }
+  .page-blog .blog-aside-box h3, .page-post .blog-aside-box h3 {
+    margin: 0;
+    font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 1.6rem;
+    line-height: 3.4rem;
+    text-align: center;
+    color: #fff;
+    background-color: #b19261; }
+  .page-blog .blog-aside-box ul, .page-post .blog-aside-box ul {
+    list-style: none;
+    padding: 1rem;
+    margin: 0; }
+    .page-blog .blog-aside-box ul li, .page-post .blog-aside-box ul li {
+      border-bottom: 1px solid #c2c2c2; }
+      .page-blog .blog-aside-box ul li:hover a, .page-post .blog-aside-box ul li:hover a {
+        color: #b19261; }
+      .page-blog .blog-aside-box ul li:hover a:before, .page-post .blog-aside-box ul li:hover a:before {
+        background-color: #000;
+        transform: rotate(45deg); }
+    .page-blog .blog-aside-box ul li:last-child, .page-post .blog-aside-box ul li:last-child {
+      border-bottom: none; }
+.page-blog .blog-aside-box.list a, .page-post .blog-aside-box.list a {
+  position: relative;
+  margin-left: 2rem;
+  line-height: 3rem;
+  font-family: "Droid Sans", Arial, Helvetica, sans-serif;
+  color: #000;
+  transition: all 0.3s ease; }
+  .page-blog .blog-aside-box.list a:before, .page-post .blog-aside-box.list a:before {
+    content: '';
+    width: 0.7rem;
+    height: 0.7rem;
+    position: absolute;
+    left: -1.5rem;
+    bottom: 50%;
+    margin-bottom: -0.4rem;
+    background-color: #b19261;
+    transform: rotate(-45deg);
+    transition: all 0.3s ease; }
+.page-blog .tags a, .page-post .tags a {
+  color: #b19261;
+  background-color: #fff;
+  border: none; }
+  .page-blog .tags a:hover, .page-post .tags a:hover {
+    color: #fff;
+    background-color: #b19261; }
+
+.page-news .news-article {
+  padding: 4rem 2rem;
+  border-bottom: 1px solid #c2c2c2; }
+.page-news .news-article:hover .news-pic-details {
+  opacity: 1;
+  transform: rotateY(0deg); }
+.page-news .news-article:hover img {
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0); }
+.page-news .news-pic {
+  position: relative;
+  max-width: 25.5rem;
+  margin: 0 auto;
+  transition: all 0.6s ease; }
+  .page-news .news-pic img {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    vertical-align: middle;
+    transition: all 0.6s ease; }
+  .page-news .news-pic .news-pic-details {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    padding-top: 9rem;
+    width: 100%;
+    height: 100%;
+    transition: all 0.6s ease;
+    opacity: 0;
+    transform: rotateY(90deg);
+    background: rgba(0, 0, 0, 0.7); }
+    .page-news .news-pic .news-pic-details .pic-details-date {
+      display: block;
+      font-family: "Droid Sans", Arial, Helvetica, sans-serif;
+      font-size: 2rem; }
+.page-news h2 {
+  font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+  font-size: 2.2rem;
+  font-weight: normal;
+  text-align: center;
+  color: #000; }
+  .page-news h2 span {
+    color: #b19261; }
+
+.page-promo .main-section {
+  max-height: 70rem;
+  overflow-x: scroll; }
+.page-promo .promotion-box {
+  margin: 4rem auto;
+  border: 1px solid #b19261;
+  transition: all 0.7s ease; }
+  .page-promo .promotion-box:hover {
+    background-color: rgba(0, 0, 0, 0.75); }
+
+.page-contacts p, .page-contacts h2, .page-contacts h3 {
+  color: #000; }
+.page-contacts .map {
+  display: block;
+  width: 100%;
+  height: 60vh;
+  border: none; }
+.page-contacts .contact-box {
+  color: #000;
+  background-color: transparent;
+  border-color: #b19261; }
+.page-contacts .map-block p {
+  margin-top: 3rem;
+  border-bottom: 1px solid #DB4436; }
+.page-contacts .map-block p + p {
+  border-bottom-color: #3F5BA9; }
+.page-contacts .contacts {
+  padding-right: 2rem;
+  border-right: 1px solid #DB4436; }
+.page-contacts .contacts + .contacts {
+  border-right-color: #3F5BA9; }
+
+.page-post .post-tags h3 {
+  display: inline-block;
+  color: #b19261; }
+.page-post .post-tags ul {
+  display: inline-block; }
+.page-post .blog-article {
+  border-bottom: 1px solid #b19261; }
+.page-post .post-comments .comment {
+  margin-bottom: 4rem; }
+  .page-post .post-comments .comment .comment {
+    margin-left: 2rem;
+    margin-top: 8rem;
+    padding-left: 1rem;
+    border-left: 1px solid #c2c2c2; }
+.page-post .post-comments .user-img {
+  width: 7.5rem;
+  height: 7.5rem;
+  float: left;
+  margin-right: 2rem;
+  border: 3px solid rgba(177, 146, 97, 0.5); }
+.page-post .post-comments .comment-details span {
+  display: block; }
+.page-post .post-comments .comment-details .user-name {
+  font-family: "Droid Sans", Arial, Helvetica, sans-serif;
+  font-size: 1.56rem;
+  line-height: 3rem;
+  color: #b19261; }
+.page-post .post-comments p {
+  margin: 2rem 0 1rem;
+  padding: 2rem;
+  font-size: 1.3rem;
+  line-height: 2rem;
+  border-radius: 5px;
+  background: #f7f7f7; }
+.page-post .post-comments .btn-read {
+  float: right;
+  font-size: 1.1rem; }
+
+.page-room p {
+  color: #000; }
+.page-room .main-title ul {
+  margin-left: -15rem; }
+.page-room .room-slider {
+  max-width: 85rem;
+  margin: 0 auto; }
+.page-room .room-slider ul {
+  list-style: none outside none;
+  padding-left: 0;
+  margin-bottom: 0;
+  max-height: 46rem; }
+.page-room .room-slider li {
+  display: block;
+  float: left;
+  margin-right: 0.6rem;
+  cursor: pointer; }
+.page-room .room-slider img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  cursor: pointer; }
+.page-room .lSSlideOuter .lSPager.lSGallery {
+  max-height: 6rem;
+  display: none; }
+.page-room .room-equipment {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #c2c2c2; }
+  .page-room .room-equipment ul {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    .page-room .room-equipment ul li {
+      display: inline-block;
+      position: relative;
+      cursor: pointer; }
+      .page-room .room-equipment ul li:hover .tooltip {
+        opacity: 1;
+        top: -6.5rem; }
+      .page-room .room-equipment ul li:hover span[class^="flaticon"]:before {
+        color: #CAA874; }
+  .page-room .room-equipment span[class^="flaticon"]:before {
+    font-size: 4rem;
+    transition: all 0.3s ease; }
+  .page-room .room-equipment .room-cost {
+    margin-top: 1.5rem; }
+    .page-room .room-equipment .room-cost .price {
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: #000; }
+    .page-room .room-equipment .room-cost .flaticon-coin32:before {
+      color: #b19261;
+      margin-left: 1rem; }
+.page-room .booking-form .breakfast-checkbox {
+  text-align: center; }
+  .page-room .booking-form .breakfast-checkbox label {
+    margin-bottom: 0.1rem; }
+
+.page-about main {
+  color: #000; }
+
+@media screen and (min-width: 380px) {
+  main .booking-form {
+    width: 38rem; }
+    main .booking-form label {
+      margin-bottom: -1.1rem; }
+    main .booking-form input, main .booking-form select {
+      margin-bottom: 0.4rem; }
+    main .booking-form .form-col {
+      display: inline-block;
+      width: 49%; }
+    main .booking-form .submit-button {
+      margin-top: 2rem; }
+    main .booking-form .fa-calendar {
+      bottom: -2.7rem; }
+
+  .page-reservation .form-col {
+    position: relative;
+    float: left;
+    margin-bottom: 0.8rem;
+    text-align: center;
+    z-index: 1; } }
+@media screen and (min-width: 432px) {
+  .logo .stars, .logo:before, .logo:after {
+    display: block; }
+  .logo .logo-first-word, .logo .logo-second-word {
+    position: absolute; }
+  .logo .logo-first-word {
+    left: 50%;
+    margin-left: -14rem; }
+  .logo .logo-first-word:after {
+    width: 22rem;
+    margin-left: -0.5rem; }
+  .logo .logo-second-word {
+    right: 50%;
+    margin-right: -19.4rem; }
+  .logo .logo-second-word:after {
+    content: '';
+    position: absolute;
+    width: 133px;
+    height: 18px;
+    right: 100%;
+    bottom: -8px;
+    background: #fff;
+    border-radius: 14px; }
+
+  .main-section .room-thumbnail img {
+    max-width: 100%;
+    margin: 0; }
+
+  .page-gallery .gallery li {
+    position: relative;
+    float: left;
+    width: 50%;
+    padding: 0.7rem; }
+    .page-gallery .gallery li a {
+      position: relative;
+      display: block;
+      border: 1px solid #b19261;
+      overflow: hidden; }
+  .page-gallery .gallery img {
+    display: block; }
+
+  .form-reply.booking-form .form-col {
+    padding: 0; }
+  .form-reply.booking-form .form-col:first-child {
+    padding-right: 1rem; }
+  .form-reply.booking-form .form-col:nth-child(2n) {
+    float: right; }
+
+  .main-title .main-heading {
+    padding-top: 0;
+    line-height: 13rem;
+    font-size: 3.5rem; } }
+@media screen and (min-width: 550px) {
+  .room-thumbnail {
+    width: 50%;
+    padding: 0 2rem;
+    float: left; }
+
+  .page-blog .blog-article-details, .page-post .blog-article-details {
+    width: 50%; }
+
+  .page-contacts .contacts {
+    float: left; }
+  .page-contacts .contacts + .contacts {
+    float: right; } }
+@media screen and (min-width: 720px) {
+  .slider {
+    display: block; }
+
+  .page-home .main-section img {
+    float: left;
+    margin-right: 1rem; }
+
+  main .main-section, main .booking-form {
+    background-color: rgba(255, 255, 255, 0.75); }
+  main .main-section {
+    padding: 0 2rem 0.5rem;
+    color: #000; }
+  main.main-fluid .main-section {
+    padding: 0 3.5rem 3.5rem; }
+  main .contact-box {
+    background-color: rgba(255, 255, 255, 0.75); }
+
+  .page-hotel-ekaterina h1 {
+    font-size: 2.6rem; }
+
+  .page-reservation .main-section {
+    margin-bottom: 2rem; }
+  .page-reservation .booking-form {
+    width: 100%;
+    margin-bottom: 0;
+    background-color: transparent; }
+    .page-reservation .booking-form .form-col {
+      width: 25%;
+      margin-bottom: 0;
+      z-index: auto; }
+  .page-reservation .reservation-hotel {
+    display: block;
+    padding: 1rem;
+    border: 1px solid #b19261; }
+    .page-reservation .reservation-hotel img {
+      float: left;
+      width: 30%;
+      margin: 0; }
+    .page-reservation .reservation-hotel .reservartion-hotel-detail {
+      float: right;
+      width: 60%;
+      height: 13rem;
+      border: 1px solid #c2c2c2;
+      border-right: none; }
+      .page-reservation .reservation-hotel .reservartion-hotel-detail div {
+        float: left;
+        width: 25%;
+        height: 13rem;
+        border-right: 1px solid #c2c2c2;
+        padding: 0.5rem;
+        padding-top: 4rem; }
+    .page-reservation .reservation-hotel .reservation-hotel-row {
+      margin-bottom: 1.5rem;
+      padding: 2rem; }
+
+  .page-news .news-article {
+    width: 50%;
+    float: left; }
+
+  .page-room .lSSlideOuter .lSPager.lSGallery {
+    display: block; }
+
+  .page-contacts .map-block p {
+    float: left; }
+  .page-contacts .map-block p + p {
+    float: right; } }
+@media screen and (min-width: 997px) {
+  .main-menu-handle {
+    display: none; }
+
+  .header-main-menu {
+    width: 100%;
+    height: 5.4rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    border-left: none;
+    background: #fff;
+    text-align: center;
+    transition: height 0.3s ease; }
+    .header-main-menu > ul > li {
+      display: inline-block;
+      margin-right: 0.6rem; }
+    .header-main-menu .sub-menu {
+      border-bottom: none; }
+      .header-main-menu .sub-menu:hover a {
+        border-bottom: none; }
+    .header-main-menu .sub-menu ul {
+      min-width: 16rem;
+      position: absolute;
+      top: 7rem;
+      left: 50%;
+      margin-left: -8rem;
+      border-top: 3px solid #b19261;
+      opacity: 0;
+      background: white;
+      visibility: hidden;
+      transition: all 0.5s ease;
+      z-index: 2; }
+    .header-main-menu .sub-menu:hover ul {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      top: 4.6rem; }
+      .header-main-menu .sub-menu:hover ul a {
+        border-bottom: 1px solid #f7f7f7; }
+    .header-main-menu ul a {
+      line-height: 5rem;
+      border-bottom: none;
+      transition: border 0.1s ease; }
+    .header-main-menu ul a:hover {
+      border-bottom: 4px solid #b19261;
+      color: #000; }
+    .header-main-menu .menu-center {
+      display: inline-block; }
+    .header-main-menu .menu-item-1 {
+      margin-left: -2rem; }
+    .header-main-menu .menu-item-last {
+      margin-right: 0; }
+
+  .sticky {
+    max-width: 100%; }
+    .sticky .header-main-menu {
+      position: absolute;
+      top: 0.6rem;
+      left: -18.3rem;
+      max-width: 117rem;
+      margin: 0 auto; }
+
+  .page-reservation .booking-form {
+    margin-bottom: 1rem; }
+    .page-reservation .booking-form fieldset:first-child {
+      float: left;
+      width: 70%; }
+    .page-reservation .booking-form fieldset:last-child {
+      float: right;
+      width: 29%;
+      border: none; }
+    .page-reservation .booking-form .submit-button {
+      position: relative;
+      width: 50%;
+      height: auto;
+      margin: 0 auto;
+      background: none;
+      border: none;
+      transform: none;
+      transition: all 0.6s ease;
+      cursor: pointer; }
+      .page-reservation .booking-form .submit-button:hover {
+        outline: 1px solid #000; }
+      .page-reservation .booking-form .submit-button:hover input {
+        color: #000;
+        background: #fff; }
+      .page-reservation .booking-form .submit-button span {
+        transition: color 0.6s ease; }
+      .page-reservation .booking-form .submit-button:hover span {
+        color: #000; }
+      .page-reservation .booking-form .submit-button input {
+        position: static;
+        width: 100%;
+        height: 3.7rem;
+        border: none;
+        margin: 0;
+        background: #b19261;
+        color: #fff;
+        transition: background-color 0.6s ease; }
+      .page-reservation .booking-form .submit-button span {
+        position: absolute;
+        transform: none;
+        top: 0.8rem;
+        left: 50%;
+        margin-left: -2.8rem; }
+
+  .page-gallery .gallery li, .page-blog .gallery li {
+    width: 25%; }
+
+  .page-blog .blog-section, .page-post .blog-section {
+    width: 77%;
+    float: left;
+    padding-top: 0; }
+  .page-blog .blog-aside, .page-post .blog-aside {
+    width: 20%;
+    float: right; }
+
+  .page-news .news-pic {
+    float: left;
+    width: 50%; }
+  .page-news .news-description {
+    float: left;
+    width: 50%;
+    padding: 0 0 0 1.5rem; }
+  .page-news h2 {
+    margin-top: 0; } }
+@media screen and (min-width: 1200px) {
+  main {
+    padding: 0 3rem 16rem; }
+    main .main-section {
+      float: right;
+      width: 65%;
+      padding-right: 0; }
+    main .booking-form {
+      float: left;
+      margin-top: 0; }
+    main .contact-box {
+      float: left;
+      margin: 0; }
+
+  .page-hotel-ekaterina .main-section {
+    margin-bottom: 2rem; }
+
+  .page-reservation .main-section {
+    float: right;
+    max-width: 74%;
+    width: 74%; }
+  .page-reservation .reservation-hotel {
+    float: left;
+    width: 50%; }
+    .page-reservation .reservation-hotel .reservation-hotel-row {
+      margin-bottom: 0; }
+    .page-reservation .reservation-hotel span {
+      word-break: break-word; }
+
+  .page-gallery main, .page-blog main, .page-post main {
+    padding-top: 0; }
+
+  .page-room .page-room-aside {
+    float: left;
+    width: 35%; }
+
+  .page-contacts .map-block {
+    width: 70%;
+    float: left; }
+    .page-contacts .map-block p {
+      float: left;
+      margin-top: 3rem;
+      border-bottom: 1px solid #DB4436; }
+    .page-contacts .map-block p + p {
+      float: right;
+      border-bottom-color: #3F5BA9; }
+  .page-contacts .contacts {
+    float: none; }
+    .page-contacts .contacts h2, .page-contacts .contacts h3, .page-contacts .contacts p {
+      text-align: right; }
+  .page-contacts .contacts + .contacts {
+    margin-top: 2.5rem;
+    float: none; } }
+
+/*# sourceMappingURL=style.css.map */

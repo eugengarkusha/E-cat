@@ -1,0 +1,139 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 15/02/2016 20:34
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-airconditioner:before { content: "\f100"; }
+.flaticon-arrow:before { content: "\f101"; }
+.flaticon-baby127:before { content: "\f102"; }
+.flaticon-baby139:before { content: "\f103"; }
+.flaticon-baby54:before { content: "\f104"; }
+.flaticon-bath21:before { content: "\f105"; }
+.flaticon-bathing2:before { content: "\f106"; }
+.flaticon-bathtub3:before { content: "\f107"; }
+.flaticon-beauty1:before { content: "\f108"; }
+.flaticon-bed33:before { content: "\f109"; }
+.flaticon-bedroom16:before { content: "\f10a"; }
+.flaticon-bedroom2:before { content: "\f10b"; }
+.flaticon-bedroom4:before { content: "\f10c"; }
+.flaticon-beds8:before { content: "\f10d"; }
+.flaticon-calendar-icons:before { content: "\f10e"; }
+.flaticon-clothes17:before { content: "\f10f"; }
+.flaticon-clothing275:before { content: "\f110"; }
+.flaticon-clothing684:before { content: "\f111"; }
+.flaticon-clothing685:before { content: "\f112"; }
+.flaticon-coin32:before { content: "\f113"; }
+.flaticon-drink110:before { content: "\f114"; }
+.flaticon-facebook55:before { content: "\f115"; }
+.flaticon-favourites7:before { content: "\f116"; }
+.flaticon-hair-salon:before { content: "\f117"; }
+.flaticon-hair-salon41:before { content: "\f118"; }
+.flaticon-king11:before { content: "\f119"; }
+.flaticon-lotions:before { content: "\f11a"; }
+.flaticon-minisplit:before { content: "\f11b"; }
+.flaticon-moneybox:before { content: "\f11c"; }
+.flaticon-phone-call41:before { content: "\f11d"; }
+.flaticon-phone325:before { content: "\f11e"; }
+.flaticon-plate13:before { content: "\f11f"; }
+.flaticon-queen9:before { content: "\f120"; }
+.flaticon-refrigerator3:before { content: "\f121"; }
+.flaticon-restaurant26:before { content: "\f122"; }
+.flaticon-screen54:before { content: "\f123"; }
+.flaticon-shower15:before { content: "\f124"; }
+.flaticon-shower5:before { content: "\f125"; }
+.flaticon-spa25:before { content: "\f126"; }
+.flaticon-telephone90:before { content: "\f127"; }
+.flaticon-telephone93:before { content: "\f128"; }
+.flaticon-tool437:before { content: "\f129"; }
+.flaticon-towel:before { content: "\f12a"; }
+.flaticon-tv14:before { content: "\f12b"; }
+.flaticon-twitter1:before { content: "\f12c"; }
+.flaticon-vk3:before { content: "\f12d"; }
+.flaticon-washing46:before { content: "\f12e"; }
+.flaticon-wifi74:before { content: "\f12f"; }
+.flaticon-window17:before { content: "\f130"; }
+.flaticon-wiping7:before { content: "\f131"; }
+    
+    $font-Flaticon-airconditioner: "\f100";
+    $font-Flaticon-arrow: "\f101";
+    $font-Flaticon-baby127: "\f102";
+    $font-Flaticon-baby139: "\f103";
+    $font-Flaticon-baby54: "\f104";
+    $font-Flaticon-bath21: "\f105";
+    $font-Flaticon-bathing2: "\f106";
+    $font-Flaticon-bathtub3: "\f107";
+    $font-Flaticon-beauty1: "\f108";
+    $font-Flaticon-bed33: "\f109";
+    $font-Flaticon-bedroom16: "\f10a";
+    $font-Flaticon-bedroom2: "\f10b";
+    $font-Flaticon-bedroom4: "\f10c";
+    $font-Flaticon-beds8: "\f10d";
+    $font-Flaticon-calendar-icons: "\f10e";
+    $font-Flaticon-clothes17: "\f10f";
+    $font-Flaticon-clothing275: "\f110";
+    $font-Flaticon-clothing684: "\f111";
+    $font-Flaticon-clothing685: "\f112";
+    $font-Flaticon-coin32: "\f113";
+    $font-Flaticon-drink110: "\f114";
+    $font-Flaticon-facebook55: "\f115";
+    $font-Flaticon-favourites7: "\f116";
+    $font-Flaticon-hair-salon: "\f117";
+    $font-Flaticon-hair-salon41: "\f118";
+    $font-Flaticon-king11: "\f119";
+    $font-Flaticon-lotions: "\f11a";
+    $font-Flaticon-minisplit: "\f11b";
+    $font-Flaticon-moneybox: "\f11c";
+    $font-Flaticon-phone-call41: "\f11d";
+    $font-Flaticon-phone325: "\f11e";
+    $font-Flaticon-plate13: "\f11f";
+    $font-Flaticon-queen9: "\f120";
+    $font-Flaticon-refrigerator3: "\f121";
+    $font-Flaticon-restaurant26: "\f122";
+    $font-Flaticon-screen54: "\f123";
+    $font-Flaticon-shower15: "\f124";
+    $font-Flaticon-shower5: "\f125";
+    $font-Flaticon-spa25: "\f126";
+    $font-Flaticon-telephone90: "\f127";
+    $font-Flaticon-telephone93: "\f128";
+    $font-Flaticon-tool437: "\f129";
+    $font-Flaticon-towel: "\f12a";
+    $font-Flaticon-tv14: "\f12b";
+    $font-Flaticon-twitter1: "\f12c";
+    $font-Flaticon-vk3: "\f12d";
+    $font-Flaticon-washing46: "\f12e";
+    $font-Flaticon-wifi74: "\f12f";
+    $font-Flaticon-window17: "\f130";
+    $font-Flaticon-wiping7: "\f131";

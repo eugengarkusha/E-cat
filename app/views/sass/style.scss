@@ -1,0 +1,2228 @@
+//================================= FONTS ======================================
+
+@import url(https://fonts.googleapis.com/css?family=Great+Vibes);
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+
+//================================ COLORS ======================================
+
+$color-primary: #b19261;
+$color-text-primary: #a6a6a6;
+$color-black: #000;
+$color-white: #fff;
+$color-footer: #c2aa83;
+$color-footer-border: #c2c2c2;
+
+//=============================== MIXINS =======================================
+
+//================== FONTS ===================//
+
+@mixin droid-sefir {
+  font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+}
+@mixin droid-sans {
+  font-family: "Droid Sans", Arial, Helvetica, sans-serif;
+}
+@mixin great-vibes {
+  font-family: "Great Vibes", Arial, Helvetica, sans-serif;
+}
+@mixin color-background-dark {
+  background-color: rgba(0,0,0,.75);
+}
+@mixin color-background-light {
+  background-color: rgba(255,255,255,.6);
+}
+
+//================= BORDERS ==========================//
+
+@mixin border-grey {
+  border: 1px solid #c0c0c0;
+}
+
+//=============================== GLOBAL STYLES ================================
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+  font-size: 10px;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html, body, .wrapper {
+  height: 100%;
+}
+
+body {
+  .wrapper {
+    height: auto;
+    min-height: 100%;
+    margin-bottom: -13rem;
+    font: 1.35em/1.5 "Droid Sans", Arial, Helvetica, sans-serif;
+    color: $color-text-primary;
+    background: $color-white;
+  }
+
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.clearfix:after {
+  content: '.';
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+}
+
+::selection {
+  color: $color-white;
+  background: $color-primary;
+}
+
+::-webkit-scrollbar{
+  width: 8px;
+  height: 10px;
+  padding-top: 40px;
+}
+
+::-webkit-scrollbar-thumb{
+  border-radius:10px;
+  height: 30px;
+  width: 8px;
+  border: 1px solid $color-primary;
+  background: $color-primary;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+
+  &:active {
+    text-decoration: underline;
+  }
+}
+
+.btn-read {
+  position: relative;
+  display: inline-block;
+  border: 1px solid $color-primary;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.4rem;
+  background-color: $color-primary;
+  color: $color-white;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: $color-primary;
+    background-color: $color-white;
+  }
+
+}
+
+blockquote {
+  @include droid-sans;
+  font-size: 1.3rem;
+  line-height: 1.95rem;
+  background: #f7f7f7;
+  padding: 2rem;
+  margin: 2rem 0;
+  border-left: 5px solid $color-primary;
+
+  cite {
+    display: block;
+    font-size: 1.43rem;
+    line-height: 2.28rem;
+    font-style: normal;
+    color: $color-primary;
+
+    &:before {
+      display: block;
+      content: "";
+      float: left;
+      margin: 1.4rem 0.7rem 0 0;
+      width: 1rem;
+      height: 0.1rem;
+      background: $color-primary;
+    }
+
+  }
+
+}
+
+.tooltip {
+  position: absolute;
+  width: 9rem;
+  height: 6rem;
+  top: 0;
+  left: -3px;
+  opacity: 0;
+  padding: 0.6rem;
+  border: 1px solid $color-white;
+  border-radius: 8px;
+  background-color: $color-primary;
+  color: $color-white;
+  word-wrap: break-word;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0,0,0,.4);
+  transition: all 0.3s ease;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 10px 0 10px;
+    border-color: #b19261 transparent transparent transparent;
+    bottom: -0.9rem;
+    left: 3.2rem;
+  }
+
+}
+
+//=================================== HEADER ===================================
+
+.header-main-wrapper {
+  position: relative;
+  height: 12.6rem;
+  margin: 0 auto;
+  z-index: 1000;
+}
+
+.header-main {
+  position: relative;
+  width: 100%;
+  max-width: 117rem;
+  height: 5rem;
+  margin: 0 auto;
+  padding: 3rem 2rem 0;
+  background: $color-white;
+  transition: height 0.3s ease;
+}
+
+//================= LOGO ==================//
+
+.logo {
+  position: relative;
+  display: block;
+  height: 4.2rem;
+  border-bottom: 1px solid $color-black;
+  margin: 0 auto;
+  font-size: 2.6rem;
+  line-height: 1.6;
+  text-align: center;
+  z-index: 1001;
+
+  .logo-first-word {
+    color: $color-primary;
+  }
+
+  .logo-first-word:after {
+    content: '';
+    width: 20rem;
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    margin-left: -10rem;
+    border-bottom: 1px solid $color-black;
+  }
+
+  .logo-second-word {
+    color: $color-black;
+  }
+
+  .stars {
+    position: absolute;
+    display: none;
+    left: 50%;
+    bottom: -4.2rem;
+    margin-left: -4.4rem;
+    color: $color-primary;
+    font-size: 1.43rem;
+    z-index: 3;
+
+    i[class^="flaticon-"]:before {
+      font-size: 1.43rem;
+      margin-left: 0;
+    }
+
+    @mixin star($top, $left) {
+      position: relative;
+      top: $top;
+      left: $left;
+    }
+
+    .star-1 {
+      @include star(-1.6rem, 0.2rem);
+    }
+    .star-2 {
+      @include star(-0.5rem, -0.1rem);
+    }
+    .star-4 {
+      @include star(-0.4rem, 0);
+    }
+    .star-5 {
+      @include star(-1.5rem, -0.2rem);
+    }
+
+  }
+
+  &:before {
+    position: absolute;
+    top: -4rem;
+    left: 50%;
+    margin-left: -6rem;
+    display: block;
+    content: '';
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    background: $color-white;
+    box-shadow: 0 4px 2px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  &:after {
+    position: absolute;
+    content: "E";
+    font-size: 4.68rem;
+    line-height: 8rem;
+    font-family: "Great Vibes", Arial, Helvetica, sans-serif;
+    width: 8rem;
+    height: 8rem;
+    background: $color-primary;
+    left: 50%;
+    top: -2rem;
+    margin-left: -4rem;
+    color: $color-white;
+    border: 2px solid $color-white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px $color-primary;
+    z-index: 2;
+  }
+
+  &:before, &:after, .stars {
+    display: none;
+  }
+
+}
+
+//===================== NAVIGATION =====================//
+
+.header-main-menu {
+  position: fixed;
+  top: 12.6rem;
+  right: -19rem;
+  width: 18rem;
+  background: #f7f7f7;
+  border-left: 1px solid $color-primary;
+  transition: all 0.6s ease;
+
+  .current {
+    border-bottom: 4px solid #b19261;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      position: relative;
+    }
+
+    a {
+      display: block;
+      padding: 0 2.2rem;
+      text-align: center;
+      line-height: 3.5rem;
+      border-bottom: 1px solid $color-primary;
+      color: $color-black;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: $color-primary;
+    }
+
+  }
+
+  .sub-menu {
+    border-bottom: 1px solid $color-primary;
+  }
+
+  .sub-menu li {
+    background: $color-white;
+
+    a {
+      line-height: 4rem;
+      border-bottom-color: #f7f7f7;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: $color-white;
+      background: $color-primary;
+    }
+
+  }
+
+  &.slide {
+    right: 0;
+    z-index: 1001;
+  }
+
+  .menu-center {
+    display: none;
+    width: 12rem;
+  }
+
+}
+
+.main-menu-handle {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  float: right;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  text-align: center;
+  line-height: 3.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+  color: $color-white;
+  background: $color-primary;
+
+  @mixin handle-span($top) {
+    position: absolute;
+    content: "";
+    width: 3rem;
+    height: 0.2rem;
+    left: 0.5rem;
+    top: $top;
+    background: $color-white;
+  }
+
+  &:after, span:before, span:after {
+    transition: all 0.3s ease;
+  }
+
+  span:before {
+    @include handle-span(1.4rem);
+  }
+
+  span:after {
+    @include handle-span(2.6rem);
+  }
+
+  &:after {
+    @include handle-span(2rem);
+  }
+
+  &.active:after {
+    width: 0;
+  }
+
+  &.active {
+    span:before {
+      transform: rotate(-45deg);
+      top: 2rem;
+    }
+    span:after {
+      transform: rotate(45deg);
+      top: 2rem;
+    }
+  }
+
+}
+
+//==================== STICKY HEADER =================//
+
+.sticky {
+  position: fixed;
+  top: 0;
+  height: 6rem;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+
+  .header-main-menu {
+    top: 6rem;
+  }
+
+  .main-menu-handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 2rem;
+    margin-top: 1rem;
+  }
+
+  .logo {
+    width: 12rem;
+    border-bottom-color: transparent;
+  }
+
+  .logo-first-word, .logo-second-word {
+    display: none;
+  }
+
+  .stars, .logo:before, .logo:after {
+    display: block;
+  }
+
+}
+
+//================================== MAIN ======================================
+
+main {
+  max-width: 117rem;
+  position: relative;
+  margin: 0 auto 5rem;
+  padding: 0 1.5rem 16rem;
+
+  &.main-fluid {
+    padding-top: 3rem;
+    max-width: 100%;
+  }
+
+  h1 {
+    position: relative;
+    padding-bottom: 1rem;
+    text-align: center;
+    font-size: 2.86rem;
+    font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    line-height: 5rem;
+    color: $color-black;
+  }
+
+  h1:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid $color-black;
+    bottom: 0;
+    left: 0;
+  }
+
+  h1:after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transform: rotate(-45deg);
+    background: white;
+    border: 1px solid #b19261;
+    box-shadow: 0 0 0 5px white;
+    left: 50%;
+    margin-left: -5px;
+    bottom: -7px;
+  }
+
+  p {
+    font-size: 1.35rem;
+    text-align: justify;
+  }
+
+  .main-section img {
+    display: block;
+    max-width: 40rem;
+    margin: 0.6rem auto 0;
+  }
+
+  //========================= BOOKING FORM ============================//
+
+  .booking-form {
+    width: 32rem;
+    margin: 4rem auto;
+
+    legend {
+      text-align: center;
+      font-size: 2.4rem;
+      font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+      color: $color-black;
+    }
+
+    input, select {
+      display: block;
+      width: 100%;
+      height: 4.2rem;
+      margin: 1rem 0;
+      padding: 0 1rem;
+      background: $color-white;
+      outline: none;
+      border: 1px solid $color-footer-border;
+      border-bottom-width: 3px;
+      color: $color-black;
+      cursor: pointer;
+    }
+
+    .check-col {
+      display: inline-block;
+      width: 49%;
+
+      input {
+        background-color: $color-white;
+      }
+    }
+
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    label {
+      position: relative;
+      display: block;
+      font-size: 1.4rem;
+    }
+
+    .flaticon-calendar-icons {
+      position: absolute;
+      right: 1rem;
+      bottom: -3.7rem;
+    }
+
+    .submit-button {
+      position: relative;
+      width: 7rem;
+      height: 7rem;
+      margin: 3rem auto 1.3rem;
+      background: #e8e8e8;
+      border: 1px solid $color-footer-border;
+      transform: rotate(45deg);
+      transition: background-color 0.6s ease;
+      cursor: pointer;
+
+      &:hover {
+        background: $color-white;
+      }
+      &:hover input {
+        background: #947A50;
+      }
+
+      input {
+        position: absolute;
+        top: -0.4rem;
+        left: 0.6rem;
+        width: 5.6rem;
+        height: 5.6rem;
+        border: none;
+        background: $color-primary;
+        color: $color-white;
+        transition: background-color 0.6s ease;
+      }
+
+      span {
+        position: absolute;
+        top: 2.2rem;
+        left: 0.6rem;
+        transform: rotate(-45deg);
+        color: $color-white;
+      }
+
+    }
+  }
+
+}
+
+.slider {
+  display: none;
+}
+
+.slider.vegas-container {
+  position: absolute;
+  width: 100%;
+}
+
+.pagination-box {
+  margin: 40px 0 30px;
+  text-align: center;
+
+  ul {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      float: left;
+      margin: 0 0.2rem;
+
+      &.active {
+        span {
+          top: -2.5rem;
+          opacity: 1;
+        }
+        a {
+          background-color: $color-primary;
+        }
+      }
+    }
+
+    a {
+      position: relative;
+      display: block;
+      width: 4rem;
+      height: 0.6rem;
+      background: $color-text-primary;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: $color-primary;
+      }
+
+      span {
+        position: absolute;
+        top: -3.5rem;
+        left: -0.1rem;
+        width: 4rem;
+        height: 2.4rem;
+        line-height: 2.4rem;
+        opacity: 0;
+        color: $color-primary;
+        background: $color-white;
+        transition: all 0.3s ease;
+
+        &:hover {
+          top: -2.5rem;
+          opacity: 1;
+        }
+      }
+
+      &:hover span {
+        top: -2.8rem;
+        opacity: 1;
+      }
+
+    }
+
+  }
+
+}
+
+.main-title {
+  position: relative;
+
+  .main-heading {
+    width: 100%;
+    height: 14.4rem;
+    margin-top: 0;
+    padding-top: 1.5rem;
+    // line-height: 13rem;
+    line-height: 3rem;
+    // font-size: 3.5rem;
+    font-size: 3rem;
+    color: $color-white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.5);
+    background: url(../img/in_bg.jpg) center top fixed no-repeat;
+  }
+
+  ul {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    list-style: none;
+    margin: 0 0 0 -8.5rem;
+    padding: 0;
+
+    .flaticon-arrow {
+      color: $color-primary;
+      text-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.8);
+
+      &:before {
+        margin-left: 1rem;
+        margin-right: 0.4rem;
+        font-size: 1.2rem;
+      }
+    }
+
+    li {
+      display: inline-block;
+
+      &:last-child a {
+        color: $color-primary;
+      }
+
+    }
+
+    a {
+      font-size: 1.4rem;
+      color: $color-white;
+      text-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.8);
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+  }
+
+}
+
+.contact-box {
+  width: 32rem;
+  margin: 3rem auto;
+  @include border-grey;
+
+  h2, h3, p {
+    text-align: center;
+    color: $color-black;
+  }
+
+}
+
+.form-reply {
+
+  fieldset {
+    border: none;
+  }
+
+  textarea {
+    width: 100%;
+    height: 15rem;
+    margin-top: 1rem;
+    border: 1px solid #c2c2c2;
+    border-bottom-width: 3px;
+  }
+
+  input[type="submit"] {
+    width: 9rem;
+    margin: 1rem auto;
+    border: none;
+    background-color: $color-primary;
+    color: $color-white;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: $color-white;
+      color: $color-primary;
+      border: 1px solid $color-primary;
+    }
+  }
+
+  &.booking-form {
+    width: 100%;
+
+    .form-col {
+      padding: 0 1rem;
+    }
+
+    input {
+      cursor: text;
+    }
+
+    input[type="submit"] {
+      cursor: pointer;
+    }
+
+  }
+
+}
+
+//============================== FOOTER ========================================
+
+.main-footer {
+  position: relative;
+  height: 13rem;
+  padding: 2.5rem 1rem 0;
+  background: $color-primary;
+
+  .scroll-up {
+    position: absolute;
+    top: -2.2rem;
+    left: 50%;
+    margin-left: -2.25rem;
+    background: $color-primary;
+    width: 4.5rem;
+    height: 4.5rem;
+    transform: rotate(-45deg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:before, &:after {
+      width: 17px;
+      height: 1px;
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 16px;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    &:before {
+      transform: rotate(0);
+    }
+
+    &:after {
+      left: 1.8rem;
+      top: 2.5rem;
+      transform: rotate(-90deg);
+    }
+
+  }
+
+}
+
+.main-footer-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  @include droid-sans;
+  font-size: 1.3rem;
+  color: $color-white;
+
+  li {
+    margin-bottom: 0.6rem;
+  }
+
+  a {
+    text-decoration: underline;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $color-text-primary;
+    }
+  }
+}
+
+.social-icons {
+  position: absolute;
+  top: 5rem;
+  right: 0.5rem;
+
+  a {
+    position: relative;
+    display: inline-block;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 0.2rem;
+    border: 1px solid white;
+    text-align: center;
+    font-size: 2rem;
+    line-height: 3.5rem;
+    color: white;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: $color-text-primary;
+    }
+
+    &:before {
+      margin-left: 0;
+    }
+  }
+}
+
+//======================PAGE EKATERINA=======================
+
+.page-hotel-ekaterina {
+
+  .main-section {
+    max-height: 83vh;
+    overflow-y: scroll;
+  }
+
+}
+
+.rooms-row {
+  text-align: center;
+}
+
+.room-thumbnail {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.8rem;
+  padding: 0 2rem;
+  width: 100%;
+  cursor: pointer;
+
+  img {
+    transition: all 0.3s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.2, 1.2);
+  }
+
+  &:hover a.detail {
+    background-color: $color-white;
+    color: $color-primary;
+  }
+
+  a {
+    display: block;
+    overflow: hidden;
+  }
+
+  a:first-child {
+    max-height: 28rem;
+  }
+
+  .room-thumbnail-description {
+    text-align: left;
+
+    h3 {
+      position: relative;
+      margin-top: -3.3rem;
+      margin-bottom: -1rem;
+      padding: 0 0.5rem 0.5rem;
+      @include droid-sefir;
+      color: black;
+      font-size: 1.4em;
+      font-weight: normal;
+      @include color-background-light;
+    }
+
+    p {
+      margin-bottom: 0;
+      position: relative;
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        bottom: -1.4rem;
+        border-top: 1px solid $color-footer;
+      }
+    }
+
+    .detail {
+      position: relative;
+      float: right;
+      padding: 0.3rem .5rem;
+      border: 1px solid $color-primary;
+      text-align: right;
+      color: $color-white;
+      background-color: $color-primary;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: $color-white;
+        color: $color-primary;
+      }
+    }
+
+  }
+  .room-thumbnail-price {
+    position: absolute;
+    display: none;
+    top: 131px;
+    left: 50%;
+  }
+}
+
+//========================PAGE RESERVATION====================
+
+.page-reservation {
+
+  .booking-from {
+    .input[type="checkbox"] {
+      display: inline;
+    }
+  }
+
+  .reservation-hotel {
+    display: none;
+  }
+
+}
+
+//==========================PAGE GALLERY=======================
+
+.page-gallery {
+
+  .gallery {
+    list-style: none;
+    padding: 0;
+    max-width: 117rem;
+    margin: 3rem auto;
+
+    li {
+      height: 17.4rem;
+      overflow: hidden;
+    }
+
+    a {
+      position: relative;
+      height: 16.7rem;
+
+      .gallery-caption {
+        position: absolute;
+        display: none;
+        background: rgba(0, 0, 0, 0.4);
+        border: 6px solid #b19261;
+        text-align: center;
+        color: white;
+        font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+        -webkit-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.8);
+        box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.8);
+        width: 100%;
+        height: 100%;
+
+      }
+
+
+      span {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+        min-width: 220px;
+        line-height: 30px;
+      }
+
+    }
+
+  }
+
+}
+
+.mfp-with-zoom .mfp-container,
+.mfp-with-zoom.mfp-bg {
+  opacity: 0;
+  -webkit-backface-visibility: hidden;
+  /* ideally, transition speed should match zoom duration */
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  }
+
+  .mfp-with-zoom.mfp-ready .mfp-container {
+    opacity: 1;
+  }
+  .mfp-with-zoom.mfp-ready.mfp-bg {
+    opacity: 0.8;
+  }
+
+  .mfp-with-zoom.mfp-removing .mfp-container,
+  .mfp-with-zoom.mfp-removing.mfp-bg {
+  opacity: 0;
+}
+
+//=========================PAGE BLOGS=========================
+
+.page-blog, .page-post {
+
+  .blog-section {
+    padding: 5rem 0 1rem;
+  }
+
+  .blog-article {
+    padding-bottom: 3rem;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid $color-footer-border;
+
+    h2 {
+
+      a {
+        @include droid-sefir;
+        font-weight: normal;
+        font-size: 2.4rem;
+        color: $color-primary;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: $color-black;
+        }
+
+      }
+
+    }
+
+    p {
+      line-height: 2.4rem;
+    }
+
+  }
+
+  .article-heading-box-link {
+
+    img {
+      display: block;
+      border: 1px solid $color-primary;
+      transition: all 0.3s ease;
+    }
+
+    &:hover img {
+      border-color: $color-black;
+    }
+
+  }
+
+  .blog-article-details {
+    width: 100%;
+    margin-top: 0.8rem;
+
+    div {
+      float: left;
+      width: 33%;
+      font-size: 1.3rem;
+    }
+
+    .article-details-author, .article-details-comments {
+      color: $color-black;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+  }
+
+  .blog-aside-box {
+    border: 1px solid $color-primary;
+    margin-bottom: 2.6rem;
+
+    h3 {
+      margin: 0;
+      @include droid-sefir;
+      font-weight: normal;
+      font-size: 1.6rem;
+      line-height: 3.4rem;
+      text-align: center;
+      color: $color-white;
+      background-color: $color-primary;
+    }
+
+    ul {
+      list-style: none;
+      padding: 1rem;
+      margin: 0;
+
+      li {
+        border-bottom: 1px solid $color-footer-border;
+
+        &:hover a {
+          color: $color-primary;
+        }
+
+        &:hover a:before {
+          background-color: $color-black;
+          transform: rotate(45deg);
+        }
+
+      }
+      li:last-child {
+        border-bottom: none;
+      }
+
+    }
+
+  }
+
+  .blog-aside-box.list {
+    a {
+      position: relative;
+      margin-left: 2rem;
+      line-height: 3rem;
+      @include droid-sans;
+      color: $color-black;
+      transition: all 0.3s ease;
+
+      &:before {
+        content: '';
+        width: 0.7rem;
+        height: 0.7rem;
+        position: absolute;
+        left: -1.5rem;
+        bottom: 50%;
+        margin-bottom: -0.4rem;
+        background-color: $color-primary;
+        transform: rotate(-45deg);
+        transition: all 0.3s ease;
+      }
+
+    }
+
+  }
+
+  .tags {
+
+    a {
+      color: $color-primary;
+      background-color: $color-white;
+      border: none;
+
+      &:hover {
+        color: $color-white;
+        background-color: $color-primary;
+      }
+
+    }
+
+  }
+
+}
+
+//=======================PAGE NEWS=======================
+
+.page-news {
+
+  .news-article {
+    padding: 4rem 2rem;
+    border-bottom: 1px solid $color-footer-border;
+  }
+
+  .news-article:hover {
+
+    .news-pic-details {
+      opacity: 1;
+      transform: rotateY(0deg);
+    }
+
+    img {
+      -webkit-filter: grayscale(0);
+      filter: grayscale(0);
+    }
+
+  }
+
+  .news-pic {
+    position: relative;
+    max-width: 25.5rem;
+    margin: 0 auto;
+    transition: all 0.6s ease;
+
+    img {
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+      vertical-align: middle;
+      transition: all 0.6s ease;
+    }
+
+    .news-pic-details {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      padding-top: 9rem;
+      width: 100%;
+      height: 100%;
+      transition: all 0.6s ease;
+      opacity: 0;
+      transform: rotateY(90deg);
+      background: rgba(0, 0, 0, 0.7);
+
+      .pic-details-date {
+        display: block;
+        @include droid-sans;
+        font-size: 2rem;
+      }
+
+    }
+
+  }
+
+  h2 {
+    @include droid-sefir;
+    font-size: 2.2rem;
+    font-weight: normal;
+    text-align: center;
+    color: $color-black;
+
+    span {
+      color: $color-primary;
+    }
+
+  }
+
+}
+
+//===================PAGE PROMO======================
+
+.page-promo {
+
+  .main-section {
+    max-height: 70rem;
+    overflow-x: scroll;
+  }
+
+  .promotion-box {
+    margin: 4rem auto;
+    border: 1px solid $color-primary;
+    transition: all 0.7s ease;
+
+    &:hover {
+      @include color-background-dark;
+    }
+
+  }
+
+}
+
+//=====================PAGE CONTACTS======================
+
+.page-contacts {
+
+  p, h2, h3 {
+    color: $color-black;
+  }
+
+  .map {
+    display: block;
+    width: 100%;
+    height: 60vh;
+    border: none;
+  }
+
+  .contact-box {
+    color: $color-black;
+    background-color: transparent;
+    border-color: $color-primary;
+  }
+
+  .map-block {
+
+    & p {
+      margin-top: 3rem;
+      border-bottom: 1px solid #DB4436;
+    }
+
+    & p+p {
+      border-bottom-color: #3F5BA9;
+    }
+
+  }
+
+  .contacts {
+    padding-right: 2rem;
+    border-right: 1px solid #DB4436;
+  }
+
+  .contacts + .contacts {
+    border-right-color: #3F5BA9;
+  }
+
+}
+
+//======================PAGE POST====================
+
+.page-post {
+
+  .post-tags {
+    h3 {
+      display: inline-block;
+      color: $color-primary;
+    }
+
+    ul {
+      display: inline-block;
+    }
+  }
+
+  .blog-article {
+    border-bottom: 1px solid $color-primary;
+  }
+
+  .post-comments {
+
+    .comment {
+      margin-bottom: 4rem;
+
+      .comment {
+        margin-left: 2rem;
+        margin-top: 8rem;
+        padding-left: 1rem;
+        border-left: 1px solid $color-footer-border;
+      }
+
+    }
+
+    .user-img {
+      width: 7.5rem;
+      height: 7.5rem;
+      float: left;
+      margin-right: 2rem;
+      border: 3px solid rgba(177, 146, 97, 0.5);
+    }
+
+    .comment-details {
+
+      span {
+        display: block;
+      }
+
+      .user-name {
+        @include droid-sans;
+        font-size: 1.56rem;
+        line-height: 3rem;
+        color: $color-primary;
+      }
+
+    }
+
+    p {
+      margin: 2rem 0 1rem;
+      padding: 2rem;
+      font-size: 1.3rem;
+      line-height: 2rem;
+      border-radius: 5px;
+      background: #f7f7f7;
+    }
+
+    .btn-read {
+      float: right;
+      font-size: 1.1rem;
+    }
+
+  }
+
+}
+
+//=============================PAGE ROOM======================
+
+.page-room {
+
+  p {
+    color: $color-black;
+  }
+
+  .main-title ul {
+    margin-left: -15rem;
+  }
+
+  .room-slider {
+    max-width: 85rem;
+    margin: 0 auto;
+  }
+  .room-slider ul {
+    list-style: none outside none;
+    padding-left: 0;
+    margin-bottom:0;
+    max-height: 46rem;
+  }
+  .room-slider li {
+    display: block;
+    float: left;
+    margin-right: 0.6rem;
+    cursor:pointer;
+  }
+  .room-slider img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    cursor: pointer;
+  }
+
+  .lSSlideOuter .lSPager.lSGallery {
+
+    max-height: 6rem;
+    display: none;
+
+  }
+
+  .room-equipment {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid $color-footer-border;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+
+        &:hover .tooltip {
+          opacity: 1;
+          top: -6.5rem;
+        }
+
+        &:hover span[class^="flaticon"]:before {
+          color: #CAA874;
+        }
+
+      }
+
+    }
+
+    span[class^="flaticon"]:before {
+      font-size: 4rem;
+      transition: all 0.3s ease;
+    }
+
+    .room-cost {
+      margin-top: 1.5rem;
+
+      .price {
+        font-size: 1.7rem;
+        font-weight: bold;
+        color: $color-black;
+      }
+
+      .flaticon-coin32:before {
+        color: $color-primary;
+        margin-left: 1rem;
+      }
+
+    }
+
+  }
+
+  .booking-form {
+
+    .breakfast-checkbox {
+      text-align: center;
+
+      label {
+        margin-bottom: 0.1rem;
+      }
+
+    }
+
+  }
+
+}
+
+//===========================PAGE ABOUT===========================
+
+.page-about main {
+
+  color: $color-black;
+
+}
+
+//================================ MEDIA QUERIES ===============================
+
+//======================= 380 ==========================
+
+@media screen and (min-width: 380px) {
+  main .booking-form {
+    width: 38rem;
+
+    label {
+      margin-bottom: -1.1rem;
+    }
+
+    input, select {
+      margin-bottom: 0.4rem;
+    }
+
+    .form-col {
+      display: inline-block;
+      width: 49%;
+    }
+
+    .submit-button {
+      margin-top: 2rem;
+    }
+
+    .fa-calendar {
+      bottom: -2.7rem;
+    }
+
+  }
+
+  .page-reservation {
+    .form-col {
+      position: relative;
+      float: left;
+      margin-bottom: 0.8rem;
+      text-align: center;
+      z-index: 1;
+    }
+
+  }
+}
+
+//======================= 432 ==========================
+
+@media screen and (min-width: 432px) {
+
+  .logo {
+    .stars, &:before, &:after {
+      display: block;
+    }
+
+    .logo-first-word, .logo-second-word {
+      position: absolute;
+    }
+
+    .logo-first-word {
+      left: 50%;
+      margin-left: -14rem;
+    }
+
+    .logo-first-word:after {
+      width: 22rem;
+      margin-left: -0.5rem;
+    }
+
+    .logo-second-word {
+      right: 50%;
+      margin-right: -19.4rem;
+    }
+
+    .logo-second-word:after {
+      content: '';
+      position: absolute;
+      width: 133px;
+      height: 18px;
+      right: 100%;
+      bottom: -8px;
+      background: $color-white;
+      border-radius: 14px;
+    }
+  }
+
+  .main-section .room-thumbnail img {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .page-gallery {
+    .gallery {
+
+      li {
+        position: relative;
+        float: left;
+        width: 50%;
+        padding: 0.7rem;
+
+        a {
+          position: relative;
+          display: block;
+          border: 1px solid $color-primary;
+          overflow: hidden;
+        }
+
+      }
+
+      img {
+        display: block;
+      }
+
+    }
+
+  }
+
+  .form-reply {
+
+    &.booking-form {
+
+      .form-col {
+        padding: 0;
+      }
+
+      .form-col:first-child {
+        padding-right: 1rem;
+      }
+
+      .form-col:nth-child(2n) {
+        float: right;
+      }
+
+    }
+
+  }
+
+  .main-title {
+
+    .main-heading {
+      padding-top: 0;
+      line-height: 13rem;
+      font-size: 3.5rem;
+    }
+
+  }
+
+}
+
+@media screen and (min-width: 550px) {
+
+  .room-thumbnail {
+    width: 50%;
+    padding: 0 2rem;
+    float: left;
+  }
+
+  .page-blog, .page-post {
+
+    .blog-article-details {
+      width: 50%;
+    }
+
+  }
+
+  .page-contacts {
+
+    .contacts {
+      float: left;
+    }
+
+    .contacts + .contacts {
+      float: right;
+    }
+
+  }
+
+}
+
+//======================= 720 =========================
+
+@media screen and (min-width: 720px) {
+
+  .slider {
+    display: block;
+  }
+
+  .page-home .main-section img {
+    float: left;
+    margin-right: 1rem;
+  }
+
+  main {
+
+    .main-section, .booking-form {
+      background-color: rgba(255, 255, 255, 0.75);
+    }
+
+    .main-section {
+      padding: 0 2rem 0.5rem;
+      color: $color-black;
+    }
+
+    &.main-fluid {
+
+      .main-section {
+        padding: 0 3.5rem 3.5rem;
+      }
+
+    }
+
+    .contact-box {
+      background-color: rgba(255,255,255,.75);
+    }
+
+  }
+
+  .page-hotel-ekaterina {
+    h1 {
+      font-size: 2.6rem;
+    }
+  }
+
+  .page-reservation {
+
+    .main-section {
+      margin-bottom: 2rem;
+    }
+
+    .booking-form {
+      width: 100%;
+      margin-bottom: 0;
+      background-color: transparent;
+
+      .form-col {
+        width: 25%;
+        margin-bottom: 0;
+        z-index: auto;
+      }
+    }
+
+    .reservation-hotel {
+      display: block;
+      padding: 1rem;
+      border: 1px solid $color-primary;
+
+      img {
+        float: left;
+        width: 30%;
+        margin: 0;
+      }
+      .reservartion-hotel-detail {
+        float: right;
+        width: 60%;
+        height: 13rem;
+        border: 1px solid $color-footer-border;
+        border-right: none;
+
+        div {
+          float: left;
+          width: 25%;
+          height: 13rem;
+          border-right: 1px solid $color-footer-border;
+          padding: 0.5rem;
+          padding-top: 4rem
+        }
+      }
+      .reservation-hotel-row {
+        margin-bottom: 1.5rem;
+        padding: 2rem;
+      }
+    }
+
+  }
+
+  .page-news {
+
+    .news-article {
+      width: 50%;
+      float: left;
+    }
+
+  }
+
+  .page-room {
+
+    .lSSlideOuter .lSPager.lSGallery {
+      display: block;
+    }
+
+  }
+
+  .page-contacts {
+
+    .map-block {
+
+      & p {
+        float: left;
+      }
+
+      & p+p {
+        float: right;
+      }
+
+    }
+
+  }
+
+}
+
+//======================= 997 =========================
+
+@media screen and (min-width: 997px) {
+
+  .main-menu-handle {
+    display: none;
+  }
+
+  .header-main-menu {
+    width: 100%;
+    height: 5.4rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    border-left: none;
+    background: $color-white;
+    text-align: center;
+    transition: height 0.3s ease;
+
+    & > ul > li {
+      display: inline-block;
+      margin-right: 0.6rem;
+    }
+
+    .sub-menu {
+      border-bottom: none;
+
+      &:hover a {
+        border-bottom: none;
+      }
+    }
+
+    .sub-menu ul {
+      min-width: 16rem;
+      position: absolute;
+      top: 7rem;
+      left: 50%;
+      margin-left: -8rem;
+      border-top: 3px solid $color-primary;
+      opacity: 0;
+      background: white;
+      visibility: hidden;
+      transition: all 0.5s ease;
+      z-index: 2;
+    }
+
+    .sub-menu:hover ul {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      top: 4.6rem;
+
+      & a {
+        border-bottom: 1px solid #f7f7f7;
+      }
+    }
+
+    ul a {
+      line-height: 5rem;
+      border-bottom: none;
+      transition: border 0.1s ease;
+    }
+
+    ul a:hover {
+      border-bottom: 4px solid $color-primary;
+      color: $color-black;
+    }
+
+    .menu-center {
+      display: inline-block;
+    }
+
+    .menu-item-1 {
+      margin-left: -2rem;
+    }
+
+    .menu-item-last {
+      margin-right: 0;
+    }
+
+  }
+
+  .sticky {
+    max-width: 100%;
+
+    .header-main-menu {
+      position: absolute;
+      top: 0.6rem;
+      left: -18.3rem;
+      max-width: 117rem;
+      margin: 0 auto;
+    }
+
+  }
+
+  .page-reservation {
+    .booking-form {
+      margin-bottom: 1rem;
+
+      fieldset:first-child {
+        float: left;
+        width: 70%;
+      }
+      fieldset:last-child {
+        float: right;
+        width: 29%;
+        border: none;
+      }
+      .submit-button {
+        position: relative;
+        width: 50%;
+        height: auto;
+        margin: 0 auto;
+        background: none;
+        border: none;
+        transform: none;
+        transition: all 0.6s ease;
+        cursor: pointer;
+
+        &:hover {
+          outline: 1px solid $color-black;
+        }
+
+        &:hover input {
+          color: $color-black;
+          background: $color-white;
+        }
+
+        span {
+          transition: color 0.6s ease;
+        }
+
+        &:hover span {
+          color: $color-black;
+        }
+
+        input {
+          position: static;
+          width: 100%;
+          height: 3.7rem;
+          border: none;
+          margin: 0;
+          background: #b19261;
+          color: #fff;
+          transition: background-color 0.6s ease;
+
+        }
+        span {
+          position: absolute;
+          transform: none;
+          top: 0.8rem;
+          left: 50%;
+          margin-left: -2.8rem;
+        }
+      }
+
+    }
+  }
+
+  .page-gallery, .page-blog {
+
+    .gallery {
+
+      li {
+        width: 25%;
+      }
+
+    }
+
+  }
+
+  .page-blog, .page-post {
+
+    .blog-section {
+      width: 77%;
+      float: left;
+      padding-top: 0;
+    }
+
+    .blog-aside {
+      width: 20%;
+      float: right;
+    }
+
+  }
+
+  .page-news {
+
+    .news-pic {
+      float: left;
+      width: 50%;
+    }
+
+    .news-description {
+      float: left;
+      width: 50%;
+      padding: 0 0 0 1.5rem;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+  }
+
+}
+
+//======================= 1200 =========================
+
+@media screen and (min-width: 1200px) {
+  main {
+
+    padding: 0 3rem 16rem;
+
+      .main-section {
+        float: right;
+        width: 65%;
+        padding-right: 0;
+      }
+
+      .booking-form {
+        float: left;
+        margin-top: 0;
+
+      }
+
+      .contact-box {
+        float: left;
+        // width: 25%;
+        margin: 0;
+      }
+
+  }
+
+  .page-hotel-ekaterina .main-section {
+    margin-bottom: 2rem;
+  }
+
+  .page-reservation {
+
+
+    .main-section {
+      float: right;
+      max-width: 74%;
+      width: 74%;
+    }
+
+    .reservation-hotel {
+      float: left;
+      width: 50%;
+
+      .reservation-hotel-row {
+        margin-bottom: 0;
+      }
+
+      span {
+        word-break: break-word;
+      }
+
+    }
+
+  }
+
+  .page-gallery, .page-blog, .page-post {
+
+    main {
+      padding-top: 0;
+    }
+
+  }
+
+  .page-room {
+
+    .page-room-aside {
+      float: left;
+      width: 35%;
+    }
+
+  }
+
+  .page-contacts {
+
+    .map-block {
+      width: 70%;
+      float: left;
+
+      & p {
+        float: left;
+        margin-top: 3rem;
+        border-bottom: 1px solid #DB4436;
+      }
+
+      & p+p {
+        float: right;
+        border-bottom-color: #3F5BA9;
+      }
+    }
+
+    .contacts {
+      float: none;
+
+      h2, h3, p {
+        text-align: right;
+      }
+
+    }
+
+    .contacts + .contacts {
+      margin-top: 2.5rem;
+      float: none;
+    }
+
+  }
+
+}
