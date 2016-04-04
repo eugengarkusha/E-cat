@@ -1,21 +1,6 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Сеть отелей Екатерина</title>
-  <link rel="stylesheet" href="@routes.Assets.versioned("css/normalize.css")">
-  <link rel="stylesheet" href="@routes.Assets.versioned("css/icon/flaticon.css")">
-  <link rel="stylesheet" href="@routes.Assets.versioned("css/selectric.css")">
-  <link rel="stylesheet" href="@routes.Assets.versioned("css/jquery.datetimepicker.css")">
-  <link rel="stylesheet" href="@routes.Assets.versioned("js/vegas/vegas.min.css")">
-  <link rel="stylesheet" href="@routes.Assets.versioned("js/lightGallery/css/lightgallery.css")">
-  <link rel="stylesheet" href="@routes.Assets.versioned("css/style.css")">
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  @views.html.commoncss.render
 </head>
 
 <body class="page-home">
@@ -186,16 +171,9 @@
     </div>
 
   </footer>
-  <script src="@routes.Assets.versioned("js/jquery-1.12.0.min.js")"></script>
-  <script src="@routes.Assets.versioned("js/jquery.scroolly.min.js")"></script>
-  <script src="@routes.Assets.versioned("js/jquery.selectric.min.js")"></script>
-  <script src="@routes.Assets.versioned("js/moment.js")"></script>
-  <script src="@routes.Assets.versioned("js/jquery.datetimepicker.min.js")"></script>
-  <script src="@routes.Assets.versioned("js/vegas/vegas.min.js")"></script>
-  <script src="@routes.Assets.versioned("js/lightGallery/js/lightgallery.min.js")"></script>
-  <script src="@routes.Assets.versioned("js/lightGallery/js/lg-thumbnail.min.js")"></script>
-  <script src="@routes.Assets.versioned("js/lightGallery/js/lg-fullscreen.min.js")"></script>
-  <script src="@routes.Assets.versioned("js/main.js")"></script>
+
+  @views.html.commonscripts.render
+
   <script>
 
     $(window).load(function () {
