@@ -1,0 +1,58 @@
+<footer class="main-footer">
+
+    <div class="scroll-up"></div>
+
+    <ul class="main-footer-items">
+      <li><span>г. Одесса</span></li>
+      <li><span>Екатерининская площадь, 7б</span></li>
+      <li><a data-iframe="true" id="google-map" href="https://mapsengine.google.com/map/embed?mid=zLbUWxUdmidU.kdS1hB_bB-kw">Показать на карте</a></li>
+      <li><a href="pages/comment.html">Оставить отзыв</a></li>
+    </ul>
+
+    <div class="social-icons">
+      <a href="#" class="flaticon-facebook55"></a>
+      <a href="#" class="flaticon-vk3"></a>
+      <a href="#" class="flaticon-twitter1"></a>
+    </div>
+
+  </footer>
+
+  @views.html.commonscripts.render
+
+  <script>
+
+    $(window).load(function () {
+
+      var $document = $(document),
+          $body     = $('body'),
+          $slider   = $('.slider');
+
+      if ($body.width() >= 720 && !$slider.hasClass('vegas-container')) {
+        $slider.height($document.height() - 256);
+          $slider.vegas({
+              slides: [
+                  { src: '@routes.Assets.versioned("img/slides/1.jpg")' },
+                  { src: '@routes.Assets.versioned("img/slides/2.jpg")' },
+                  { src: '@routes.Assets.versioned("img/slides/3.jpg")' },
+                  { src: '@routes.Assets.versioned("img/slides/4.jpg")' },
+            ]
+          });
+      }
+
+      $(this).resize(function () {
+        $slider.height($document.height() - 256);
+        if ($body.width() >= 720 && !$slider.hasClass('vegas-container')) {
+            $slider.vegas({
+                slides: [
+                  { src: '@routes.Assets.versioned("img/slides/1.jpg")' },
+                  { src: '@routes.Assets.versioned("img/slides/2.jpg")' },
+                  { src: '@routes.Assets.versioned("img/slides/3.jpg")' },
+                  { src: '@routes.Assets.versioned("img/slides/4.jpg")' },
+              ]
+            });
+        }
+      })
+
+    });
+
+  </script>

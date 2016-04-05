@@ -1,69 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Бронирование</title>
-  <link rel="stylesheet" href="../css/normalize.css">
-  <link rel="stylesheet" href="../icon/flaticon.css">
-  <link rel="stylesheet" href="../css/selectric.css">
-  <link rel="stylesheet" href="../css/jquery.datetimepicker.css">
-  <link rel="stylesheet" href="../js/vegas/vegas.min.css">
-  <link rel="stylesheet" href="../js/lightGallery/css/lightgallery.css">
-  <link rel="stylesheet" href="../css/style.css">
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  @views.html.commoncss.render("Бронирование")
 </head>
 
 <body class="page-reservation">
 
   <div class="wrapper">
-
-    <div class="header-main-wrapper">
-
-      <header class="header-main">
-        <a href="../index.html" class="logo">
-          <span class="logo-first-word">Отель</span>
-          <span class="logo-second-word">Екатерина</span>
-          <span class="stars">
-            <i class="flaticon-favourites7 star-1"></i>
-            <i class="flaticon-favourites7 star-2"></i>
-            <i class="flaticon-favourites7 star-3"></i>
-            <i class="flaticon-favourites7 star-4"></i>
-            <i class="flaticon-favourites7 star-5"></i>
-          </span>
-        </a>
-
-        <nav class="header-main-menu">
-          <ul>
-            <li class="sub-menu menu-item-1">
-              <a href="#">Отели</a>
-              <ul>
-                <li><a href="hotels/ekaterina/ekaterina.html">Екатерина</a></li>
-                <li><a href="hotels/ekaterina2/ekaterina2.html">Екатерина II</a></li>
-              </ul>
-            </li>
-            <li><a class="current" href="reservation.html">Бронирование</a></li>
-            <li><a href="gallery.html">Галерея</a></li>
-            <li><a href="blog.html">Блог</a></li>
-            <li class="menu-center"></li>
-            <li><a href="news.html">Новости</a></li>
-            <li><a href="promo.html">Акции</a></li>
-            <li><a href="about.html">О нас</a></li>
-            <li class="menu-item-last"><a href="contacts.html">Контакты</a></li>
-          </ul>
-        </nav>
-
-        <div class="main-menu-handle">
-          <span></span>
-        </div>
-
-      </header>
-
-    </div>
+      
+    @views.html.base_header.render
 
     <div class="slider"></div>
 
@@ -79,7 +24,7 @@
         <p><a href="tel:+380487296703">+38 (048) 729-67-03</a></p>
         <p><a href="tel:+380487226408">+38 (048) 722-64-08</a></p>
         <p>факс: +38 (048) 729-67-08</p>
-        <p><a href="mailto:booking@hotel-ekaterina.com">Email: booking@hotel-ekaterina.com</a></p>
+        <p><a href="mailto:booking@@hotel-ekaterina.com">Email: booking@@hotel-ekaterina.com</a></p>
         <h2>Отель Екатерина II</h2>
         <p>Украина, 65026, г. Одесса, площадь Екатерининская, 7</p>
         <h3>Отдел бронирования:</h3>
@@ -88,7 +33,7 @@
         <h3>Рецепция:</h3>
         <p><a href="tel:+380487296700">+38 (048) 729-67-00</a></p>
         <p>факс: +38 (048) 729-67-08</p>
-        <p><a href="mailto:booking@hotel-ekaterina.com">Email: booking@hotel-ekaterina.com</a></p>
+        <p><a href="mailto:booking@@hotel-ekaterina.com">Email: booking@@hotel-ekaterina.com</a></p>
       </div>
 
       <section class="main-section clearfix">
@@ -98,7 +43,6 @@
         <form action="#" class="booking-form clearfix">
 
           <fieldset>
-            <!-- <legend>Забронируйте номер</legend> -->
             <div class="booking-row clearfix">
               <div class="form-col">
                 <label for="checkIn">Дата заселения <i class="flaticon-calendar-icons"></i></label>
@@ -171,7 +115,7 @@
         <div class="reservation-hotel">
           <h2>Екатерина</h2>
           <div class="reservation-hotel-row clearfix">
-            <img src="../img/room.jpg" alt="room">
+            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
             <div class="reservartion-hotel-detail">
               <div><span>2 человека</span></div>
               <div><span>900 UAH</span></div>
@@ -180,7 +124,7 @@
             </div>
           </div>
           <div class="reservation-hotel-row clearfix">
-            <img src="../img/room.jpg" alt="room">
+            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
             <div class="reservartion-hotel-detail">
               <div><span>2 человека</span></div>
               <div><span>900 UAH</span></div>
@@ -189,7 +133,7 @@
             </div>
           </div>
           <div class="reservation-hotel-row clearfix">
-            <img src="../img/room.jpg" alt="room">
+            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
             <div class="reservartion-hotel-detail">
               <div><span>2 человека</span></div>
               <div><span>900 UAH</span></div>
@@ -202,7 +146,7 @@
         <div class="reservation-hotel">
           <h2>Екатерина II</h2>
           <div class="reservation-hotel-row clearfix">
-            <img src="../img/room.jpg" alt="room">
+            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
             <div class="reservartion-hotel-detail">
               <div><span>2 человека</span></div>
               <div><span>900 UAH</span></div>
@@ -211,7 +155,7 @@
             </div>
           </div>
           <div class="reservation-hotel-row clearfix">
-            <img src="../img/room.jpg" alt="room">
+            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
             <div class="reservartion-hotel-detail">
               <div><span>2 человека</span></div>
               <div><span>900 UAH</span></div>
@@ -220,7 +164,7 @@
             </div>
           </div>
           <div class="reservation-hotel-row clearfix">
-            <img src="../img/room.jpg" alt="room">
+            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
             <div class="reservartion-hotel-detail">
               <div><span>2 человека</span></div>
               <div><span>900 UAH</span></div>
@@ -237,73 +181,8 @@
     </main>
 
   </div>
-
-  <footer class="main-footer">
-
-    <div class="scroll-up"></div>
-
-    <ul class="main-footer-items">
-      <li><span>г. Одесса</span></li>
-      <li><span>Екатерининская площадь, 7б</span></li>
-      <li><a data-iframe="true" id="google-map" href="https://mapsengine.google.com/map/embed?mid=zLbUWxUdmidU.kdS1hB_bB-kw">Показать на карте</a></li>
-      <li><a href="comment.html">Оставить отзыв</a></li>
-    </ul>
-
-    <div class="social-icons">
-      <a href="#" class="flaticon-facebook55"></a>
-      <a href="#" class="flaticon-vk3"></a>
-      <a href="#" class="flaticon-twitter1"></a>
-    </div>
-
-  </footer>
-
-  <script src="../js/jquery-1.12.0.min.js"></script>
-  <script src="../js/jquery.scroolly.min.js"></script>
-  <script src="../js/jquery.selectric.min.js"></script>
-  <script src="../js/moment.js"></script>
-  <script src="../js/jquery.datetimepicker.min.js"></script>
-  <script src="../js/vegas/vegas.min.js"></script>
-  <script src="../js/lightGallery/js/lightgallery.min.js"></script>
-  <script src="../js/lightGallery/js/lg-thumbnail.min.js"></script>
-  <script src="../js/lightGallery/js/lg-fullscreen.min.js"></script>
-  <script src="../js/main.js"></script>
-  <script>
-
-    $(window).load(function () {
-
-      var $document = $(document),
-          $body     = $('body'),
-          $slider   = $('.slider');
-
-      if ($body.width() >= 720 && !$slider.hasClass('vegas-container')) {
-        $slider.height($document.height() - 256);
-          $slider.vegas({
-              slides: [
-                  { src: '../img/slides/1.jpg' },
-                  { src: '../img/slides/2.jpg' },
-                  { src: '../img/slides/3.jpg' },
-                  { src: '../img/slides/4.jpg' }
-            ]
-          });
-      }
-
-      $(this).resize(function () {
-        $slider.height($document.height() - 256);
-        if ($body.width() >= 720 && !$slider.hasClass('vegas-container')) {
-            $slider.vegas({
-                slides: [
-                    { src: '../img/slides/1.jpg' },
-                    { src: '../img/slides/2.jpg' },
-                    { src: '../img/slides/3.jpg' },
-                    { src: '../img/slides/4.jpg' }
-              ]
-            });
-        }
-      })
-
-    });
-
-  </script>
+  
+  @views.html.base_footer.render
 
 </body>
 </html>
