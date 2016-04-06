@@ -41,12 +41,13 @@ class Application extends Controller {
     }
   }
 
-  def getDummyJson(from:String,to:String) = Action {
+  def getDummyOffers(from:String, to:String) = Action {
     val tariff = Tariff("tarif_id","tariff_name", LocalDateTime.now(), LocalDateTime.now().plusDays(20), 10, 2, 2, 2)
     val room = Room(1,2,1,true,"wtf",3,Seq("with a smell of a homless","partially flooded"))
-    val cat = Category("cat_id","cat_name",Seq(room,room.copy(number = 3,twin = false,options = Nil)), Seq(tariff))
-      val h = Hotel("some_id","Ekaterina", LocalTime.NOON,LocalTime.MIDNIGHT,Seq(cat, cat.copy(id="id2")))
-      Ok(Json.toJson(h))
+    val cat = Category("cat_id","SweetCategory",Seq(room,room.copy(number = 3,twin = false,options = Nil)), Seq(tariff))
+    val h = Hotel("some_id","Ekaterina", LocalTime.NOON,LocalTime.MIDNIGHT,Seq(cat, cat.copy(id="id2", name="ShitCategory")))
+//    Ok(Json.toJson(h))
+    Ok(views.html.pages.offers(Seq(h)))
   }
 
   def main = Action{
@@ -85,7 +86,7 @@ class Application extends Controller {
   def event = Action{
     Ok(views.html.pages.news_pages.event())
   }
-  
+
   def reservation(hotel: String, from:String, to:String) = Action{implicit  req =>
     Ok(views.html.pages.reservation(from, to))
   }

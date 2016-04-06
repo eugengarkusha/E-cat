@@ -1,0 +1,28 @@
+@import  ecat.model.Hotel
+
+@(hotels: Seq[Hotel])
+
+
+<table border="3" bordercolor="200">
+@for(h <- hotels){
+
+  <tr><td colspan="5">Hotel name: @h.name</td></tr>
+
+  @for(c<-h.categories){
+
+    <tr><td colspan="5">Category name: @c.name</td></tr>
+
+    @for(room <- c.numbers){
+
+        <tr>
+            <td>room number=@room.number</td>
+            <td>guests count = @room.guestsCnt</td>
+            <td>twin=@room.twin</td>
+            <td>bathroom=@room.bathroom</td>
+            <td>level=@room.level</td>
+        </tr>
+
+    }
+  }
+}
+</table>>

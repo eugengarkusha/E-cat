@@ -7,7 +7,7 @@ GET     /                                         controllers.Application.main
 GET     /booking/results/from-:from/to-:to        controllers.Application.bookingCategories(from:LocalDate,to:LocalDate)
 GET     /dumpxml/:from/:to                        controllers.Application.dumpXml(from,to)
 GET     /rooms/:from/:to                          controllers.Application.getAvailableRooms(from,to)
-GET     /dummyjson/:from/:to                      controllers.Application.getDummyJson(from, to)
+GET     /dummyoffers/:from/:to                    controllers.Application.getDummyOffers(from, to)
 GET     /*hotel/reservation/:from/:to             controllers.Application.reservation(hotel,from,to)
 GET     /ekaterina                                controllers.Application.ekaterina
 GET     /ekaterina2                               controllers.Application.ekaterina2

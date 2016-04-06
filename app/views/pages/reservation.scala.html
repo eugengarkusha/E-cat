@@ -1,7 +1,7 @@
 
 @(from:String, to:String)(implicit req: play.api.mvc.RequestHeader)
 
-@helper.javascriptRouter("jsRoutes")(routes.javascript.Application.getDummyJson)
+@helper.javascriptRouter("jsRoutes")(routes.javascript.Application.getDummyOffers)
 <!--move javascript router to main wrapping template -->
 <!DOCTYPE html>
 <html lang="en">
@@ -189,8 +189,9 @@
   
   @views.html.base_bottom.render(true)
   
-  <script>$.ajax(jsRoutes.controllers.Application.getDummyJson(@from,@to)).done(function( data ) {document.getElementById("json").innerHTML =JSON.stringify(data)})</script>
-  <div id="json"></div>
+  <script>$.ajax(jsRoutes.controllers.Application.getDummyOffers(@from,@to)).done(function( data ) {document.getElementById("table").innerHTML = data})</script>
+
+  <div id="table"></div>
 
 </body>
 </html>
