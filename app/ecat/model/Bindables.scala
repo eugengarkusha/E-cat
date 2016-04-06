@@ -1,7 +1,8 @@
 package ecat.model
 
-import ecat.util.DateTimeFormatters.{dateFormatter =>fmt}
-import java.time.LocalDate
+import ecat.util.DateTimeFormatters.{pertrovichDateTimeFormatter => fmt}
+import java.time.{LocalDate, LocalDateTime}
+
 import play.api.mvc.PathBindable.Parsing
 
 /**
@@ -9,6 +10,6 @@ import play.api.mvc.PathBindable.Parsing
  */
 object Bindables {
 
-  implicit val ldf = new Parsing[LocalDate](LocalDate.parse(_, fmt), fmt.format(_), _ +":"+ _.getMessage)
+  implicit val ldf = new Parsing[LocalDateTime](LocalDateTime.parse(_, fmt), fmt.format(_), _ +":"+ _.getMessage)
 
 }

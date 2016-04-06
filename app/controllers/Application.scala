@@ -1,16 +1,22 @@
 package controllers
 
-import java.time.{LocalDateTime, LocalTime, LocalDate}
+import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
 import javax.xml.ws.BindingProvider
+
 import async.client.ObmenSait
-import ecat.model.{Tariff, Room, Category, Hotel}
+import com.google.inject.Inject
+import ecat.model.{Category, Hotel, Room, Tariff}
+import play.api.cache.CacheApi
 import play.api.libs.json.Json
 import play.api.mvc._
-import play.cache.Cache
+import scala.concurrent.duration._
+import ecat.util.DateTimeFormatters.{pertrovichDateTimeFormatter => fmt}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class Application extends Controller {
+//TODO: Use compile time DI !!!
+class Application @Inject() (cache: CacheApi) extends Controller {
 
 
 // TODO: create and maintain proxy outside the controller
@@ -22,12 +28,6 @@ class Application extends Controller {
     srv
   }
 
-  //TODO: think of correct name for this.
-  //return the rendered booking template here
-  def bookingCategories(from: LocalDate,to: LocalDate) = Action {
-    Ok(s"Success from =$from, to=$to")
-  }
-
   def dumpXml(from:String, to:String)= Action.async{
       //Just forwarding XML from 1C
       Future(proxy.getNomSvobod(from, to)).map(Ok(_))
@@ -37,17 +37,20 @@ class Application extends Controller {
   def getAvailableRooms(from:String, to:String)= Action.async{
     Future(proxy.getNomSvobod(from, to)).map{s=>
       val hotels = Hotel.fromXml(scala.xml.XML.loadString(s))
+      //cache.set()
       Ok(Json.toJson(hotels))
     }
   }
 
-  def getDummyOffers(from:String, to:String) = Action {
-    val tariff = Tariff("tarif_id","tariff_name", LocalDateTime.now(), LocalDateTime.now().plusDays(20), 10, 2, 2, 2)
-    val room = Room(1,2,1,true,"wtf",3,Seq("with a smell of a homless","partially flooded"))
-    val cat = Category("cat_id","SweetCategory",Seq(room,room.copy(number = 3,twin = false,options = Nil)), Seq(tariff))
-    val h = Hotel("some_id","Ekaterina", LocalTime.NOON,LocalTime.MIDNIGHT,Seq(cat, cat.copy(id="id2", name="ShitCategory")))
-//    Ok(Json.toJson(h))
-    Ok(views.html.pages.offers(Seq(h)))
+  def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action {
+    def h = {
+      val tariff = Tariff("tarif_id", "tariff_name", LocalDateTime.now(), LocalDateTime.now().plusDays(20), 10, 2, 2, 2)
+      val room = Room(1, 2, 1, true, "wtf", 3, Seq("with a smell of a homless", "partially flooded"))
+      val cat = Category("cat_id", "SweetCategory", Seq(room, room.copy(number = 3, twin = false, options = Nil)), Seq(tariff))
+      Hotel("some_id", "Ekaterina", LocalTime.NOON, LocalTime.MIDNIGHT, Seq(cat, cat.copy(id = "id2", name = "ShitCategory")))
+    }
+    val cacheKey = (to.toEpochSecond(ZoneOffset.UTC) - from.toEpochSecond(ZoneOffset.UTC)).toString
+    Ok(views.html.pages.offers(cache.getOrElse(cacheKey, 2.minutes)(Seq(h))))
   }
 
   def main = Action{
