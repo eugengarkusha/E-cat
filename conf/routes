@@ -20,7 +20,6 @@ GET     /contacts                                 controllers.Application.contac
 GET     /comment                                  controllers.Application.comment
 GET     /post                                     controllers.Application.post
 GET     /event                                    controllers.Application.event
-# GET     /reservation                              controllers.Application.reserv
 
 
 
