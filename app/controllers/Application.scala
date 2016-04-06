@@ -85,11 +85,7 @@ class Application extends Controller {
   def event = Action{
     Ok(views.html.pages.news_pages.event())
   }
-
-  def reservation(hotel: String, from:String, to:String) = Action{implicit  req =>
-    Ok(views.html.pages.reservation(from, to))
-  }
-
+  
   def reservation(hotel: String, from:String, to:String) = Action{implicit  req =>
     Ok(views.html.pages.reservation(from, to))
   }
