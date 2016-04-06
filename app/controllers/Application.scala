@@ -61,5 +61,32 @@ class Application extends Controller {
   def reservation = Action{
     Ok(views.html.pages.reservation())
   }
+  def gallery = Action{
+    Ok(views.html.pages.gallery())
+  }
+  def blog = Action{
+    Ok(views.html.pages.blog())
+  }
+  def news = Action{
+    Ok(views.html.pages.news())
+  }
+  def promo = Action{
+    Ok(views.html.pages.promo())
+  }
+  def about = Action{
+    Ok(views.html.pages.about())
+  }
+  def contacts = Action{
+    Ok(views.html.pages.contacts())
+  }
+  def comment = Action{
+    Ok(views.html.pages.comment())
+  }
+  def post = Action{
+    Ok(views.html.pages.blog_pages.post())
+  }
+  def event = Action{
+    Ok(views.html.pages.news_pages.event())
+  }
 
 }

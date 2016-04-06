@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  @views.html.commoncss.render("Оставьте отзыв")
+</head>
+
+<body class="page-contacts">
+
+  <div class="wrapper">
+
+    @views.html.base_top.render
+
+    <main class="clearfix">
+
+      <div class="main-title">
+        <h1 class="main-heading">Оставьте свой отзыв</h1>
+      </div>
+
+      <div class="contact-box">
+        <h2>Отель Екатерина</h2>
+        <p>Украина, 65026, г. Одесса, ул. Греческая 25/11</p>
+        <h3>Отдел бронирования:</h3>
+        <p><a href="tel:+380487296701">+38 (048) 729-67-01</a></p>
+        <p><a href="tel:+380671815104">+38 (067) 181-51-04</a></p>
+        <h3>Рецепция:</h3>
+        <p><a href="tel:+380487296703">+38 (048) 729-67-03</a></p>
+        <p><a href="tel:+380487226408">+38 (048) 722-64-08</a></p>
+        <p>факс: +38 (048) 729-67-08</p>
+        <p><a href="mailto:booking@@hotel-ekaterina.com">Email: booking@@hotel-ekaterina.com</a></p>
+        <h2>Отель Екатерина II</h2>
+        <p>Украина, 65026, г. Одесса, площадь Екатерининская, 7</p>
+        <h3>Отдел бронирования:</h3>
+        <p><a href="tel:+380487296702">+38 (048) 729-67-02</a></p>
+        <p><a href="tel:+380671815105">+38 (067) 181-51-05</a></p>
+        <h3>Рецепция:</h3>
+        <p><a href="tel:+380487296700">+38 (048) 729-67-00</a></p>
+        <p>факс: +38 (048) 729-67-08</p>
+        <p><a href="mailto:booking@@hotel-ekaterina.com">Email: booking@@hotel-ekaterina.com</a></p>
+      </div>
+
+      <section class="main-section">
+
+        <form action="#" class="form-reply booking-form">
+          <fieldset>
+            <p>
+              Поля, обозначенные "*" обязательны для заполнения
+            </p>
+            <div>
+              <div class="form-col">
+                <input type="text" name="name" placeholder="Имя *" required>
+              </div>
+              <div class="form-col">
+                <input type="email" name="email" placeholder="Email *" required>
+              </div>
+            </div>
+            <div>
+              <div class="form-col">
+                <input type="tel" name="tel" placeholder="Телефон">
+              </div>
+              <div class="form-col">
+                <input type="text" name="website" placeholder="Вебсайт">
+              </div>
+            </div>
+            <textarea name="message" placeholder="Сообщение *" required=""></textarea>
+          </fieldset>
+          <input type="submit" value="Отправить">
+        </form>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  @views.html.base_bottom.render(false)
+
+</body>
+</html>

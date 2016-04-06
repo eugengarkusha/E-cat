@@ -1,0 +1,26 @@
+@(use_slider : Boolean)
+
+<footer class="main-footer">
+
+    <div class="scroll-up"></div>
+
+    <ul class="main-footer-items">
+      <li><span>г. Одесса</span></li>
+      <li><span>Екатерининская площадь, 7б</span></li>
+      <li><a data-iframe="true" id="google-map" href="https://mapsengine.google.com/map/embed?mid=zLbUWxUdmidU.kdS1hB_bB-kw">Показать на карте</a></li>
+      <li><a href="@routes.Application.comment">Оставить отзыв</a></li>
+    </ul>
+
+    <div class="social-icons">
+      <a href="#" class="flaticon-facebook55"></a>
+      <a href="#" class="flaticon-vk3"></a>
+      <a href="#" class="flaticon-twitter1"></a>
+    </div>
+
+  </footer>
+
+  @views.html.commonscripts.render
+
+  @if(use_slider) {
+      @views.html.slider_script.render
+  }
