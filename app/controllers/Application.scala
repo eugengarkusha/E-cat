@@ -90,4 +90,8 @@ class Application extends Controller {
     Ok(views.html.pages.reservation(from, to))
   }
 
+  def reservation(hotel: String, from:String, to:String) = Action{implicit  req =>
+    Ok(views.html.pages.reservation(from, to))
+  }
+
 }
