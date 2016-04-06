@@ -3,11 +3,12 @@
 # ~~~~
 
 # Home page
+GET     /                                         controllers.Application.main
 GET     /booking/results/from-:from/to-:to        controllers.Application.bookingCategories(from:LocalDate,to:LocalDate)
 GET     /dumpxml/:from/:to                        controllers.Application.dumpXml(from,to)
 GET     /rooms/:from/:to                          controllers.Application.getAvailableRooms(from,to)
-GET     /dummyjson                                controllers.Application.getDummyJson
-GET     /                                         controllers.Application.main
+GET     /dummyjson/:from/:to                      controllers.Application.getDummyJson(from, to)
+GET     /*hotel/reservation/:from/:to             controllers.Application.reservation(hotel,from,to)
 GET     /ekaterina                                controllers.Application.ekaterina
 GET     /ekaterina2                               controllers.Application.ekaterina2
 GET     /reservation                              controllers.Application.reservation
@@ -20,6 +21,8 @@ GET     /contacts                                 controllers.Application.contac
 GET     /comment                                  controllers.Application.comment
 GET     /post                                     controllers.Application.post
 GET     /event                                     controllers.Application.event
+
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                             controllers.Assets.versioned(path="/public", file: Asset)

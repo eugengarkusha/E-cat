@@ -1,3 +1,8 @@
+
+@(from:String, to:String)(implicit req: play.api.mvc.RequestHeader)
+
+@helper.javascriptRouter("jsRoutes")(routes.javascript.Application.getDummyJson)
+<!--move javascript router to main wrapping template -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -183,6 +188,9 @@
   </div>
   
   @views.html.base_bottom.render(true)
+  
+  <script>$.ajax(jsRoutes.controllers.Application.getDummyJson(@from,@to)).done(function( data ) {document.getElementById("json").innerHTML =JSON.stringify(data)})</script>
+  <div id="json"></div>
 
 </body>
 </html>
