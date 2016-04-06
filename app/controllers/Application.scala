@@ -58,9 +58,6 @@ class Application extends Controller {
   def ekaterina2 = Action{
     Ok(views.html.pages.hotels.ekaterina2.ekaterina2())
   }
-  def reservation = Action{
-    Ok(views.html.pages.reservation())
-  }
   def gallery = Action{
     Ok(views.html.pages.gallery())
   }

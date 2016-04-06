@@ -11,7 +11,6 @@ GET     /dummyjson/:from/:to                      controllers.Application.getDum
 GET     /*hotel/reservation/:from/:to             controllers.Application.reservation(hotel,from,to)
 GET     /ekaterina                                controllers.Application.ekaterina
 GET     /ekaterina2                               controllers.Application.ekaterina2
-GET     /reservation                              controllers.Application.reservation
 GET     /gallery                                  controllers.Application.gallery
 GET     /blog                                     controllers.Application.blog
 GET     /news                                     controllers.Application.news
@@ -20,7 +19,8 @@ GET     /about                                    controllers.Application.about
 GET     /contacts                                 controllers.Application.contacts
 GET     /comment                                  controllers.Application.comment
 GET     /post                                     controllers.Application.post
-GET     /event                                     controllers.Application.event
+GET     /event                                    controllers.Application.event
+# GET     /reservation                              controllers.Application.reserv
 
 
 
