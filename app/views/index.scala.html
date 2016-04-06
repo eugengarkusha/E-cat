@@ -8,48 +8,7 @@
 
   <div class="wrapper">
 
-    <div class="header-main-wrapper">
-
-      <header class="header-main">
-        <a href="/" class="logo">
-          <span class="logo-first-word">Отель</span>
-          <span class="logo-second-word">Екатерина</span>
-          <span class="stars">
-            <i class="flaticon-favourites7 star-1"></i>
-            <i class="flaticon-favourites7 star-2"></i>
-            <i class="flaticon-favourites7 star-3"></i>
-            <i class="flaticon-favourites7 star-4"></i>
-            <i class="flaticon-favourites7 star-5"></i>
-          </span>
-        </a>
-
-        <nav class="header-main-menu">
-          <ul>
-            <li class="sub-menu menu-item-1">
-              <a href="#">Отели</a>
-              <ul>
-                <li><a href="@routes.Application.ekaterina">Екатерина</a></li>
-                <li><a href="@routes.Application.ekaterina2">Екатерина II</a></li>
-              </ul>
-            </li>
-            <li><a href="@routes.Application.reservation">Бронирование</a></li>
-            <li><a href="pages/gallery.html">Галерея</a></li>
-            <li><a href="pages/blog.html">Блог</a></li>
-            <li class="menu-center"></li>
-            <li><a href="pages/news.html">Новости</a></li>
-            <li><a href="pages/promo.html">Акции</a></li>
-            <li><a href="pages/about.html">О нас</a></li>
-            <li class="menu-item-last"><a href="pages/contacts.html">Контакты</a></li>
-          </ul>
-        </nav>
-
-        <div class="main-menu-handle">
-          <span></span>
-        </div>
-
-      </header>
-
-    </div>
+    @views.html.base_top.render
 
     <div class="slider"></div>
 
@@ -154,64 +113,7 @@
 
   </div>
 
-  <footer class="main-footer">
-
-    <div class="scroll-up"></div>
-
-    <ul class="main-footer-items">
-      <li><span>г. Одесса</span></li>
-      <li><span>Екатерининская площадь, 7б</span></li>
-      <li><a data-iframe="true" id="google-map" href="https://mapsengine.google.com/map/embed?mid=zLbUWxUdmidU.kdS1hB_bB-kw">Показать на карте</a></li>
-      <li><a href="pages/comment.html">Оставить отзыв</a></li>
-    </ul>
-
-    <div class="social-icons">
-      <a href="#" class="flaticon-facebook55"></a>
-      <a href="#" class="flaticon-vk3"></a>
-      <a href="#" class="flaticon-twitter1"></a>
-    </div>
-
-  </footer>
-
-  @views.html.commonscripts.render
-
-  <script>
-
-    $(window).load(function () {
-
-      var $document = $(document),
-          $body     = $('body'),
-          $slider   = $('.slider');
-
-      if ($body.width() >= 720 && !$slider.hasClass('vegas-container')) {
-        $slider.height($document.height() - 256);
-          $slider.vegas({
-              slides: [
-                  { src: '@routes.Assets.versioned("img/slides/1.jpg")' },
-                  { src: '@routes.Assets.versioned("img/slides/2.jpg")' },
-                  { src: '@routes.Assets.versioned("img/slides/3.jpg")' },
-                  { src: '@routes.Assets.versioned("img/slides/4.jpg")' },
-            ]
-          });
-      }
-
-      $(this).resize(function () {
-        $slider.height($document.height() - 256);
-        if ($body.width() >= 720 && !$slider.hasClass('vegas-container')) {
-            $slider.vegas({
-                slides: [
-                  { src: '@routes.Assets.versioned("img/slides/1.jpg")' },
-                  { src: '@routes.Assets.versioned("img/slides/2.jpg")' },
-                  { src: '@routes.Assets.versioned("img/slides/3.jpg")' },
-                  { src: '@routes.Assets.versioned("img/slides/4.jpg")' },
-              ]
-            });
-        }
-      })
-
-    });
-
-  </script>
+  @views.html.base_bottom.render(true)
 
 </body>
 </html>

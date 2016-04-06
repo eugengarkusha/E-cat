@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  @views.html.commoncss.render("Контакты")
+</head>
+
+<body class="page-contacts">
+
+  <div class="wrapper">
+
+    @views.html.base_top.render
+
+    <main class="clearfix">
+
+      <div class="main-title">
+        <h1 class="main-heading">Наши контакты</h1>
+      </div>
+
+      <div class="map-block clearfix">
+        <iframe class="map" src="https://mapsengine.google.com/map/embed?mid=zLbUWxUdmidU.kdS1hB_bB-kw"></iframe>
+        <p>Украина, 65026, г. Одесса, ул. Греческая 25/11</p>
+        <p>Украина, 65026, г. Одесса, площадь Екатерининская, 7</p>
+      </div>
+
+      <div class="clearfix">
+        <div class="contacts">
+          <h2>Отель Екатерина</h2>
+          <h3>Отдел бронирования:</h3>
+          <p><a href="tel:+380487296701">+38 (048) 729-67-01</a></p>
+          <p><a href="tel:+380671815104">+38 (067) 181-51-04</a></p>
+          <h3>Рецепция:</h3>
+          <p><a href="tel:+380487296703">+38 (048) 729-67-03</a></p>
+          <p><a href="tel:+380487226408">+38 (048) 722-64-08</a></p>
+          <p>факс: +38 (048) 729-67-08</p>
+          <p><a href="mailto:booking@@hotel-ekaterina.com">Email: booking@@hotel-ekaterina.com</a></p>
+        </div>
+
+        <div class="contacts">
+          <h2>Отель Екатерина II</h2>
+          <h3>Отдел бронирования:</h3>
+          <p><a href="tel:+380487296702">+38 (048) 729-67-02</a></p>
+          <p><a href="tel:+380671815105">+38 (067) 181-51-05</a></p>
+          <h3>Рецепция:</h3>
+          <p><a href="tel:+380487296700">+38 (048) 729-67-00</a></p>
+          <p>факс: +38 (048) 729-67-08</p>
+          <p><a href="mailto:booking@@hotel-ekaterina.com">Email: booking@@hotel-ekaterina.com</a></p>
+        </div>
+      </div>
+
+
+    </main>
+
+  </div>
+
+  @views.html.base_bottom.render(false)
+
+</body>
+</html>

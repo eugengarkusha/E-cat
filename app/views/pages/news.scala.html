@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  @views.html.commoncss.render("Новости")
+</head>
+
+<body class="page-news">
+
+  <div class="wrapper">
+
+    @views.html.base_top.render
+
+    <main class="clearfix">
+
+      <div class="main-title">
+        <h1 class="main-heading">Новости</h1>
+      </div>
+
+      <div class="news-row clearfix">
+        <article class="news-article">
+          <div class="news-pic">
+            <img src="@routes.Assets.versioned("img/news.jpg")" alt="news image">
+            <div class="news-pic-details">
+              <span class="pic-details-date">1 января - 2 января</span>
+              <a href="@routes.Application.event" class="btn-read">Читать</a>
+            </div>
+          </div>
+          <div class="news-description">
+            <h2><span>Новое</span> событие</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, dignissimos libero pariatur explicabo, saepe debitis, assumenda deserunt rem, fugiat neque non maiores! Molestiae cum rerum dicta, voluptatem sed alias facere est consequuntur a similique officia.</p>
+          </div>
+        </article>
+
+        <article class="news-article">
+          <div class="news-pic">
+            <img src="@routes.Assets.versioned("img/news.jpg")" alt="news image">
+            <div class="news-pic-details">
+              <span class="pic-details-date">1 января - 2 января</span>
+              <a href="@routes.Application.event" class="btn-read">Читать</a>
+            </div>
+          </div>
+          <div class="news-description">
+            <h2><span>Новое</span> событие</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, dignissimos libero pariatur explicabo, saepe debitis, assumenda deserunt rem, fugiat neque non maiores! Molestiae cum rerum dicta, voluptatem sed alias facere est consequuntur a similique officia.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="news-row clearfix">
+        <article class="news-article">
+          <div class="news-pic">
+            <img src="@routes.Assets.versioned("img/news.jpg")" alt="news image">
+            <div class="news-pic-details">
+              <span class="pic-details-date">1 января - 2 января</span>
+              <a href="@routes.Application.event" class="btn-read">Читать</a>
+            </div>
+          </div>
+          <div class="news-description">
+            <h2><span>Новое</span> событие</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, dignissimos libero pariatur explicabo, saepe debitis, assumenda deserunt rem, fugiat neque non maiores! Molestiae cum rerum dicta, voluptatem sed alias facere est consequuntur a similique officia.</p>
+          </div>
+        </article>
+
+        <article class="news-article">
+          <div class="news-pic">
+            <img src="@routes.Assets.versioned("img/news.jpg")" alt="news image">
+            <div class="news-pic-details">
+              <span class="pic-details-date">1 января - 2 января</span>
+              <a href="@routes.Application.event" class="btn-read">Читать</a>
+            </div>
+          </div>
+          <div class="news-description">
+            <h2><span>Новое</span> событие</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, dignissimos libero pariatur explicabo, saepe debitis, assumenda deserunt rem, fugiat neque non maiores! Molestiae cum rerum dicta, voluptatem sed alias facere est consequuntur a similique officia.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="pagination-box">
+        <ul>
+          <li class=active><a href=#><span>1</span></a></li>
+          <li><a href=#><span>2</span></a></li>
+          <li><a href=#><span>3</span></a></li>
+          <li><a href=#><span>4</span></a></li>
+          <li><a href=#><span>5</span></a></li>
+        </ul>
+      </div>
+
+    </main>
+
+  </div>
+
+  @views.html.base_bottom.render(false)
+
+</body>
+</html>

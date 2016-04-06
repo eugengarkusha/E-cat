@@ -7,49 +7,8 @@
 <body class="page-hotel-ekaterina">
 
   <div class="wrapper">
-
-    <div class="header-main-wrapper">
-
-      <header class="header-main">
-        <a href="../../../index.html" class="logo">
-          <span class="logo-first-word">Отель</span>
-          <span class="logo-second-word">Екатерина</span>
-          <span class="stars">
-            <i class="flaticon-favourites7 star-1"></i>
-            <i class="flaticon-favourites7 star-2"></i>
-            <i class="flaticon-favourites7 star-3"></i>
-            <i class="flaticon-favourites7 star-4"></i>
-            <i class="flaticon-favourites7 star-5"></i>
-          </span>
-        </a>
-
-        <nav class="header-main-menu">
-          <ul>
-            <li class="sub-menu menu-item-1">
-              <a href="#">Отели</a>
-              <ul>
-                <li><a class="current" href="ekaterina.html">Екатерина</a></li>
-                <li><a href="../ekaterina2/ekaterina2.html">Екатерина II</a></li>
-              </ul>
-            </li>
-            <li><a href="../../reservation.html">Бронирование</a></li>
-            <li><a href="../../gallery.html">Галерея</a></li>
-            <li><a href="../../blog.html">Блог</a></li>
-            <li class="menu-center"></li>
-            <li><a href="../../news.html">Новости</a></li>
-            <li><a href="../../promo.html">Акции</a></li>
-            <li><a href="../../about.html">О нас</a></li>
-            <li class="menu-item-last"><a href="../../contacts.html">Контакты</a></li>
-          </ul>
-        </nav>
-
-        <div class="main-menu-handle">
-          <span></span>
-        </div>
-
-      </header>
-
-    </div>
+    
+    @views.html.base_top.render
 
     <div class="slider"></div>
 
@@ -61,7 +20,7 @@
         <div class="rooms-row clearfix">
           <div class="room-thumbnail">
             <a href="rooms/sakura.html" title="Сакура">
-              <img src="../../../img/rooms/ekaterina/sakura/sacura-luxary-2.jpg" alt="Сакура">
+              <img src="@routes.Assets.versioned("img/rooms/ekaterina/sakura/sacura-luxary-2.jpg")" alt="Сакура">
             </a>
             <span class="room-thumbnail-price">1100грн</span>
             <div class="room-thumbnail-description">
@@ -72,7 +31,7 @@
           </div>
           <div class="room-thumbnail">
             <a href="rooms/peony.html" title="Пион">
-              <img src="../../../img/rooms/ekaterina/peony/piony-luxary-1.jpg" alt="Пион">
+              <img src="@routes.Assets.versioned("img/rooms/ekaterina/peony/piony-luxary-1.jpg")" alt="Пион">
             </a>
             <span class="room-thumbnail-price">1000грн</span>
             <div class="room-thumbnail-description">
@@ -86,7 +45,7 @@
         <div class="rooms-row clearfix">
           <div class="room-thumbnail">
             <a href="rooms/orchid.html" title="Орхидея">
-              <img src="../../../img/rooms/ekaterina/orchid/orchid-luxary-1.jpg" alt="Орхидея">
+              <img src="@routes.Assets.versioned("img/rooms/ekaterina/orchid/orchid-luxary-1.jpg")" alt="Орхидея">
             </a>
             <span class="room-thumbnail-price">1000грн</span>
             <div class="room-thumbnail-description">
@@ -97,7 +56,7 @@
           </div>
           <div class="room-thumbnail">
             <a href="rooms/lotus.html" title="Лотос">
-              <img src="../../../img/rooms/ekaterina/lotus/lotus-luxary-1.jpg" alt="Лотос">
+              <img src="@routes.Assets.versioned("img/rooms/ekaterina/lotus/lotus-luxary-1.jpg")" alt="Лотос">
             </a>
             <span class="room-thumbnail-price">1250грн</span>
             <div class="room-thumbnail-description">
@@ -111,7 +70,7 @@
         <div class="rooms-row clearfix">
           <div class="room-thumbnail">
             <a href="rooms/poppy.html" title="Мак">
-              <img src="../../../img/rooms/ekaterina/poppy/poppy-luxary-1.jpg" alt="Мак">
+              <img src="@routes.Assets.versioned("img/rooms/ekaterina/poppy/poppy-luxary-1.jpg")" alt="Мак">
             </a>
             <span class="room-thumbnail-price">1100грн</span>
             <div class="room-thumbnail-description">
@@ -122,7 +81,7 @@
           </div>
           <div class="room-thumbnail">
             <a href="rooms/tea-rose.html" title="Чайная Роза">
-              <img src="../../../img/rooms/ekaterina/tea-rose/rose-luxary-1.jpg" alt="Чайная Роза">
+              <img src="@routes.Assets.versioned("img/rooms/ekaterina/tea-rose/rose-luxary-1.jpg")" alt="Чайная Роза">
             </a>
             <span class="room-thumbnail-price">1250грн</span>
             <div class="room-thumbnail-description">
@@ -135,7 +94,7 @@
           <div class="rooms-row clearfix">
             <div class="room-thumbnail">
               <a href="rooms/caramel.html" title="Карамель">
-                <img src="../../../img/rooms/ekaterina/caramel/caramel-luxary-1.jpg" alt="Карамель">
+                <img src="@routes.Assets.versioned("img/rooms/ekaterina/caramel/caramel-luxary-1.jpg")" alt="Карамель">
               </a>
               <span class="room-thumbnail-price">1000грн</span>
               <div class="room-thumbnail-description">
@@ -146,7 +105,7 @@
             </div>
             <div class="room-thumbnail">
               <a href="rooms/lily.html" title="Лилия">
-                <img src="../../../img/rooms/ekaterina/lily/lily-luxary-1.jpg" alt="Лилия">
+                <img src="@routes.Assets.versioned("img/rooms/ekaterina/lily/lily-luxary-1.jpg")" alt="Лилия">
               </a>
               <span class="room-thumbnail-price">1000грн</span>
               <div class="room-thumbnail-description">
@@ -160,7 +119,7 @@
           <div class="rooms-row clearfix">
             <div class="room-thumbnail">
               <a href="rooms/red-rose.html" title="Красная Роза">
-                <img src="../../../img/rooms/ekaterina/red-rose/red-rose-luxary-1.jpg" alt="Красная Роза">
+                <img src="@routes.Assets.versioned("img/rooms/ekaterina/red-rose/red-rose-luxary-1.jpg")" alt="Красная Роза">
               </a>
               <span class="room-thumbnail-price">1450грн</span>
               <div class="room-thumbnail-description">
@@ -171,7 +130,7 @@
             </div>
             <div class="room-thumbnail">
               <a href="rooms/tulip.html" title="Тюльпан">
-                <img src="../../../img/rooms/ekaterina/tulip/tulip-luxary-1.jpg" alt="Тюльпан">
+                <img src="@routes.Assets.versioned("img/rooms/ekaterina/tulip/tulip-luxary-1.jpg")" alt="Тюльпан">
               </a>
               <span class="room-thumbnail-price">1450грн</span>
               <div class="room-thumbnail-description">
@@ -185,7 +144,7 @@
           <div class="rooms-row clearfix">
             <div class="room-thumbnail">
               <a href="rooms/camomile.html" title="Ромашка">
-                <img src="../../../img/rooms/ekaterina/camomile/camomile-luxary-1.jpg" alt="Ромашка">
+                <img src="@routes.Assets.versioned("img/rooms/ekaterina/camomile/camomile-luxary-1.jpg")" alt="Ромашка">
               </a>
               <span class="room-thumbnail-price">1450грн</span>
               <div class="room-thumbnail-description">
@@ -196,7 +155,7 @@
             </div>
             <div class="room-thumbnail">
               <a href="rooms/high-tech.html" title="ХАЙтек">
-                <img src="../../../img/rooms/ekaterina/high-tech/high-tech-luxary-1.jpg" alt="ХАЙтек">
+                <img src="@routes.Assets.versioned("img/rooms/ekaterina/high-tech/high-tech-luxary-1.jpg")" alt="ХАЙтек">
               </a>
               <span class="room-thumbnail-price">1450грн</span>
               <div class="room-thumbnail-description">
@@ -210,7 +169,7 @@
           <div class="rooms-row clearfix">
             <div class="room-thumbnail">
               <a href="rooms/rose.html" title="Роза">
-                <img src="../../../img/rooms/ekaterina/rose/rose-luxary-1.jpg" alt="Роза">
+                <img src="@routes.Assets.versioned("img/rooms/ekaterina/rose/rose-luxary-1.jpg")" alt="Роза">
               </a>
               <span class="room-thumbnail-price">1450грн</span>
               <div class="room-thumbnail-description">
@@ -221,7 +180,7 @@
             </div>
             <div class="room-thumbnail">
               <a href="rooms/vip.html" title="VIP">
-                <img src="../../../img/rooms/ekaterina/vip/vip-luxary-1.jpg" alt="VIP">
+                <img src="@routes.Assets.versioned("img/rooms/ekaterina/vip/vip-luxary-1.jpg")" alt="VIP">
               </a>
               <span class="room-thumbnail-price">1450грн</span>
               <div class="room-thumbnail-description">
@@ -235,7 +194,7 @@
           <div class="rooms-row clearfix">
             <div class="room-thumbnail">
               <a href="rooms/sauna.html" title="Сауна">
-                <img src="../../../img/rooms/ekaterina/sauna/sauna-luxary-1.jpg" alt="Сауна">
+                <img src="@routes.Assets.versioned("img/rooms/ekaterina/sauna/sauna-luxary-1.jpg")" alt="Сауна">
               </a>
               <span class="room-thumbnail-price">1450грн</span>
               <div class="room-thumbnail-description">
@@ -318,43 +277,7 @@
 
   @views.html.commonscripts.render
 
-  <script>
-
-    $(window).load(function () {
-
-      var $document = $(document),
-          $body     = $('body'),
-          $slider   = $('.slider');
-
-      if ($body.width() >= 720 && !$slider.hasClass('vegas-container')) {
-        $slider.height($document.height() - 256);
-          $slider.vegas({
-              slides: [
-                  { src: '../../../img/slides/1.jpg' },
-                  { src: '../../../img/slides/2.jpg' },
-                  { src: '../../../img/slides/3.jpg' },
-                  { src: '../../../img/slides/4.jpg' }
-            ]
-          });
-      }
-
-      $(this).resize(function () {
-        $slider.height($document.height() - 256);
-        if ($body.width() >= 720 && !$slider.hasClass('vegas-container')) {
-            $slider.vegas({
-                slides: [
-                    { src: '../../../img/slides/1.jpg' },
-                    { src: '../../../img/slides/2.jpg' },
-                    { src: '../../../img/slides/3.jpg' },
-                    { src: '../../../img/slides/4.jpg' }
-              ]
-            });
-        }
-      })
-
-    });
-
-  </script>
+  @views.html.base_bottom.render(true)
 
 </body>
 </html>
