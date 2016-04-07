@@ -3,26 +3,65 @@
 @(hotels: Seq[Hotel])
 
 
-<table border="3" bordercolor="200">
-@for(h <- hotels){
-
-  <tr><td colspan="5">Hotel name: @h.name</td></tr>
-
-  @for(c<-h.categories){
-
-    <tr><td colspan="5">Category name: @c.name</td></tr>
-
-    @for(room <- c.numbers){
-
-        <tr>
-            <td>room number=@room.number</td>
-            <td>guests count = @room.guestsCnt</td>
-            <td>twin=@room.twin</td>
-            <td>bathroom=@room.bathroom</td>
-            <td>level=@room.level</td>
-        </tr>
-
+<div class="reservation-hotel">
+    
+  @for(hotel <- hotels) {
+  
+    <h2>@hotel.name</h2>
+  
+    @for(category <- hotel.categories) {
+          
+      <h3>@category.name</h3>
+          
+      @for(room <- category.numbers) {
+      
+        <div class="reservation-hotel-row clearfix">
+            
+          <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
+            <ul class="reservartion-hotel-detail room-equipment">
+              <li>
+                <span class="">Номер:</span>
+                <div>
+                  <span class="room-number">@room.number</span>
+                </div>
+              </li>
+              <li>
+                <span class="">Кол-во людей:</span>
+                <div>
+                  <span class="room-number">@room.guestsCnt</span>
+                </div>
+              </li>
+              <li>
+                <span class="">Твин</span>
+                <div>
+                @if(room.twin) {
+                  <span class="flaticon-mark"></span>
+                }
+                </div>
+              </li>
+              <li>
+                <span class="">Ванная</span>
+                <div>
+                  @if(room.bathroom) {
+                  <span class="flaticon-mark"></span>                    
+                  }
+                </div>
+              </li>
+              <li>
+                <span class="">Этаж:</span>
+                <div>
+                  <span class="room-number">@room.level</span>
+                </div>
+              </li>
+            </ul>
+            
+        </div>
+      
+      }
+          
     }
+      
   }
-}
-</table>>
+    
+    
+</div>

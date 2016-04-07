@@ -1034,11 +1034,77 @@ main {
     }
   }
 
-  .reservation-hotel {
-    display: none;
+  .reservation-hotel h2 {
+    margin-bottom: 4rem;
+    border-bottom: 1px solid $color-primary;
+    color: $color-black;
   }
-
-}
+  
+  .reservation-hotel h3 {
+      border: 1px solid $color-text-primary;
+      border-radius: 6px;
+      padding: 0.5rem 0;
+      text-align: center;
+      color: $color-black;
+      background: rgba(0,0,0,.2);
+  }
+  
+  .room-equipment {
+    
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+    
+    li {
+      display: block;
+      overflow: auto;
+      line-height: 6rem;
+      border-bottom: 1px dotted;
+      
+        & > span:first-child {
+          color: $color-black;
+        }
+      
+      }
+      
+      & > li:last-child {
+        border-bottom: none;
+      }
+      
+      div {
+        float: right;
+        
+        span {
+          color: #5F5B5B;
+        }
+        
+        .room-number {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        
+      }
+      
+      span[class^="flaticon"]:before {
+          font-size: 3rem;
+      }
+      
+    }
+    
+  }
+  
+  .reservation-hotel-row {
+    border: 3px solid #5F5B5B;
+    border-color: rgba(0,0,0,.4);
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 2.5rem;
+    
+    img {
+      box-shadow: 2px 2px 8px 2px rgba(0,0,0,.5);
+    }
+    
+  }
 
 //==========================PAGE GALLERY=======================
 
@@ -1530,57 +1596,6 @@ main {
 
   }
 
-  .room-equipment {
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid $color-footer-border;
-
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-
-      li {
-        display: inline-block;
-        position: relative;
-        cursor: pointer;
-
-        &:hover .tooltip {
-          opacity: 1;
-          top: -6.5rem;
-        }
-
-        &:hover span[class^="flaticon"]:before {
-          color: #CAA874;
-        }
-
-      }
-
-    }
-
-    span[class^="flaticon"]:before {
-      font-size: 4rem;
-      transition: all 0.3s ease;
-    }
-
-    .room-cost {
-      margin-top: 1.5rem;
-
-      .price {
-        font-size: 1.7rem;
-        font-weight: bold;
-        color: $color-black;
-      }
-
-      .flaticon-coin32:before {
-        color: $color-primary;
-        margin-left: 1rem;
-      }
-
-    }
-
-  }
-
   .booking-form {
 
     .breakfast-checkbox {
@@ -1591,6 +1606,57 @@ main {
       }
 
     }
+
+  }
+
+}
+
+.room-equipment {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid $color-footer-border;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+  li {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+
+      &:hover .tooltip {
+        opacity: 1;
+        top: -6.5rem;
+      }
+
+      &:hover span[class^="flaticon"]:before {
+        color: #CAA874;
+      }
+
+  }
+
+  }
+
+  span[class^="flaticon"]:before {
+    font-size: 4rem;
+    transition: all 0.3s ease;
+  }
+
+  .room-cost {
+    margin-top: 1.5rem;
+
+  .price {
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: $color-black;
+  }
+
+  .flaticon-coin32:before {
+      color: $color-primary;
+      margin-left: 1rem;
+  }
 
   }
 
@@ -1844,8 +1910,11 @@ main {
 
     .reservation-hotel {
       display: block;
-      padding: 1rem;
-      border: 1px solid $color-primary;
+      height: 89rem;  
+      padding: 2rem;
+      border: 1px solid $color-black;
+      border-radius: 5px; 
+      overflow: auto;
 
       img {
         float: left;
@@ -1854,19 +1923,12 @@ main {
       }
       .reservartion-hotel-detail {
         float: right;
-        width: 60%;
-        height: 13rem;
-        border: 1px solid $color-footer-border;
-        border-right: none;
-
+        width: 65%;
+        
         div {
-          float: left;
-          width: 25%;
-          height: 13rem;
-          border-right: 1px solid $color-footer-border;
-          padding: 0.5rem;
-          padding-top: 4rem
+          color: $color-primary;
         }
+        
       }
       .reservation-hotel-row {
         margin-bottom: 1.5rem;
@@ -2160,11 +2222,11 @@ main {
 
     .reservation-hotel {
       float: left;
-      width: 50%;
+      width: 100%;
 
-      .reservation-hotel-row {
-        margin-bottom: 0;
-      }
+      // .reservation-hotel-row {
+      //   margin-bottom: 0;
+      // }
 
       span {
         word-break: break-word;

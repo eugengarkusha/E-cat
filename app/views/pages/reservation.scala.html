@@ -117,67 +117,7 @@
           </fieldset>
         </form>
 
-        <div class="reservation-hotel">
-          <h2>Екатерина</h2>
-          <div class="reservation-hotel-row clearfix">
-            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
-            <div class="reservartion-hotel-detail">
-              <div><span>2 человека</span></div>
-              <div><span>900 UAH</span></div>
-              <div><span>Завтрак включен</span></div>
-              <div><span>Количество номеров: 4</span></div>
-            </div>
-          </div>
-          <div class="reservation-hotel-row clearfix">
-            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
-            <div class="reservartion-hotel-detail">
-              <div><span>2 человека</span></div>
-              <div><span>900 UAH</span></div>
-              <div><span>Завтрак включен</span></div>
-              <div><span>Количество номеров: 4</span></div>
-            </div>
-          </div>
-          <div class="reservation-hotel-row clearfix">
-            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
-            <div class="reservartion-hotel-detail">
-              <div><span>2 человека</span></div>
-              <div><span>900 UAH</span></div>
-              <div><span>Завтрак включен</span></div>
-              <div><span>Количество номеров: 4</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="reservation-hotel">
-          <h2>Екатерина II</h2>
-          <div class="reservation-hotel-row clearfix">
-            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
-            <div class="reservartion-hotel-detail">
-              <div><span>2 человека</span></div>
-              <div><span>900 UAH</span></div>
-              <div><span>Завтрак включен</span></div>
-              <div><span>Количество номеров: 4</span></div>
-            </div>
-          </div>
-          <div class="reservation-hotel-row clearfix">
-            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
-            <div class="reservartion-hotel-detail">
-              <div><span>2 человека</span></div>
-              <div><span>900 UAH</span></div>
-              <div><span>Завтрак включен</span></div>
-              <div><span>Количество номеров: 4</span></div>
-            </div>
-          </div>
-          <div class="reservation-hotel-row clearfix">
-            <img src="@routes.Assets.versioned("img/room.jpg")" alt="room">
-            <div class="reservartion-hotel-detail">
-              <div><span>2 человека</span></div>
-              <div><span>900 UAH</span></div>
-              <div><span>Завтрак включен</span></div>
-              <div><span>Количество номеров: 4</span></div>
-            </div>
-          </div>
-        </div>
+        
 
       </section>
 
@@ -189,9 +129,12 @@
   
   @views.html.base_bottom.render(true)
   
-  <script>$.ajax(jsRoutes.controllers.Application.getDummyOffers(@from,@to)).done(function( data ) {document.getElementById("table").innerHTML = data})</script>
-
-  <div id="table"></div>
+  <script>
+          $.ajax(jsRoutes.controllers.Application.getDummyOffers(@from,@to))
+              .done(function( data ) {
+                  $('.booking-form').after(data);
+              });
+  </script>
 
 </body>
 </html>

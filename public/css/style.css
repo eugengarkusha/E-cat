@@ -702,8 +702,48 @@ main {
 
 .page-reservation .booking-from .input[type="checkbox"] {
   display: inline; }
-.page-reservation .reservation-hotel {
-  display: none; }
+.page-reservation .reservation-hotel h2 {
+  margin-bottom: 4rem;
+  border-bottom: 1px solid #b19261;
+  color: #000; }
+.page-reservation .reservation-hotel h3 {
+  border: 1px solid #a6a6a6;
+  border-radius: 6px;
+  padding: 0.5rem 0;
+  text-align: center;
+  color: #000;
+  background: rgba(0, 0, 0, 0.2); }
+.page-reservation .room-equipment {
+  border-bottom: none;
+  margin: 0;
+  padding: 0; }
+  .page-reservation .room-equipment li {
+    display: block;
+    overflow: auto;
+    line-height: 6rem;
+    border-bottom: 1px dotted; }
+    .page-reservation .room-equipment li > span:first-child {
+      color: #000; }
+  .page-reservation .room-equipment > li:last-child {
+    border-bottom: none; }
+  .page-reservation .room-equipment div {
+    float: right; }
+    .page-reservation .room-equipment div span {
+      color: #5F5B5B; }
+    .page-reservation .room-equipment div .room-number {
+      font-size: 3rem;
+      font-weight: bold; }
+  .page-reservation .room-equipment span[class^="flaticon"]:before {
+    font-size: 3rem; }
+
+.reservation-hotel-row {
+  border: 3px solid #5F5B5B;
+  border-color: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 2.5rem; }
+  .reservation-hotel-row img {
+    box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.5); }
 
 .page-gallery .gallery {
   list-style: none;
@@ -984,39 +1024,40 @@ main {
 .page-room .lSSlideOuter .lSPager.lSGallery {
   max-height: 6rem;
   display: none; }
-.page-room .room-equipment {
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #c2c2c2; }
-  .page-room .room-equipment ul {
-    list-style: none;
-    margin: 0;
-    padding: 0; }
-    .page-room .room-equipment ul li {
-      display: inline-block;
-      position: relative;
-      cursor: pointer; }
-      .page-room .room-equipment ul li:hover .tooltip {
-        opacity: 1;
-        top: -6.5rem; }
-      .page-room .room-equipment ul li:hover span[class^="flaticon"]:before {
-        color: #CAA874; }
-  .page-room .room-equipment span[class^="flaticon"]:before {
-    font-size: 4rem;
-    transition: all 0.3s ease; }
-  .page-room .room-equipment .room-cost {
-    margin-top: 1.5rem; }
-    .page-room .room-equipment .room-cost .price {
-      font-size: 1.7rem;
-      font-weight: bold;
-      color: #000; }
-    .page-room .room-equipment .room-cost .flaticon-coin32:before {
-      color: #b19261;
-      margin-left: 1rem; }
 .page-room .booking-form .breakfast-checkbox {
   text-align: center; }
   .page-room .booking-form .breakfast-checkbox label {
     margin-bottom: 0.1rem; }
+
+.room-equipment {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #c2c2c2; }
+  .room-equipment ul {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    .room-equipment ul li {
+      display: inline-block;
+      position: relative;
+      cursor: pointer; }
+      .room-equipment ul li:hover .tooltip {
+        opacity: 1;
+        top: -6.5rem; }
+      .room-equipment ul li:hover span[class^="flaticon"]:before {
+        color: #CAA874; }
+  .room-equipment span[class^="flaticon"]:before {
+    font-size: 4rem;
+    transition: all 0.3s ease; }
+  .room-equipment .room-cost {
+    margin-top: 1.5rem; }
+    .room-equipment .room-cost .price {
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: #000; }
+    .room-equipment .room-cost .flaticon-coin32:before {
+      color: #b19261;
+      margin-left: 1rem; }
 
 .page-about main {
   color: #000; }
@@ -1140,25 +1181,20 @@ main {
       z-index: auto; }
   .page-reservation .reservation-hotel {
     display: block;
-    padding: 1rem;
-    border: 1px solid #b19261; }
+    height: 89rem;
+    padding: 2rem;
+    border: 1px solid #000;
+    border-radius: 5px;
+    overflow: auto; }
     .page-reservation .reservation-hotel img {
       float: left;
       width: 30%;
       margin: 0; }
     .page-reservation .reservation-hotel .reservartion-hotel-detail {
       float: right;
-      width: 60%;
-      height: 13rem;
-      border: 1px solid #c2c2c2;
-      border-right: none; }
+      width: 65%; }
       .page-reservation .reservation-hotel .reservartion-hotel-detail div {
-        float: left;
-        width: 25%;
-        height: 13rem;
-        border-right: 1px solid #c2c2c2;
-        padding: 0.5rem;
-        padding-top: 4rem; }
+        color: #b19261; }
     .page-reservation .reservation-hotel .reservation-hotel-row {
       margin-bottom: 1.5rem;
       padding: 2rem; }
@@ -1324,9 +1360,7 @@ main {
     width: 74%; }
   .page-reservation .reservation-hotel {
     float: left;
-    width: 50%; }
-    .page-reservation .reservation-hotel .reservation-hotel-row {
-      margin-bottom: 0; }
+    width: 100%; }
     .page-reservation .reservation-hotel span {
       word-break: break-word; }
 
