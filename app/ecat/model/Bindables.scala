@@ -1,7 +1,7 @@
 package ecat.model
 
 import ecat.util.DateTimeFormatters.{pertrovichDateTimeFormatter => fmt}
-import java.time.{LocalDate, LocalDateTime}
+import java.time.{LocalDateTime}
 
 import play.api.mvc.PathBindable.Parsing
 

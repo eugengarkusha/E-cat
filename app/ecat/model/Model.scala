@@ -1,9 +1,9 @@
 package ecat.model
 
 import java.time.{LocalDateTime, LocalTime}
-import ecat.util.DateTimeFormatters.{pertrovichDateTimeFormatter => petrovichDtf, _}
-import ecat.util.JsonFormats._
+import ecat.util.DateTimeFormatters.{pertrovichDateTimeFormatter => fmt, _}
 import play.api.libs.json.Json
+import ecat.util.JsonFormats._
 import scala.xml.Node
 /**
  * Created by admin on 10/12/15.
@@ -33,8 +33,8 @@ object Tariff{
   def fromXml(n: Node):Tariff = Tariff(
     n \@"id" ,
     n \@"name" ,
-    LocalDateTime.parse(n \@"dateN", petrovichDtf) ,
-    LocalDateTime.parse(n \@"dateK", petrovichDtf) ,
+    LocalDateTime.parse(n \@"dateN", fmt) ,
+    LocalDateTime.parse(n \@"dateK", fmt) ,
     (n \@"roomprice").toDouble,
     (n \@"bkfprice").toDouble,
     (n \@"eciprice").toDouble,
