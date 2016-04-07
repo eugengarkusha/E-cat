@@ -18,7 +18,7 @@ object Filters {
   val pureFilters = Record(
     twin = (isTwin:Boolean, hotels:Seq[Hotel])=> {
       filterByNonEmpty(lens[Hotel] >> 'categories)(hotels){ cats =>
-        filterByNonEmpty(lens[Category] >> 'numbers)(cats)(_.filter(_.twin == isTwin))
+        filterByNonEmpty(lens[Category] >> 'rooms)(cats)(_.filter(_.twin == isTwin))
       }
     }
   )

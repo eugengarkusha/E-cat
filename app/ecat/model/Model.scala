@@ -44,7 +44,7 @@ object Tariff{
 }
 
 
-case class Category (id: String, name:String, numbers: Seq[Room], tariffs: Seq[Tariff])
+case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tariff])
 
 object Category{
   def fromXml(n: Node):Category =
