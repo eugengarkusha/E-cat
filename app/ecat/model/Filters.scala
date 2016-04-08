@@ -1,24 +1,19 @@
 package ecat.model
 
 import java.time.{LocalDateTime, LocalTime}
-
 import ecat.util.JsonFormats.localTimeFormat
 import play.api.libs.json._
 import shapeless._
 import labelled._
 import record._
-
 import scalaz.{Lens => _, _}
 import Scalaz._
 
-
 object Filters {
 
-
   type PureFilter[T, V] = (T, V)=> Boolean
-  //think of better name
   type Filter[T] = T => Boolean
-  //type ParsedFilter[V, T] = V => String\/ (T => Boolean)
+  type JsFilter[T] = JsValue => String \/ (T => Boolean)
 
 
   def applyFilters(hf: Filter[Hotel], rf: Filter[Room], of: Filter[String], hotels: Seq[Hotel])= {
@@ -32,19 +27,19 @@ object Filters {
         filterByNonEmpty(lens[Room] >> 'options)(rooms.filter(rf))(_.filter(of))
       }
     }
-
   }
+
 
   def filter[V,T](get: T => V)(cmp: (V,V)=>Boolean)(t:T, v:V): Boolean = cmp(get(t),v)
 
   def eqFilter[V,T](get: T => V)(r:T,t:V): Boolean = filter(get)(_ == _)(r,t)
 
-  def combine[T](fs:Iterable[Filter[T]]):Filter[T] = (t:T)=> fs.foldLeft(true)((agr, n)=> agr && n(t))
+  def combine[T](fs: List[Filter[T]]): Filter[T] = (t:T) => fs.foldLeft(true)((agr, n) => agr && n(t))
 
-  def setupFilters[T](settings: Map[String, JsValue], filters :Map[String, JsValue => String \/ (T => Boolean)]):ValidationNel[String, List[T=>Boolean]] = {
+  def setupFilters[T](settings: Map[String, JsValue], jsFilters: Map[String, JsFilter[T]]): ValidationNel[String, Filter[T]] = {
     settings.map{case (k,v)=>
-      filters.get(k).\/>(s"elenemt '$k not found").flatMap(_(v)).validationNel.map(_ :: Nil)
-    }.reduce(_ +++ _)
+      jsFilters.get(k).\/>(s"filter '$k not found").flatMap(_(v)).validationNel.map(_ :: Nil)
+    }.reduce(_ +++ _).map(combine[T])
   }
 
   val roomOptPureFilter = eqFilter[String,String](identity) _
@@ -53,6 +48,7 @@ object Filters {
     def r[V] = eqFilter[V,Room] _
     Record(
       twin = r(_.twin),
+      addGuests = r(_.additionalGuestsCnt),
       guests = r(_.guestsCnt),
       bath = r(_.bathroom)
     )
@@ -72,11 +68,12 @@ object Filters {
       w.value.name -> ((jv: JsValue)=> \/.fromEither(r.reads(jv).map(v => (t:T) => pureFilter(t, v)).asEither).leftMap(_.map(_._2).mkString))
     )
   }
-/*
-  //todo: think of better names:
-  val hotelFilters:Map[String,JsValue => \/[String, Hotel => Boolean]] = hotelPureFilters.map(toParsedFilter).toList.toMap
-  val roomFilters:Map[String,JsValue => \/[String, Room => Boolean]] = roomPureFilters.map(toParsedFilter).toList.toMap
 
+  //todo: think of better names:
+  val hoteJslFilters:Map[String, JsFilter[Hotel]] = hotelPureFilters.map(toParsedFilter).toList.toMap
+  val roomJsFilters:Map[String, JsFilter[Room]] = roomPureFilters.map(toParsedFilter).toList.toMap
+
+/*
   //Usage example:
 
   //settings from FE
@@ -91,11 +88,13 @@ object Filters {
   val h = Hotel("some_id","Ekaterina", LocalTime.NOON,LocalTime.MIDNIGHT,Seq(cat, cat.copy(id="id2")))
 
 
-  val a = setupFilters(hotelFilterSettings,hotelFilters).map(combine[Hotel])
-  val b = setupFilters(roomFilterSettings,roomFilters).map(combine[Room])
+  val a = setupFilters(hotelFilterSettings, hoteJslFilters)
+  val b = setupFilters(roomFilterSettings, roomJsFilters)
   val c = combine[String](roomOptFilterSettings.map(roomOptPureFilter.curried(_)))
 
   //ValidationNel[String, List[Hotel]]
   (a|@|b).apply((aa:Hotel=>Boolean,bb:Room=>Boolean)=>applyFilters(aa,bb,c,Seq(h)))
+
 */
+
 }
