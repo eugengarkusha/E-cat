@@ -15,8 +15,7 @@ import ecat.util.DateTimeFormatters.{pertrovichDateTimeFormatter => fmt}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-//TODO: Use compile time DI !!!
-class Application @Inject() (cache: CacheApi) extends Controller {
+class Application (cache: CacheApi) extends Controller {
 
 
 // TODO: create and maintain proxy outside the controller

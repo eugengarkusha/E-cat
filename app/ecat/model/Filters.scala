@@ -93,7 +93,7 @@ object Filters {
   val c = combine[String](roomOptFilterSettings.map(roomOptPureFilter.curried(_)))
 
   //ValidationNel[String, List[Hotel]]
-  (a|@|b).apply((aa:Hotel=>Boolean,bb:Room=>Boolean)=>applyFilters(aa,bb,c,Seq(h)))
+  (a|@|b)(applyFilters(_, _, c, Seq(h)))
 
 */
 
