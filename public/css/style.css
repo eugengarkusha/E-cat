@@ -374,7 +374,6 @@ main {
     max-width: 40rem;
     margin: 0.6rem auto 0; }
   main .booking-form {
-    width: 32rem;
     margin: 4rem auto; }
     main .booking-form legend {
       text-align: center;
@@ -410,36 +409,14 @@ main {
       position: absolute;
       right: 1rem;
       bottom: -3.7rem; }
-    main .booking-form .submit-button {
-      position: relative;
-      width: 7rem;
-      height: 7rem;
-      margin: 3rem auto 1.3rem;
-      background: #e8e8e8;
-      border: 1px solid #c2c2c2;
-      transform: rotate(45deg);
-      transition: background-color 0.6s ease;
-      cursor: pointer; }
-      main .booking-form .submit-button:hover {
-        background: #fff; }
-      main .booking-form .submit-button:hover input {
-        background: #947A50; }
-      main .booking-form .submit-button input {
-        position: absolute;
-        top: -0.4rem;
-        left: 0.6rem;
-        width: 5.6rem;
-        height: 5.6rem;
-        border: none;
-        background: #b19261;
-        color: #fff;
-        transition: background-color 0.6s ease; }
-      main .booking-form .submit-button span {
-        position: absolute;
-        top: 2.2rem;
-        left: 0.6rem;
-        transform: rotate(-45deg);
-        color: #fff; }
+    main .booking-form .submit-button input {
+      width: 50%;
+      height: 3.7rem;
+      border: none;
+      margin: 1rem auto;
+      background: #b19261;
+      color: #fff;
+      transition: background-color 0.6s ease; }
 
 .slider {
   display: none; }
@@ -700,6 +677,8 @@ main {
     top: 131px;
     left: 50%; }
 
+.page-reservation .main-section {
+  border: 1px solid; }
 .page-reservation .booking-from .input[type="checkbox"] {
   display: inline; }
 .page-reservation .reservation-hotel h2 {
@@ -1063,24 +1042,23 @@ main {
   color: #000; }
 
 @media screen and (min-width: 380px) {
-  main .booking-form {
-    width: 38rem; }
-    main .booking-form label {
-      margin-bottom: -1.1rem; }
-    main .booking-form input, main .booking-form select {
-      margin-bottom: 0.4rem; }
-    main .booking-form .form-col {
-      display: inline-block;
-      width: 49%; }
-    main .booking-form .submit-button {
-      margin-top: 2rem; }
-    main .booking-form .fa-calendar {
-      bottom: -2.7rem; }
+  main .booking-form label {
+    margin-bottom: -1.1rem; }
+  main .booking-form input, main .booking-form select {
+    margin-bottom: 0.4rem; }
+  main .booking-form .form-col {
+    display: inline-block;
+    width: 50%; }
+  main .booking-form .submit-button {
+    margin-top: 2rem; }
+  main .booking-form .fa-calendar {
+    bottom: -2.7rem; }
 
   .page-reservation .form-col {
     position: relative;
     float: left;
     margin-bottom: 0.8rem;
+    padding: 0.2rem;
     text-align: center;
     z-index: 1; } }
 @media screen and (min-width: 432px) {
@@ -1176,7 +1154,7 @@ main {
     margin-bottom: 0;
     background-color: transparent; }
     .page-reservation .booking-form .form-col {
-      width: 25%;
+      width: 33%;
       margin-bottom: 0;
       z-index: auto; }
   .page-reservation .reservation-hotel {
@@ -1227,6 +1205,8 @@ main {
     .header-main-menu > ul > li {
       display: inline-block;
       margin-right: 0.6rem; }
+    .header-main-menu .header-main-menu__news {
+      margin-right: 17.5rem; }
     .header-main-menu .sub-menu {
       border-bottom: none; }
       .header-main-menu .sub-menu:hover a {
@@ -1260,7 +1240,7 @@ main {
     .header-main-menu .menu-center {
       display: inline-block; }
     .header-main-menu .menu-item-1 {
-      margin-left: -2rem; }
+      margin-left: -7rem; }
     .header-main-menu .menu-item-last {
       margin-right: 0; }
 
@@ -1275,47 +1255,6 @@ main {
 
   .page-reservation .booking-form {
     margin-bottom: 1rem; }
-    .page-reservation .booking-form fieldset:first-child {
-      float: left;
-      width: 70%; }
-    .page-reservation .booking-form fieldset:last-child {
-      float: right;
-      width: 29%;
-      border: none; }
-    .page-reservation .booking-form .submit-button {
-      position: relative;
-      width: 50%;
-      height: auto;
-      margin: 0 auto;
-      background: none;
-      border: none;
-      transform: none;
-      transition: all 0.6s ease;
-      cursor: pointer; }
-      .page-reservation .booking-form .submit-button:hover {
-        outline: 1px solid #000; }
-      .page-reservation .booking-form .submit-button:hover input {
-        color: #000;
-        background: #fff; }
-      .page-reservation .booking-form .submit-button span {
-        transition: color 0.6s ease; }
-      .page-reservation .booking-form .submit-button:hover span {
-        color: #000; }
-      .page-reservation .booking-form .submit-button input {
-        position: static;
-        width: 100%;
-        height: 3.7rem;
-        border: none;
-        margin: 0;
-        background: #b19261;
-        color: #fff;
-        transition: background-color 0.6s ease; }
-      .page-reservation .booking-form .submit-button span {
-        position: absolute;
-        transform: none;
-        top: 0.8rem;
-        left: 50%;
-        margin-left: -2.8rem; }
 
   .page-gallery .gallery li, .page-blog .gallery li {
     width: 25%; }

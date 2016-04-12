@@ -15,8 +15,6 @@
       
     @views.html.base_top.render
 
-    <div class="slider"></div>
-
     <main class="main-fluid clearfix">
 
       <div class="contact-box">
@@ -49,15 +47,17 @@
 
           <fieldset>
             <div class="booking-row clearfix">
-              <div class="form-col">
+              
+              <div class="form-col booking-form__date">
                 <label for="checkIn">Дата заселения <i class="flaticon-calendar-icons"></i></label>
                 <input type="text" name="checkIn" id="checkIn" value="Дата заселения" required readonly>
               </div>
-              <div class="form-col">
-                <label for="entry">Ранний заезд</label>
-                <input type="checkbox" name="entry" id="entry">
+              
+              <div class="form-col booking-form__date">
+                <label for="checkOut">Дата выселения <i class="flaticon-calendar-icons"></i></label>
+                <input type="text" name="checkOut" id="checkOut" value="Дата выселения" required readonly>
               </div>
-
+              
               <div class="form-col">
                 <label for="peopleQuantity">Кол-во человек</label>
                 <select name="peopleQuantity" id="peopleQuantity" required>
@@ -67,53 +67,28 @@
                   <option value="1">4</option>
                 </select>
               </div>
-
+              
               <div class="form-col">
-                <label for="breakfast">Завтрак</label>
-                <input type="checkbox" name="breakfast" id="breakfast">
-              </div>
-            </div>
-
-            <div class="booking-row clearfix">
-              <div class="form-col">
-                <label for="checkOut">Дата выселения <i class="flaticon-calendar-icons"></i></label>
-                <input type="text" name="checkOut" id="checkOut" value="Дата выселения" required readonly>
-              </div>
-              <div class="form-col">
-                <label for="exit">Поздний выезд</label>
-                <input type="checkbox" name="exit" id="exit">
-              </div>
-              <div class="form-col">
-                <label for="addPeople">Доп. человек</label>
-                <select name="addPeople" id="addPeople" required>
-                  <option value="1">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                <label for="hotel">Отель</label>
+                <select name="hotel" id="hotel" required>
+                  <option value="ekaterina1">Екатерина</option>
+                  <option value="ekaterina2">Екатерина II</option>
                 </select>
               </div>
+              
               <div class="form-col">
                 <label for="twin">Твин</label>
                 <input type="checkbox" name="twin" id="twin">
               </div>
+              
+              <div class="form-col">
+                <div class="submit-button">
+                  <input type="submit" value="Заказать">
+                </div>
+              </div>
+              
             </div>
-          </fieldset>
-
-
-          <fieldset>
-            <label for="hotel">Отель</label>
-            <select name="hotel" id="hotel" required>
-              <option value="ekaterina1">Екатерина</option>
-              <option value="ekaterina2">Екатерина II</option>
-            </select>
-            <label for="hotel">Категория</label>
-            <select name="hotel" id="hotel" required>
-              <option value="1">Категория 1</option>
-              <option value="2">Категория 2</option>
-            </select>
-            <div class="submit-button">
-              <input type="submit" value="">
-              <span>Заказать</span>
-            </div>
+            
           </fieldset>
         </form>
 
@@ -127,12 +102,12 @@
 
   </div>
   
-  @views.html.base_bottom.render(true)
+  @views.html.base_bottom.render(false)
   
   <script>
           $.ajax(jsRoutes.controllers.Application.getDummyOffers(@from,@to))
               .done(function( data ) {
-                  $('.booking-form').after(data);
+                //   $('.booking-form').after(data);
               });
   </script>
 
