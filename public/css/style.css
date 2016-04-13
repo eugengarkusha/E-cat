@@ -677,8 +677,6 @@ main {
     top: 131px;
     left: 50%; }
 
-.page-reservation .main-section {
-  border: 1px solid; }
 .page-reservation .booking-from .input[type="checkbox"] {
   display: inline; }
 .page-reservation .category-item {
@@ -689,7 +687,7 @@ main {
   display: none; }
 .page-reservation .category-list {
   padding: 0.8rem; }
-.page-reservation .category-item__description {
+.page-reservation .category-item__detail {
   padding: 1rem 0; }
 .page-reservation .options__item {
   display: inline-block;
@@ -709,10 +707,18 @@ main {
   float: right; }
 .page-reservation .options__item__description {
   vertical-align: top; }
-.page-reservation .category__item__price {
+.page-reservation .category__item_result {
+  clear: both; }
+.page-reservation .category__item__result--price {
   float: left; }
-.page-reservation .category__item__add-to-order {
-  float: right; }
+.page-reservation .category__item__result--add-to-order {
+  float: right;
+  padding-right: 0.5rem; }
+  .page-reservation .category__item__result--add-to-order span {
+    vertical-align: top; }
+  .page-reservation .category__item__result--add-to-order input {
+    width: 2.5rem;
+    height: 2.5rem; }
 
 .page-gallery .gallery {
   list-style: none;
@@ -1138,7 +1144,8 @@ main {
     font-size: 2.6rem; }
 
   .page-reservation .main-section {
-    margin-bottom: 2rem; }
+    margin-bottom: 2rem;
+    box-shadow: 3px 3px 14px 0 rgba(0, 0, 0, 0.45), -3px -3px 14px rgba(0, 0, 0, 0.45); }
   .page-reservation .booking-form {
     width: 100%;
     margin-bottom: 0;
@@ -1147,25 +1154,20 @@ main {
       width: 33%;
       margin-bottom: 0;
       z-index: auto; }
-  .page-reservation .reservation-hotel {
-    display: block;
-    height: 89rem;
-    padding: 2rem;
-    border: 1px solid #000;
-    border-radius: 5px;
-    overflow: auto; }
-    .page-reservation .reservation-hotel img {
-      float: left;
-      width: 30%;
-      margin: 0; }
-    .page-reservation .reservation-hotel .reservartion-hotel-detail {
-      float: right;
-      width: 65%; }
-      .page-reservation .reservation-hotel .reservartion-hotel-detail div {
-        color: #b19261; }
-    .page-reservation .reservation-hotel .reservation-hotel-row {
-      margin-bottom: 1.5rem;
-      padding: 2rem; }
+  .page-reservation .category-item {
+    padding: 1.5rem;
+    padding-top: 0.1rem; }
+  .page-reservation .category-item__detail {
+    float: left;
+    width: 40%;
+    padding-bottom: 0; }
+  .page-reservation .options {
+    float: right;
+    width: 55%; }
+  .page-reservation .category__item_result {
+    width: 56%;
+    float: right;
+    margin-top: -5rem; }
 
   .page-news .news-article {
     width: 50%;
@@ -1282,16 +1284,6 @@ main {
   .page-hotel-ekaterina .main-section {
     margin-bottom: 2rem; }
 
-  .page-reservation .main-section {
-    float: right;
-    max-width: 74%;
-    width: 74%; }
-  .page-reservation .reservation-hotel {
-    float: left;
-    width: 100%; }
-    .page-reservation .reservation-hotel span {
-      word-break: break-word; }
-
   .page-gallery main, .page-blog main, .page-post main {
     padding-top: 0; }
 
@@ -1316,5 +1308,10 @@ main {
   .page-contacts .contacts + .contacts {
     margin-top: 2.5rem;
     float: none; } }
+@media screen and (min-width: 1300px) {
+  .page-reservation .main-section {
+    float: right;
+    max-width: 74%;
+    width: 74%; } }
 
 /*# sourceMappingURL=style.css.map */

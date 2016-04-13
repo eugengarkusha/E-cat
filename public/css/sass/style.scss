@@ -687,9 +687,7 @@ main {
     height: 14.4rem;
     margin-top: 0;
     padding-top: 1.5rem;
-    // line-height: 13rem;
     line-height: 3rem;
-    // font-size: 3.5rem;
     font-size: 3rem;
     color: $color-white;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
@@ -997,10 +995,6 @@ main {
 //========================PAGE RESERVATION====================
 
 .page-reservation {
-  
-  .main-section {
-    border: 1px solid;
-  }
 
   .booking-from {
     .input[type="checkbox"] {
@@ -1022,7 +1016,7 @@ main {
     padding: 0.8rem;
   }
   
-  .category-item__description {
+  .category-item__detail {
     padding: 1rem 0;
   }
   
@@ -1060,12 +1054,27 @@ main {
     vertical-align: top;
   }
   
-  .category__item__price {
+  .category__item_result {
+    clear: both;
+  }
+  
+  .category__item__result--price {
     float: left;
   }
   
-  .category__item__add-to-order {
+  .category__item__result--add-to-order {
     float: right;
+    padding-right: 0.5rem;
+    
+    span {
+      vertical-align: top;
+    }
+    
+    input {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+    
   }
     
  }
@@ -1858,6 +1867,7 @@ main {
 
     .main-section {
       margin-bottom: 2rem;
+      box-shadow: 3px 3px 14px 0 rgba(0,0,0,.45), -3px -3px 14px rgba(0,0,0,.45);
     }
 
     .booking-form {
@@ -1872,32 +1882,26 @@ main {
       }
     }
 
-    .reservation-hotel {
-      display: block;
-      height: 89rem;  
-      padding: 2rem;
-      border: 1px solid $color-black;
-      border-radius: 5px; 
-      overflow: auto;
-
-      img {
-        float: left;
-        width: 30%;
-        margin: 0;
-      }
-      .reservartion-hotel-detail {
-        float: right;
-        width: 65%;
-        
-        div {
-          color: $color-primary;
-        }
-        
-      }
-      .reservation-hotel-row {
-        margin-bottom: 1.5rem;
-        padding: 2rem;
-      }
+    .category-item {
+      padding: 1.5rem;
+      padding-top: 0.1rem;
+    }
+    
+    .category-item__detail {
+      float: left;
+      width: 40%;
+      padding-bottom: 0;
+    }
+    
+    .options {
+      float: right;
+      width: 55%;
+    }
+    
+    .category__item_result {
+      width: 56%;
+      float: right;
+      margin-top: -5rem;
     }
 
   }
@@ -2124,30 +2128,7 @@ main {
     margin-bottom: 2rem;
   }
 
-  .page-reservation {
 
-
-    .main-section {
-      float: right;
-      max-width: 74%;
-      width: 74%;
-    }
-
-    .reservation-hotel {
-      float: left;
-      width: 100%;
-
-      // .reservation-hotel-row {
-      //   margin-bottom: 0;
-      // }
-
-      span {
-        word-break: break-word;
-      }
-
-    }
-
-  }
 
   .page-gallery, .page-blog, .page-post {
 
@@ -2200,4 +2181,19 @@ main {
 
   }
 
+}
+
+@media screen and (min-width: 1300px) {
+  
+    .page-reservation {
+
+
+      .main-section {
+        float: right;
+        max-width: 74%;
+        width: 74%;
+      }
+
+  }
+  
 }

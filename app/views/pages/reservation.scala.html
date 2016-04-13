@@ -98,20 +98,22 @@
           <div class="category-item clearfix">
             
             <h3>Category</h3>
-            
-            <div class="category-item__image">
+                        
+            <div class="category-item__detail">
               
-              <img src='@routes.Assets.versioned("img/room.jpg")' alt="image">            
-            </div>
+              <div class="category-item__image">
+              
+                <img src='@routes.Assets.versioned("img/room.jpg")' alt="image">            
+              </div>
             
             <div class="category-item__gallery">
               
               <div class="category-item__gallery__carousel">
                 <ul>
-                    <li><img src='@routes.Assets.versioned("img/room.jpg")'</li>
-                    <li><img src='@routes.Assets.versioned("img/room.jpg")'</li>
-                    <li><img src='@routes.Assets.versioned("img/room.jpg")'</li>
-                    <li><img src='@routes.Assets.versioned("img/room.jpg")'</li>
+                    <li><img src='@routes.Assets.versioned("img/category/1.jpg")'</li>
+                    <li><img src='@routes.Assets.versioned("img/category/2.jpg")'</li>
+                    <li><img src='@routes.Assets.versioned("img/category/3.jpg")'</li>
+                    <li><img src='@routes.Assets.versioned("img/category/4.jpg")'</li>
                 </ul>
               </div>
         
@@ -124,9 +126,11 @@
               </div>
               
             </div>
-                        
-            <div class="category-item__description">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum eum quos cupiditate vero laborum dignissimos fuga maxime rem, sapiente, nam quo porro, ipsam autem ut illo recusandae placeat pariatur optio, quasi perspiciatis eaque totam. Recusandae autem et vel eos accusantium.
+            
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum eum quos cupiditate vero laborum dignissimos fuga maxime rem, sapiente, nam quo porro, ipsam autem ut illo recusandae placeat pariatur optio, quasi perspiciatis eaque totam. Recusandae autem et vel eos accusantium.
+              </p>
+              
             </div>
             
             <div class="options">
@@ -168,15 +172,15 @@
               
               
               <div class="options__item options__item--breakfast">
-                <span class="options__item__description">Завтрак:</span>
+                <label for="breakfast" class="options__item__description">Завтрак:</label>
                 <div class="options__item__data options__item__data--checkbox">
-                  <input type="checkbox">                  
+                  <input id="breakfast" type="checkbox">                  
                 </div>
               </div>
               
               <div class="options__item options__item--rooms">
                 
-                <span class="options__item__description">Кол-во номеров:</span>
+                <label for="room_count" class="options__item__description">Кол-во номеров:</label>
                 
                 <div class="options__item__data options__item__data--select">
                   
@@ -192,14 +196,18 @@
               
             </div>
             
-            <div class="category__item__price">
-              <span class="flaticon-coin32"></span>
-              <span>1000 грн</span>
-            </div>
+            <div class="category__item_result clearfix">
+              
+              <div class="category__item__result--price">
+                <span class="flaticon-coin32"></span>
+                <span>1000 грн</span>
+              </div>
+              
+              <div class="category__item__result--add-to-order">
+                <span>Выбрать</span>
+                <input type="checkbox">
+              </div>
             
-            <div class="category__item__add-to-order">
-              <span>Добавить</span>
-              <input type="checkbox">
             </div>
             
           </div>
@@ -215,6 +223,9 @@
   </div>
   
   @views.html.base_bottom.render(false)
+  
+  <script src="@routes.Assets.versioned("js/jquery.easing.1.3.js")"></script>
+  <script src="@routes.Assets.versioned("js/jquery.jcarousellite.js")"></script>
   
   <script>
           $.ajax(jsRoutes.controllers.Application.getDummyOffers(@from,@to))
