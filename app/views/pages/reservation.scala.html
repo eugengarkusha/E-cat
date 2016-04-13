@@ -48,12 +48,12 @@
           <fieldset>
             <div class="booking-row clearfix">
               
-              <div class="form-col booking-form__date">
+              <div class="form-col">
                 <label for="checkIn">Дата заселения <i class="flaticon-calendar-icons"></i></label>
                 <input type="text" name="checkIn" id="checkIn" value="Дата заселения" required readonly>
               </div>
               
-              <div class="form-col booking-form__date">
+              <div class="form-col">
                 <label for="checkOut">Дата выселения <i class="flaticon-calendar-icons"></i></label>
                 <input type="text" name="checkOut" id="checkOut" value="Дата выселения" required readonly>
               </div>
@@ -91,6 +91,61 @@
             
           </fieldset>
         </form>
+        
+        <div class="category-list">
+          
+          <div class="category-item clearfix">
+            
+            <h3>Category</h3>
+            
+            <img src='@routes.Assets.versioned("img/room.jpg")' alt="image" class="category-item__image">
+            
+            <div class="category-item__description">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum eum quos cupiditate vero laborum dignissimos fuga maxime rem, sapiente, nam quo porro, ipsam autem ut illo recusandae placeat pariatur optio, quasi perspiciatis eaque totam. Recusandae autem et vel eos accusantium.
+            </div>
+            
+            <div class="options">
+              
+              <div class="options__guest">
+                
+                <span>Выберите кол-во людей</span>
+                
+                <select name="guest" id="opt_guest">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                
+              </div>
+              
+              <div class="options__add-guest">
+                <span>Дополнительное место:</span>
+                <input type="checkbox">
+              </div>
+              
+              <div class="options__entry-exit">
+                <span>Ранний заезд</span>
+                <input type="checkbox">
+                
+                <span>Поздний заезд</span>
+                <input type="checkbox">
+              </div>
+              
+              <div class="options__breakfast">
+                <span>Завтрак:</span>
+                <input type="checkbox">
+              </div>
+              
+              <div class="options__rooms">
+                <span>Количество номеров:</span>
+                <input type="checkbox">
+              </div>
+              
+            </div>
+            
+          </div>
+          
+        </div>
 
         
 
