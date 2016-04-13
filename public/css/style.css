@@ -681,48 +681,38 @@ main {
   border: 1px solid; }
 .page-reservation .booking-from .input[type="checkbox"] {
   display: inline; }
-.page-reservation .reservation-hotel h2 {
-  margin-bottom: 4rem;
-  border-bottom: 1px solid #b19261;
-  color: #000; }
-.page-reservation .reservation-hotel h3 {
-  border: 1px solid #a6a6a6;
-  border-radius: 6px;
-  padding: 0.5rem 0;
-  text-align: center;
+.page-reservation .category-item {
+  padding: 0.5rem;
   color: #000;
-  background: rgba(0, 0, 0, 0.2); }
-.page-reservation .room-equipment {
-  border-bottom: none;
-  margin: 0;
-  padding: 0; }
-  .page-reservation .room-equipment li {
-    display: block;
-    overflow: auto;
-    line-height: 6rem;
-    border-bottom: 1px dotted; }
-    .page-reservation .room-equipment li > span:first-child {
-      color: #000; }
-  .page-reservation .room-equipment > li:last-child {
-    border-bottom: none; }
-  .page-reservation .room-equipment div {
-    float: right; }
-    .page-reservation .room-equipment div span {
-      color: #5F5B5B; }
-    .page-reservation .room-equipment div .room-number {
-      font-size: 3rem;
-      font-weight: bold; }
-  .page-reservation .room-equipment span[class^="flaticon"]:before {
-    font-size: 3rem; }
-
-.reservation-hotel-row {
-  border: 3px solid #5F5B5B;
-  border-color: rgba(0, 0, 0, 0.4);
-  border-radius: 4px;
-  padding: 1rem;
-  margin-bottom: 2.5rem; }
-  .reservation-hotel-row img {
-    box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.5); }
+  outline: 1px solid; }
+.page-reservation .category-item__gallery {
+  display: none; }
+.page-reservation .category-list {
+  padding: 0.8rem; }
+.page-reservation .category-item__description {
+  padding: 1rem 0; }
+.page-reservation .options__item {
+  display: inline-block;
+  width: 100%;
+  padding: 0.5rem; }
+.page-reservation .options__item--guest, .page-reservation .options__item--rooms {
+  width: 100%; }
+.page-reservation .options__item__data--select {
+  position: relative;
+  display: inline-block;
+  width: 30%;
+  top: -0.5rem; }
+.page-reservation .options__item__data--checkbox input {
+  width: 2.5rem;
+  height: 2.5rem; }
+.page-reservation .options__item__data {
+  float: right; }
+.page-reservation .options__item__description {
+  vertical-align: top; }
+.page-reservation .category__item__price {
+  float: left; }
+.page-reservation .category__item__add-to-order {
+  float: right; }
 
 .page-gallery .gallery {
   list-style: none;
@@ -1284,7 +1274,6 @@ main {
       width: 65%;
       padding-right: 0; }
     main .booking-form {
-      float: left;
       margin-top: 0; }
     main .contact-box {
       float: left;
