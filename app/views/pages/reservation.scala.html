@@ -223,6 +223,9 @@
           $.ajax(jsRoutes.controllers.Application.getDummyOffers(@from,@to))
               .done(function( data ) {
                   $('.booking-form').after(data);
+                  $('select').selectric({
+                    responsive: true
+                  });
               });
   </script>
 
