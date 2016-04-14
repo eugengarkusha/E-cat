@@ -995,14 +995,9 @@ main {
 //========================PAGE RESERVATION====================
 
 .page-reservation {
-
-  .booking-from {
-    .input[type="checkbox"] {
-      display: inline;
-    }
-  }
   
   .category-item {
+    margin-bottom: 1.2rem;
     padding: 0.5rem;
     color: $color-black;
     outline: 1px solid;
@@ -1024,6 +1019,7 @@ main {
     display: inline-block;
     width: 100%;
     padding: 0.5rem;
+    border-bottom: 1px dotted rgba(0,0,0,.25);
   }
   
   .options__item--guest, .options__item--rooms {
@@ -1035,6 +1031,9 @@ main {
     display: inline-block;
     width: 30%;
     top: -0.5rem;
+    margin-top: -0.4rem;
+    margin-bottom: -2rem;
+    padding-bottom: 0.4rem;
   }
   
   .options__item__data--checkbox {
@@ -2043,13 +2042,10 @@ main {
   .page-reservation {
     .booking-form {
       margin-bottom: 1rem;
-      
-      .submit-button {
-        
-      }
-
     }
   }
+  
+  
 
   .page-gallery, .page-blog {
 
