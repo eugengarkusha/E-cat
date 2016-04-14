@@ -15,7 +15,8 @@ $(function () {
         }
     ]);
     
-    $('.booking-form').scroolly([
+    if ($('.page-reservation')[0]) {
+      $('.booking-form').scroolly([
         
         {
           to: 'con-top - 60px',
@@ -52,7 +53,8 @@ $(function () {
             }
         }
         
-    ], $('.main-section'));
+      ], $('.main-section'));
+    }
 
     if ($('.booking-form')[0] && !$('.form-reply')[0]) {
         $('select').selectric({

@@ -677,9 +677,8 @@ main {
     top: 131px;
     left: 50%; }
 
-.page-reservation .booking-from .input[type="checkbox"] {
-  display: inline; }
 .page-reservation .category-item {
+  margin-bottom: 1.2rem;
   padding: 0.5rem;
   color: #000;
   outline: 1px solid; }
@@ -692,14 +691,18 @@ main {
 .page-reservation .options__item {
   display: inline-block;
   width: 100%;
-  padding: 0.5rem; }
+  padding: 0.5rem;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.25); }
 .page-reservation .options__item--guest, .page-reservation .options__item--rooms {
   width: 100%; }
 .page-reservation .options__item__data--select {
   position: relative;
   display: inline-block;
   width: 30%;
-  top: -0.5rem; }
+  top: -0.5rem;
+  margin-top: -0.4rem;
+  margin-bottom: -2rem;
+  padding-bottom: 0.4rem; }
 .page-reservation .options__item__data--checkbox input {
   width: 2.5rem;
   height: 2.5rem; }
