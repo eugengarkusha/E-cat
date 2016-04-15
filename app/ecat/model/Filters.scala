@@ -9,6 +9,7 @@ import record._
 import scalaz.{Lens => _, _}
 import Scalaz._
 
+//todo: filters are too couples with JsObjects, is it ok?
 object Filters {
 
   type PureFilter[T, V] = (T, V)=> Boolean
@@ -16,7 +17,7 @@ object Filters {
   type JsFilter[T] = JsValue => String \/ (T => Boolean)
 
 
-  def applyFilters(hf: Filter[Hotel], rf: Filter[Room], of: Filter[String], hotels: Seq[Hotel])= {
+  private def applyFilters(hf: Filter[Hotel], rf: Filter[Room], of: Filter[String], hotels: Seq[Hotel])= {
 
     def filterByNonEmpty[T,V[X]<:Seq[X],X](lens:Lens[T,V[X]])(s:Seq[T])(tFilter:V[X]=>V[X]):Seq[T]={
       s.iterator.map(t=> lens.set(t)(tFilter(lens.get(t)))).filter(lens.get(_).nonEmpty).toSeq
@@ -30,21 +31,21 @@ object Filters {
   }
 
 
-  def filter[V,T](get: T => V)(cmp: (V,V)=>Boolean)(t:T, v:V): Boolean = cmp(get(t),v)
+  private def filter[V,T](get: T => V)(cmp: (V,V)=>Boolean)(t:T, v:V): Boolean = cmp(get(t),v)
 
-  def eqFilter[V,T](get: T => V)(r:T,t:V): Boolean = filter(get)(_ == _)(r,t)
+  private def eqFilter[V,T](get: T => V)(r:T,t:V): Boolean = filter(get)(_ == _)(r,t)
 
-  def combine[T](fs: List[Filter[T]]): Filter[T] = (t:T) => fs.foldLeft(true)((agr, n) => agr && n(t))
+  private def combine[T](fs: Seq[Filter[T]]): Filter[T] = (t:T) => fs.foldLeft(true)((agr, n) => agr && n(t))
 
-  def setupFilters[T](settings: Map[String, JsValue], jsFilters: Map[String, JsFilter[T]]): ValidationNel[String, Filter[T]] = {
+  private def setupFilters[T](settings: collection.Map[String, JsValue], jsFilters: collection.Map[String, JsFilter[T]]): ValidationNel[String, Filter[T]] = {
     settings.map{case (k,v)=>
       jsFilters.get(k).\/>(s"filter '$k not found").flatMap(_(v)).validationNel.map(_ :: Nil)
     }.reduce(_ +++ _).map(combine[T])
   }
 
-  val roomOptPureFilter = eqFilter[String,String](identity) _
+  private val roomOptPureFilter = eqFilter[String,String](identity) _
 
-  val roomPureFilters = {
+  private val roomPureFilters = {
     def r[V] = eqFilter[V,Room] _
     Record(
       twin = r(_.twin),
@@ -54,7 +55,7 @@ object Filters {
     )
   }
 
-  val hotelPureFilters = {
+  private val hotelPureFilters = {
     def r[V] = eqFilter[V,Hotel] _
     Record(
       ci = r(_.checkInTime),
@@ -63,15 +64,22 @@ object Filters {
     )
   }
 
-  object toParsedFilter extends Poly1{
+  private object toParsedFilter extends Poly1{
     implicit def caseT[K<:Symbol,V,T](implicit r :Reads[V], w:Witness.Aux[K]) = at[FieldType[K,PureFilter[T,V]]](pureFilter =>
       w.value.name -> ((jv: JsValue)=> \/.fromEither(r.reads(jv).map(v => (t:T) => pureFilter(t, v)).asEither).leftMap(_.map(_._2).mkString))
     )
   }
 
   //todo: think of better names:
-  val hoteJslFilters:Map[String, JsFilter[Hotel]] = hotelPureFilters.map(toParsedFilter).toList.toMap
-  val roomJsFilters:Map[String, JsFilter[Room]] = roomPureFilters.map(toParsedFilter).toList.toMap
+  private val hoteJslFilters:Map[String, JsFilter[Hotel]] = hotelPureFilters.map(toParsedFilter).toList.toMap
+  private val roomJsFilters:Map[String, JsFilter[Room]] = roomPureFilters.map(toParsedFilter).toList.toMap
+
+  def apply(hotels: Seq[Hotel], hotelFilterSettings: JsObject, roomFilterSettings: JsObject, roomOptFilterSettings:JsArray): ValidationNel[String, Seq[Hotel]] = {
+    val hotelFilters = setupFilters(hotelFilterSettings.value, hoteJslFilters)
+    val roomFilters = setupFilters(roomFilterSettings.value, roomJsFilters)
+    val roomOptFilters = combine[String](roomOptFilterSettings.value.map(f=>roomOptPureFilter.curried(f.toString)))
+    (hotelFilters|@|roomFilters)(applyFilters(_, _, roomOptFilters, hotels))
+  }
 
 /*
   //Usage example:
