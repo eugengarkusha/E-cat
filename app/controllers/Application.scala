@@ -5,18 +5,41 @@ import javax.xml.ws.BindingProvider
 
 import async.client.ObmenSait
 import com.google.inject.Inject
+import ecat.model.Category.Prices
+import ecat.model.ajax.Mappings.CategoryCtrl
 import ecat.model.{Category, Hotel, Room, Tariff}
 import play.api.cache.CacheApi
 import play.api.libs.json.Json
 import play.api.mvc._
+
 import scala.concurrent.duration._
-import ecat.util.DateTimeFormatters.{pertrovichDateTimeFormatter => fmt}
+import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.xml.NodeSeq
 
 class Application (cache: CacheApi) extends Controller {
 
+
+  private def interval(from: LocalDateTime, to: LocalDateTime): Long = {
+    to.toEpochSecond(ZoneOffset.UTC) - from.toEpochSecond(ZoneOffset.UTC)
+  }
+  //replace with real proxy call
+  private def getHotels(from: LocalDateTime, to: LocalDateTime): Seq[Hotel] ={
+    val h = Seq{
+      val tariff = Tariff("tarif_id", "tariff_name", LocalDateTime.now(), LocalDateTime.now().plusDays(20), 10, 2, 2, 2)
+      val room = Room(1, 2, 1, true, "wtf", 3, Seq("with a smell of a homless", "partially flooded"))
+      val cat = Category("cat_id", "SweetCategory", Seq(room, room.copy(number = 3, twin = false, options = Nil)), Seq(tariff))
+      Hotel("some_id", "Ekaterina", LocalTime.NOON, LocalTime.MIDNIGHT, Seq(cat, cat.copy(id = "id2", name = "ShitCategory")))
+    }
+
+    cache.getOrElse("H:"+interval(from, to), 5.minutes)(h)
+  }
+
+  def getPrices(from: LocalDateTime, to: LocalDateTime, cat: Category) = {
+    cache.getOrElse[Category.Prices](s"P:${interval(from, to)}:${cat.hashCode()}", 30.minutes)(cat.prices(from, to))
+  }
 
 // TODO: create and maintain proxy outside the controller
   val proxy ={
@@ -42,14 +65,7 @@ class Application (cache: CacheApi) extends Controller {
   }
 
   def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action {
-    def h = {
-      val tariff = Tariff("tarif_id", "tariff_name", LocalDateTime.now(), LocalDateTime.now().plusDays(20), 10, 2, 2, 2)
-      val room = Room(1, 2, 1, true, "wtf", 3, Seq("with a smell of a homless", "partially flooded"))
-      val cat = Category("cat_id", "SweetCategory", Seq(room, room.copy(number = 3, twin = false, options = Nil)), Seq(tariff))
-      Hotel("some_id", "Ekaterina", LocalTime.NOON, LocalTime.MIDNIGHT, Seq(cat, cat.copy(id = "id2", name = "ShitCategory")))
-    }
-    val cacheKey = (to.toEpochSecond(ZoneOffset.UTC) - from.toEpochSecond(ZoneOffset.UTC)).toString
-    Ok(views.html.pages.offers(cache.getOrElse(cacheKey, 2.minutes)(Seq(h))))
+    Ok(views.html.pages.offers(getHotels(from,to)))
   }
 
   def main = Action{
@@ -91,6 +107,42 @@ class Application (cache: CacheApi) extends Controller {
 
   def reservation(hotel: String, from:String, to:String) = Action{implicit  req =>
     Ok(views.html.pages.reservation(from, to))
+  }
+
+
+
+  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl) = Action{req =>
+
+    val resp = for{
+      h   <- getHotels(from, to).find(_.id == ctrl.hotelId)
+      cat <- h.categories.find(_.id == ctrl.catId)
+    } yield{
+
+      def redraw = Json.obj(
+          "changed"-> true,
+          "categoryHtml"-> views.html.pages.category.render(cat, req).toString
+      )
+
+      if(cat.hashCode == ctrl.hash) {
+        try {
+          Json.obj(
+            "changed" -> false,
+            "price" -> getPrices(from, to, cat).price(ctrl.roomCnt, ctrl.bkf, ctrl.eci, ctrl.lco),
+            "maxGuestCnt" -> cat.maxGuestCnt(ctrl.roomCnt),
+            "maxRoomCnt" -> cat.maxRoomCnt(ctrl.guestsCnt)
+          )
+        }catch{
+          //todo: handling situation where hash matched but cats are not equal(redraw category and log errors)
+          //case t:Throwable => report(t); redraw
+          //lets look if we encounter these situations in development
+          case t:Throwable => throw t
+        }
+      }else redraw
+
+    }
+
+    Ok(resp.getOrElse(Json.obj("changed" -> true, "categoryHtml" -> "")))
+
   }
 
 }

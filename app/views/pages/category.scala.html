@@ -1,0 +1,30 @@
+@import ecat.model.Category
+@(c: Category)(implicit req: play.api.mvc.RequestHeader)
+
+@helper.javascriptRouter("jsRoutes")(
+    routes.javascript.Application.category
+)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TestTitle</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<body>
+
+<script>
+function myFunction() {
+    var from = '20160415111111'
+    var to = '20160416111111'
+    var js = JSON.stringify({"hotelId":1,"catId":1,"hash":"sadasd","guestsCnt":2})
+     $.ajax(jsRoutes.controllers.Application.category(from,to,js)).done(function( data ) {document.getElementById("demo").innerHTML =JSON.stringify(data)});
+}
+</script>
+
+<button type="button" onclick="myFunction()">Try it</button>
+<div id=demo></div>>
+</body>
+</html>
+

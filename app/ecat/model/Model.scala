@@ -1,9 +1,12 @@
 package ecat.model
 
+import java.time.temporal.ChronoUnit
 import java.time.{LocalDateTime, LocalTime}
-import ecat.util.DateTimeFormatters.{pertrovichDateTimeFormatter => fmt, _}
+
+import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt, _}
 import play.api.libs.json.Json
 import ecat.util.JsonFormats._
+
 import scala.xml.Node
 /**
  * Created by admin on 10/12/15.
@@ -12,7 +15,6 @@ import scala.xml.Node
 //options - additional details about room setup. They may become the dynamic part of filters .
 case class Room(number:Int, guestsCnt: Int, additionalGuestsCnt: Int, twin:Boolean, bathroom:String, level: Int, options: Seq[String])
 object Room{
-
   def fromXml(n: Node):Room=
     Room(n \@"num" toInt,
       n \@"guests" toInt,
@@ -44,14 +46,47 @@ object Tariff{
 }
 
 
-case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tariff])
+//TODO: escalate on overlapping tariffs
+case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tariff]){
+  import Category.Prices
+
+  def prices(from: LocalDateTime, to: LocalDateTime): Prices = {
+
+    val filtered = tariffs.sortBy(_.startDate)
+    .dropWhile(_.endDate.compareTo(from) < 0)
+    .takeWhile(_.startDate.compareTo(to) <= 0)
+
+    (  for {
+        h <- filtered.headOption.toIterable
+        f = (h.copy(startDate = from) +: filtered.tail)
+        l <- f.lastOption.toIterable
+        t <- f.init :+ l.copy(endDate = to)
+        dif = ChronoUnit.DAYS.between(t.startDate,t.endDate) + 1
+      } yield  Prices(t.roomPrice * dif, t.bkf * dif, t.eci * dif, t.lco * dif)
+    ).reduce[Prices]{case(p1, p2) => Prices(p1.room + p2.room, p1.bkf + p2.bkf, p1.eci + p2.eci, p1.lco + p2.lco)}
+  }
+
+  def maxGuestCnt(roomCnt: Int) = rooms.sortBy(_.guestsCnt)(Ordering[Int].reverse)(roomCnt - 1)
+  def maxRoomCnt (guestCnt: Int) = rooms.filter(_.guestsCnt >= guestCnt).size
+
+}
 
 object Category{
+
+  case class Prices (room: Double, bkf:Double, eci: Double, lco: Double){
+    private def addIf(b:Boolean, d:Double) = if(b) d else 0D
+    def price(roomCnt:Int, bkf:Boolean,eci: Boolean, lco: Boolean) = {
+      roomCnt * room + addIf(bkf, this.bkf) + addIf(eci, this.eci) + addIf(lco, this.lco)
+    }
+  }
+
   def fromXml(n: Node):Category =
-    Category(n \@"id",
+    Category(
+      n \@"id",
       n \@"name",
       n \"room" map(Room.fromXml),
-      n \ "tarif" map(Tariff.fromXml))
+      n \ "tarif" map(Tariff.fromXml)
+    )
 
   implicit val cw = Json.writes[Category]
 
@@ -64,11 +99,16 @@ object Hotel{
 
   def fromXml(n: Node):Seq[Hotel] = {
     //println("converting n"+ n.toString)
-    (n \ "hotel").map(n=>Hotel(n \@"id",
-      n \@"name",
-      LocalTime.of(n \@ "ckeckin" toInt, 0),
-      LocalTime.of(n \@ "checkout" toInt, 0),
-      n \ "category" map(Category.fromXml)))}
+    (n \ "hotel").map(n=>
+      Hotel(
+        n \@"id",
+        n \@"name",
+        LocalTime.of(n \@ "ckeckin" toInt, 0),
+        LocalTime.of(n \@ "checkout" toInt, 0),
+        n \ "category" map(Category.fromXml)
+      )
+    )
+  }
 
   implicit val hw = Json.writes[Hotel]
 
