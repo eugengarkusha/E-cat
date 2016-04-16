@@ -46,7 +46,6 @@ object Tariff{
 }
 
 
-//TODO: escalate on overlapping tariffs
 case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tariff]){
   import Category.Prices
 

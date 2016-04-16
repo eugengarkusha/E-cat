@@ -11,7 +11,7 @@ import ecat.model.{Category, Hotel, Room, Tariff}
 import play.api.cache.CacheApi
 import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.mvc._
-
+import ecat.util.DateTime.localDateTimeOrdering
 import scala.concurrent.duration._
 import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
 
@@ -19,18 +19,44 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.xml.NodeSeq
 
+//TODO: clean this fucking mess!
 class Application (cache: CacheApi) extends Controller {
 
 
   private def interval(from: LocalDateTime, to: LocalDateTime): Long = {
     to.toEpochSecond(ZoneOffset.UTC) - from.toEpochSecond(ZoneOffset.UTC)
   }
+  //TODO:Move this out of controller(and add all other validations)
+  //TODO:collect and react on errors separately
+  //TODO:think of repacking category with sorted and filtered tariffs
+  def validateCategory(c: Category, from: LocalDateTime, to: LocalDateTime) = {
+
+    val tarifs = c.tariffs.sortBy(_.startDate)
+
+    if(tarifs.isEmpty)
+      throw new Exception(s"no tariffs in category $this")
+    tarifs.reduceLeft { (p, n) =>
+      if (p.endDate != n.startDate) throw new Exception(s"gap or overlap between tariffs: 1)$p, 2)$n")
+      p
+    }
+    if(tarifs.head.startDate.compareTo(from) > 0 || tarifs.last.endDate.compareTo(to) < 0)
+      throw new Exception(s"tariffs are not covering date interval: first Tariff start date :${tarifs.head.startDate}, last tarif end date:${tarifs.last.endDate}.Provided dates: $from:, $to ")
+
+  }
+
   //replace with real proxy call
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Seq[Hotel] ={
+    val date = LocalDateTime.of(2016,11,11,11,11,11)
     val h = Seq{
-      val tariff = Tariff("tarif_id", "tariff_name", LocalDateTime.now(), LocalDateTime.now().plusDays(20), 10, 2, 2, 2)
+      val tariff = Tariff("tarif_id", "tariff_name", date, date.plusDays(1), 10, 2, 2, 2)
       val room = Room(1, 2, 1, true, "wtf", 3, Seq("with a smell of a homless", "partially flooded"))
-      val cat = Category("cat_id", "SweetCategory", Seq(room, room.copy(number = 3, twin = false, options = Nil)), Seq(tariff))
+      val cat = Category(
+                    "cat_id",
+                   "SweetCategory",
+                   Seq(room, room.copy(number = 3, twin = false, options = Nil, guestsCnt = 3)),
+                   Seq(tariff,tariff.copy(startDate=date.plusDays(1),endDate = date.plusDays(5)))
+                )
+      validateCategory(cat,from,to)
       Hotel("some_id", "Ekaterina", LocalTime.NOON, LocalTime.MIDNIGHT, Seq(cat, cat.copy(id = "id2", name = "ShitCategory")))
     }
 
