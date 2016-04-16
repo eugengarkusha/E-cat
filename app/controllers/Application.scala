@@ -64,7 +64,7 @@ class Application (cache: CacheApi) extends Controller {
     }
   }
 
-  def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action {
+  def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action {  implicit req =>
     Ok(views.html.pages.offers(getHotels(from,to)))
   }
 
@@ -109,6 +109,10 @@ class Application (cache: CacheApi) extends Controller {
     Ok(views.html.pages.reservation(from, to))
   }
 
+  // def cat  = Action{ implicit req =>
+  //   Ok(views.html.pages.category(getHotels(LocalDateTime.now(),LocalDateTime.now()).head.categories.head))
+  // }
+
 
 
   def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl) = Action{req =>
@@ -120,7 +124,7 @@ class Application (cache: CacheApi) extends Controller {
 
       def redraw = Json.obj(
           "changed"-> true,
-          "categoryHtml"-> views.html.pages.category.render(cat, req).toString
+          "categoryHtml"-> views.html.pages.category.render(cat, h.id, req).toString
       )
 
       if(cat.hashCode == ctrl.hash) {

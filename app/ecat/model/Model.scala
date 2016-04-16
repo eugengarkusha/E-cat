@@ -66,7 +66,7 @@ case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tar
     ).reduce[Prices]{case(p1, p2) => Prices(p1.room + p2.room, p1.bkf + p2.bkf, p1.eci + p2.eci, p1.lco + p2.lco)}
   }
 
-  def maxGuestCnt(roomCnt: Int) = rooms.sortBy(_.guestsCnt)(Ordering[Int].reverse)(roomCnt - 1)
+  def maxGuestCnt(roomCnt: Int) = rooms.sortBy(_.guestsCnt)(Ordering[Int].reverse)(roomCnt - 1).guestsCnt
   def maxRoomCnt (guestCnt: Int) = rooms.filter(_.guestsCnt >= guestCnt).size
 
 }
@@ -114,5 +114,3 @@ object Hotel{
 
 
 }
-
-

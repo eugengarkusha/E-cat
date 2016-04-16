@@ -1,30 +1,109 @@
-@import ecat.model.Category
-@(c: Category)(implicit req: play.api.mvc.RequestHeader)
+@import  ecat.model.Category
+@(c: Category, h: String)(implicit req: play.api.mvc.RequestHeader)
 
-@helper.javascriptRouter("jsRoutes")(
-    routes.javascript.Application.category
-)
+<div class="category-item clearfix" data-catId=@c.id data-hash=@c.hashCode data-hotelId=@h>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>TestTitle</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-</head>
-<body>
+  <h3>@c.name</h3>
 
-<script>
-function myFunction() {
-    var from = '20160415111111'
-    var to = '20160416111111'
-    var js = JSON.stringify({"hotelId":1,"catId":1,"hash":"sadasd","guestsCnt":2})
-     $.ajax(jsRoutes.controllers.Application.category(from,to,js)).done(function( data ) {document.getElementById("demo").innerHTML =JSON.stringify(data)});
-}
-</script>
+  <div class="category-item__detail">
 
-<button type="button" onclick="myFunction()">Try it</button>
-<div id=demo></div>>
-</body>
-</html>
+      <div class="category-item__image">
 
+        <img src='@routes.Assets.versioned("img/room.jpg")' alt="image">
+      </div>
+
+    <div class="category-item__gallery">
+
+    </div>
+
+      <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum eum quos cupiditate vero laborum dignissimos fuga maxime rem, sapiente, nam quo porro, ipsam autem ut illo recusandae placeat pariatur optio, quasi perspiciatis eaque totam. Recusandae autem et vel eos accusantium.
+      </p>
+
+  </div>
+
+  <div class="options">
+
+    <div class="options__item options__item--guest">
+
+      <span class="options__item__description">Кол-во людей:</span>
+
+      <div class="options__item__data options__item__data--select">
+        <select name="guest">
+          <option value="">0</option>
+          @for(guest <- 1 to c.maxGuestCnt(1)) {
+            <option value=@guest>@guest</option>
+          }
+        </select>
+      </div>
+
+    </div>
+
+    <div class="options__item options__item--add-guest">
+      <span class="options__item__description">Дополнительное место:</span>
+      <div class="options__item__data options__item__data--select">
+        <select name="addGuest">
+          <option value="">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="options__item options__item--early">
+      <span class="options__item__description">Ранний заезд:</span>
+      <div class="options__item__data options__item__data--checkbox">
+        <input type="checkbox">
+      </div>
+    </div>
+
+    <div class="options__item options__item--late">
+      <span class="options__item__description">Поздний заезд:</span>
+      <div class="options__item__data options__item__data--checkbox">
+        <input type="checkbox">
+      </div>
+    </div>
+
+
+    <div class="options__item options__item--breakfast">
+      <label for="breakfast" class="options__item__description">Завтрак:</label>
+      <div class="options__item__data options__item__data--checkbox">
+        <input type="checkbox">
+      </div>
+    </div>
+
+    <div class="options__item options__item--rooms">
+
+      <label for="room_count" class="options__item__description">Кол-во номеров:</label>
+
+      <div class="options__item__data options__item__data--select">
+
+        <select name="room_count">
+          <option value="">0</option>
+          @for(room <- 1 to c.maxRoomCnt(1)) {
+            <option value=@room>@room</option>
+          }
+        </select>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="category__item_result clearfix">
+
+    <div class="category__item__result--price">
+      <span class="flaticon-coin32"></span>
+      <span>1000 грн</span>
+    </div>
+
+    <div class="category__item__result--add-to-order">
+      <span>Выбрать</span>
+      <input type="checkbox">
+    </div>
+
+  </div>
+
+</div>

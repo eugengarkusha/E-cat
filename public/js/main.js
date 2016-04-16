@@ -14,47 +14,47 @@ $(function () {
             removeClass: 'sticky'
         }
     ]);
-    
-    if ($('.page-reservation')[0]) {
-      $('.booking-form').scroolly([
-        
-        {
-          to: 'con-top - 60px',
-          css: {
-              position: 'relative',
-              width: '100%',
-              top: '0',
-              left: '0',
-              height: 'auto'
-          }  
-        },
-        
-        {
-            from: 'el-top = vp-top + 60px',
-            css: {
-                position: 'fixed',
-                top: '60px',
-                left: '27%',
-                width: '71%',
-                backgroundColor: 'white',
-                height: '80px',
-                overflow: 'hidden',
-                zIndex: '999'
-            },
-            onCheckIn: function (el, rule) {
-                $('.main-section > h1').css({
-                    marginBottom: '192px'
-                });
-            },
-            onCheckOut: function (el, rule) {
-                $('.main-section > h1').css({
-                    marginBottom: 'inherit'
-                });
-            }
-        }
-        
-      ], $('.main-section'));
-    }
+
+    // if ($('.page-reservation')[0]) {
+    //   $('.booking-form').scroolly([
+    //
+    //     {
+    //       to: 'con-top - 60px',
+    //       css: {
+    //           position: 'relative',
+    //           width: '100%',
+    //           top: '0',
+    //           left: '0',
+    //           height: 'auto'
+    //       }
+    //     },
+    //
+    //     {
+    //         from: 'el-top = vp-top + 60px',
+    //         css: {
+    //             position: 'fixed',
+    //             top: '60px',
+    //             left: '27%',
+    //             width: '71%',
+    //             backgroundColor: 'white',
+    //             height: '80px',
+    //             overflow: 'hidden',
+    //             zIndex: '999'
+    //         },
+    //         onCheckIn: function (el, rule) {
+    //             $('.main-section > h1').css({
+    //                 marginBottom: '192px'
+    //             });
+    //         },
+    //         onCheckOut: function (el, rule) {
+    //             $('.main-section > h1').css({
+    //                 marginBottom: 'inherit'
+    //             });
+    //         }
+    //     }
+    //
+    //   ], $('.main-section'));
+    // }
 
     if ($('.booking-form')[0] && !$('.form-reply')[0]) {
         $('select').selectric({

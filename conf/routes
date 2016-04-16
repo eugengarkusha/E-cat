@@ -19,6 +19,7 @@ GET     /contacts                                 controllers.Application.contac
 GET     /comment                                  controllers.Application.comment
 GET     /post                                     controllers.Application.post
 GET     /event                                    controllers.Application.event
+# GET     /cat                     controllers.Application.cat
 
 #Ajax
 GET     /category/:from/:to                       controllers.Application.category(from:LocalDateTime,to:LocalDateTime, c: CategoryCtrl)
