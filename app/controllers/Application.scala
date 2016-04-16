@@ -1,11 +1,9 @@
 package controllers
 
-import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
+import java.time.{LocalDateTime, LocalTime, ZoneOffset}
 import javax.xml.ws.BindingProvider
-
 import async.client.ObmenSait
-import com.google.inject.Inject
-import ecat.model.Category.Prices
+import ecat.model.Prices
 import ecat.model.ajax.Mappings.CategoryCtrl
 import ecat.model.{Category, Hotel, Room, Tariff}
 import play.api.cache.CacheApi
@@ -17,35 +15,28 @@ import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.xml.NodeSeq
+import ecat.util.DateTime.interval
 
 //TODO: clean this fucking mess!
 class Application (cache: CacheApi) extends Controller {
 
-
-  private def interval(from: LocalDateTime, to: LocalDateTime): Long = {
-    to.toEpochSecond(ZoneOffset.UTC) - from.toEpochSecond(ZoneOffset.UTC)
-  }
-  //TODO:Move this out of controller(and add all other validations)
-  //TODO:collect and react on errors separately
-  //TODO:think of repacking category with sorted and filtered tariffs
-  def validateCategory(c: Category, from: LocalDateTime, to: LocalDateTime) = {
-
-    val tarifs = c.tariffs.sortBy(_.startDate)
-
-    if(tarifs.isEmpty)
-      throw new Exception(s"no tariffs in category $this")
-    tarifs.reduceLeft { (p, n) =>
-      if (p.endDate != n.startDate) throw new Exception(s"gap or overlap between tariffs: 1)$p, 2)$n")
-      p
-    }
-    if(tarifs.head.startDate.compareTo(from) > 0 || tarifs.last.endDate.compareTo(to) < 0)
-      throw new Exception(s"tariffs are not covering date interval: first Tariff start date :${tarifs.head.startDate}, last tarif end date:${tarifs.last.endDate}.Provided dates: $from:, $to ")
-
-  }
-
   //replace with real proxy call
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Seq[Hotel] ={
+    //remove this method(validations are done in Model.scala):
+    def validateCategory(c: Category, from: LocalDateTime, to: LocalDateTime) = {
+
+      val tarifs = c.tariffs.sortBy(_.startDate)
+
+      if(tarifs.isEmpty)
+        throw new Exception(s"no tariffs in category $this")
+      tarifs.reduceLeft { (p, n) =>
+        if (p.endDate != n.startDate) throw new Exception(s"gap or overlap between tariffs: 1)$p, 2)$n")
+        p
+      }
+      if(tarifs.head.startDate.compareTo(from) > 0 || tarifs.last.endDate.compareTo(to) < 0)
+        throw new Exception(s"tariffs are not covering date interval: first Tariff start date :${tarifs.head.startDate}, last tarif end date:${tarifs.last.endDate}.Provided dates: $from:, $to ")
+
+    }
     val date = LocalDateTime.of(2016,11,11,11,11,11)
     val h = Seq{
       val tariff = Tariff("tarif_id", "tariff_name", date, date.plusDays(1), 10, 2, 2, 2)
@@ -54,7 +45,8 @@ class Application (cache: CacheApi) extends Controller {
                     "cat_id",
                    "SweetCategory",
                    Seq(room, room.copy(number = 3, twin = false, options = Nil, guestsCnt = 3)),
-                   Seq(tariff,tariff.copy(startDate=date.plusDays(1),endDate = date.plusDays(5)))
+                   Seq(tariff,tariff.copy(startDate=date.plusDays(1),endDate = date.plusDays(5))),
+                   Prices(10, 3, 5, 4)
                 )
       validateCategory(cat,from,to)
       Hotel("some_id", "Ekaterina", LocalTime.NOON, LocalTime.MIDNIGHT, Seq(cat, cat.copy(id = "id2", name = "ShitCategory")))
@@ -63,9 +55,6 @@ class Application (cache: CacheApi) extends Controller {
     cache.getOrElse("H:"+interval(from, to), 5.minutes)(h)
   }
 
-  def getPrices(from: LocalDateTime, to: LocalDateTime, cat: Category) = {
-    cache.getOrElse[Category.Prices](s"P:${interval(from, to)}:${cat.hashCode()}", 30.minutes)(cat.prices(from, to))
-  }
 
 // TODO: create and maintain proxy outside the controller
   val proxy ={
@@ -81,10 +70,9 @@ class Application (cache: CacheApi) extends Controller {
       Future(proxy.getNomSvobod(from, to)).map(Ok(_))
   }
 
-  //TBD: parse dates on rcv(format://ГГГГММДДЧЧММСС)
-  def getAvailableRooms(from:String, to:String)= Action.async{
-    Future(proxy.getNomSvobod(from, to)).map{s=>
-      val hotels = Hotel.fromXml(scala.xml.XML.loadString(s))
+  def getAvailableRooms(from: LocalDateTime, to: LocalDateTime)= Action.async{
+    Future(proxy.getNomSvobod(fmt.format(from), fmt.format(to))).map{s=>
+      val hotels = Hotel.fromXml(scala.xml.XML.loadString(s), from, to).fold(err=> throw new Exception(err.toString), identity)
       //cache.set()
       Ok(Json.toJson(hotels))
     }
@@ -157,7 +145,7 @@ class Application (cache: CacheApi) extends Controller {
         try {
           Json.obj(
             "changed" -> false,
-            "price" -> getPrices(from, to, cat).price(ctrl.roomCnt, ctrl.bkf, ctrl.eci, ctrl.lco),
+            "price" -> ctrl.price(cat.prices),
             "maxGuestCnt" -> cat.maxGuestCnt(ctrl.roomCnt),
             "maxRoomCnt" -> cat.maxRoomCnt(ctrl.guestsCnt)
           )

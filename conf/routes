@@ -5,9 +5,10 @@
 # Home page
 GET     /                                         controllers.Application.main
 GET     /dumpxml/:from/:to                        controllers.Application.dumpXml(from,to)
-GET     /rooms/:from/:to                          controllers.Application.getAvailableRooms(from,to)
+GET     /rooms/:from/:to                          controllers.Application.getAvailableRooms(from: LocalDateTime,to:LocalDateTime)
 GET     /dummyoffers/:from/:to                    controllers.Application.getDummyOffers(from:LocalDateTime,to:LocalDateTime)
-GET     /*hotel/reservation/:from/:to             controllers.Application.reservation(hotel,from,to)
+#                                                  TODO:from: LocalDateTime,to: LocalDateTime)
+GET     /*hotel/reservation/:from/:to             controllers.Application.reservation(hotel,from, to)
 GET     /ekaterina                                controllers.Application.ekaterina
 GET     /ekaterina2                               controllers.Application.ekaterina2
 GET     /gallery                                  controllers.Application.gallery

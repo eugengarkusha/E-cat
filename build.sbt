@@ -12,8 +12,9 @@ libraryDependencies ++= Seq(
   ws,
   specs2 % Test
 )
-libraryDependencies += "org.scalaz" % "scalaz-core_2.11" % "7.2.2"
-libraryDependencies += "com.chuusai" % "shapeless_2.11" % "2.3.0"
+libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.2"
+libraryDependencies += "com.chuusai" %% "shapeless" % "2.3.0"
+libraryDependencies += "org.typelevel" %% "shapeless-scalaz" % "0.4"
 unmanagedJars in Compile += file("./lib/ecatWsClient.jar")
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
