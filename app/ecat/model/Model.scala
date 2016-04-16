@@ -57,13 +57,13 @@ case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tar
     .takeWhile(_.startDate.compareTo(to) <= 0)
 
     (  for {
-        h <- filtered.headOption.toIterable
-        f = (h.copy(startDate = from) +: filtered.tail)
-        l <- f.lastOption.toIterable
-        t <- f.init :+ l.copy(endDate = to)
-        dif = ChronoUnit.DAYS.between(t.startDate,t.endDate) + 1
-      } yield  Prices(t.roomPrice * dif, t.bkf * dif, t.eci * dif, t.lco * dif)
-    ).reduce[Prices]{case(p1, p2) => Prices(p1.room + p2.room, p1.bkf + p2.bkf, p1.eci + p2.eci, p1.lco + p2.lco)}
+        head <- filtered.headOption.toIterable
+        f = (head.copy(startDate = from) +: filtered.tail)
+        last <- f.lastOption.toIterable
+        next <- f.init :+ last.copy(endDate = to)
+        dif = ChronoUnit.DAYS.between(next.startDate,next.endDate) + 1
+      } yield  Prices(next.roomPrice * dif, next.bkf * dif, next.eci * dif, next.lco * dif)
+    ).fold(Prices(0,0,0,0)){case(p1, p2) => Prices(p1.room + p2.room, p1.bkf + p2.bkf, p1.eci + p2.eci, p1.lco + p2.lco)}
   }
 
   def maxGuestCnt(roomCnt: Int) = rooms.sortBy(_.guestsCnt)(Ordering[Int].reverse)(roomCnt - 1).guestsCnt
