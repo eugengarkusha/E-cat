@@ -116,9 +116,9 @@
 
       var hotelId   = cat.dataset.hotelid,
           catId     = cat.dataset.catid,
-          hash      = cat.dataset.hash,
-          guestsCnt = $(cat).find('select[name="guest"]').val(),
-          roomCnt   = $(cat).find('select[name="room_count"]').val(),
+          hash      = +cat.dataset.hash,
+          guestsCnt = +$(cat).find('select[name="guest"]').val(),
+          roomCnt   = +$(cat).find('select[name="room_count"]').val(),
           breakfast = breakfastChkbx.checked ? true : false,
           eci       = eciChkbx.checked ? true : false,
           lco       = lcoChkbx.checked ? true : false;
@@ -144,8 +144,8 @@
 
       console.log('changingCat() called');
 
-      var from = '20160415111111',
-          to   = '20160416111111';
+      var from = '20160130000000',
+          to   = '20160230000000';
 
       $.ajax(jsRoutes.controllers.Application.category(from,to,data))
       .done(function( resp ) {
