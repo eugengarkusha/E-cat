@@ -4,9 +4,9 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 object Mappings {
 
-  case class CategoryCtrl(hotelId: Int,
-                          catId: Int,
-                          hash: String,
+  case class CategoryCtrl(hotelId: String,
+                          catId: String,
+                          hash: Int,
                           guestsCnt: Int,
                           roomCnt: Int,
                           bkf: Boolean,
@@ -16,7 +16,7 @@ object Mappings {
    implicit val catReads: Reads[CategoryCtrl]  = {
     ((__ \ "hotelId").read[Int] ~
     (__ \ "catId").read[Int] ~
-    (__ \ "hash").read[String] ~
+    (__ \ "hash").read[Int] ~
     (__ \ "guestsCnt").read[Int].orElse(Reads(_ => JsSuccess(1))) ~
     (__ \ "roomCnt").read[Int].orElse(Reads(_ => JsSuccess(1)))~
     (__ \ "bkf").read[Boolean].orElse(Reads(_ => JsSuccess(false)))~
