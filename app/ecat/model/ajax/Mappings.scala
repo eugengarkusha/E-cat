@@ -14,8 +14,8 @@ object Mappings {
                           lco: Boolean)
 
    implicit val catReads: Reads[CategoryCtrl]  = {
-    ((__ \ "hotelId").read[Int] ~
-    (__ \ "catId").read[Int] ~
+    ((__ \ "hotelId").read[String] ~
+    (__ \ "catId").read[String] ~
     (__ \ "hash").read[Int] ~
     (__ \ "guestsCnt").read[Int].orElse(Reads(_ => JsSuccess(1))) ~
     (__ \ "roomCnt").read[Int].orElse(Reads(_ => JsSuccess(1)))~
