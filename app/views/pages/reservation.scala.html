@@ -1,3 +1,4 @@
+@import  ecat.util.DateTime.{pertrovichDateTimeFormatter=>fmt}
 
 @(from:String, to:String)(implicit req: play.api.mvc.RequestHeader)
 
@@ -106,32 +107,70 @@
 
   <script>
 
-    var collectOpt = function (cat) {
+    var elemAndVal = function (container, selector, valueType) {
+      var result = {};
+      result.element = container.querySelector(selector);
 
-      console.log('collectOpt() called');
+      result.value = (function () {
+        if (result.element.tagName === "INPUT" && result.element.type === 'checkbox') {
+          return result.element.checked ? true : false;
+        }
 
-      var breakfastChkbx = $(cat).find('.options__item--breakfast input')[0],
-          eciChkbx       = $(cat).find('.options__item--early input')[0],
-          lcoChkbx       = $(cat).find('.options__item--late input')[0];
+        if(result.element.tagName === "SELECT") {
+          return result.element.value;
+        }
+        return result.element.text;
+      })();
 
-      var hotelId   = cat.dataset.hotelid,
-          catId     = cat.dataset.catid,
-          hash      = +cat.dataset.hash,
-          guestsCnt = +$(cat).find('select[name="guest"]').val(),
-          roomCnt   = +$(cat).find('select[name="room_count"]').val(),
-          breakfast = breakfastChkbx.checked ? true : false,
-          eci       = eciChkbx.checked ? true : false,
-          lco       = lcoChkbx.checked ? true : false;
+      if (valueType === 'number') {
+        result.value = +result.value
+      }
+
+      return result;
+
+    };
+
+    var collectOpts = function (cat) {
+
+      var options = {
+
+        breakfast: elemAndVal(cat, '[data-breakfast]'),
+
+        eci: elemAndVal(cat, '[data-eci]'),
+
+        lco: elemAndVal(cat, '[data-lco]'),
+
+        guestsCnt: elemAndVal(cat, '[data-guestscnt]', 'number'),
+
+        roomCnt: elemAndVal(cat, '[data-roomcnt]', 'number'),
+
+        price: elemAndVal(cat, '[data-price]', 'number'),
+
+        hotelId: (cat).dataset.hotelid,
+
+        catId: (cat).dataset.catid,
+
+        hash: +(cat).dataset.hash
+
+      };
+
+      return options;
+
+    };
+
+    var stringOpts = function (cat) {
+
+      var opt = collectOpts(cat);
 
       var data = JSON.stringify({
-          'hotelId'  : hotelId,
-          'catId'    : catId,
-          'hash'     : hash,
-          'guestsCnt': guestsCnt,
-          'roomCnt'  : roomCnt,
-          'breakfast': breakfast,
-          'eci'      : eci,
-          'lco'      : lco
+          'hotelId'  : opt.hotelId,
+          'catId'    : opt.catId,
+          'hash'     : opt.hash,
+          'guestsCnt': opt.guestsCnt.value,
+          'roomCnt'  : opt.roomCnt.value,
+          'breakfast': opt.breakfast.value,
+          'eci'      : opt.eci.value,
+          'lco'      : opt.lco.value
       });
 
       console.log(data);
@@ -140,20 +179,27 @@
 
     };
 
-    var changingCat = function (data) {
+    var setupOpt = function (data, cat) {
 
-      console.log('changingCat() called');
+      console.log(data);
 
-      var from = '20160130000000',
-          to   = '20160230000000';
+      $(cat).find('[data-price]').text(data.price);
+      if ($(cat).find('[data-guestscnt] option').length !== data.maxGuestCnt) {
+        (function () {
+          var select = $(cat).find('[data-guestscnt]');
+          var options = $(cat).find('[data-guestscnt] option')
+          .clone().slice(0, data.maxGuestCnt);
+          console.log(options);
+          options.each(function(index, el) {
+            select.append(el);
+          });
+          $('select').selectric({
+            responsive: true
+          });
+        })()
+      }
 
-      $.ajax(jsRoutes.controllers.Application.category(from,to,data))
-      .done(function( resp ) {
-        console.log(data);
-        console.log(resp);
-      });
-
-    };
+    }
 
     $.ajax(jsRoutes.controllers.Application.getDummyOffers(@from,@to))
       .done(function( data ) {
@@ -165,7 +211,19 @@
 
         $('.category-item').change(function(e) {
 
-          changingCat(collectOpt(e.currentTarget));
+          var from    = '20161111111111',
+              to      = '20161116111111',
+              cat     = e.currentTarget,
+              reqData = stringOpts(cat),
+              response;
+
+          $.ajax(jsRoutes.controllers.Application.category(from, to, reqData))
+          .done(function( resp ) {
+
+            resp.changed ? $(cat).replaceWith(data.categoryHtml) :
+             setupOpt(resp, cat);
+
+          });
 
         });
 
