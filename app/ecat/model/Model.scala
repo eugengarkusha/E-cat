@@ -6,8 +6,12 @@ import java.time.{LocalDateTime, LocalTime}
 import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt, _}
 import play.api.libs.json.Json
 import ecat.util.JsonFormats._
-
 import scala.xml.Node
+import scalaz.{Ordering=>_, _}
+import Scalaz._
+import shapeless.contrib.scalaz.instances._
+
+
 /**
  * Created by admin on 10/12/15.
  */
@@ -29,7 +33,7 @@ object Room{
 }
 
 
-case class Tariff(id: String, name:String, startDate: LocalDateTime, endDate: LocalDateTime, roomPrice: Double, bkf: Double, eci: Double, lco: Double)
+case class Tariff(id: String, name:String, startDate: LocalDateTime, endDate: LocalDateTime, roomPrice: Long, bkf: Long, eci: Long, lco: Long)
 
 object Tariff{
   def fromXml(n: Node):Tariff = Tariff(
@@ -37,79 +41,110 @@ object Tariff{
     n \@"name" ,
     LocalDateTime.parse(n \@"dateN", fmt) ,
     LocalDateTime.parse(n \@"dateK", fmt) ,
-    (n \@"roomprice").toDouble,
-    (n \@"bkfprice").toDouble,
-    (n \@"eciprice").toDouble,
-    (n \@"lcoprice").toDouble)
+    (n \@"roomprice").toDouble * 100 toLong,
+    (n \@"bkfprice").toDouble * 100 toLong,
+    (n \@"eciprice").toDouble * 100 toLong,
+    (n \@"lcoprice").toDouble * 100 toLong)
 
   implicit val tw = Json.writes[Tariff]
 }
 
 
-case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tariff]){
-  import Category.Prices
+case class Prices(room: Long, bkf: Long, eci: Long, lco: Long)
 
-  def prices(from: LocalDateTime, to: LocalDateTime): Prices = {
+object Prices{
+  implicit val pm = Monoid[Prices]
+  implicit val pw = Json.writes[Prices]
+}
 
-    val filtered = tariffs.sortBy(_.startDate)
-    .dropWhile(_.endDate.compareTo(from) < 0)
-    .takeWhile(_.startDate.compareTo(to) <= 0)
-
-    (  for {
-        head <- filtered.headOption.toIterable
-        f = (head.copy(startDate = from) +: filtered.tail)
-        last <- f.lastOption.toIterable
-        next <- f.init :+ last.copy(endDate = to)
-        dif = ChronoUnit.DAYS.between(next.startDate,next.endDate) + 1
-      } yield  Prices(next.roomPrice * dif, next.bkf * dif, next.eci * dif, next.lco * dif)
-    ).fold(Prices(0,0,0,0)){case(p1, p2) => Prices(p1.room + p2.room, p1.bkf + p2.bkf, p1.eci + p2.eci, p1.lco + p2.lco)}
-  }
-
+case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tariff], prices: Prices){
   def maxGuestCnt(roomCnt: Int) = rooms.sortBy(_.guestsCnt)(Ordering[Int].reverse)(roomCnt - 1).guestsCnt
   def maxRoomCnt (guestCnt: Int) = rooms.filter(_.guestsCnt >= guestCnt).size
-
 }
 
-object Category{
+object Category {
 
-  case class Prices (room: Double, bkf:Double, eci: Double, lco: Double){
-    private def addIf(b:Boolean, d:Double) = if(b) d else 0D
-    def price(roomCnt:Int, bkf:Boolean,eci: Boolean, lco: Boolean) = {
-      roomCnt * room + addIf(bkf, this.bkf) + addIf(eci, this.eci) + addIf(lco, this.lco)
+  def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): String \/ Category = {
+
+    def align(tariffs: Seq[Tariff]): String \/ Seq[Tariff] = {
+
+      val filtered = tariffs.sortBy(_.startDate)
+        .dropWhile(_.endDate.compareTo(from) < 0)
+        .takeWhile(_.startDate.compareTo(to) <= 0)
+
+      if (filtered.isEmpty) s"no active tariffs in category $this".left
+      else if (filtered.head.startDate.compareTo(from) > 0 || filtered.last.endDate.compareTo(to) < 0){
+        s"""tariffs are not covering date interval: first tariff start date :${tariffs.head.startDate},
+            |last tariff end date:${tariffs.last.endDate}.Provided dates: $from:, $to.
+        |""".stripMargin.left
+      }
+      else {
+        filtered.sliding(2, 1).find {
+          case Seq(p, n) => p.endDate != n.startDate
+          case Seq() => false
+        }.<\/ {
+          val t = (filtered.head.copy(startDate = from) +: filtered.tail)
+          t.init :+ t.last.copy(endDate = to)
+        }.leftMap(s => s"gap or overlap between tariffs: 1)${s(0)}, 2)${s(1)}")
+      }
     }
-  }
 
-  def fromXml(n: Node):Category =
-    Category(
-      n \@"id",
-      n \@"name",
-      n \"room" map(Room.fromXml),
-      n \ "tarif" map(Tariff.fromXml)
+    val catId = n \@ "id"
+
+    align(n \ "tarif" map (Tariff.fromXml))
+    .bimap (
+      err => s"categoryId=$catId:$err",
+
+      tariffs => {
+
+        val prices = tariffs.map { tariff =>
+          val dif = ChronoUnit.DAYS.between(tariff.startDate, tariff.endDate) + 1
+          Prices(tariff.roomPrice * dif, tariff.bkf * dif, tariff.eci * dif, tariff.lco * dif)
+        }.reduce(_ |+| _)
+
+        Category(
+          catId,
+          n \@ "name",
+          n \ "room" map (Room.fromXml),
+          tariffs,
+          prices
+        )
+      }
     )
 
+  }
   implicit val cw = Json.writes[Category]
-
 }
 
+  case class Hotel(id: String, name: String, checkInTime: LocalTime, checkOutTime: LocalTime, categories: Seq[Category])
 
-case class Hotel(id:String, name:String, checkInTime:LocalTime, checkOutTime:LocalTime, categories: Seq[Category])
+  object Hotel {
 
-object Hotel{
+    def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): ValidationNel[String, Seq[Hotel]] = {
 
-  def fromXml(n: Node):Seq[Hotel] = {
-    //println("converting n"+ n.toString)
-    (n \ "hotel").map(n=>
-      Hotel(
-        n \@"id",
-        n \@"name",
-        LocalTime.of(n \@ "ckeckin" toInt, 0),
-        LocalTime.of(n \@ "checkout" toInt, 0),
-        n \ "category" map(Category.fromXml)
-      )
-    )
+      (n \ "hotel").map { hotelNode =>
+
+        val hotelId = hotelNode \@ "id"
+
+        (hotelNode \ "category").map(catNode=>
+          Category.fromXml(catNode, from, to)
+          .validationNel
+          .map(_ :: Nil)
+        ).reduce(_ +++ _).map(cats =>
+          Hotel(
+            hotelId,
+            hotelNode \@ "name",
+            LocalTime.of(hotelNode \@ "ckeckin" toInt, 0),
+            LocalTime.of(hotelNode \@ "checkout" toInt, 0),
+            cats
+          ) :: Nil
+        ).leftMap(err=> NonEmptyList(s"hotelId=$hotelId:$err"))
+      }.reduce(_ +++ _)
+    }
+
+
+    implicit val hw = Json.writes[Hotel]
+
   }
 
-  implicit val hw = Json.writes[Hotel]
 
-
-}

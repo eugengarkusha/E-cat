@@ -1,5 +1,6 @@
 package ecat.model.ajax
 
+import ecat.model.Prices
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 object Mappings {
@@ -11,7 +12,13 @@ object Mappings {
                           roomCnt: Int,
                           bkf: Boolean,
                           eci: Boolean,
-                          lco: Boolean)
+                          lco: Boolean){
+
+    def price (p: Prices): Double= {
+      def addIf(cond: Boolean, l: Long, r:Long) = if (cond) l + r else r
+      addIf(lco, p.lco, addIf(eci, p.eci, addIf(bkf, p.bkf, roomCnt * p.room))).toDouble / 100
+    }
+  }
 
    implicit val catReads: Reads[CategoryCtrl]  = {
     ((__ \ "hotelId").read[String] ~
