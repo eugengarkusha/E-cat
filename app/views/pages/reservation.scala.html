@@ -168,7 +168,7 @@
           'hash'     : opt.hash,
           'guestsCnt': opt.guestsCnt.value,
           'roomCnt'  : opt.roomCnt.value,
-          'breakfast': opt.breakfast.value,
+          'bkf'      : opt.breakfast.value,
           'eci'      : opt.eci.value,
           'lco'      : opt.lco.value
       });
@@ -179,27 +179,40 @@
 
     };
 
+    var changeSelect = function (container, elem, maxCnt) {
+
+      if ($(container).find(elem + 'option').length !== maxCnt) {
+        (function () {
+          var i       = 0,
+              $select = $(container).find(elem),
+              value   = $select.val();
+          $select.html('');
+          for (;i < maxCnt; i++) {
+            var $option = $('<option>');
+            $option.val(i + 1).text(i + 1);
+            $select.append($option);
+          }
+          $select.val(value);
+          $('select').selectric({
+            responsive: true
+          });
+          console.log($select.val());
+        })()
+      }
+
+    };
+
     var setupOpt = function (data, cat) {
 
       console.log(data);
 
       $(cat).find('[data-price]').text(data.price);
-      if ($(cat).find('[data-guestscnt] option').length !== data.maxGuestCnt) {
-        (function () {
-          var select = $(cat).find('[data-guestscnt]');
-          var options = $(cat).find('[data-guestscnt] option')
-          .clone().slice(0, data.maxGuestCnt);
-          console.log(options);
-          options.each(function(index, el) {
-            select.append(el);
-          });
-          $('select').selectric({
-            responsive: true
-          });
-        })()
-      }
 
-    }
+      changeSelect(cat, '[data-guestscnt]', data.maxGuestCnt);
+
+      changeSelect(cat, '[data-roomcnt]', data.maxRoomCnt);
+
+    };
 
     $.ajax(jsRoutes.controllers.Application.getDummyOffers(@from,@to))
       .done(function( data ) {
