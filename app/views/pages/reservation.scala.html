@@ -2,7 +2,7 @@
 
 @(from:String, to:String)(implicit req: play.api.mvc.RequestHeader)
 
-@helper.javascriptRouter("jsRoutes")(routes.javascript.Application.getDummyOffers, routes.javascript.Application.category)
+@helper.javascriptRouter("jsRoutes")(routes.javascript.Application.getDummyOffers, routes.javascript.Application.category, routes.javascript.Application.filter)
 
 <!--move javascript router to main wrapping template -->
 <!DOCTYPE html>
@@ -107,7 +107,14 @@
 
   <script>
 
+  var beautySelect = function () {
+    $('select').selectric({
+      responsive: true
+    });
+  };
+
     var elemAndVal = function (container, selector, valueType) {
+      console.log('elemAndVal');
       var result = {};
       result.element = container.querySelector(selector);
 
@@ -131,6 +138,7 @@
     };
 
     var collectOpts = function (cat) {
+      console.log('collectOpts');
 
       var options = {
 
@@ -159,6 +167,7 @@
     };
 
     var stringOpts = function (cat) {
+      console.log('stringOpts');
 
       var opt = collectOpts(cat);
 
@@ -173,13 +182,14 @@
           'lco'      : opt.lco.value
       });
 
-      console.log(data);
-
       return data;
 
     };
 
+    // ***************** Setup Options ***************************
+
     var changeSelect = function (container, elem, maxCnt) {
+      console.log('changeSelect');
 
       if ($(container).find(elem + 'option').length !== maxCnt) {
         (function () {
@@ -192,19 +202,18 @@
             $option.val(i + 1).text(i + 1);
             $select.append($option);
           }
+
           $select.val(value);
-          $('select').selectric({
-            responsive: true
-          });
-          console.log($select.val());
+
+          beautySelect();
+
         })()
       }
 
     };
 
     var setupOpt = function (data, cat) {
-
-      console.log(data);
+      console.log('setupOpt');
 
       $(cat).find('[data-price]').text(data.price);
 
@@ -214,30 +223,65 @@
 
     };
 
-    $.ajax(jsRoutes.controllers.Application.getDummyOffers(@from,@to))
-      .done(function( data ) {
-        $('.booking-form').after(data);
+    // ***************************End of setup options***********************
 
-        $('select').selectric({
-          responsive: true
+    var changeCat = function (cat) {
+      console.log('changeCat');
+
+      cat = cat || '.category-item';
+
+      $(cat).change(function(e) {
+
+        var from    = @from,
+            to      = @to,
+            cat     = e.currentTarget,
+            reqData = stringOpts(cat);
+
+        $.ajax(jsRoutes.controllers.Application.category(from, to, reqData))
+        .done(function( resp ) {
+
+          resp.changed ? (function () {
+            alert('Категория изменилась!');
+            var category = resp.categoryHtml;
+            $(cat).replaceWith(category);
+            console.log($(category).attr('data-catid'));
+            changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
+          })() :
+           setupOpt(resp, cat);
+
+           beautySelect();
+
         });
 
-        $('.category-item').change(function(e) {
+      });
+    };
 
-          var from    = '20161111111111',
-              to      = '20161116111111',
-              cat     = e.currentTarget,
-              reqData = stringOpts(cat),
-              response;
+//   ************************Starting dynamic****************************
 
-          $.ajax(jsRoutes.controllers.Application.category(from, to, reqData))
-          .done(function( resp ) {
+    $.ajax(jsRoutes.controllers.Application.getDummyOffers(@from, @to))
+      .done(function( resp ) {
+        $('.booking-form').after(resp);
 
-            resp.changed ? $(cat).replaceWith(data.categoryHtml) :
-             setupOpt(resp, cat);
+        beautySelect();
 
-          });
+        changeCat('.category-item');
 
+        $('.booking-form').change(function(e) {
+          var from      = @from,
+              to        = @to,
+              container = e.currentTarget;
+
+              $.ajax(jsRoutes.controllers.Application.filter(from, to, '{"name":"Ekaterina"}', '{"twin":true, "guests": 2}', '[]'))
+              .done(function( response ) {
+                console.log("$('.booking-form').change");
+
+                $('.category-list').replaceWith(response);
+
+                beautySelect();
+
+                changeCat();
+
+              });
         });
 
     });

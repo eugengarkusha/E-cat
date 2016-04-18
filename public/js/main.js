@@ -70,8 +70,8 @@ $(function () {
 
         $.datetimepicker.setLocale('ru');
         $('#checkIn, #checkOut').datetimepicker({
-            format:'DD.MM.YYYY h:mm a',
-            formatTime:'h:mm a',
+            format:'DD.MM.YYYY h:mm',
+            formatTime:'hh:mm',
             formatDate:'DD.MM.YYYY',
             validateOnBlur: true
         });
