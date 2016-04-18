@@ -1,4 +1,4 @@
-@import  ecat.model.Category
+@import  ecat.model.{Category, Prices}
 @(c: Category, h: String)(implicit req: play.api.mvc.RequestHeader)
 
 <div class="category-item clearfix" data-catId=@c.id data-hash=@c.hashCode data-hotelId=@h>
@@ -94,7 +94,7 @@
 
     <div class="category__item__result--price">
       <span class="flaticon-coin32"></span>
-      <span data-price=@c.prices.room>@c.prices.room</span><span> грн</span>
+      <span data-price=@Prices.fromLong(c.prices.room)>@Prices.fromLong(c.prices.room)</span><span> грн</span>
     </div>
 
     <div class="category__item__result--add-to-order">

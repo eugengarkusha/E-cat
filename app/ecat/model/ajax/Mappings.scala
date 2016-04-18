@@ -16,7 +16,7 @@ object Mappings {
 
     def price (p: Prices): Double= {
       def addIf(cond: Boolean, l: Long, r:Long) = if (cond) l + r else r
-      addIf(lco, p.lco, addIf(eci, p.eci, addIf(bkf, p.bkf, roomCnt * p.room))).toDouble / 100
+      (roomCnt * addIf(lco, p.lco, addIf(eci, p.eci, addIf(bkf, p.bkf, p.room)))).toDouble / 100
     }
   }
 

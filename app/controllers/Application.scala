@@ -46,7 +46,7 @@ class Application (cache: CacheApi) extends Controller {
                    "SweetCategory",
                    Seq(room, room.copy(number = 3, twin = false, options = Nil, guestsCnt = 3)),
                    Seq(tariff,tariff.copy(startDate=date.plusDays(1),endDate = date.plusDays(5))),
-                   Prices(10, 3, 5, 4)
+                   Prices(1000, 300, 500, 400)
                 )
       validateCategory(cat,from,to)
       Hotel("some_id", "Ekaterina", LocalTime.NOON, LocalTime.MIDNIGHT, Seq(cat, cat.copy(id = "id2", name = "ShitCategory")))

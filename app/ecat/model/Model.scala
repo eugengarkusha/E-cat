@@ -53,6 +53,7 @@ object Tariff{
 case class Prices(room: Long, bkf: Long, eci: Long, lco: Long)
 
 object Prices{
+  def fromLong(l: Long) = l.toDouble / 100
   implicit val pm = Monoid[Prices]
   implicit val pw = Json.writes[Prices]
 }
