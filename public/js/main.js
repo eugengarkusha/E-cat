@@ -70,9 +70,9 @@ $(function () {
 
         $.datetimepicker.setLocale('ru');
         $('#checkIn, #checkOut').datetimepicker({
-            format:'DD.MM.YYYY h:mm',
-            formatTime:'hh:mm',
-            formatDate:'DD.MM.YYYY',
+            format:'YYYY.MM.DD',
+            formatDate:'YYYY.MM.DD',
+            timepicker:false,
             validateOnBlur: true
         });
     }

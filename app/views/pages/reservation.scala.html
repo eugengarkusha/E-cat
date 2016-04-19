@@ -45,7 +45,7 @@
 
         <h1>Забронируйте номер</h1>
 
-        <form action="#" class="booking-form clearfix">
+        <form action="#" class="booking-form clearfix" id="filterBlock">
 
           <fieldset>
             <div class="booking-row clearfix">
@@ -114,19 +114,21 @@
   };
 
     var elemAndVal = function (container, selector, valueType) {
-      console.log('elemAndVal');
+      // console.log('elemAndVal');
       var result = {};
       result.element = container.querySelector(selector);
 
       result.value = (function () {
-        if (result.element.tagName === "INPUT" && result.element.type === 'checkbox') {
+        if (result.element.type === 'checkbox') {
           return result.element.checked ? true : false;
         }
 
-        if(result.element.tagName === "SELECT") {
+        if(result.element.tagName === "SELECT" || result.element.tagName === "INPUT") {
           return result.element.value;
         }
+
         return result.element.text;
+
       })();
 
       if (valueType === 'number') {
@@ -138,7 +140,7 @@
     };
 
     var collectOpts = function (cat) {
-      console.log('collectOpts');
+      // console.log('collectOpts');
 
       var options = {
 
@@ -166,8 +168,27 @@
 
     };
 
+    var collectFilters = function (elem) {
+      var filters = {
+        from: function () {
+          return elemAndVal(elem, '#checkIn').value.replace(/\./g,'') + '000000';
+        },
+        to: function () {
+          return elemAndVal(elem, '#checkOut').value.replace(/\./g,'') + '000000';
+        },
+        hotel: {
+          name: elemAndVal(elem, '#hotel').value
+        },
+        room: {
+          twin: elemAndVal(elem, '#twin').value,
+          guests: elemAndVal(elem, '#peopleQuantity', 'number').value
+        }
+      };
+      return filters;
+    };
+
     var stringOpts = function (cat) {
-      console.log('stringOpts');
+      // console.log('stringOpts');
 
       var opt = collectOpts(cat);
 
@@ -189,7 +210,7 @@
     // ***************** Setup Options ***************************
 
     var changeSelect = function (container, elem, maxCnt) {
-      console.log('changeSelect');
+      // console.log('changeSelect');
 
       if ($(container).find(elem + 'option').length !== maxCnt) {
         (function () {
@@ -213,7 +234,7 @@
     };
 
     var setupOpt = function (data, cat) {
-      console.log('setupOpt');
+      // console.log('setupOpt');
 
       $(cat).find('[data-price]').text(data.price);
 
@@ -226,7 +247,7 @@
     // ***************************End of setup options***********************
 
     var changeCat = function (cat) {
-      console.log('changeCat');
+      // console.log('changeCat');
 
       cat = cat || '.category-item';
 
@@ -256,33 +277,43 @@
       });
     };
 
+    var changeFilter = function (selector) {
+      $(selector).change(function(e) {
+        var from      = @from,
+            to        = @to,
+            container = e.currentTarget,
+            req       = collectFilters(selector);
+
+            console.log(req.from() + " : " + req.to() + " : " + JSON.stringify(req.hotel) + " : " + JSON.stringify(req.room) + " : " + '[]');
+
+            $.ajax(jsRoutes.controllers.Application.filter(req.from(), req.to(), JSON.stringify(req.hotel), JSON.stringify(req.room), '[]'))
+            .done(function( response ) {
+              console.log(response);
+
+              $('.category-list').replaceWith(response);
+
+              beautySelect();
+
+              changeCat();
+
+            });
+      });
+    };
+
 //   ************************Starting dynamic****************************
 
     $.ajax(jsRoutes.controllers.Application.getDummyOffers(@from, @to))
       .done(function( resp ) {
         $('.booking-form').after(resp);
 
+        $('#checkIn').val(moment((@from).toString().slice(0,-6)).format('YYYY.MM.DD'));
+        $('#checkOut').val(moment((@to).toString().slice(0,-6)).format('YYYY.MM.DD'));
+
         beautySelect();
 
         changeCat('.category-item');
 
-        $('.booking-form').change(function(e) {
-          var from      = @from,
-              to        = @to,
-              container = e.currentTarget;
-
-              $.ajax(jsRoutes.controllers.Application.filter(from, to, '{"name":"Ekaterina"}', '{"twin":true, "guests": 2}', '[]'))
-              .done(function( response ) {
-                console.log("$('.booking-form').change");
-
-                $('.category-list').replaceWith(response);
-
-                beautySelect();
-
-                changeCat();
-
-              });
-        });
+        changeFilter($('.booking-form')[0]);
 
     });
 

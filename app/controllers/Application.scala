@@ -37,7 +37,7 @@ class Application (cache: CacheApi) extends Controller {
         throw new Exception(s"tariffs are not covering date interval: first Tariff start date :${tarifs.head.startDate}, last tarif end date:${tarifs.last.endDate}.Provided dates: $from:, $to ")
 
     }
-    val date = LocalDateTime.of(2016,11,11,11,11,11)
+    val date = LocalDateTime.of(2016,11,11,0,0,0)
     val h = Seq{
       val tariff = Tariff("tarif_id", "tariff_name", date, date.plusDays(1), 10, 2, 2, 2)
       val room = Room(1, 2, 1, true, "wtf", 3, Seq("with a smell of a homless", "partially flooded"))
