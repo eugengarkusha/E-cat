@@ -19,14 +19,21 @@ import shapeless.contrib.scalaz.instances._
 //options - additional details about room setup. They may become the dynamic part of filters .
 case class Room(number:Int, guestsCnt: Int, additionalGuestsCnt: Int, twin:Boolean, bathroom:String, level: Int, options: Seq[String])
 object Room{
-  def fromXml(n: Node):Room=
-    Room(n \@"num" toInt,
-      n \@"guests" toInt,
-      n \@"addguests" toInt,
-      n \@"twin" toBoolean,
-      n \@"bathroom",
-      (n \@"level").toInt,
-      (n \ "option").map(_.text))
+
+  def fromXml(n: Node): Validation[String, Room] = {
+    val options = (n \ "option")
+
+    Success(options).ensure("room options may not be empty")(_.isEmpty)
+    .map(opts =>
+      Room(n \@ "num" toInt,
+        n \@ "guests" toInt,
+        n \@ "addguests" toInt,
+        n \@ "twin" toBoolean,
+        n \@ "bathroom",
+        (n \@ "level").toInt,
+        opts.map(_.text))
+    )
+  }
 
   implicit val rw = Json.writes[Room]
 
@@ -63,59 +70,63 @@ case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tar
   def maxRoomCnt (guestCnt: Int) = rooms.filter(_.guestsCnt >= guestCnt).size
 }
 
+
 object Category {
+  implicit val cw = Json.writes[Category]
+  def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): ValidationNel[String, Category] = {
 
-  def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): String \/ Category = {
+    val catId = n \@ "id"
 
-    def align(tariffs: Seq[Tariff]): String \/ Seq[Tariff] = {
+    val catName = n \@ "name"
 
-      val filtered = tariffs.sortBy(_.startDate)
+    val errLbl =s"categoryId=$catId:"
+
+  //todo: move validation code to separate file!!!!
+    val tariffs: ValidationNel[String, Seq[Tariff]] = {
+
+      val _tariffs = (n \ "tarif" map (Tariff.fromXml))
+
+      val filtered = _tariffs.sortBy(_.startDate)
         .dropWhile(_.endDate.compareTo(from) < 0)
         .takeWhile(_.startDate.compareTo(to) <= 0)
 
-      if (filtered.isEmpty) s"no active tariffs in category $this".left
+      if (filtered.isEmpty) s"no active tariffs in category $this".failure
       else if (filtered.head.startDate.compareTo(from) > 0 || filtered.last.endDate.compareTo(to) < 0){
-        s"""tariffs are not covering date interval: first tariff start date :${tariffs.head.startDate},
-            |last tariff end date:${tariffs.last.endDate}.Provided dates: $from:, $to.
-        |""".stripMargin.left
+        s"""tariffs are not covering date interval: first tariff start date :${_tariffs.head.startDate},
+            |last tariff end date:${_tariffs.last.endDate}.Provided dates: $from:, $to.
+        |""".stripMargin.failure
       }
       else {
         filtered.sliding(2, 1).find {
           case Seq(p, n) => p.endDate != n.startDate
           case Seq() => false
-        }.<\/ {
+        }.toFailure{
           val t = (filtered.head.copy(startDate = from) +: filtered.tail)
           t.init :+ t.last.copy(endDate = to)
         }.leftMap(s => s"gap or overlap between tariffs: 1)${s(0)}, 2)${s(1)}")
       }
+    }.leftMap(err=>NonEmptyList(errLbl + err))
+
+
+
+    val rooms: ValidationNel[String, List[Room]] ={
+      n \ "room" map (Room.fromXml(_).bimap(er=>NonEmptyList(er), _ :: Nil)) reduce(_ +++ _)
     }
 
-    val catId = n \@ "id"
 
-    align(n \ "tarif" map (Tariff.fromXml))
-    .bimap (
-      err => s"categoryId=$catId:$err",
+    (tariffs |@| rooms).apply{ (_tariffs, _rooms)=>
 
-      tariffs => {
+      def prices = _tariffs.map { tariff =>
+        val dif = ChronoUnit.DAYS.between(tariff.startDate, tariff.endDate) + 1
+        Prices(tariff.roomPrice * dif, tariff.bkf * dif, tariff.eci * dif, tariff.lco * dif)
+      }.reduce(_ |+| _)
 
-        val prices = tariffs.map { tariff =>
-          val dif = ChronoUnit.DAYS.between(tariff.startDate, tariff.endDate) + 1
-          Prices(tariff.roomPrice * dif, tariff.bkf * dif, tariff.eci * dif, tariff.lco * dif)
-        }.reduce(_ |+| _)
-
-        Category(
-          catId,
-          n \@ "name",
-          n \ "room" map (Room.fromXml),
-          tariffs,
-          prices
-        )
-      }
-    )
+    Category(catId, catName, _rooms, _tariffs, prices)
+  }
 
   }
-  implicit val cw = Json.writes[Category]
 }
+
 
   case class Hotel(id: String, name: String, checkInTime: LocalTime, checkOutTime: LocalTime, categories: Seq[Category])
 
@@ -129,7 +140,6 @@ object Category {
 
         (hotelNode \ "category").map(catNode=>
           Category.fromXml(catNode, from, to)
-          .validationNel
           .map(_ :: Nil)
         ).reduce(_ +++ _).map(cats =>
           Hotel(

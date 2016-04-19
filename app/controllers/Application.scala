@@ -25,6 +25,8 @@ class Application (cache: CacheApi) extends Controller {
     //remove this method(validations are done in Model.scala):
     def validateCategory(c: Category, from: LocalDateTime, to: LocalDateTime) = {
 
+      if(c.rooms.exists(_.options.isEmpty))throw new Exception("Room should contain options")
+
       val tarifs = c.tariffs.sortBy(_.startDate)
 
       if(tarifs.isEmpty)
@@ -41,15 +43,22 @@ class Application (cache: CacheApi) extends Controller {
     val h = Seq{
       val tariff = Tariff("tarif_id", "tariff_name", date, date.plusDays(1), 10, 2, 2, 2)
       val room = Room(1, 2, 1, true, "wtf", 3, Seq("with a smell of a homless", "partially flooded"))
-      val cat = Category(
+      val cat1 = Category(
                     "cat_id",
                    "SweetCategory",
-                   Seq(room, room.copy(number = 3, twin = false, options = Nil, guestsCnt = 3)),
+                   Seq(room, room.copy(number = 3,guestsCnt = 5, options = "window to hell" :: Nil)),
                    Seq(tariff,tariff.copy(startDate=date.plusDays(1),endDate = date.plusDays(5))),
                    Prices(1000, 300, 500, 400)
                 )
-      validateCategory(cat,from,to)
-      Hotel("some_id", "Ekaterina", LocalTime.NOON, LocalTime.MIDNIGHT, Seq(cat, cat.copy(id = "id2", name = "ShitCategory")))
+       val cat2 = {
+         val _room = room.copy(number = 3, twin = false, options = "window to hell" :: Nil, guestsCnt = 3)
+         val _rooms = Seq(_room.copy(guestsCnt = 2),_room.copy(guestsCnt = 1))
+         cat1.copy(id = "id2", name = "ShitCategory", rooms = _rooms)
+       }
+
+      validateCategory(cat1,from,to)
+      validateCategory(cat2,from,to)
+      Hotel("some_id", "ekaterina1", LocalTime.NOON, LocalTime.MIDNIGHT, Seq(cat1, cat2))
     }
 
     cache.getOrElse("H:"+interval(from, to), 5.minutes)(h)
@@ -164,6 +173,7 @@ class Application (cache: CacheApi) extends Controller {
   }
 
   def filter(from: LocalDateTime, to: LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray) = Action{implicit  req =>
+    println("CALLING ENDPOINT!")
     val filtered = ecat.model.Filters(getHotels(from, to),hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray)
     Ok(views.html.pages.offers(filtered.fold(errs => throw new Exception(errs.toString()), identity )))
   }

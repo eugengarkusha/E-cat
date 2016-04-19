@@ -50,7 +50,7 @@ object Filters {
     Record(
       twin = r(_.twin),
       addGuests = r(_.additionalGuestsCnt),
-      guests = r(_.guestsCnt),
+      guests = filter[Int, Room](_.guestsCnt)(_ > _) _,
       bath = r(_.bathroom)
     )
   }
