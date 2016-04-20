@@ -128,7 +128,7 @@ class Application (cache: CacheApi) extends Controller {
     Ok(views.html.pages.news_pages.event())
   }
 
-  def reservation(hotel: String, from:String, to:String) = Action{implicit  req =>
+  def reservation(from:String, to:String) = Action{implicit  req =>
     Ok(views.html.pages.reservation(from, to))
   }
 

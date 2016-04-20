@@ -56,10 +56,7 @@ $(function () {
     //   ], $('.main-section'));
     // }
 
-    if ($('.booking-form')[0] && !$('.form-reply')[0]) {
-        $('select').selectric({
-            responsive: true
-        });
+    if ($('.makeOrder')[0]) {
 
         Date.parseDate = function( input, format ){
             return moment(input,format).toDate();

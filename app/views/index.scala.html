@@ -66,22 +66,18 @@
         </p>
       </section>
 
-      <form action="http://www.lenta.ru" class="booking-form">
-        <fieldset>
-          <legend>Закажите номер</legend>
-          <div class="form-col">
-            <label for="checkIn">Дата заселения <i class="flaticon-calendar-icons"></i></label>
-            <input type="text" name="checkIn" id="checkIn" value="Дата заселения" required readonly>
-          </div>
-          <div class="form-col">
-            <label for="checkOut">Дата выселения <i class="flaticon-calendar-icons"></i></label>
-            <input type="text" name="checkOut" id="checkOut" value="Дата выселения" required readonly>
-          </div>
-          <div class="submit-button">
-            <input type="submit" value="Заказать">
-          </div>
-        </fieldset>
-      </form>
+      <div class="makeOrder">
+        <h2>Закажите номер</h2>
+        <div class="form-col">
+          <label for="checkIn">Дата заселения <i class="flaticon-calendar-icons"></i></label>
+          <input type="text" name="checkIn" id="checkIn" value="Дата заселения" required readonly>
+        </div>
+        <div class="form-col">
+          <label for="checkOut">Дата выселения <i class="flaticon-calendar-icons"></i></label>
+          <input type="text" name="checkOut" id="checkOut" value="Дата выселения" required readonly>
+        </div>
+        <a href='#' class="makeOrder__btn" id="makeOrder__btn">Заказать</a>
+      </div>
 
     </main>
 
@@ -91,9 +87,23 @@
 
   <script>
     (function () {
-      var hellyeah = function () {
-        alert('haha');
-      }
+      var link        = document.querySelector('#makeOrder__btn'),
+          checkIn     = document.querySelector('#checkIn'),
+          checkOut    = document.querySelector('#checkOut'),
+          checkInVal  = checkIn.value,
+          checkOutVal = checkOut.value;
+
+      var reservation = function () {
+        if (checkIn.value === checkInVal || checkOut.value === checkOutVal) return;
+        var from = checkIn.value.replace(/\./g,'') + '000000',
+            to   = checkOut.value.replace(/\./g,'') + '000000';
+            console.log(from + ' ' + to);
+
+        link.href = 'reservation/' + from + '/' + to;
+      };
+
+      link.addEventListener('click', reservation);
+
     })()
   </script>
 </body>
