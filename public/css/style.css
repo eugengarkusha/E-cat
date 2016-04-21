@@ -1,5 +1,17 @@
-@import url(https://fonts.googleapis.com/css?family=Great+Vibes);
-@import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+/* great-vibes-regular - latin */
+@font-face {
+  font-family: 'Great Vibes';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Great Vibes"), local("GreatVibes-Regular"), url("fonts/great-vibes-v4-latin-regular.woff2") format("woff2"), url("fonts/great-vibes-v4-latin-regular.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+/* droid-serif-regular - latin */
+@font-face {
+  font-family: 'Droid Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Droid Serif"), local("DroidSerif"), url("fonts/droid-serif-v6-latin-regular.woff2") format("woff2"), url("fonts/droid-serif-v6-latin-regular.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 html {
   height: 100%;
   box-sizing: border-box;
@@ -417,6 +429,60 @@ main {
       background: #b19261;
       color: #fff;
       transition: background-color 0.6s ease; }
+
+.makeOrder {
+  width: 30rem;
+  margin: 5rem auto 0;
+  border: 1px solid #a6a6a6;
+  padding: 2rem 1rem 1rem; }
+
+.makeOrder__heading {
+  margin: 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #000;
+  font-family: "Great Vibes", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 2.4rem;
+  color: #000;
+  text-align: center; }
+
+.makeOrder__calendar {
+  position: relative; }
+  .makeOrder__calendar input {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin: 2rem auto;
+    padding: 1rem 1.5rem;
+    font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+    color: #000;
+    font-size: 1.6rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); }
+    .makeOrder__calendar input:hover {
+      cursor: pointer; }
+  .makeOrder__calendar i {
+    position: absolute;
+    right: 10%;
+    top: 2.5rem; }
+    .makeOrder__calendar i:before {
+      font-size: 2.2rem; }
+
+.makeOrder__btn {
+  display: block;
+  width: 14rem;
+  border: 1px solid #7D7373;
+  border-radius: 4px;
+  margin: 1.5rem auto;
+  padding: 0.8rem;
+  background: #b19261;
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
+  .makeOrder__btn:hover {
+    background: #fff;
+    color: #000;
+    text-shadow: none; }
 
 .slider {
   display: none; }
@@ -1126,6 +1192,11 @@ main {
   .page-contacts .contacts + .contacts {
     float: right; } }
 @media screen and (min-width: 720px) {
+  .makeOrder {
+    background: rgba(255, 255, 255, 0.6);
+    width: 40rem;
+    padding: 2rem; }
+
   .slider {
     display: block; }
 
@@ -1272,6 +1343,10 @@ main {
   .page-news h2 {
     margin-top: 0; } }
 @media screen and (min-width: 1200px) {
+  .makeOrder {
+    margin: 0;
+    float: left; }
+
   main {
     padding: 0 3rem 16rem; }
     main .main-section {

@@ -67,12 +67,12 @@
       </section>
 
       <div class="makeOrder">
-        <h2>Закажите номер</h2>
-        <div class="form-col">
+        <h2 class="makeOrder__heading">Закажите номер</h2>
+        <div class="form-col makeOrder__calendar">
           <i class="flaticon-calendar-icons"></i>
           <input type="text" id="checkIn" value="Дата заселения" readonly>
         </div>
-        <div class="form-col">
+        <div class="form-col makeOrder__calendar">
           <i class="flaticon-calendar-icons"></i>
           <input type="text" id="checkOut" value="Дата выселения" readonly>
         </div>
@@ -85,26 +85,5 @@
 
   @views.html.base_bottom.render(true)
 
-  <script>
-    (function () {
-      var link        = document.querySelector('#makeOrder__btn'),
-          checkIn     = document.querySelector('#checkIn'),
-          checkOut    = document.querySelector('#checkOut'),
-          checkInVal  = checkIn.value,
-          checkOutVal = checkOut.value;
-
-      var reservation = function () {
-        if (checkIn.value === checkInVal || checkOut.value === checkOutVal) return;
-        var from = checkIn.value.replace(/\./g,'') + '000000',
-            to   = checkOut.value.replace(/\./g,'') + '000000';
-            console.log(from + ' ' + to);
-
-        link.href = 'reservation/' + from + '/' + to;
-      };
-
-      link.addEventListener('click', reservation);
-
-    })()
-  </script>
 </body>
 </html>

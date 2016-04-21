@@ -72,6 +72,24 @@ $(function () {
             timepicker:false,
             validateOnBlur: true
         });
+
+        var link        = document.querySelector('#makeOrder__btn'),
+            checkIn     = document.querySelector('#checkIn'),
+            checkOut    = document.querySelector('#checkOut'),
+            checkInVal  = checkIn.value,
+            checkOutVal = checkOut.value;
+
+        var reservation = function () {
+          if (checkIn.value === checkInVal || checkOut.value === checkOutVal) return;
+          var from = checkIn.value.replace(/\./g,'') + '000000',
+              to   = checkOut.value.replace(/\./g,'') + '000000';
+              console.log(from + ' ' + to);
+
+          link.href = 'reservation/' + from + '/' + to;
+        };
+
+        link.addEventListener('click', reservation);
+
     }
 
     $('.scroll-up').click(function (event) {

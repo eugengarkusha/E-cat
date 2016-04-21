@@ -1,7 +1,23 @@
 //================================= FONTS ======================================
 
-@import url(https://fonts.googleapis.com/css?family=Great+Vibes);
-@import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+/* great-vibes-regular - latin */
+@font-face {
+  font-family: 'Great Vibes';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Great Vibes'), local('GreatVibes-Regular'),
+       url('fonts/great-vibes-v4-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+       url('fonts/great-vibes-v4-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* droid-serif-regular - latin */
+@font-face {
+  font-family: 'Droid Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Serif'), local('DroidSerif'),
+       url('fonts/droid-serif-v6-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+       url('fonts/droid-serif-v6-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
 
 //================================ COLORS ======================================
 
@@ -599,10 +615,82 @@ main {
       color: #fff;
       transition: background-color 0.6s ease;
     }
-    
+
   }
 
 }
+
+//=========================== makeOrder ========================
+.makeOrder {
+  width: 30rem;
+  margin: 5rem auto 0;
+  border: 1px solid $color-text-primary;
+  padding: 2rem 1rem 1rem;
+}
+
+.makeOrder__heading {
+  margin: 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #000;
+  @include great-vibes;
+  font-weight: normal;
+  font-size: 2.4rem;
+  color: #000;
+  text-align: center;
+}
+
+.makeOrder__calendar {
+  position: relative;
+
+  input {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin: 2rem auto;
+    padding: 1rem 1.5rem;
+    @include droid-sefir;
+    color: #000;
+    font-size: 1.6rem;
+    box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  i {
+    position: absolute;
+    right: 10%;
+    top: 2.5rem;
+
+    &:before {
+      font-size: 2.2rem;
+    }
+  }
+
+}
+
+.makeOrder__btn {
+  display: block;
+  width: 14rem;
+  border: 1px solid #7D7373;
+  border-radius: 4px;
+  margin: 1.5rem auto;
+  padding: 0.8rem;
+  background: $color-primary;
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0,0,0,.5);
+
+  &:hover {
+    background: #fff;
+    color: #000;
+    text-shadow: none;
+  }
+}
+
+// =============================================================
 
 .slider {
   display: none;
@@ -995,7 +1083,7 @@ main {
 //========================PAGE RESERVATION====================
 
 .page-reservation {
-  
+
   .category-item {
     margin-bottom: 1.2rem;
     padding: 0.5rem;
@@ -1006,26 +1094,26 @@ main {
   .category-item__gallery {
     display: none;
   }
-  
+
   .category-list {
     padding: 0.8rem;
   }
-  
+
   .category-item__detail {
     padding: 1rem 0;
   }
-  
+
   .options__item {
     display: inline-block;
     width: 100%;
     padding: 0.5rem;
     border-bottom: 1px dotted rgba(0,0,0,.25);
   }
-  
+
   .options__item--guest, .options__item--rooms {
     width: 100%;
   }
-  
+
   .options__item__data--select {
     position: relative;
     display: inline-block;
@@ -1035,47 +1123,47 @@ main {
     margin-bottom: -2rem;
     padding-bottom: 0.4rem;
   }
-  
+
   .options__item__data--checkbox {
-    
+
     input {
       width: 2.5rem;
       height: 2.5rem;
     }
-    
+
   }
-  
+
   .options__item__data {
     float: right;
   }
-  
+
   .options__item__description {
     vertical-align: top;
   }
-  
+
   .category__item_result {
     clear: both;
   }
-  
+
   .category__item__result--price {
     float: left;
   }
-  
+
   .category__item__result--add-to-order {
     float: right;
     padding-right: 0.5rem;
-    
+
     span {
       vertical-align: top;
     }
-    
+
     input {
       width: 2.5rem;
       height: 2.5rem;
     }
-    
+
   }
-    
+
  }
 
 //==========================PAGE GALLERY=======================
@@ -1822,6 +1910,12 @@ main {
 
 @media screen and (min-width: 720px) {
 
+  .makeOrder {
+    background: rgba(255,255,255,.6);
+    width: 40rem;
+    padding: 2rem;
+  }
+
   .slider {
     display: block;
   }
@@ -1885,18 +1979,18 @@ main {
       padding: 1.5rem;
       padding-top: 0.1rem;
     }
-    
+
     .category-item__detail {
       float: left;
       width: 40%;
       padding-bottom: 0;
     }
-    
+
     .options {
       float: right;
       width: 55%;
     }
-    
+
     .category__item_result {
       width: 56%;
       float: right;
@@ -1963,7 +2057,7 @@ main {
       display: inline-block;
       margin-right: 0.6rem;
     }
-    
+
     .header-main-menu__news {
         margin-right: 17.5rem;
     }
@@ -2044,8 +2138,8 @@ main {
       margin-bottom: 1rem;
     }
   }
-  
-  
+
+
 
   .page-gallery, .page-blog {
 
@@ -2098,6 +2192,12 @@ main {
 //======================= 1200 =========================
 
 @media screen and (min-width: 1200px) {
+
+  .makeOrder {
+    margin: 0;
+    float: left;
+  }
+
   main {
 
     padding: 0 3rem 16rem;
@@ -2180,7 +2280,7 @@ main {
 }
 
 @media screen and (min-width: 1300px) {
-  
+
     .page-reservation {
 
 
@@ -2191,5 +2291,5 @@ main {
       }
 
   }
-  
+
 }
