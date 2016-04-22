@@ -24,9 +24,9 @@ object Filters {
     }
 
     filterByNonEmpty(lens[Hotel] >> 'categories)(hotels.filter(hf)) { cats =>
-      filterByNonEmpty(lens[Category] >> 'rooms)(cats){rooms =>
+      filterByNonEmpty(lens[Category] >> 'rooms)(cats)(_.filter(rf)) /*=>
         filterByNonEmpty(lens[Room] >> 'options)(rooms.filter(rf))(_.filter(of))
-      }
+      }*/
     }
   }
 
@@ -50,7 +50,7 @@ object Filters {
     Record(
       twin = r(_.twin),
       addGuests = r(_.additionalGuestsCnt),
-      guests = filter[Int, Room](_.guestsCnt)(_ > _) _,
+      guests = filter[Int, Room](_.guestsCnt)(_ >= _) _,
       bath = r(_.bathroom)
     )
   }

@@ -24,7 +24,7 @@ object Room{
   def fromXml(n: Node): Validation[String, Room] = {
     val options = (n \ "option")
 
-    Success(options).ensure("room options may not be empty")(_.isEmpty)
+    Success(options)//.ensure("room options may not be empty")(_.isEmpty)
     .map(opts =>
       Room(n \@ "num" toInt,
         n \@ "guests" toInt,
