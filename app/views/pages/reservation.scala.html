@@ -191,7 +191,9 @@
           guests: elemAndVal(elem, '#peopleQuantity', 'number').value
         }
       };
+      if (filters.hotel.name === '') delete filters.hotel.name;
       console.timeEnd('collectFilters');
+      console.log(filters);
       return filters;
     };
 
@@ -235,7 +237,6 @@
           $select.val(value);
 
           console.timeEnd('changeSelect');
-          // beautySelect();
         })()
       }
 
@@ -300,7 +301,6 @@
 
             $.ajax(jsRoutes.controllers.Application.filter(req.from(), req.to(), JSON.stringify(req.hotel), JSON.stringify(req.room), '[]'))
             .done(function( response ) {
-              console.log(response);
 
               $('.category-list').replaceWith(response);
 
