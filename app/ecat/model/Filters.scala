@@ -38,9 +38,12 @@ object Filters {
   private def combine[T](fs: Seq[Filter[T]]): Filter[T] = (t:T) => fs.foldLeft(true)((agr, n) => agr && n(t))
 
   private def setupFilters[T](settings: collection.Map[String, JsValue], jsFilters: collection.Map[String, JsFilter[T]]): ValidationNel[String, Filter[T]] = {
-    settings.map{case (k,v)=>
-      jsFilters.get(k).\/>(s"filter '$k not found").flatMap(_(v)).validationNel.map(_ :: Nil)
-    }.reduce(_ +++ _).map(combine[T])
+    if(settings.isEmpty)((_:T)=>true).successNel
+    else{
+      settings.map{case (k,v)=>
+        jsFilters.get(k).\/>(s"filter '$k not found").flatMap(_(v)).validationNel.map(_ :: Nil)
+      }.reduce(_ +++ _).map(combine[T])
+    }
   }
 
   private val roomOptPureFilter = eqFilter[String,String](identity) _

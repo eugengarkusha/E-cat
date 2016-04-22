@@ -140,7 +140,6 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   }
 
   def filter(from: LocalDateTime, to: LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray) = Action{implicit  req =>
-    println("CALLING ENDPOINT!")
     val filtered = ecat.model.Filters(getHotels(from, to),hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray)
     Ok(views.html.pages.offers(filtered.fold(errs => throw new Exception(errs.toString()), identity )))
   }
