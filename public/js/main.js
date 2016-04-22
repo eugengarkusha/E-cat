@@ -56,7 +56,7 @@ $(function () {
     //   ], $('.main-section'));
     // }
 
-    if ($('.makeOrder')[0]) {
+    if ($('.makeOrder')[0] || $('.booking-form')[0]) {
 
         Date.parseDate = function( input, format ){
             return moment(input,format).toDate();
