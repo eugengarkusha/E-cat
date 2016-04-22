@@ -1,0 +1,974 @@
+[ {
+  "id" : "000000002",
+  "name" : "Екатерина II",
+  "checkInTime" : 32400,
+  "checkOutTime" : 72000,
+  "categories" : [ {
+    "id" : "000000002",
+    "name" : "VIP апартаменты",
+    "rooms" : [ {
+      "number" : 101,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 3,
+      "twin" : false,
+      "bathroom" : "2=Ванная",
+      "level" : 1,
+      "options" : [ "Окна во двор" ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 2580,
+      "bkf" : 30,
+      "eci" : 1290,
+      "lco" : 1290
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 3000,
+      "bkf" : 30,
+      "eci" : 1500,
+      "lco" : 1500
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000004",
+    "name" : "Полулюкс",
+    "rooms" : [ {
+      "number" : 401,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Окна во двор" ]
+    }, {
+      "number" : 402,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Вид на море" ]
+    }, {
+      "number" : 403,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Окна во двор" ]
+    }, {
+      "number" : 404,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Вид на море" ]
+    }, {
+      "number" : 405,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Окна во двор" ]
+    }, {
+      "number" : 406,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Вид на море" ]
+    }, {
+      "number" : 407,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Окна во двор" ]
+    }, {
+      "number" : 408,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Вид на море", "Может быть твином" ]
+    }, {
+      "number" : 409,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Окна во двор" ]
+    }, {
+      "number" : 410,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Вид на море" ]
+    }, {
+      "number" : 411,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Окна во двор" ]
+    }, {
+      "number" : 412,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 4,
+      "options" : [ "Вид на море", "Может быть твином" ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-02-18T11:11:11",
+      "roomPrice" : 1600,
+      "bkf" : 30,
+      "eci" : 800,
+      "lco" : 800
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-19T00:00:00",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1680,
+      "bkf" : 30,
+      "eci" : 840,
+      "lco" : 840
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-07-31T00:00:00",
+      "roomPrice" : 2000,
+      "bkf" : 30,
+      "eci" : 1000,
+      "lco" : 1000
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-08-01T00:00:00",
+      "endDate" : "2016-08-30T00:00:00",
+      "roomPrice" : 2080,
+      "bkf" : 30,
+      "eci" : 1040,
+      "lco" : 1040
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-08-31T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2000,
+      "bkf" : 30,
+      "eci" : 1000,
+      "lco" : 1000
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000003",
+    "name" : "Эконом",
+    "rooms" : [ {
+      "number" : 501,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ "Окна во двор", "Может быть твином" ]
+    }, {
+      "number" : 502,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ "Вид на море" ]
+    }, {
+      "number" : 503,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 504,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 505,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 506,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 507,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 508,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 509,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 510,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 511,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 512,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    }, {
+      "number" : 514,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 0,
+      "twin" : true,
+      "bathroom" : "1=Душ",
+      "level" : 5,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1280,
+      "bkf" : 30,
+      "eci" : 640,
+      "lco" : 640
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-07-31T00:00:00",
+      "roomPrice" : 1600,
+      "bkf" : 30,
+      "eci" : 800,
+      "lco" : 800
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-08-01T00:00:00",
+      "endDate" : "2016-08-30T00:00:00",
+      "roomPrice" : 1680,
+      "bkf" : 30,
+      "eci" : 840,
+      "lco" : 840
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-08-31T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 1600,
+      "bkf" : 30,
+      "eci" : 800,
+      "lco" : 800
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  } ]
+}, {
+  "id" : "000000001",
+  "name" : "Екатерина",
+  "checkInTime" : 32400,
+  "checkOutTime" : 72000,
+  "categories" : [ {
+    "id" : "000000006",
+    "name" : "Сакура",
+    "rooms" : [ {
+      "number" : 201,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 2,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1700,
+      "bkf" : 70,
+      "eci" : 850,
+      "lco" : 850
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2200,
+      "bkf" : 70,
+      "eci" : 1100,
+      "lco" : 1100
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000007",
+    "name" : "Пион",
+    "rooms" : [ {
+      "number" : 202,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1500,
+      "bkf" : 70,
+      "eci" : 750,
+      "lco" : 750
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2000,
+      "bkf" : 70,
+      "eci" : 1000,
+      "lco" : 1000
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000008",
+    "name" : "Орхидея",
+    "rooms" : [ {
+      "number" : 203,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1500,
+      "bkf" : 70,
+      "eci" : 750,
+      "lco" : 750
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2000,
+      "bkf" : 70,
+      "eci" : 1000,
+      "lco" : 1000
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000011",
+    "name" : "Лотос",
+    "rooms" : [ {
+      "number" : 204,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 2,
+      "twin" : false,
+      "bathroom" : "2=Ванная",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 2000,
+      "bkf" : 70,
+      "eci" : 1000,
+      "lco" : 1000
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2500,
+      "bkf" : 70,
+      "eci" : 1250,
+      "lco" : 1250
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000009",
+    "name" : "Мак",
+    "rooms" : [ {
+      "number" : 205,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 2,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1700,
+      "bkf" : 70,
+      "eci" : 850,
+      "lco" : 850
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2200,
+      "bkf" : 70,
+      "eci" : 1100,
+      "lco" : 1100
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000010",
+    "name" : "Чайная роза",
+    "rooms" : [ {
+      "number" : 206,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 2,
+      "twin" : false,
+      "bathroom" : "2=Ванная",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 2000,
+      "bkf" : 70,
+      "eci" : 1000,
+      "lco" : 1000
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2500,
+      "bkf" : 70,
+      "eci" : 1250,
+      "lco" : 1250
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000013",
+    "name" : "Hi-tech",
+    "rooms" : [ {
+      "number" : 207,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 2,
+      "twin" : false,
+      "bathroom" : "2=Ванная",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-02-29T00:00:00",
+      "roomPrice" : 2400,
+      "bkf" : 70,
+      "eci" : 1200,
+      "lco" : 1200
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000014",
+    "name" : "Роза",
+    "rooms" : [ {
+      "number" : 208,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 2,
+      "twin" : false,
+      "bathroom" : "2=Ванная",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-02-29T00:00:00",
+      "roomPrice" : 1700,
+      "bkf" : 70,
+      "eci" : 850,
+      "lco" : 850
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000012",
+    "name" : "VIP",
+    "rooms" : [ {
+      "number" : 209,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 2,
+      "twin" : false,
+      "bathroom" : "2=Ванная",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-02-29T00:00:00",
+      "roomPrice" : 2400,
+      "bkf" : 70,
+      "eci" : 1200,
+      "lco" : 1200
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000015",
+    "name" : "Нарцисс",
+    "rooms" : [ {
+      "number" : 210,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-02-29T00:00:00",
+      "roomPrice" : 1500,
+      "bkf" : 70,
+      "eci" : 750,
+      "lco" : 750
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000016",
+    "name" : "Ландыш",
+    "rooms" : [ {
+      "number" : 211,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-02-29T00:00:00",
+      "roomPrice" : 1300,
+      "bkf" : 70,
+      "eci" : 650,
+      "lco" : 650
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000017",
+    "name" : "Сауна",
+    "rooms" : [ {
+      "number" : 212,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "2=Ванная",
+      "level" : 2,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-02-29T00:00:00",
+      "roomPrice" : 2200,
+      "bkf" : 70,
+      "eci" : 1100,
+      "lco" : 1100
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000018",
+    "name" : "Карамель ",
+    "rooms" : [ {
+      "number" : 301,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 3,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1600,
+      "bkf" : 70,
+      "eci" : 800,
+      "lco" : 800
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2000,
+      "bkf" : 70,
+      "eci" : 1000,
+      "lco" : 1000
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000019",
+    "name" : "Лилия",
+    "rooms" : [ {
+      "number" : 302,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 3,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1700,
+      "bkf" : 70,
+      "eci" : 850,
+      "lco" : 850
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2200,
+      "bkf" : 70,
+      "eci" : 1100,
+      "lco" : 1100
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000020",
+    "name" : "Романтик",
+    "rooms" : [ {
+      "number" : 303,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 3,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-02-29T00:00:00",
+      "roomPrice" : 1600,
+      "bkf" : 70,
+      "eci" : 800,
+      "lco" : 800
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-03-01T00:00:00",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1700,
+      "bkf" : 70,
+      "eci" : 850,
+      "lco" : 850
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2200,
+      "bkf" : 70,
+      "eci" : 1100,
+      "lco" : 1100
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000021",
+    "name" : "Красная роза",
+    "rooms" : [ {
+      "number" : 304,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 2,
+      "twin" : false,
+      "bathroom" : "2=Ванная",
+      "level" : 3,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 2400,
+      "bkf" : 70,
+      "eci" : 1200,
+      "lco" : 1200
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2900,
+      "bkf" : 70,
+      "eci" : 1450,
+      "lco" : 1450
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000022",
+    "name" : "Тюльпан",
+    "rooms" : [ {
+      "number" : 305,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 1,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 3,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1300,
+      "bkf" : 70,
+      "eci" : 650,
+      "lco" : 650
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 1800,
+      "bkf" : 70,
+      "eci" : 900,
+      "lco" : 900
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  }, {
+    "id" : "000000023",
+    "name" : "Ромашка",
+    "rooms" : [ {
+      "number" : 306,
+      "guestsCnt" : 2,
+      "additionalGuestsCnt" : 2,
+      "twin" : false,
+      "bathroom" : "1=Душ",
+      "level" : 3,
+      "options" : [ ]
+    } ],
+    "tariffs" : [ {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-02-18T11:11:11",
+      "endDate" : "2016-03-31T00:00:00",
+      "roomPrice" : 1700,
+      "bkf" : 70,
+      "eci" : 850,
+      "lco" : 850
+    }, {
+      "id" : "000000008",
+      "name" : "ПРОЖИВАНИЕ",
+      "startDate" : "2016-04-01T00:00:00",
+      "endDate" : "2016-09-30T00:00:00",
+      "roomPrice" : 2200,
+      "bkf" : 70,
+      "eci" : 1100,
+      "lco" : 1100
+    } ],
+    "prices" : {
+      "room" : 1000,
+      "bkf" : 100,
+      "eci" : 150,
+      "lco" : 250
+    }
+  } ]
+} ]

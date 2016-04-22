@@ -11,5 +11,5 @@ class AppLoader extends ApplicationLoader {
 }
 
 class Components(context: Context) extends BuiltInComponentsFromContext(context) with EhCacheComponents{
-  lazy val router = new Routes(httpErrorHandler, new AppController(defaultCacheApi), new Assets(httpErrorHandler) )
+  lazy val router = new Routes(httpErrorHandler, new AppController(defaultCacheApi, context.environment), new Assets(httpErrorHandler) )
 }

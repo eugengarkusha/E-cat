@@ -4,10 +4,11 @@ import java.time.temporal.ChronoUnit
 import java.time.{LocalDateTime, LocalTime}
 
 import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt, _}
-import play.api.libs.json.Json
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 import ecat.util.JsonFormats._
 import scala.xml.Node
-import scalaz.{Ordering=>_, _}
+import scalaz.{Ordering => _, _}
 import Scalaz._
 import shapeless.contrib.scalaz.instances._
 
@@ -35,7 +36,7 @@ object Room{
     )
   }
 
-  implicit val rw = Json.writes[Room]
+  implicit val rw = Json.format[Room]
 
 }
 
@@ -51,9 +52,10 @@ object Tariff{
     (n \@"roomprice").toDouble * 100 toLong,
     (n \@"bkfprice").toDouble * 100 toLong,
     (n \@"eciprice").toDouble * 100 toLong,
-    (n \@"lcoprice").toDouble * 100 toLong)
+    (n \@"lcoprice").toDouble * 100 toLong
+  )
 
-  implicit val tw = Json.writes[Tariff]
+  implicit val tw = Json.format[Tariff]
 }
 
 
@@ -62,7 +64,7 @@ case class Prices(room: Long, bkf: Long, eci: Long, lco: Long)
 object Prices{
   def fromLong(l: Long) = l.toDouble / 100
   implicit val pm = Monoid[Prices]
-  implicit val pw = Json.writes[Prices]
+  implicit val pf = Json.format[Prices]
 }
 
 case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tariff], prices: Prices){
@@ -72,7 +74,7 @@ case class Category (id: String, name:String, rooms: Seq[Room], tariffs: Seq[Tar
 
 
 object Category {
-  implicit val cw = Json.writes[Category]
+
   def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): ValidationNel[String, Category] = {
 
     val catId = n \@ "id"
@@ -121,10 +123,17 @@ object Category {
         Prices(tariff.roomPrice * dif, tariff.bkf * dif, tariff.eci * dif, tariff.lco * dif)
       }.reduce(_ |+| _)
 
-    Category(catId, catName, _rooms, _tariffs, prices)
-  }
+      Category(catId, catName, _rooms, _tariffs, prices)
+    }
 
   }
+  implicit val cw = Json.writes[Category]
+  implicit val cr:Reads[Category] ={
+    (__ \ "id").read[String] and
+    (__ \ "name").read[String] and
+    (__ \ "rooms").read[Seq[Room]] and
+    (__ \ "tariffs").read[Seq[Tariff]]
+  }.apply((i,n,r,t) => Category(i,n,r,t,Prices(1000,100,150,250)))
 }
 
 
@@ -154,7 +163,7 @@ object Category {
     }
 
 
-    implicit val hw = Json.writes[Hotel]
+    implicit val hw = Json.format[Hotel]
 
   }
 
