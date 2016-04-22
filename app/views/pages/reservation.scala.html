@@ -73,8 +73,8 @@
               <div class="form-col">
                 <label for="hotel">Отель</label>
                 <select name="hotel" id="hotel" required>
-                  <option value="ekaterina1">Екатерина</option>
-                  <option value="ekaterina2">Екатерина II</option>
+                  <option value="Екатерина">Екатерина</option>
+                  <option value="Екатерина II">Екатерина II</option>
                 </select>
               </div>
 
@@ -114,19 +114,22 @@
   };
 
     var elemAndVal = function (container, selector, valueType) {
-      // console.log('elemAndVal');
+      console.time('elemAndVal');
       var result = {};
       result.element = container.querySelector(selector);
 
       result.value = (function () {
         if (result.element.type === 'checkbox') {
+          console.timeEnd('elemAndVal');
           return result.element.checked ? true : false;
         }
 
         if(result.element.tagName === "SELECT" || result.element.tagName === "INPUT") {
+          console.timeEnd('elemAndVal');
           return result.element.value;
         }
 
+        console.timeEnd('elemAndVal');
         return result.element.text;
 
       })();
@@ -135,12 +138,14 @@
         result.value = +result.value
       }
 
+      console.timeEnd('elemAndVal');
+
       return result;
 
     };
 
     var collectOpts = function (cat) {
-      // console.log('collectOpts');
+      console.time('collectOpts');
 
       var options = {
 
@@ -163,12 +168,13 @@
         hash: +(cat).dataset.hash
 
       };
-
+      console.timeEnd('collectOpts');
       return options;
 
     };
 
     var collectFilters = function (elem) {
+      console.time('collectFilters');
       var filters = {
         from: function () {
           return elemAndVal(elem, '#checkIn').value.replace(/\./g,'') + '000000';
@@ -184,11 +190,12 @@
           guests: elemAndVal(elem, '#peopleQuantity', 'number').value
         }
       };
+      console.timeEnd('collectFilters');
       return filters;
     };
 
     var stringOpts = function (cat) {
-      // console.log('stringOpts');
+      console.time('stringOpts');
 
       var opt = collectOpts(cat);
 
@@ -202,7 +209,7 @@
           'eci'      : opt.eci.value,
           'lco'      : opt.lco.value
       });
-
+      console.timeEnd('stringOpts');
       return data;
 
     };
@@ -210,7 +217,7 @@
     // ***************** Setup Options ***************************
 
     var changeSelect = function (container, elem, maxCnt) {
-      // console.log('changeSelect');
+      console.time('changeSelect');
 
       if ($(container).find(elem + 'option').length !== maxCnt) {
         (function () {
@@ -226,36 +233,38 @@
 
           $select.val(value);
 
-          beautySelect();
-
+          console.timeEnd('changeSelect');
+          // beautySelect();
         })()
       }
 
     };
 
     var setupOpt = function (data, cat) {
-      // console.log('setupOpt');
+      console.time('setupOpt');
 
-      $(cat).find('[data-price]').text(data.price);
+      // $(cat).find('[data-price]').text(data.price);
 
       changeSelect(cat, '[data-guestscnt]', data.maxGuestCnt);
 
       changeSelect(cat, '[data-roomcnt]', data.maxRoomCnt);
+
+      console.timeEnd('setupOpt');
 
     };
 
     // ***************************End of setup options***********************
 
     var changeCat = function (cat) {
-      // console.log('changeCat');
+      console.time('changeCat');
 
-      cat = cat || '.category-item';
+      cat = cat || '.category-list';
 
       $(cat).change(function(e) {
 
         var from    = @from,
             to      = @to,
-            cat     = e.currentTarget,
+            cat     = $('.category-item').has(e.target)[0],
             reqData = stringOpts(cat);
 
         $.ajax(jsRoutes.controllers.Application.category(from, to, reqData))
@@ -268,16 +277,18 @@
             console.log($(category).attr('data-catid'));
             changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
           })() :
+          $(cat).find('[data-price]').text(resp.price);
            setupOpt(resp, cat);
 
            beautySelect();
-
+           console.timeEnd('changeCat');
         });
 
       });
     };
 
     var changeFilter = function (selector) {
+      console.time('changeFilter');
       $(selector).change(function(e) {
         var from      = @from,
             to        = @to,
@@ -295,7 +306,7 @@
               beautySelect();
 
               changeCat();
-
+              console.timeEnd('changeFilter');
             });
       });
     };
@@ -311,7 +322,7 @@
 
         beautySelect();
 
-        changeCat('.category-item');
+        changeCat('.category-list');
 
         changeFilter($('.booking-form')[0]);
 
