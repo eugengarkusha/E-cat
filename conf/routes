@@ -23,7 +23,7 @@ GET     /event                                    controllers.Application.event
 # GET     /cat                     controllers.Application.cat
 
 #Ajax
-GET     /category/:from/:to                       controllers.Application.category(from:LocalDateTime,to:LocalDateTime, c: CategoryCtrl)
+GET     /category/:from/:to                       controllers.Application.category(from:LocalDateTime,to:LocalDateTime, c: CategoryCtrl, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters: JsArray)
 #TODO: JsObjects in signature? Think of validation.
 GET     /filters/:from/:to                        controllers.Application.filter(from:LocalDateTime,to:LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters: JsArray)
 

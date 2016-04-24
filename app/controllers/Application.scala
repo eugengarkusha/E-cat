@@ -14,7 +14,7 @@ import ecat.util.DateTime.localDateTimeOrdering
 
 import scala.concurrent.duration._
 import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
-
+import ecat.model.Filters
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import ecat.util.DateTime.interval
@@ -113,10 +113,12 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
 
 
-  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl) = Action.async{req =>
+  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray) = Action.async{req =>
     getHotels(from, to).map { hotels =>
       val resp = for {
-        h <- hotels.find(_.id == ctrl.hotelId)
+        h <- Filters(hotels, hotelFilters, roomFilters, roomOptFilters)
+            .valueOr(err=>throw new Exception(err.toString))
+            .find(_.id == ctrl.hotelId)
         cat <- h.categories.find(_.id == ctrl.catId)
       } yield {
 
@@ -149,7 +151,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
   def filter(from: LocalDateTime, to: LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray) = Action.async{implicit  req =>
     getHotels(from, to).map { hotels =>
-      val filtered = ecat.model.Filters(hotels, hotelFilters: JsObject, roomFilters: JsObject, roomOptFilters: JsArray)
+      val filtered = Filters(hotels, hotelFilters: JsObject, roomFilters: JsObject, roomOptFilters: JsArray)
       Ok(views.html.pages.offers(filtered.fold(errs => throw new Exception(errs.toString()), identity)))
     }
   }
