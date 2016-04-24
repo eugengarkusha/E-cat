@@ -192,6 +192,7 @@
         }
       };
       if (filters.hotel.name === '') delete filters.hotel.name;
+      if (filters.room.twin === false) delete filters.room.twin;
       console.timeEnd('collectFilters');
       console.log(filters);
       return filters;
@@ -245,8 +246,6 @@
     var setupOpt = function (data, cat) {
       console.time('setupOpt');
 
-      // $(cat).find('[data-price]').text(data.price);
-
       changeSelect(cat, '[data-guestscnt]', data.maxGuestCnt);
 
       changeSelect(cat, '[data-roomcnt]', data.maxRoomCnt);
@@ -279,7 +278,9 @@
             console.log($(category).attr('data-catid'));
             changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
           })() :
+          console.log(resp.price);
           $(cat).find('[data-price]').text(resp.price);
+
            setupOpt(resp, cat);
 
            beautySelect();
