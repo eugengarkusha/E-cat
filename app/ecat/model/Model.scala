@@ -100,6 +100,7 @@ object Category {
       }
       else {
         filtered.sliding(2, 1).find {
+          case Seq(t) => false
           case Seq(p, n) => p.endDate != n.startDate
           case Seq() => false
         }.toFailure{

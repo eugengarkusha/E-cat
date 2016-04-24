@@ -24,11 +24,19 @@ import play.api.Play
 class Application (cache: CacheApi, env: play.api.Environment ) extends Controller {
 
   //replace with real proxy call
-  private def getHotels(from: LocalDateTime, to: LocalDateTime): Seq[Hotel] ={
+  private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
 
-    def hotels = Json.parse(scala.io.Source.fromFile(env.getFile("conf/json")).mkString).as[Seq[Hotel]]
 
-    cache.getOrElse("H:"+interval(from, to), 5.minutes)(hotels)
+    def lbl = "H:"+interval(from, to)
+//    def hotels = Json.parse(scala.io.Source.fromFile(env.getFile("conf/json")).mkString).as[Seq[Hotel]]
+    def  load = Future(proxy.getNomSvobod(fmt.format(from), fmt.format(to))).map { s =>
+      val h = Hotel.fromXml(scala.xml.XML.loadString(s), from, to.minusDays(1)).fold(err => throw new Exception(err.toString), identity)
+      cache.set(lbl,h, 3.minutes)
+      h
+    }
+
+    cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse(load)
+//    hotels
   }
 
 
@@ -48,14 +56,14 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
   def getAvailableRooms(from: LocalDateTime, to: LocalDateTime)= Action.async{
     Future(proxy.getNomSvobod(fmt.format(from), fmt.format(to))).map{s=>
-      val hotels = Hotel.fromXml(scala.xml.XML.loadString(s), from, to).fold(err=> throw new Exception(err.toString), identity)
+      val hotels = Hotel.fromXml(scala.xml.XML.loadString(s), from, to.minusDays(1)).fold(err=> throw new Exception(err.toString), identity)
       //cache.set()
       Ok(Json.toJson(hotels))
     }
   }
 
-  def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action {  implicit req =>
-    Ok(views.html.pages.offers(getHotels(from,to)))
+  def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action.async {  implicit req =>
+    getHotels(from,to).map(r=>Ok(views.html.pages.offers(r)))
   }
 
   def main = Action{
@@ -105,43 +113,45 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
 
 
-  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl) = Action{req =>
+  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl) = Action.async{req =>
+    getHotels(from, to).map { hotels =>
+      val resp = for {
+        h <- hotels.find(_.id == ctrl.hotelId)
+        cat <- h.categories.find(_.id == ctrl.catId)
+      } yield {
 
-    val resp = for{
-      h   <- getHotels(from, to).find(_.id == ctrl.hotelId)
-      cat <- h.categories.find(_.id == ctrl.catId)
-    } yield{
+        def redraw = Json.obj(
+          "changed" -> true,
+          "categoryHtml" -> views.html.pages.category.render(cat, h.id, req).toString
+        )
 
-      def redraw = Json.obj(
-          "changed"-> true,
-          "categoryHtml"-> views.html.pages.category.render(cat, h.id, req).toString
-      )
+        if (cat.hashCode == ctrl.hash) {
+          try {
+            Json.obj(
+              "changed" -> false,
+              "price" -> ctrl.price(cat.prices),
+              "maxGuestCnt" -> cat.maxGuestCnt(ctrl.roomCnt),
+              "maxRoomCnt" -> cat.maxRoomCnt(ctrl.guestsCnt)
+            )
+          } catch {
+            //todo: handling situation where hash matched but cats are not equal(redraw category and log errors)
+            //case t:Throwable => report(t); redraw
+            //lets look if we encounter these situations in development
+            case t: Throwable => throw t
+          }
+        } else redraw
 
-      if(cat.hashCode == ctrl.hash) {
-        try {
-          Json.obj(
-            "changed" -> false,
-            "price" -> ctrl.price(cat.prices),
-            "maxGuestCnt" -> cat.maxGuestCnt(ctrl.roomCnt),
-            "maxRoomCnt" -> cat.maxRoomCnt(ctrl.guestsCnt)
-          )
-        }catch{
-          //todo: handling situation where hash matched but cats are not equal(redraw category and log errors)
-          //case t:Throwable => report(t); redraw
-          //lets look if we encounter these situations in development
-          case t:Throwable => throw t
-        }
-      }else redraw
+      }
 
+      Ok(resp.getOrElse(Json.obj("changed" -> true, "categoryHtml" -> "")))
     }
-
-    Ok(resp.getOrElse(Json.obj("changed" -> true, "categoryHtml" -> "")))
-
   }
 
-  def filter(from: LocalDateTime, to: LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray) = Action{implicit  req =>
-    val filtered = ecat.model.Filters(getHotels(from, to),hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray)
-    Ok(views.html.pages.offers(filtered.fold(errs => throw new Exception(errs.toString()), identity )))
+  def filter(from: LocalDateTime, to: LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray) = Action.async{implicit  req =>
+    getHotels(from, to).map { hotels =>
+      val filtered = ecat.model.Filters(hotels, hotelFilters: JsObject, roomFilters: JsObject, roomOptFilters: JsArray)
+      Ok(views.html.pages.offers(filtered.fold(errs => throw new Exception(errs.toString()), identity)))
+    }
   }
 
 
