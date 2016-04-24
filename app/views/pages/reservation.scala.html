@@ -114,6 +114,8 @@
     });
   };
 
+  var globalFilt = {};
+
     var elemAndVal = function (container, selector, valueType) {
       console.time('elemAndVal');
       var result = {};
@@ -193,6 +195,11 @@
       };
       if (filters.hotel.name === '') delete filters.hotel.name;
       if (filters.room.twin === false) delete filters.room.twin;
+      globalFilt = {
+        hotel: filters.hotel,
+        room: filters.room,
+        opt: []
+      };
       console.timeEnd('collectFilters');
       console.log(filters);
       return filters;
@@ -211,7 +218,10 @@
           'roomCnt'  : opt.roomCnt.value,
           'bkf'      : opt.breakfast.value,
           'eci'      : opt.eci.value,
-          'lco'      : opt.lco.value
+          'lco'      : opt.lco.value,
+          'hotel'    : globalFilt.hotel,
+          'room'     : globalFilt.room,
+          'opt'      : globalFilt.opt
       });
       console.timeEnd('stringOpts');
       return data;
@@ -267,6 +277,8 @@
             to      = @to,
             cat     = $('.category-item').has(e.target)[0],
             reqData = stringOpts(cat);
+
+            console.log(reqData);
 
         $.ajax(jsRoutes.controllers.Application.category(from, to, reqData))
         .done(function( resp ) {
