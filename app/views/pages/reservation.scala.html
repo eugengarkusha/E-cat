@@ -340,6 +340,33 @@
 
         changeFilter($('.booking-form')[0]);
 
+        (function () {
+          var min = $('#checkIn').val();
+          var max = $('#checkOut').val();
+          console.log('checkIn value: ' + min);
+          $('#checkOut').datetimepicker({
+              format:'YYYY.MM.DD',
+              formatDate:'YYYY.MM.DD',
+              timepicker:false,
+              validateOnBlur: true,
+              scrollMonth: false,
+              scrollTime: false,
+              minDate: min
+          });
+
+          $('#checkIn').datetimepicker({
+              format:'YYYY.MM.DD',
+              formatDate:'YYYY.MM.DD',
+              timepicker:false,
+              validateOnBlur: true,
+              scrollMonth: false,
+              scrollTime: false,
+              minDate: 0,
+              maxDate: max
+          });
+
+        })();
+
     });
 
   </script>

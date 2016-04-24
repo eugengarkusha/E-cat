@@ -90,6 +90,20 @@ $(function () {
           });
         });
 
+        $('#checkOut').change(function(e) {
+          var max = document.querySelector('#checkOut').value;
+          $('#checkIn').datetimepicker({
+              format:'YYYY.MM.DD',
+              formatDate:'YYYY.MM.DD',
+              timepicker:false,
+              validateOnBlur: true,
+              scrollMonth: false,
+              scrollTime: false,
+              minDate: 0,
+              maxDate: max
+          });
+        });
+
         if($('.makeOrder')[0]) {
           var link        = document.querySelector('#makeOrder__btn'),
               checkIn     = document.querySelector('#checkIn'),
