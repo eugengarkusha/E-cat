@@ -66,11 +66,28 @@ $(function () {
         };
 
         $.datetimepicker.setLocale('ru');
-        $('#checkIn, #checkOut').datetimepicker({
+        $('#checkIn').datetimepicker({
             format:'YYYY.MM.DD',
             formatDate:'YYYY.MM.DD',
             timepicker:false,
-            validateOnBlur: true
+            validateOnBlur: true,
+            scrollMonth: false,
+            scrollTime: false,
+            minDate: 0
+        });
+
+        $('#checkIn').change(function(e) {
+          console.log(document.querySelector('#checkIn').value);
+          var min = document.querySelector('#checkIn').value;
+          $('#checkOut').datetimepicker({
+              format:'YYYY.MM.DD',
+              formatDate:'YYYY.MM.DD',
+              timepicker:false,
+              validateOnBlur: true,
+              scrollMonth: false,
+              scrollTime: false,
+              minDate: min
+          });
         });
 
         if($('.makeOrder')[0]) {
@@ -81,9 +98,34 @@ $(function () {
               checkOutVal = checkOut.value;
 
           var reservation = function () {
+
             if (checkIn.value === checkInVal || checkOut.value === checkOutVal) return;
-            var from = checkIn.value.replace(/\./g,'') + '000000',
-                to   = checkOut.value.replace(/\./g,'') + '000000';
+
+            var changeToday = function (elem) {
+              var now = new Date(),
+                  nowDay = now.getDate(),
+                  nowHours = +now.getHours() < 10 ? '0' + now.getHours() : now.getHours(),
+                  nowMin = +now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes(),
+                  nowSec = +now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds(),
+                  input = elem.value.replace(/\./g,''),
+                  inputDay = +input.slice(-2);
+
+                  if (nowDay === inputDay) {
+                    console.log("day: " + nowDay);
+                    now.setMinutes(nowMin + 1);
+                    console.log(now);
+                    console.log('checkIn: ' + input + nowHours + (+nowMin+ 1 ) + nowSec);
+                    input = ( new Date(now.setMinutes(nowMin + 1)).getDate() !== nowDay ) ? input + '23' + '59' + '59' :
+                    input + nowHours + (+nowMin+ 1 ) + nowSec;
+                    return input;
+                  }
+
+                  return input + '000000';
+
+            };
+
+            var from = changeToday(checkIn),
+                to   = changeToday(checkOut);
                 console.log(from + ' ' + to);
 
             link.href = 'reservation/' + from + '/' + to;
