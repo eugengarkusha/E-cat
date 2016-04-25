@@ -114,7 +114,11 @@
     });
   };
 
-  var globalFilt = {};
+  var globalFilt = {
+    hotel: {},
+    room: {},
+    opt: []
+  };
 
     var elemAndVal = function (container, selector, valueType) {
       console.time('elemAndVal');
@@ -171,6 +175,28 @@
         hash: +(cat).dataset.hash
 
       };
+
+      globalFilt.hotel = {
+        name: elemAndVal($('.booking-form')[0], '#hotel').value
+      };
+      if (globalFilt.hotel.name === '') delete globalFilt.hotel.name;
+
+      globalFilt.hotel = JSON.stringify(globalFilt.hotel);
+
+
+      globalFilt.room = {
+        twin: elemAndVal($('.booking-form')[0], '#twin').value,
+        guests: elemAndVal($('.booking-form')[0], '#peopleQuantity', 'number').value
+      };
+      if (globalFilt.room.twin === false) delete globalFilt.room.twin;
+
+      globalFilt.room = JSON.stringify(globalFilt.room);
+
+      console.log(JSON.stringify(globalFilt.room));
+      globalFilt.opt = [];
+
+      globalFilt.opt = JSON.stringify(globalFilt.opt);
+
       console.timeEnd('collectOpts');
       return options;
 
@@ -195,11 +221,6 @@
       };
       if (filters.hotel.name === '') delete filters.hotel.name;
       if (filters.room.twin === false) delete filters.room.twin;
-      globalFilt = {
-        hotel: filters.hotel,
-        room: filters.room,
-        opt: []
-      };
       console.timeEnd('collectFilters');
       console.log(filters);
       return filters;
@@ -218,10 +239,7 @@
           'roomCnt'  : opt.roomCnt.value,
           'bkf'      : opt.breakfast.value,
           'eci'      : opt.eci.value,
-          'lco'      : opt.lco.value,
-          'hotel'    : globalFilt.hotel,
-          'room'     : globalFilt.room,
-          'opt'      : globalFilt.opt
+          'lco'      : opt.lco.value
       });
       console.timeEnd('stringOpts');
       return data;
@@ -279,8 +297,9 @@
             reqData = stringOpts(cat);
 
             console.log(reqData);
+            console.log(globalFilt);
 
-        $.ajax(jsRoutes.controllers.Application.category(from, to, reqData))
+        $.ajax(jsRoutes.controllers.Application.category(from, to, reqData, globalFilt.hotel, globalFilt.room, globalFilt.opt))
         .done(function( resp ) {
 
           resp.changed ? (function () {
@@ -339,6 +358,7 @@
         changeCat('.category-list');
 
         changeFilter($('.booking-form')[0]);
+
 
         (function () {
           var min = $('#checkIn').val();
