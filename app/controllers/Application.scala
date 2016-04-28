@@ -27,16 +27,20 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
 
 
-    def lbl = "H:"+interval(from, to)
-//    def hotels = Json.parse(scala.io.Source.fromFile(env.getFile("conf/json")).mkString).as[Seq[Hotel]]
-    def  load = Future(proxy.getNomSvobod(fmt.format(from), fmt.format(to))).map { s =>
-      val h = Hotel.fromXml(scala.xml.XML.loadString(s), from, to.minusDays(1)).fold(err => throw new Exception(err.toString), identity)
-      cache.set(lbl,h, 3.minutes)
-      h
-    }
+//     def lbl = "H:"+interval(from, to)
+// //    def hotels = Json.parse(scala.io.Source.fromFile(env.getFile("conf/json")).mkString).as[Seq[Hotel]]
+//     def  load = Future(proxy.getNomSvobod(fmt.format(from), fmt.format(to))).map { s =>
+//       val h = Hotel.fromXml(scala.xml.XML.loadString(s), from, to.minusDays(1)).fold(err => throw new Exception(err.toString), identity)
+//       cache.set(lbl,h, 3.minutes)
+//       h
+//     }
+//
+//     cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse(load)
+// //    hotels
 
-    cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse(load)
-//    hotels
+    Future.successful(Json.parse(scala.io.Source.fromFile(env.getFile("conf/json")).mkString).as[Seq[Hotel]])
+
+
   }
 
 
