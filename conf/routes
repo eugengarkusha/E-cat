@@ -3,29 +3,29 @@
 # ~~~~
 
 # Home page
-GET     /                                         controllers.Application.main
+#GET     /                                         controllers.Application.main
 GET     /dumpxml/:from/:to                        controllers.Application.dumpXml(from,to)
 GET     /rooms/:from/:to                          controllers.Application.getAvailableRooms(from: LocalDateTime,to:LocalDateTime)
 GET     /dummyoffers/:from/:to                    controllers.Application.getDummyOffers(from:LocalDateTime,to:LocalDateTime)
 #                                                  TODO:from: LocalDateTime,to: LocalDateTime)
-GET     /reservation/:from/:to             controllers.Application.reservation(from, to)
-GET     /ekaterina                                controllers.Application.ekaterina
-GET     /ekaterina2                               controllers.Application.ekaterina2
-GET     /gallery                                  controllers.Application.gallery
-GET     /blog                                     controllers.Application.blog
-GET     /news                                     controllers.Application.news
-GET     /promo                                    controllers.Application.promo
-GET     /about                                    controllers.Application.about
-GET     /contacts                                 controllers.Application.contacts
-GET     /comment                                  controllers.Application.comment
-GET     /post                                     controllers.Application.post
-GET     /event                                    controllers.Application.event
+#GET     /reservation/:from/:to             controllers.Application.reservation(from, to)
+##GET     /ekaterina                                controllers.Application.ekaterina
+#GET     /ekaterina2                               controllers.Application.ekaterina2
+#GET     /gallery                                  controllers.Application.gallery
+#GET     /blog                                     controllers.Application.blog
+#GET     /news                                     controllers.Application.news
+##GET     /promo                                    controllers.Application.promo
+#GET     /about                                    controllers.Application.about
+#GET     /contacts                                 controllers.Application.contacts
+#GET     /comment                                  controllers.Application.comment
+#GET     /post                                     controllers.Application.post
+#GET     /event                                    controllers.Application.event
 # GET     /cat                     controllers.Application.cat
 
 #Ajax
-GET     /category/:from/:to                       controllers.Application.category(from:LocalDateTime,to:LocalDateTime, c: CategoryCtrl, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters: JsArray)
+#GET     /category/:from/:to                       controllers.Application.category(from:LocalDateTime,to:LocalDateTime, c: CategoryCtrl, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters: JsArray)
 #TODO: JsObjects in signature? Think of validation.
-GET     /filters/:from/:to                        controllers.Application.filter(from:LocalDateTime,to:LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters: JsArray)
+#GET     /filters/:from/:to                        controllers.Application.filter(from:LocalDateTime,to:LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters: JsArray)
 
 
 
