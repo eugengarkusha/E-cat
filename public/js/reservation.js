@@ -37,6 +37,14 @@ $(function () {
     });
   };
 
+  var tariffsOpen = function () {
+    if ($('.tariffs-btn')[0]) {
+      $('.tariffs-btn').click(function (e) {
+        $(e.currentTarget).parent().addClass('tariffs-open');
+      });
+    }
+  };
+
   var globalFilt = {
     hotel: {},
     room: {},
@@ -259,6 +267,8 @@ $(function () {
 
               categoryTimepicker();
 
+              tariffsOpen();
+
               beautySelect();
 
               changeCat();
@@ -312,6 +322,8 @@ $(function () {
           categoryGallery();
 
           categoryTimepicker();
+
+          tariffsOpen();
 
         })();
 

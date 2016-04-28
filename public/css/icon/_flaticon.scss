@@ -1,6 +1,6 @@
     /*
     Flaticon icon font: Flaticon
-    Creation date: 07/04/2016 15:17
+    Creation date: 28/04/2016 15:43
     */
 
     @font-face {
@@ -73,35 +73,36 @@
 .flaticon-icon-31128:before { content: "\f122"; }
 .flaticon-keys:before { content: "\f123"; }
 .flaticon-king11:before { content: "\f124"; }
-.flaticon-lotions:before { content: "\f125"; }
-.flaticon-mark:before { content: "\f126"; }
-.flaticon-minisplit:before { content: "\f127"; }
-.flaticon-moneybox:before { content: "\f128"; }
-.flaticon-people:before { content: "\f129"; }
-.flaticon-phone-call41:before { content: "\f12a"; }
-.flaticon-phone325:before { content: "\f12b"; }
-.flaticon-plate13:before { content: "\f12c"; }
-.flaticon-queen9:before { content: "\f12d"; }
-.flaticon-refrigerator3:before { content: "\f12e"; }
-.flaticon-restaurant26:before { content: "\f12f"; }
-.flaticon-right:before { content: "\f130"; }
-.flaticon-screen54:before { content: "\f131"; }
-.flaticon-shower15:before { content: "\f132"; }
-.flaticon-shower5:before { content: "\f133"; }
-.flaticon-spa25:before { content: "\f134"; }
-.flaticon-telephone90:before { content: "\f135"; }
-.flaticon-telephone93:before { content: "\f136"; }
-.flaticon-three:before { content: "\f137"; }
-.flaticon-tool437:before { content: "\f138"; }
-.flaticon-towel:before { content: "\f139"; }
-.flaticon-tv14:before { content: "\f13a"; }
-.flaticon-twitter1:before { content: "\f13b"; }
-.flaticon-two:before { content: "\f13c"; }
-.flaticon-vk3:before { content: "\f13d"; }
-.flaticon-washing46:before { content: "\f13e"; }
-.flaticon-wifi74:before { content: "\f13f"; }
-.flaticon-window17:before { content: "\f140"; }
-.flaticon-wiping7:before { content: "\f141"; }
+.flaticon-list:before { content: "\f125"; }
+.flaticon-lotions:before { content: "\f126"; }
+.flaticon-mark:before { content: "\f127"; }
+.flaticon-minisplit:before { content: "\f128"; }
+.flaticon-moneybox:before { content: "\f129"; }
+.flaticon-people:before { content: "\f12a"; }
+.flaticon-phone-call41:before { content: "\f12b"; }
+.flaticon-phone325:before { content: "\f12c"; }
+.flaticon-plate13:before { content: "\f12d"; }
+.flaticon-queen9:before { content: "\f12e"; }
+.flaticon-refrigerator3:before { content: "\f12f"; }
+.flaticon-restaurant26:before { content: "\f130"; }
+.flaticon-right:before { content: "\f131"; }
+.flaticon-screen54:before { content: "\f132"; }
+.flaticon-shower15:before { content: "\f133"; }
+.flaticon-shower5:before { content: "\f134"; }
+.flaticon-spa25:before { content: "\f135"; }
+.flaticon-telephone90:before { content: "\f136"; }
+.flaticon-telephone93:before { content: "\f137"; }
+.flaticon-three:before { content: "\f138"; }
+.flaticon-tool437:before { content: "\f139"; }
+.flaticon-towel:before { content: "\f13a"; }
+.flaticon-tv14:before { content: "\f13b"; }
+.flaticon-twitter1:before { content: "\f13c"; }
+.flaticon-two:before { content: "\f13d"; }
+.flaticon-vk3:before { content: "\f13e"; }
+.flaticon-washing46:before { content: "\f13f"; }
+.flaticon-wifi74:before { content: "\f140"; }
+.flaticon-window17:before { content: "\f141"; }
+.flaticon-wiping7:before { content: "\f142"; }
     
     $font-Flaticon-airconditioner: "\f100";
     $font-Flaticon-baby127: "\f101";
@@ -140,32 +141,33 @@
     $font-Flaticon-icon-31128: "\f122";
     $font-Flaticon-keys: "\f123";
     $font-Flaticon-king11: "\f124";
-    $font-Flaticon-lotions: "\f125";
-    $font-Flaticon-mark: "\f126";
-    $font-Flaticon-minisplit: "\f127";
-    $font-Flaticon-moneybox: "\f128";
-    $font-Flaticon-people: "\f129";
-    $font-Flaticon-phone-call41: "\f12a";
-    $font-Flaticon-phone325: "\f12b";
-    $font-Flaticon-plate13: "\f12c";
-    $font-Flaticon-queen9: "\f12d";
-    $font-Flaticon-refrigerator3: "\f12e";
-    $font-Flaticon-restaurant26: "\f12f";
-    $font-Flaticon-right: "\f130";
-    $font-Flaticon-screen54: "\f131";
-    $font-Flaticon-shower15: "\f132";
-    $font-Flaticon-shower5: "\f133";
-    $font-Flaticon-spa25: "\f134";
-    $font-Flaticon-telephone90: "\f135";
-    $font-Flaticon-telephone93: "\f136";
-    $font-Flaticon-three: "\f137";
-    $font-Flaticon-tool437: "\f138";
-    $font-Flaticon-towel: "\f139";
-    $font-Flaticon-tv14: "\f13a";
-    $font-Flaticon-twitter1: "\f13b";
-    $font-Flaticon-two: "\f13c";
-    $font-Flaticon-vk3: "\f13d";
-    $font-Flaticon-washing46: "\f13e";
-    $font-Flaticon-wifi74: "\f13f";
-    $font-Flaticon-window17: "\f140";
-    $font-Flaticon-wiping7: "\f141";
+    $font-Flaticon-list: "\f125";
+    $font-Flaticon-lotions: "\f126";
+    $font-Flaticon-mark: "\f127";
+    $font-Flaticon-minisplit: "\f128";
+    $font-Flaticon-moneybox: "\f129";
+    $font-Flaticon-people: "\f12a";
+    $font-Flaticon-phone-call41: "\f12b";
+    $font-Flaticon-phone325: "\f12c";
+    $font-Flaticon-plate13: "\f12d";
+    $font-Flaticon-queen9: "\f12e";
+    $font-Flaticon-refrigerator3: "\f12f";
+    $font-Flaticon-restaurant26: "\f130";
+    $font-Flaticon-right: "\f131";
+    $font-Flaticon-screen54: "\f132";
+    $font-Flaticon-shower15: "\f133";
+    $font-Flaticon-shower5: "\f134";
+    $font-Flaticon-spa25: "\f135";
+    $font-Flaticon-telephone90: "\f136";
+    $font-Flaticon-telephone93: "\f137";
+    $font-Flaticon-three: "\f138";
+    $font-Flaticon-tool437: "\f139";
+    $font-Flaticon-towel: "\f13a";
+    $font-Flaticon-tv14: "\f13b";
+    $font-Flaticon-twitter1: "\f13c";
+    $font-Flaticon-two: "\f13d";
+    $font-Flaticon-vk3: "\f13e";
+    $font-Flaticon-washing46: "\f13f";
+    $font-Flaticon-wifi74: "\f140";
+    $font-Flaticon-window17: "\f141";
+    $font-Flaticon-wiping7: "\f142";

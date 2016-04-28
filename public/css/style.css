@@ -577,6 +577,7 @@ main {
         color: #b19261; }
 
 .contact-box {
+  display: none;
   width: 32rem;
   margin: 3rem auto;
   border: 1px solid #c0c0c0; }
@@ -747,10 +748,12 @@ main {
     left: 50%; }
 
 .page-reservation .category {
-  margin-bottom: 1.2rem;
+  margin-bottom: 2rem;
   padding: 0.5rem;
   color: #000;
   outline: 1px solid; }
+.page-reservation .category-heading {
+  border-bottom: 2px solid #000; }
 .page-reservation .category-gallery {
   display: none;
   max-width: 85rem;
@@ -776,7 +779,7 @@ main {
 .page-reservation .option {
   display: inline-block;
   width: 100%;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.25); }
 .page-reservation .option-guest, .page-reservation .option-rooms {
   width: 100%; }
@@ -799,7 +802,9 @@ main {
   vertical-align: top;
   float: left; }
 .page-reservation .category-result {
-  clear: both; }
+  clear: both;
+  margin-top: 3.5rem;
+  line-height: 22px; }
 .page-reservation .category-result-price {
   float: left; }
 .page-reservation .category-result-addToOrder {
@@ -810,6 +815,73 @@ main {
   .page-reservation .category-result-addToOrder input {
     width: 2.5rem;
     height: 2.5rem; }
+.page-reservation .tariffs {
+  margin-top: 2rem;
+  height: 4.5rem;
+  border: 1px dotted #000;
+  border-radius: 4px;
+  overflow: hidden;
+  clear: both;
+  transition: all 0.3s ease; }
+  .page-reservation .tariffs h2 {
+    margin-top: 10px;
+    margin-left: 8px;
+    font-weight: normal;
+    font-style: italic;
+    font-family: "Great Vibes", Arial, Helvetica, sans-serif; }
+.page-reservation .tariffs-open {
+  height: auto;
+  overflow: auto;
+  border: none; }
+  .page-reservation .tariffs-open h2 {
+    display: none; }
+  .page-reservation .tariffs-open .tariffs-btn {
+    display: none; }
+.page-reservation .tariff {
+  border-bottom: 1px dashed;
+  padding-bottom: 1.5rem; }
+.page-reservation .tariffs-btn {
+  position: relative;
+  width: 40px;
+  height: 30px;
+  border: 1px solid #583908;
+  border-radius: 4px;
+  float: right;
+  margin-top: 7px;
+  margin-right: 12px;
+  background: #B19261; }
+  .page-reservation .tariffs-btn span {
+    position: relative; }
+.page-reservation .tariffs-btn:before, .page-reservation .tariffs-btn:after, .page-reservation .tariffs-btn span:before {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 3px;
+  background: #fff;
+  position: absolute; }
+.page-reservation .tariffs-btn::before {
+  top: 5px;
+  left: 4px; }
+.page-reservation .tariffs-btn:after {
+  bottom: 6px;
+  left: 4px; }
+.page-reservation .tariffs-btn span:before {
+  top: 12px;
+  left: 4px; }
+.page-reservation .tariff-overall {
+  margin-top: 20px;
+  padding: 5px; }
+.page-reservation .tariff-price {
+  display: block;
+  width: 80px;
+  padding: 5px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background-color: #B19261;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); }
 
 .page-gallery .gallery {
   list-style: none;
@@ -1256,19 +1328,39 @@ main {
   .page-reservation .category-detail {
     float: left;
     width: 40%;
-    padding-bottom: 0; }
+    margin-bottom: 2rem;
+    padding: 0.8rem;
+    padding-bottom: 0;
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2), -2px -2px 1px rgba(0, 0, 0, 0.2); }
   .page-reservation .options {
     float: left;
-    width: 18.5%;
+    width: 60%;
     padding: 1.4rem 0 0 0.8rem; }
   .page-reservation .category-result {
     width: 56%;
     float: right;
-    margin-top: -5rem; }
+    line-height: 31px;
+    border-bottom: 1px solid #ADA5A5; }
   .page-reservation .category-image {
     display: none; }
   .page-reservation .category-gallery {
     display: block; }
+  .page-reservation .tariff-heading, .page-reservation .tariff-rooms, .page-reservation .tariff-overall {
+    display: inline-block; }
+  .page-reservation .tariff-heading {
+    width: 50%;
+    margin-right: 10px; }
+    .page-reservation .tariff-heading h3 {
+      margin-top: 1rem;
+      margin-bottom: 0; }
+    .page-reservation .tariff-heading p {
+      margin-top: 0.6rem; }
+  .page-reservation .tariff-rooms {
+    width: 25%; }
+  .page-reservation .tariff-overall {
+    width: 20%; }
+  .page-reservation .tariff-price {
+    float: right; }
 
   .page-news .news-article {
     width: 50%;
@@ -1383,7 +1475,8 @@ main {
     main .booking-form {
       margin-top: 0; }
     main .contact-box {
-      float: left;
+      display: block;
+      position: fixed;
       margin: 0; }
 
   .page-hotel-ekaterina .main-section {
@@ -1417,6 +1510,39 @@ main {
   .page-reservation .main-section {
     float: right;
     max-width: 74%;
-    width: 74%; } }
+    width: 74%; }
+  .page-reservation .options {
+    width: 10%;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: rgba(0, 0, 0, 0.1); }
+  .page-reservation .option-description {
+    float: none; }
+  .page-reservation .option-data {
+    float: none;
+    width: 100%; }
+  .page-reservation .tariffs {
+    border: none;
+    height: auto;
+    overflow: auto;
+    clear: none; }
+  .page-reservation .tariffs-btn {
+    display: none; }
+  .page-reservation .tariffs {
+    padding-left: 20px;
+    border-left: 1px solid;
+    margin-top: 0; }
+    .page-reservation .tariffs h2 {
+      display: none; }
+  .page-reservation .tariff {
+    padding-bottom: 0; }
+  .page-reservation .tariff-heading {
+    width: 40%; }
+  .page-reservation .tariff-rooms {
+    width: 30%;
+    position: relative;
+    top: -0.6rem; }
+  .page-reservation .tariff-overall {
+    width: 25%; } }
 
 /*# sourceMappingURL=style.css.map */

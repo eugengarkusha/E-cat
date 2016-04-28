@@ -32,7 +32,7 @@ $color-footer-border: #c2c2c2;
 
 //================== FONTS ===================//
 
-@mixin droid-sefir {
+@mixin droid-serif {
   font-family: "Droid Serif", Arial, Helvetica, sans-serif;
 }
 @mixin droid-sans {
@@ -652,7 +652,7 @@ main {
     border-radius: 4px;
     margin: 2rem auto;
     padding: 1rem 1.5rem;
-    @include droid-sefir;
+    @include droid-serif;
     color: #000;
     font-size: 1.6rem;
     box-shadow: 2px 2px 5px rgba(0,0,0,.5);
@@ -831,6 +831,7 @@ main {
 }
 
 .contact-box {
+  display: none;
   width: 32rem;
   margin: 3rem auto;
   @include border-grey;
@@ -1038,7 +1039,7 @@ main {
       margin-top: -3.3rem;
       margin-bottom: -1rem;
       padding: 0 0.5rem 0.5rem;
-      @include droid-sefir;
+      @include droid-serif;
       color: black;
       font-size: 1.4em;
       font-weight: normal;
@@ -1089,10 +1090,14 @@ main {
 .page-reservation {
 
   .category {
-    margin-bottom: 1.2rem;
+    margin-bottom: 2rem;
     padding: 0.5rem;
     color: $color-black;
     outline: 1px solid;
+  }
+
+  .category-heading {
+    border-bottom: 2px solid #000;
   }
 
   .category-gallery {
@@ -1132,7 +1137,7 @@ main {
   .option {
     display: inline-block;
     width: 100%;
-    padding: 0.5rem;
+    padding: 1rem 0.5rem;
     border-bottom: 1px dotted rgba(0,0,0,.25);
   }
 
@@ -1174,6 +1179,8 @@ main {
 
   .category-result {
     clear: both;
+    margin-top: 3.5rem;
+    line-height: 22px;
   }
 
   .category-result-price {
@@ -1192,6 +1199,105 @@ main {
       width: 2.5rem;
       height: 2.5rem;
     }
+
+  }
+
+  .tariffs {
+    margin-top: 2rem;
+    height: 4.5rem;
+    border: 1px dotted #000;
+    border-radius: 4px;
+    overflow: hidden;
+    clear: both;
+    transition: all 0.3s ease;
+
+    h2 {
+      margin-top: 10px;
+      margin-left: 8px;
+      font-weight: normal;
+      font-style: italic;
+      @include great-vibes;
+    }
+
+  }
+
+  .tariffs-open {
+    height: auto;
+    overflow: auto;
+    border: none;
+
+    h2 {
+      display: none;
+    }
+
+    .tariffs-btn {
+      display: none;
+    }
+
+  }
+
+  .tariff {
+    border-bottom: 1px dashed;
+    padding-bottom: 1.5rem;
+  }
+
+  .tariffs-btn {
+    position: relative;
+    width: 40px;
+    height: 30px;
+    border: 1px solid #583908;
+    border-radius: 4px;
+    float: right;
+    margin-top: 7px;
+    margin-right: 12px;
+    background: #B19261;
+
+    span {
+      position: relative;
+    }
+
+  }
+
+  .tariffs-btn:before, .tariffs-btn:after, .tariffs-btn span:before {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 3px;
+    background: #fff;
+    position: absolute;
+  }
+
+  .tariffs-btn::before {
+    top: 5px;
+    left: 4px;
+  }
+
+  .tariffs-btn:after {
+    bottom: 6px;
+    left: 4px;
+  }
+
+  .tariffs-btn span:before {
+    top: 12px;
+    left: 4px;
+  }
+
+  .tariff-overall {
+    margin-top: 20px;
+    padding: 5px;
+  }
+
+  .tariff-price {
+    display: block;
+    width: 80px;
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    background-color: #B19261;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0,0,0,.2);
 
   }
 
@@ -1289,7 +1395,7 @@ main {
     h2 {
 
       a {
-        @include droid-sefir;
+        @include droid-serif;
         font-weight: normal;
         font-size: 2.4rem;
         color: $color-primary;
@@ -1349,7 +1455,7 @@ main {
 
     h3 {
       margin: 0;
-      @include droid-sefir;
+      @include droid-serif;
       font-weight: normal;
       font-size: 1.6rem;
       line-height: 3.4rem;
@@ -1490,7 +1596,7 @@ main {
   }
 
   h2 {
-    @include droid-sefir;
+    @include droid-serif;
     font-size: 2.2rem;
     font-weight: normal;
     text-align: center;
@@ -2014,19 +2120,24 @@ main {
     .category-detail {
       float: left;
       width: 40%;
+      margin-bottom: 2rem;
+      padding: 0.8rem;
       padding-bottom: 0;
+      box-shadow: 2px 2px 1px rgba(0,0,0,.2), -2px -2px 1px rgba(0,0,0,.2);
     }
 
     .options {
       float: left;
-      width: 18.5%;
+      width: 60%;
       padding: 1.4rem 0 0 0.8rem;
     }
 
     .category-result {
       width: 56%;
       float: right;
-      margin-top: -5rem;
+      line-height: 31px;
+      border-bottom: 1px solid #ADA5A5;
+      // margin-top: -5rem;
     }
 
     .category-image {
@@ -2035,6 +2146,37 @@ main {
 
     .category-gallery {
       display: block;
+    }
+
+    .tariff-heading, .tariff-rooms, .tariff-overall {
+      display: inline-block;
+    }
+
+    .tariff-heading {
+      width: 50%;
+      margin-right: 10px;
+
+      h3 {
+        margin-top: 1rem;
+        margin-bottom: 0;
+      }
+
+      p {
+        margin-top: 0.6rem;
+      }
+
+    }
+
+    .tariff-rooms {
+      width: 25%;
+    }
+
+    .tariff-overall {
+      width: 20%;
+    }
+
+    .tariff-price {
+      float: right;
     }
 
   }
@@ -2254,7 +2396,8 @@ main {
       }
 
       .contact-box {
-        float: left;
+        display: block;
+        position: fixed;
         margin: 0;
       }
 
@@ -2323,11 +2466,66 @@ main {
 
     .page-reservation {
 
-
       .main-section {
         float: right;
         max-width: 74%;
         width: 74%;
+      }
+
+      .options {
+        width: 10%;
+        padding-left: 10px;
+        padding-right: 10px;
+        background: rgba(0,0,0,.1);
+      }
+
+      .option-description {
+        float: none;
+      }
+
+      .option-data {
+        float: none;
+        width: 100%;
+      }
+
+      .tariffs {
+        border: none;
+        height: auto;
+        overflow: auto;
+        clear: none;
+      }
+
+      .tariffs-btn {
+        display: none;
+      }
+
+      .tariffs {
+        padding-left: 20px;
+        border-left: 1px solid;
+        margin-top: 0;
+
+        h2 {
+          display: none;
+        }
+
+      }
+
+      .tariff {
+        padding-bottom: 0;
+      }
+
+      .tariff-heading {
+        width: 40%;
+      }
+
+      .tariff-rooms {
+        width: 30%;
+        position: relative;
+        top: -0.6rem;
+      }
+
+      .tariff-overall {
+        width: 25%;
       }
 
   }
