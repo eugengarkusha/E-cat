@@ -198,7 +198,7 @@ $(function () {
             changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
           })() :
           $(cat).find('[data-price]').text(resp.price);
-          
+
           console.log(resp.price);
 
            setupOpt(resp, cat);
@@ -272,6 +272,32 @@ $(function () {
               minDate: 0,
               maxDate: max
           });
+
+          if ($('.category-item__gallery')[0]) {
+
+          $('.category-item__gallery ul').each(function(index, elem) {
+            var elemID = 'gallery#' + index;
+            elem.id = elemID;
+            $(elem).lightSlider({
+              gallery: true,
+              item: 1,
+              slideMargin: 0,
+              thumbItem: 7,
+              keyPress: true,
+              onSliderLoad: function(el) {
+                el.lightGallery({
+                  selector: '#' + elemID + ' .lslide'
+                });
+              },
+              currentPagerPosition:'left'
+            });
+          });
+
+        }
+
+        $('.timepicker').timepicker({
+          'timeFormat': 'H:i'
+        });
 
         })();
 

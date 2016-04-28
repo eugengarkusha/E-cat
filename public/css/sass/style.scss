@@ -1133,6 +1133,10 @@ main {
 
   }
 
+  .options__item__data--eci .timepicker, .options__item__data--lco .timepicker {
+    width: 9rem;
+  }
+
   .options__item__data {
     float: right;
   }

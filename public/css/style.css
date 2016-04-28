@@ -743,57 +743,25 @@ main {
     top: 131px;
     left: 50%; }
 
-.category-item {
+.page-reservation .category-item {
   margin-bottom: 1.2rem;
   padding: 0.5rem;
   color: #000;
   outline: 1px solid; }
-
-.category-item__heading {
-  float: right; }
-
-.category-item__gallery {
+.page-reservation .category-item__gallery {
   display: none; }
-
-.category-item__gallery {
-  max-width: 85rem;
-  margin: 0 auto;
-  overflow: hidden; }
-
-.category-item__gallery ul {
-  list-style: none outside none;
-  padding-left: 0;
-  margin-bottom: 0;
-  max-height: 46rem; }
-
-.category-item__gallery li {
-  display: block;
-  float: left;
-  margin-right: 0.6rem;
-  cursor: pointer; }
-
-.category-item__gallery img {
-  display: block;
-  height: auto;
-  max-width: 100%;
-  cursor: pointer; }
-
-.category-list {
+.page-reservation .category-list {
   padding: 0.8rem; }
-
-.category-item__detail {
+.page-reservation .category-item__detail {
   padding: 1rem 0; }
-
-.options__item {
+.page-reservation .options__item {
   display: inline-block;
   width: 100%;
   padding: 0.5rem;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.25); }
-
-.options__item--guest, .options__item--rooms {
+.page-reservation .options__item--guest, .page-reservation .options__item--rooms {
   width: 100%; }
-
-.options__item__data--select {
+.page-reservation .options__item__data--select {
   position: relative;
   display: inline-block;
   width: 30%;
@@ -801,31 +769,25 @@ main {
   margin-top: -0.4rem;
   margin-bottom: -2rem;
   padding-bottom: 0.4rem; }
-
-.options__item__data--checkbox input {
+.page-reservation .options__item__data--checkbox input {
   width: 2.5rem;
   height: 2.5rem; }
-  .options__item__data--checkbox input:hover {
-    cursor: pointer; }
-
-.options__item__data {
+.page-reservation .options__item__data--eci .timepicker, .page-reservation .options__item__data--lco .timepicker {
+  width: 9rem; }
+.page-reservation .options__item__data {
   float: right; }
-
-.options__item__description {
+.page-reservation .options__item__description {
   vertical-align: top; }
-
-.category__item_result {
+.page-reservation .category__item_result {
   clear: both; }
-
-.category__item__result--price {
+.page-reservation .category__item__result--price {
   float: left; }
-
-.category__item__result--add-to-order {
+.page-reservation .category__item__result--add-to-order {
   float: right;
   padding-right: 0.5rem; }
-  .category__item__result--add-to-order span {
+  .page-reservation .category__item__result--add-to-order span {
     vertical-align: top; }
-  .category__item__result--add-to-order input {
+  .page-reservation .category__item__result--add-to-order input {
     width: 2.5rem;
     height: 2.5rem; }
 
@@ -1236,12 +1198,6 @@ main {
     background: rgba(255, 255, 255, 0.6);
     width: 40rem;
     padding: 2rem; }
-
-  .category-item__image {
-    display: none; }
-
-  .category-item__gallery {
-    display: block; }
 
   .slider {
     display: block; }
