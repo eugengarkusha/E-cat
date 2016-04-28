@@ -10,20 +10,20 @@ import ecat.util.DateTime._
 
 object Preprocessing {
 
-  def rooms(r: Seq[Schema.Room]):ValidationNel[String, Seq[Schema.Room]] = {
+  def rooms(r: List[Schema.Room]):ValidationNel[String, List[Schema.Room]] = {
 //    if(r.get('options).isEmpty)"room options may not be empty".failureNel else Success(r)
       Success(r)
   }
 
   //failing fast here
-  def tariffs( tariffs: Seq[Schema.Tariff], from: LocalDateTime, to: LocalDateTime): ValidationNel[String, Seq[Schema.Tariff]] = {
+  def tariffs( tariffs: List[Schema.Tariff], from: LocalDateTime, to: LocalDateTime): ValidationNel[String, List[Schema.Tariff]] = {
 
-    val filtered: Seq[Schema.Tariff] = tariffs.sortBy(_.get('startDate))
+    val filtered: List[Schema.Tariff] = tariffs.sortBy(_.get('startDate))
       .dropWhile(_.get('endDate).compareTo(from) < 0)
       .takeWhile(_.get('startDate).compareTo(to) <= 0)
 
     {
-      if (filtered.isEmpty) s"no active tariffs in category $this".failureNel[Seq[Schema.Tariff]]
+      if (filtered.isEmpty) s"no active tariffs in category $this".failureNel[List[Schema.Tariff]]
       else if (filtered.head.get('startDate).compareTo(from) > 0 || filtered.last.get('endDate).compareTo(to) < 0) {
         s"""tariffs are not covering date interval: first tariff start date :${tariffs.head.get('startDate)},
             |last tariff end date:${tariffs.last.get('endDate)}.Provided dates: $from:, $to.
