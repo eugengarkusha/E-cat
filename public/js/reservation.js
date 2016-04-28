@@ -1,4 +1,5 @@
 $(function () {
+
   var beautySelect = function () {
     $('select').selectric({
       responsive: true
@@ -6,9 +7,9 @@ $(function () {
   };
 
   var categoryGallery = function () {
-    if ($('.category-item__gallery')[0]) {
+    if ($('.category-gallery')[0]) {
 
-    $('.category-item__gallery ul').each(function(index, elem) {
+    $('.category-gallery ul').each(function(index, elem) {
       var elemID = 'gallery#' + index;
       elem.id = elemID;
       $(elem).lightSlider({
@@ -31,7 +32,8 @@ $(function () {
 
   var categoryTimepicker = function () {
     $('.timepicker').timepicker({
-      'timeFormat': 'H:i'
+      timeFormat: 'H:i',
+      disableTextInput: true
     });
   };
 
@@ -211,7 +213,7 @@ $(function () {
       cat = cat || '.category-list';
 
       $(cat).change(function(e) {
-          var cat     = $('.category-item').has(e.target)[0],
+          var cat     = $('.category').has(e.target)[0],
               reqData = stringOpts(cat);
 
             console.log(reqData);

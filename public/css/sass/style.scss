@@ -204,6 +204,10 @@ blockquote {
 
 }
 
+[type="checkbox"]:hover {
+  cursor: pointer;
+}
+
 //=================================== HEADER ===================================
 
 .header-main-wrapper {
@@ -1084,14 +1088,14 @@ main {
 
 .page-reservation {
 
-  .category-item {
+  .category {
     margin-bottom: 1.2rem;
     padding: 0.5rem;
     color: $color-black;
     outline: 1px solid;
   }
 
-  .category-item__gallery {
+  .category-gallery {
     display: none;
     max-width: 85rem;
     margin: 0 auto;
@@ -1125,22 +1129,18 @@ main {
     padding: 0.8rem;
   }
 
-  .category-item__detail {
-    padding: 1rem 0;
-  }
-
-  .options__item {
+  .option {
     display: inline-block;
     width: 100%;
     padding: 0.5rem;
     border-bottom: 1px dotted rgba(0,0,0,.25);
   }
 
-  .options__item--guest, .options__item--rooms {
+  .option-guest, .option-rooms {
     width: 100%;
   }
 
-  .options__item__data--select {
+  .option-data-select {
     position: relative;
     display: inline-block;
     width: 30%;
@@ -1150,7 +1150,7 @@ main {
     padding-bottom: 0.4rem;
   }
 
-  .options__item__data--checkbox {
+  .option-data-checkbox {
 
     input {
       width: 2.5rem;
@@ -1159,27 +1159,28 @@ main {
 
   }
 
-  .options__item__data--eci .timepicker, .options__item__data--lco .timepicker {
-    width: 9rem;
+  .option-data-eci .timepicker, .option-data-lco .timepicker {
+    width: 5.5rem;
   }
 
-  .options__item__data {
-    float: right;
+  .option-data {
+    float: right;;
   }
 
-  .options__item__description {
+  .option-description {
     vertical-align: top;
-  }
-
-  .category__item_result {
-    clear: both;
-  }
-
-  .category__item__result--price {
     float: left;
   }
 
-  .category__item__result--add-to-order {
+  .category-result {
+    clear: both;
+  }
+
+  .category-result-price {
+    float: left;
+  }
+
+  .category-result-addToOrder {
     float: right;
     padding-right: 0.5rem;
 
@@ -2005,33 +2006,34 @@ main {
       }
     }
 
-    .category-item {
+    .category {
       padding: 1.5rem;
       padding-top: 0.1rem;
     }
 
-    .category-item__detail {
+    .category-detail {
       float: left;
       width: 40%;
       padding-bottom: 0;
     }
 
     .options {
-      float: right;
-      width: 55%;
+      float: left;
+      width: 18.5%;
+      padding: 1.4rem 0 0 0.8rem;
     }
 
-    .category__item_result {
+    .category-result {
       width: 56%;
       float: right;
       margin-top: -5rem;
     }
 
-    .category-item__image {
+    .category-image {
       display: none;
     }
 
-    .category-item__gallery {
+    .category-gallery {
       display: block;
     }
 

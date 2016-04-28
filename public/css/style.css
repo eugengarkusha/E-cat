@@ -130,6 +130,9 @@ blockquote {
     bottom: -0.9rem;
     left: 3.2rem; }
 
+[type="checkbox"]:hover {
+  cursor: pointer; }
+
 .header-main-wrapper {
   position: relative;
   height: 12.6rem;
@@ -743,43 +746,41 @@ main {
     top: 131px;
     left: 50%; }
 
-.page-reservation .category-item {
+.page-reservation .category {
   margin-bottom: 1.2rem;
   padding: 0.5rem;
   color: #000;
   outline: 1px solid; }
-.page-reservation .category-item__gallery {
+.page-reservation .category-gallery {
   display: none;
   max-width: 85rem;
   margin: 0 auto;
   overflow: hidden; }
-  .page-reservation .category-item__gallery ul {
+  .page-reservation .category-gallery ul {
     list-style: none outside none;
     padding-left: 0;
     margin-bottom: 0;
     max-height: 46rem; }
-    .page-reservation .category-item__gallery ul li {
+    .page-reservation .category-gallery ul li {
       display: block;
       float: left;
       margin-right: 0.6rem;
       cursor: pointer; }
-  .page-reservation .category-item__gallery img {
+  .page-reservation .category-gallery img {
     display: block;
     height: auto;
     max-width: 100%;
     cursor: pointer; }
 .page-reservation .category-list {
   padding: 0.8rem; }
-.page-reservation .category-item__detail {
-  padding: 1rem 0; }
-.page-reservation .options__item {
+.page-reservation .option {
   display: inline-block;
   width: 100%;
   padding: 0.5rem;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.25); }
-.page-reservation .options__item--guest, .page-reservation .options__item--rooms {
+.page-reservation .option-guest, .page-reservation .option-rooms {
   width: 100%; }
-.page-reservation .options__item__data--select {
+.page-reservation .option-data-select {
   position: relative;
   display: inline-block;
   width: 30%;
@@ -787,25 +788,26 @@ main {
   margin-top: -0.4rem;
   margin-bottom: -2rem;
   padding-bottom: 0.4rem; }
-.page-reservation .options__item__data--checkbox input {
+.page-reservation .option-data-checkbox input {
   width: 2.5rem;
   height: 2.5rem; }
-.page-reservation .options__item__data--eci .timepicker, .page-reservation .options__item__data--lco .timepicker {
-  width: 9rem; }
-.page-reservation .options__item__data {
+.page-reservation .option-data-eci .timepicker, .page-reservation .option-data-lco .timepicker {
+  width: 5.5rem; }
+.page-reservation .option-data {
   float: right; }
-.page-reservation .options__item__description {
-  vertical-align: top; }
-.page-reservation .category__item_result {
-  clear: both; }
-.page-reservation .category__item__result--price {
+.page-reservation .option-description {
+  vertical-align: top;
   float: left; }
-.page-reservation .category__item__result--add-to-order {
+.page-reservation .category-result {
+  clear: both; }
+.page-reservation .category-result-price {
+  float: left; }
+.page-reservation .category-result-addToOrder {
   float: right;
   padding-right: 0.5rem; }
-  .page-reservation .category__item__result--add-to-order span {
+  .page-reservation .category-result-addToOrder span {
     vertical-align: top; }
-  .page-reservation .category__item__result--add-to-order input {
+  .page-reservation .category-result-addToOrder input {
     width: 2.5rem;
     height: 2.5rem; }
 
@@ -1248,23 +1250,24 @@ main {
       width: 33%;
       margin-bottom: 0;
       z-index: auto; }
-  .page-reservation .category-item {
+  .page-reservation .category {
     padding: 1.5rem;
     padding-top: 0.1rem; }
-  .page-reservation .category-item__detail {
+  .page-reservation .category-detail {
     float: left;
     width: 40%;
     padding-bottom: 0; }
   .page-reservation .options {
-    float: right;
-    width: 55%; }
-  .page-reservation .category__item_result {
+    float: left;
+    width: 18.5%;
+    padding: 1.4rem 0 0 0.8rem; }
+  .page-reservation .category-result {
     width: 56%;
     float: right;
     margin-top: -5rem; }
-  .page-reservation .category-item__image {
+  .page-reservation .category-image {
     display: none; }
-  .page-reservation .category-item__gallery {
+  .page-reservation .category-gallery {
     display: block; }
 
   .page-news .news-article {
