@@ -1,11 +1,9 @@
 @import  ecat.model.{Category, Prices}
-@import  ecat.util.MiscFormats.priceFormat
 @(c: Category, h: String)(implicit req: play.api.mvc.RequestHeader)
-
 
 <div class="category-item clearfix" data-catId=@c.id data-hash=@c.hashCode data-hotelId=@h>
 
-  <h3>@c.name</h3>
+  <h3 class="category-item__heading">@c.name</h3>
 
   <div class="category-item__detail">
 
@@ -15,7 +13,15 @@
       </div>
 
     <div class="category-item__gallery">
-
+      <ul>
+        <li data-thumb="@routes.Assets.versioned("img/category/1.jpg")" data-src="@routes.Assets.versioned("img/category/1.jpg")"><img src="@routes.Assets.versioned("img/category/1.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/2.jpg")" data-src="@routes.Assets.versioned("img/category/2.jpg")"><img src="@routes.Assets.versioned("img/category/2.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/3.jpg")" data-src="@routes.Assets.versioned("img/category/3.jpg")"><img src="@routes.Assets.versioned("img/category/3.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/4.jpg")" data-src="@routes.Assets.versioned("img/category/4.jpg")"><img src="@routes.Assets.versioned("img/category/4.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/5.jpg")" data-src="@routes.Assets.versioned("img/category/5.jpg")"><img src="@routes.Assets.versioned("img/category/5.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/6.jpg")" data-src="@routes.Assets.versioned("img/category/6.jpg")"><img src="@routes.Assets.versioned("img/category/6.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/7.jpg")" data-src="@routes.Assets.versioned("img/category/7.jpg")"><img src="@routes.Assets.versioned("img/category/7.jpg")" alt=""></li>
+      </ul>
     </div>
 
       <p>
@@ -96,7 +102,7 @@
 
     <div class="category__item__result--price">
       <span class="flaticon-coin32"></span>
-      <span data-price=@Prices.fromLong(c.prices.room)>@priceFormat.format(Prices.fromLong(c.prices.room))</span><span> грн</span>
+      <span data-price=@Prices.fromLong(c.prices.room)>@Prices.fromLong(c.prices.room)</span><span> грн</span>
     </div>
 
     <div class="category__item__result--add-to-order">
