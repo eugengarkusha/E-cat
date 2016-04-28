@@ -749,7 +749,25 @@ main {
   color: #000;
   outline: 1px solid; }
 .page-reservation .category-item__gallery {
-  display: none; }
+  display: none;
+  max-width: 85rem;
+  margin: 0 auto;
+  overflow: hidden; }
+  .page-reservation .category-item__gallery ul {
+    list-style: none outside none;
+    padding-left: 0;
+    margin-bottom: 0;
+    max-height: 46rem; }
+    .page-reservation .category-item__gallery ul li {
+      display: block;
+      float: left;
+      margin-right: 0.6rem;
+      cursor: pointer; }
+  .page-reservation .category-item__gallery img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    cursor: pointer; }
 .page-reservation .category-list {
   padding: 0.8rem; }
 .page-reservation .category-item__detail {
@@ -1244,6 +1262,10 @@ main {
     width: 56%;
     float: right;
     margin-top: -5rem; }
+  .page-reservation .category-item__image {
+    display: none; }
+  .page-reservation .category-item__gallery {
+    display: block; }
 
   .page-news .news-article {
     width: 50%;

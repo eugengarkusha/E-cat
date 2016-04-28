@@ -5,6 +5,36 @@ $(function () {
     });
   };
 
+  var categoryGallery = function () {
+    if ($('.category-item__gallery')[0]) {
+
+    $('.category-item__gallery ul').each(function(index, elem) {
+      var elemID = 'gallery#' + index;
+      elem.id = elemID;
+      $(elem).lightSlider({
+        gallery: true,
+        item: 1,
+        slideMargin: 0,
+        thumbItem: 7,
+        keyPress: true,
+        onSliderLoad: function(el) {
+          el.lightGallery({
+            selector: '#' + elemID + ' .lslide'
+          });
+        },
+        currentPagerPosition:'left'
+      });
+    });
+
+  }
+  };
+
+  var categoryTimepicker = function () {
+    $('.timepicker').timepicker({
+      'timeFormat': 'H:i'
+    });
+  };
+
   var globalFilt = {
     hotel: {},
     room: {},
@@ -223,6 +253,10 @@ $(function () {
 
               $('.category-list').replaceWith(response);
 
+              categoryGallery();
+
+              categoryTimepicker();
+
               beautySelect();
 
               changeCat();
@@ -273,31 +307,9 @@ $(function () {
               maxDate: max
           });
 
-          if ($('.category-item__gallery')[0]) {
+          categoryGallery();
 
-          $('.category-item__gallery ul').each(function(index, elem) {
-            var elemID = 'gallery#' + index;
-            elem.id = elemID;
-            $(elem).lightSlider({
-              gallery: true,
-              item: 1,
-              slideMargin: 0,
-              thumbItem: 7,
-              keyPress: true,
-              onSliderLoad: function(el) {
-                el.lightGallery({
-                  selector: '#' + elemID + ' .lslide'
-                });
-              },
-              currentPagerPosition:'left'
-            });
-          });
-
-        }
-
-        $('.timepicker').timepicker({
-          'timeFormat': 'H:i'
-        });
+          categoryTimepicker();
 
         })();
 

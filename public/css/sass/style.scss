@@ -1093,6 +1093,32 @@ main {
 
   .category-item__gallery {
     display: none;
+    max-width: 85rem;
+    margin: 0 auto;
+    overflow: hidden;
+
+    ul {
+      list-style: none outside none;
+      padding-left: 0;
+      margin-bottom: 0;
+      max-height: 46rem;
+
+      li {
+        display: block;
+        float: left;
+        margin-right: 0.6rem;
+        cursor: pointer;
+      }
+
+    }
+
+    img {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      cursor: pointer;
+    }
+
   }
 
   .category-list {
@@ -1999,6 +2025,14 @@ main {
       width: 56%;
       float: right;
       margin-top: -5rem;
+    }
+
+    .category-item__image {
+      display: none;
+    }
+
+    .category-item__gallery {
+      display: block;
     }
 
   }
