@@ -1087,13 +1087,10 @@ main {
 
 //========================PAGE RESERVATION====================
 
-.page-reservation {
-
   .category {
     margin-bottom: 4rem;
     padding: 0.5rem;
     color: $color-black;
-    outline: 1px solid;
   }
 
   .category-heading {
@@ -1134,6 +1131,18 @@ main {
     padding: 0.8rem;
   }
 
+  .category-roomOptions {
+    padding: 0.8rem;
+    text-align: center;
+  }
+
+  .category-roomOptions [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    font-size: 28px;
+    margin-left: 0;
+    margin-right: 12px;
+    color: $color-text-primary;
+  }
+
   .option {
     display: inline-block;
     width: 100%;
@@ -1166,10 +1175,14 @@ main {
 
   .option-data-eci .timepicker, .option-data-lco .timepicker {
     width: 5.5rem;
+    width: 9.2rem;
+    height: 3.7rem;
+    padding-left: 8px;
   }
 
   .option-data {
-    float: right;;
+    float: right;
+    width: 9.2rem;
   }
 
   .option-description {
@@ -1237,6 +1250,7 @@ main {
   }
 
   .tariff {
+    position: relative;
     border-bottom: 1px dashed;
     padding-bottom: 1.5rem;
   }
@@ -1282,25 +1296,16 @@ main {
     left: 4px;
   }
 
+  .tariff-list {
+    padding-left: 0;
+    list-style-type: circle;
+    list-style-position: inside;
+  }
+
   .tariff-overall {
     margin-top: 20px;
     padding: 5px;
   }
-
-  .tariff-price {
-    display: block;
-    width: 80px;
-    padding: 5px;
-    border: 1px solid #000;
-    border-radius: 4px;
-    background-color: #B19261;
-    text-align: center;
-    color: #fff;
-    text-shadow: 1px 1px 1px rgba(0,0,0,.2);
-
-  }
-
- }
 
 //==========================PAGE GALLERY=======================
 
@@ -2121,8 +2126,8 @@ main {
       width: 40%;
       margin-bottom: 2rem;
       padding: 0.8rem;
-      padding-bottom: 0;
-      box-shadow: 2px 2px 1px rgba(0,0,0,.2), -2px -2px 1px rgba(0,0,0,.2);
+      padding-bottom: 2rem;
+      box-shadow: 3px 2px 1px rgba(0,0,0,.2), -2px -2px 1px rgba(0,0,0,.2);
     }
 
     .options {
@@ -2132,11 +2137,8 @@ main {
     }
 
     .category-result {
-      width: 56%;
-      float: right;
       line-height: 31px;
       border-bottom: 1px solid #ADA5A5;
-      // margin-top: -5rem;
     }
 
     .category-image {
@@ -2147,13 +2149,12 @@ main {
       display: block;
     }
 
-    .tariff-heading, .tariff-rooms, .tariff-overall {
+    .tariff-heading, .tariff-overall {
       display: inline-block;
     }
 
     .tariff-heading {
       width: 50%;
-      margin-right: 10px;
 
       h3 {
         margin-top: 1rem;
@@ -2166,16 +2167,8 @@ main {
 
     }
 
-    .tariff-rooms {
-      width: 25%;
-    }
-
     .tariff-overall {
       width: 20%;
-    }
-
-    .tariff-price {
-      float: right;
     }
 
   }
@@ -2472,36 +2465,28 @@ main {
       }
 
       .options {
-        width: 10%;
-        padding-left: 10px;
-        padding-right: 10px;
-        background: rgba(0,0,0,.1);
+        width: 33%;
+        margin-top: 5rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
       }
 
       .option-description {
-        float: none;
       }
 
       .option-data {
-        float: none;
-        width: 100%;
       }
 
       .tariffs {
+        width: 27%;
         border: none;
+        border-radius: 0;
+        border-left: 1px solid;
+        margin-top: 8.8rem;
+        padding-left: 2rem;
         height: auto;
         overflow: auto;
         clear: none;
-      }
-
-      .tariffs-btn {
-        display: none;
-      }
-
-      .tariffs {
-        padding-left: 20px;
-        border-left: 1px solid;
-        margin-top: 0;
 
         h2 {
           display: none;
@@ -2509,22 +2494,42 @@ main {
 
       }
 
+      .tariff-first {
+        border-top: 1px dashed #000;
+      }
+
+      .tariffs-btn {
+        display: none;
+      }
+
       .tariff {
         padding-bottom: 0;
       }
 
       .tariff-heading {
-        width: 40%;
-      }
-
-      .tariff-rooms {
-        width: 30%;
-        position: relative;
-        top: -0.6rem;
+        width: 65%;
+        border-right: 1px dashed #000;
       }
 
       .tariff-overall {
-        width: 25%;
+        width: 33%;
+        border-top: 2px solid $color-primary;
+        padding: 0;
+        vertical-align: bottom;
+
+        [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+          margin-left: 0;
+        }
+
+      }
+
+      .tariff-radio {
+        position: absolute;
+        top: 26px;
+        right: 35px;
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
       }
 
   }

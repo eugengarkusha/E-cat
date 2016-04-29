@@ -25,8 +25,19 @@
     </div>
 
       <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum eum quos cupiditate vero laborum dignissimos fuga maxime rem, sapiente, nam quo porro, ipsam autem ut illo recusandae placeat pariatur optio, quasi perspiciatis eaque totam. Recusandae autem et vel eos accusantium.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque iusto earum mollitia, facere perferendis odit tempore architecto suscipit soluta! Beatae!
       </p>
+
+      <div class="category-roomOptions">
+        <i class="flaticon-airconditioner"></i>
+        <i class="flaticon-bath21"></i>
+        <i class="flaticon-beauty1"></i>
+        <i class="flaticon-drink110"></i>
+        <i class="flaticon-clothing275"></i>
+        <i class="flaticon-clothing685"></i>
+        <i class="flaticon-tv14"></i>
+        <i class="flaticon-moneybox"></i>
+      </div>
 
   </div>
 
@@ -59,14 +70,14 @@
     </div>
 
     <div class="option option-early">
-      <span class="option-description">Ранний заезд:</span>
+      <span class="option-description">Заезд:</span>
       <div class="option-data option-data-eci">
         <input data-eci type="text" name="timepicker" class="timepicker">
       </div>
     </div>
 
     <div class="option option-late">
-      <span class="option-description">Поздний выезд:</span>
+      <span class="option-description">Выезд:</span>
       <div class="option-data option-data-lco">
         <input data-lco type="text" name="timepicker" class="timepicker">
       </div>
@@ -98,112 +109,81 @@
 
   </div>
 
-  <div class="tariffs">
-    <div class="tariffs-btn">
-      <span></span>
-    </div>
-    <h2>Тарифы</h2>
+  <form>
 
-    <div class="tariff">
+    <div class="tariffs">
+      <div class="tariffs-btn">
+        <span></span>
+      </div>
+      <h2>Тарифы</h2>
 
-      <div class="tariff-heading">
-        <h3>Название тарифа</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, quidem.</p>
+      <div class="tariff tariff-first">
+
+        <div class="tariff-heading">
+          <h3>Стандартные условия</h3>
+          <ul class="tariff-list">
+            <li>возможен возврат</li>
+        </div>
+
+        <div class="tariff-overall">
+          <i class="flaticon-coin32"></i>
+          <span class="tariff-price">2000 грн</span>
+        </div>
+
+        <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
+
       </div>
 
-      <div class="tariff-rooms">
-        <select name="tariff-rooms" id="tariffRooms">
-          <option value="">Кол-во номеров</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
+      <div class="tariff">
+
+        <div class="tariff-heading">
+          <h3>Особые условия</h3>
+          <ul class="tariff-list">
+            <li>-10% к завтраку</li>
+            <li>-15% за проживание</li>
+            <li>-5% к чему-то еще</li>
+          </ul>
+        </div>
+
+        <div class="tariff-overall">
+          <i class="flaticon-coin32"></i>
+          <span class="tariff-price">2000 грн</span>
+        </div>
+
+        <input class="tariff-radio" type="radio" name="tariff" value="two">
+
       </div>
 
-      <div class="tariff-overall">
-        <span class="tariff-price">2000 грн</span>
-      </div>
+      <div class="tariff">
 
-    </div>
+        <div class="tariff-heading">
+          <h3>Особые условия</h3>
+          <ul class="tariff-list">
+            <li>-10% к завтраку</li>
+            <li>-15% за проживание</li>
+            <li>-5% к чему-то еще</li>
+          </ul>
+        </div>
 
-    <div class="tariff">
+        <div class="tariff-overall">
+          <i class="flaticon-coin32"></i>
+          <span class="tariff-price">2000 грн</span>
+        </div>
 
-      <div class="tariff-heading">
-        <h3>Название тарифа</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, quidem.</p>
-      </div>
+        <input class="tariff-radio" type="radio" name="tariff" value="three">
 
-      <div class="tariff-rooms">
-        <select name="tariff-rooms" id="tariffRooms">
-          <option value="">Кол-во номеров</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-      </div>
-
-      <div class="tariff-overall">
-        <span class="tariff-price">2000 грн</span>
-      </div>
-
-    </div>
-
-    <div class="tariff">
-
-      <div class="tariff-heading">
-        <h3>Название тарифа</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, quidem.</p>
-      </div>
-
-      <div class="tariff-rooms">
-        <select name="tariff-rooms" id="tariffRooms">
-          <option value="">Кол-во номеров</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-      </div>
-
-      <div class="tariff-overall">
-        <span class="tariff-price">2000 грн</span>
       </div>
 
     </div>
 
-    <div class="tariff">
-
-      <div class="tariff-heading">
-        <h3>Название тарифа</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, quidem.</p>
-      </div>
-
-      <div class="tariff-rooms">
-        <select name="tariff-rooms" id="tariffRooms">
-          <option value="">Кол-во номеров</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-      </div>
-
-      <div class="tariff-overall">
-        <span class="tariff-price">2000 грн</span>
-      </div>
-
-    </div>
-
-  </div>
+  </form>
 
   <div class="category-result clearfix">
 
-    <div class="category-result-price">
+    <!-- <div class="category-result-price">
       <span class="flaticon-coin32"></span>
       <span data-price=@Prices.fromLong(c.prices.room)>@Prices.fromLong(c.prices.room)</span><span> грн</span>
-    </div>
+    </div> -->
 
     <div class="category-result-addToOrder">
       <span>Выбрать</span>
