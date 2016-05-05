@@ -1,15 +1,18 @@
 package ecat.model
 
 import ecat.util.JsonFormats._
+
 import scalaz.{Lens => _, _}
 import Scalaz._
 import ecat.model.Schema._
-import schema.RecordFilters
+import play.api.libs.json.Reads
+import schema.RecordFilters._
 import schema.RecordJsonFormats._
+import schema.heplers.Materializer._
 import schema.heplers.misc.tpe
 
 object Filters {
-  val filters = RecordFilters.from(tpe[Hotel])
+  implicit val filterReads = implicitly[Reads[Filter[Hotel]]]
 }
 
 

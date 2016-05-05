@@ -13,13 +13,12 @@ import scala.xml.Node
 import scalaz.{Ordering => _, _}
 import Scalaz._
 import shapeless._
+import record._
 import ops.traversable.FromTraversable._
 import ops.record.Values
 import shapeless.syntax.std.traversable._
 import shapeless.contrib.scalaz._
-import record._
 import schema.RecordFilters
-
 import schema.RecordFilters._
 
 
@@ -31,8 +30,9 @@ import schema.RecordFilters._
 object Schema {
   type Room = Record.`'number->Int, 'guestsCnt->Int, 'additionalGuestsCnt-> Int, 'twin->Boolean, 'bathroom->String, 'level-> Int, 'options-> List[String]`.T
   type Prices = Record.`'room-> Long, 'bkf-> Long, 'eci-> Long, 'lco-> Long`.T
-  type Tariff = Record.`'id-> String, 'name->String, 'startDate-> LocalDateTime, 'endDate-> LocalDateTime, 'prices -> Prices`.T  //'roomPrice-> Long, 'bkf-> Long, 'eci-> Long, 'lco-> Long`
-  type Category = Record.`'id-> String, 'name->String, 'rooms-> List[Room], 'tariffs-> List[Tariff], 'prices-> Prices`.T
+  type Tariff = Record.`'id-> String, 'name->String, 'startDate-> LocalDateTime, 'endDate-> LocalDateTime, 'pricesPerDay -> Prices`.T  //'roomPrice-> Long, 'bkf-> Long, 'eci-> Long, 'lco-> Long`
+  type TariffGroup = Record.`'name->String, 'tariffs->List[Tariff], 'overalPrices->Prices`.T
+  type Category = Record.`'id-> String, 'name->String, 'rooms-> List[Room], 'tariffGroups-> List[TariffGroup]`.T
   type Hotel =  Record.`'id-> String, 'name-> String, 'checkInTime-> LocalTime, 'checkOutTime-> LocalTime, 'categories-> List[Category]`.T
 }
 
@@ -55,12 +55,22 @@ object Room{
 
 
 object Tariff{
+
+  def duration(t:Schema.Tariff)=ChronoUnit.DAYS.between(t.get('startDate), t.get('endDate))
+
+  def pricePerDay(t:Schema.Tariff,bkf:Boolean,eci:Boolean,lco:Boolean,roomCnt: Int)={
+    val p = t.get('pricesPerDay)
+    def addIf(cond: Boolean, l: Long, r:Long) = if (cond) l + r else r
+
+    (roomCnt * addIf(lco, p.get('lco), addIf(eci, p.get('eci), addIf(bkf, p.get('bkf), p.get('room))))).toDouble / 100
+
+  }
   def fromXml(n: Node):Schema.Tariff = Record(
     id = n \@"id" ,
     name = n \@"name" ,
     startDate = LocalDateTime.parse(n \@"dateN", fmt) ,
     endDate = LocalDateTime.parse(n \@"dateK", fmt) ,
-    prices = Record(
+    pricesPerDay = Record(
       room = (n \@"roomprice").toDouble * 100 toLong,
       bkf = (n \@"bkfprice").toDouble * 100 toLong,
       eci = (n \@"eciprice").toDouble * 100 toLong,
@@ -86,18 +96,9 @@ object Category {
     val catId =  n \@ "id"
     def name = n \@ "name"
     def rooms: ValidationNel[String, List[Schema.Room]] = Preprocessing.rooms((n \ "room").toList.map(Room.fromXml))
-    def tariffs: ValidationNel[String, List[Schema.Tariff]] = Preprocessing.tariffs((n \ "tarif").toList.map(Tariff.fromXml), from, to)
+    def tariffGroups: ValidationNel[String, List[Schema.TariffGroup]] = Preprocessing.tariffs((n \ "tarif").toList.map(Tariff.fromXml), from, to, catId)
 
-
-    (rooms |@| tariffs) { (_rooms,_tariffs)=>
-
-      def prices: Schema.Prices = _tariffs.map {tariff =>
-        val dif = ChronoUnit.DAYS.between(tariff.get('startDate), tariff.get('endDate)) + 1
-        (tariff.get('prices)).toList.map(_ * dif).toHList[Schema.Prices].get
-      }.reduce(_ |+| _)
-
-      Record(id = catId, name = name, rooms= _rooms , tariffs= _tariffs, prices = prices )
-    }
+    (rooms |@| tariffGroups) { (_rooms, _tariffGroups)=> Record(id = catId, name = name, rooms= _rooms , tariffGroups= _tariffGroups )}
     .leftMap(err=>NonEmptyList(s"categoryId=$catId:" + err))
 
   }

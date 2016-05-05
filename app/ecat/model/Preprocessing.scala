@@ -1,10 +1,13 @@
 package ecat.model
 import java.time.LocalDateTime
-
+import java.time.temporal._
+import ValidationOps._
 import Schema._
-import shapeless._, record._
+import shapeless._
+import record._
+import TariffOps._
 import scalaz.{Ordering => _, _}
-import Scalaz._
+import scalaz._, Scalaz._
 import ecat.util.DateTime._
 
 
@@ -15,30 +18,51 @@ object Preprocessing {
       Success(r)
   }
 
-  //failing fast here
-  def tariffs( tariffs: List[Schema.Tariff], from: LocalDateTime, to: LocalDateTime): ValidationNel[String, List[Schema.Tariff]] = {
+  def tariffs( tariffs: List[Schema.Tariff], from: LocalDateTime, to: LocalDateTime, catId: String): ValidationNel[String, List[Schema.TariffGroup]] = {
 
-    val filtered: List[Schema.Tariff] = tariffs.sortBy(_.get('startDate))
-      .dropWhile(_.get('endDate).compareTo(from) < 0)
-      .takeWhile(_.get('startDate).compareTo(to) <= 0)
+    def edgesCheck(tarffs: List[Tariff]) = {
+      val (first, last) = (tarffs.head, tarffs.last)
+      If(first.get('startDate).compareTo(from) > 0 || last.get('endDate).compareTo(to) < 0)(
+         s"""Tariffs of type: ${first.get('name)} are not covering date interval.
+             | First tariff start date: ${first.get('startDate)}, last tariff end date: ${last.get('endDate)}.
+             | Provided dates: from: $from , to: $to.""".stripMargin
+      )
+    }
 
-    {
-      if (filtered.isEmpty) s"no active tariffs in category $this".failureNel[List[Schema.Tariff]]
-      else if (filtered.head.get('startDate).compareTo(from) > 0 || filtered.last.get('endDate).compareTo(to) < 0) {
-        s"""tariffs are not covering date interval: first tariff start date :${tariffs.head.get('startDate)},
-            |last tariff end date:${tariffs.last.get('endDate)}.Provided dates: $from:, $to.
-            |""".stripMargin.failureNel
-      }
-      else {
-        filtered.sliding(2, 1).find(t => t.size==2 && t(0).get('endDate) != t(1).get('startDate))
-        .map(s => s"gap or overlap between tariffs: 1)${s(0)}, 2)${s(1)}")
-        .toFailureNel{
-          //aligning tariffs  start/end dates with given (category) interval
-          val t = (filtered.head.updated('startDate, from) +: filtered.tail)
-          t.init :+ t.last.updated('endDate, to)
-        }
+    def gapCheck(t1:Tariff, t2:Tariff)={
+      If(t1.get('endDate).compareTo(t2.get('startDate)) < 0)(s"gap between tariffs: 1)$t1, 2)$t2")
+    }
+
+    def overlapCheck(t1:Tariff, t2:Tariff)={
+      If(t1.get('endDate).compareTo(t2.get('startDate)) > 0)(s"overlap between tariffs: 1)$t1, 2)$t2")
+    }
+
+    def startEndCheck(tariffs: List[Tariff]):List[String] = {
+      tariffs.flatMap{t=>
+        If(t.get('startDate).compareTo(t.get('endDate))>=0)("startDate >= endDate in tariff: :$t")
       }
     }
+
+    //factor out logic that provides checks based on tariff name
+    def validated: ValidationNel[String,Map[String, List[Tariff]]] = {
+
+      cutPeriod(from, to, tariffs.sortBy(_.get('startDate)))
+      .groupBy(_.get('name)).toList
+      .traverseU {
+        case (name, rawGroup) =>{
+
+          def checks:List[List[Tariff]=>List[String]]={
+            if(name == baseGrpName) List(startEndCheck(_), edgesCheck(_),pairwiseCheck(_)(overlapCheck, gapCheck))
+            else List( startEndCheck(_), pairwiseCheck(_)(overlapCheck))
+          }
+          validate(rawGroup)(checks:_*).map(name -> _)
+        }
+      }.map(_.toMap).ensure(NonEmptyList("base tariff not found"))(_.contains(baseGrpName))
+
+    }
+
+
+    validated.map(group(from, to, _))
   }
 
 }

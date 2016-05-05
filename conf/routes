@@ -3,12 +3,13 @@
 # ~~~~
 
 # Home page
+GET      /tst                                      controllers.Application.tst
 #GET     /                                         controllers.Application.main
-GET     /dumpxml/:from/:to                        controllers.Application.dumpXml(from,to)
-GET     /rooms/:from/:to                          controllers.Application.getAvailableRooms(from: LocalDateTime,to:LocalDateTime)
-GET     /dummyoffers/:from/:to                    controllers.Application.getDummyOffers(from:LocalDateTime,to:LocalDateTime)
-#                                                  TODO:from: LocalDateTime,to: LocalDateTime)
-#GET     /reservation/:from/:to             controllers.Application.reservation(from, to)
+GET     /dumpxml/:from/:to                         controllers.Application.dumpXml(from,to)
+#GET     /rooms/:from/:to                          controllers.Application.getAvailableRooms(from: LocalDateTime,to:LocalDateTime)
+#GET     /dummyoffers/:from/:to                    controllers.Application.getDummyOffers(from:LocalDateTime,to:LocalDateTime)
+#
+#GET     /reservation/:from/:to                    controllers.Application.reservation(from, to)
 ##GET     /ekaterina                                controllers.Application.ekaterina
 #GET     /ekaterina2                               controllers.Application.ekaterina2
 #GET     /gallery                                  controllers.Application.gallery
@@ -25,7 +26,7 @@ GET     /dummyoffers/:from/:to                    controllers.Application.getDum
 #Ajax
 #GET     /category/:from/:to                       controllers.Application.category(from:LocalDateTime,to:LocalDateTime, c: CategoryCtrl, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters: JsArray)
 #TODO: JsObjects in signature? Think of validation.
-#GET     /filters/:from/:to                        controllers.Application.filter(from:LocalDateTime,to:LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters: JsArray)
+#GET     /filters/:from/:to                        controllers.Application.filter(from:LocalDateTime,to:LocalDateTime, filters: Filter[Schema.Hotel])
 
 
 

@@ -12,13 +12,17 @@ import play.api.mvc._
 import ecat.util.DateTime.localDateTimeOrdering
 import schema.RecordJsonFormats._
 import ecat.util.JsonFormats._
+
 import scala.concurrent.duration._
 import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import ecat.util.DateTime.interval
 import play.api.Play
+import schema.RecordFilters.Filter
 import ecat.model.Schema._
+import ecat.model.ajax.Mappings.CategoryCtrl
 //TODO: clean this fucking mess!
 class Application (cache: CacheApi, env: play.api.Environment ) extends Controller {
 
@@ -28,16 +32,23 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
     def lbl = "H:"+interval(from, to)
 //    def hotels = Json.parse(scala.io.Source.fromFile(env.getFile("conf/json")).mkString).as[Seq[Hotel]]
-    def  load = Future(proxy.getNomSvobod(fmt.format(from), fmt.format(to))).map { s =>
+    def  load = Future(fetchData(from,to)).map { s =>
       val h = Hotel.fromXml(scala.xml.XML.loadString(s), from, to.minusDays(1)).fold(err => throw new Exception(err.toString), identity)
       cache.set(lbl,h, 3.minutes)
+      println("h="+h)
       h
     }
-
-    cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse(load)
-//    hotels
+//
+//    cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse(load)
+    load
+//    Future.successful(hotels)
   }
 
+  private def fetchData(from: LocalDateTime, to: LocalDateTime):String={
+//    proxy.getNomSvobod(fmt.format(from), fmt.format(to))
+    scala.io.Source.fromFile(env.getFile("conf/xml20160505223228_20160630000000")).mkString
+
+  }
 
 // TODO: create and maintain proxy outside the controller
   val proxy ={
@@ -53,17 +64,16 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
       Future(proxy.getNomSvobod(from, to)).map(Ok(_))
   }
 
-  def getAvailableRooms(from: LocalDateTime, to: LocalDateTime)= Action.async{
-    Future(proxy.getNomSvobod(fmt.format(from), fmt.format(to))).map{s=>
-      val hotels = Hotel.fromXml(scala.xml.XML.loadString(s), from, to.minusDays(1)).fold(err=> throw new Exception(err.toString), identity)
-      //cache.set()
-      Ok(Json.toJson(hotels))
+  def tst= Action.async{
+    getHotels(LocalDateTime.of(2016,5,5,22,32,28),LocalDateTime.of(2016,6,30,0,0,0)).map{r=>
+      Ok(r.toString)
     }
+
   }
 
-  def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action.async {  implicit req =>
-    getHotels(from,to).map(hotels=>Ok(views.html.pages.offers(hotels)))
-  }
+//  def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action.async {  implicit req =>
+//    getHotels(from,to).map(hotels=>Ok(views.html.pages.offers(hotels)))
+//  }
 
 //  def main = Action{
 //    Ok(views.html.index())
@@ -108,47 +118,44 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 //
 //
 //
-//  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray) = Action.async{req =>
+
+//Category code in unrelated to reality
+//  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl, filter: Filter[Hotel]) = Action.async{req =>
 //    getHotels(from, to).map { hotels =>
-//      val resp = for {
-//        h <- Filters(hotels, hotelFilters, roomFilters, roomOptFilters)
-//            .valueOr(err=>throw new Exception(err.toString))
-//            .find(_.id == ctrl.hotelId)
-//        cat <- h.categories.find(_.id == ctrl.catId)
-//      } yield {
+//    val resp =  Ok{
 //
-//        def redraw = Json.obj(
-//          "changed" -> true,
-//          "categoryHtml" -> views.html.pages.category.render(cat, h.id, req).toString
-//        )
+//      filter(hotels).map{
+//        case Right(c)=>{
 //
-//        if (cat.hashCode == ctrl.hash) {
-//          try {
+//         val trfs =  cat.get('tariffs)
+//         val grpd:Map[String,Tariff] = trfs.groupBy(_.get('name))//.sortBy(_.get('startDate)) noneed to sort
+//         val base = grpd.getOrElse("Проживание", throw new Exception("no base tariff deteced(by name Проживание)"))
+//
+//
+//
+////          tariffs ++
 //            Json.obj(
 //              "changed" -> false,
-//              "price" -> ctrl.price(cat.prices),
-//              "maxGuestCnt" -> cat.maxGuestCnt(ctrl.roomCnt),
-//              "maxRoomCnt" -> cat.maxRoomCnt(ctrl.guestsCnt)
+//              "price" -> ctrl.price(filteredC.prices),
+//              "maxGuestCnt" -> cat.maxGuestCnt(filteredC.roomCnt),
+//              "maxRoomCnt" -> cat.maxRoomCnt(filteredC.guestsCnt)
 //            )
-//          } catch {
-//            //todo: handling situation where hash matched but cats are not equal(redraw category and log errors)
-//            //case t:Throwable => report(t); redraw
-//            //lets look if we encounter these situations in development
-//            case t: Throwable => throw t
-//          }
-//        } else redraw
+//        }
+//        case Left(c)=>{
+//          Json.obj(
+//            "changed" -> true,
+//            "categoryHtml" -> views.html.pages.category.render(c, h.id, req).toString
+//          )
+//        }
+//      }.getOrElse(Json.obj("changed" -> true, "categoryHtml" -> ""))
 //
-//      }
 //
-//      Ok(resp.getOrElse(Json.obj("changed" -> true, "categoryHtml" -> "")))
+//
 //    }
 //  }
 //
-//  def filter(from: LocalDateTime, to: LocalDateTime, hotelFilters: JsObject,roomFilters: JsObject, roomOptFilters:JsArray) = Action.async{implicit  req =>
-//    getHotels(from, to).map { hotels =>
-//      val filtered = Filters(hotels, hotelFilters: JsObject, roomFilters: JsObject, roomOptFilters: JsArray)
-//      Ok(views.html.pages.offers(filtered.fold(errs => throw new Exception(errs.toString()), identity)))
-//    }
+//  def filter(from: LocalDateTime, to: LocalDateTime, filter: Filter[Hotel]) = Action.async{ implicit req =>
+//    getHotels(from, to).map(hotels => Ok(views.html.pages.offers(hotels.flatMap(filter))))
 //  }
 
 

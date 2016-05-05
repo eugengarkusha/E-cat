@@ -9,20 +9,26 @@ scalaVersion := "2.11.8"
 libraryDependencies ++= Seq(
   jdbc,
   cache,
-  ws,
-  specs2 % Test
+  ws
 )
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.2"
 libraryDependencies += "com.chuusai" %% "shapeless" % "2.3.0"
 libraryDependencies += "org.typelevel" %% "shapeless-scalaz" % "0.4"
 libraryDependencies += "sandbox" %% "schema" % "1.1"
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
 
 unmanagedJars in Compile += file("./lib/ecatWsClient.jar")
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
 // Play provides two styles of routers, one expects its actions to be injected, the
-// other, legacy style, accesses its actions statically.
+// other, legacy style, accesses its actions statically."
 routesGenerator := InjectedRoutesGenerator
+//, "ecat.model.ajax.Mappings._
+routesImport ++= List("ecat.model.Bindables._",
+                       "java.time.LocalDateTime",
+                       "play.api.libs.json._",
+                       "schema.RecordFilters.Filter",
+                       "ecat.model.Schema",
+                       "ecat.model.Filters.filterReads")
 
-routesImport ++= List("ecat.model.Bindables._", "java.time.LocalDateTime", "ecat.model.ajax.Mappings._, play.api.libs.json._")

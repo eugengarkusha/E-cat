@@ -10,7 +10,8 @@ import scalaz.Monoid
 
 object RecordInstances {
 
-  implicit def rm[R<:HList, H<:HList](implicit v:Values.Aux[R,H], p:Monoid[H]): Monoid[R]= {
+  //needs import shapeless.contrib.scalaz.instances._ to be imported
+  implicit def recordMonoid[R<:HList, H<:HList](implicit v:Values.Aux[R,H], p:Monoid[H]): Monoid[R]= {
     MonoidDerivedOrphans.typeClass.project(p,(r:R)=>v.apply(r),(h:H)=>h.asInstanceOf[R])
   }
 
