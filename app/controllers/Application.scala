@@ -120,7 +120,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 //
 
 //Category code in unrelated to reality
-//  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl, filter: Filter[Hotel]) = Action.async{req =>
+//  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl) = Action.async{req =>
 //    getHotels(from, to).map { hotels =>
 //    val resp =  Ok{
 //

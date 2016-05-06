@@ -30,20 +30,24 @@ object Mappings {
 //      (roomCnt * addIf(lco, p.lco, addIf(eci, p.eci, addIf(bkf, p.bkf, p.room)))).toDouble / 100
 //    }
 
-//OLD DRAFT(maybe irrelevant):
+//return all needed data instead of category on the right(prices, maxguest/roomCount etc)
     def filter(hotels: Seq[Hotel]):Option[Either[Category,Category]] = {
       //TODO: consider rewriting in terms of filtering AST when it is implemented(in would also cover filtering by roomCnt)
-      val filtered: Seq[Category] = for{
+      val preFiltered: Seq[Category] = for{
         h<- hotels.filter(_.get('id) == hotelId)
         c<- h.get('categories).filter(_.get('id) == catId)
       }yield c
 
-      if(filtered.size > 1) throw new Exception(s"CategoryCtrl filter returned more then one category: $filtered")
+      if(preFiltered.size > 1) throw new Exception(s"CategoryCtrl filter returned more then one category: $preFiltered")
 
-      filtered.headOption.map{c=>
-        val filteredC = c.updateWith('rooms)(_.filter(r=>r.get('guestsCnt)>=guestsCnt && (!twinRequired || r.get('twin))))
-        if(filteredC.get('rooms).size < roomCnt)Left(c)else Right(filteredC)
+      preFiltered.headOption.map { category =>
+        if(category.get('tariffGroups).hashCode!=tariffsHash)Left(category)
+        else {
+          val filtered = category.updateWith('rooms)(_.filter(r => r.get('guestsCnt) >= guestsCnt && (!twinRequired || r.get('twin))))
+          if (filtered.get('rooms).size < roomCnt) Left(category) else Right(filtered)
+        }
       }
+
     }
 
   }
