@@ -117,7 +117,26 @@
       </div>
       <h2>Тарифы</h2>
 
-      <div class="tariff tariff-first">
+      @for(tg <- @c.get('tariffGroups)) {
+        <div class="tariff tariff-first">
+
+          <div class="tariff-heading">
+            <h3>@tg.get('name)</h3>
+            <ul class="tariff-list">
+              <li>возможен возврат</li>
+          </div>
+
+          <div class="tariff-overall">
+            <i class="flaticon-coin32"></i>
+            <span class="tariff-price">@tg.get('overalPrices) грн</span>
+          </div>
+
+          <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
+
+        </div>
+      }
+
+      <!-- <div class="tariff tariff-first">
 
         <div class="tariff-heading">
           <h3>Стандартные условия</h3>
@@ -172,18 +191,13 @@
 
         <input class="tariff-radio" type="radio" name="tariff" value="three">
 
-      </div>
+      </div> -->
 
     </div>
 
   </form>
 
   <div class="category-result clearfix">
-
-    <!-- <div class="category-result-price">
-      <span class="flaticon-coin32"></span>
-      <span data-price=@Prices.fromLong(c.prices.room)>@Prices.fromLong(c.prices.room)</span><span> грн</span>
-    </div> -->
 
     <div class="category-result-addToOrder">
       <span>Выбрать</span>

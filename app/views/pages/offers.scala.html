@@ -7,12 +7,12 @@
 
   @for(h <- hotels) {
 
-    <div class="hotel" id=@h.id>
+    <div class="hotel" id=@h.get('id)>
       <h2>@h.get('name)</h2>
 
-      @for(c <- h.get('categories)) {
+      @for(c <- @h.get('categories)) {
 
-        @views.html.pages.category.render(c, h.get('id), req)
+        @views.html.pages.category.render(@c, @h.get('id), req)
 
       }
     </div>
