@@ -4,16 +4,55 @@ $(function () {
         $('.header-main-menu').toggleClass('slide');
     });
 
-    $('.header-main').scroolly([
-        {
-            from: 'doc-top + 122px',
-            addClass: 'sticky'
-        },
-        {
-            to: 'doc-top + 1px',
-            removeClass: 'sticky'
-        }
-    ]);
+    setTimeout(function() {
+      $('.header-main').scroolly([
+          {
+              from: 'doc-top + 122px',
+              addClass: 'sticky'
+          },
+          {
+              to: 'doc-top + 1px',
+              removeClass: 'sticky'
+          }
+      ]);
+
+      if($('.filtering')[0]) {
+        $('.filtering').scroolly([
+          {
+            from: 'doc-top + 420px',
+            addClass: 'filtering-slide'
+          },
+          {
+            to:'doc-top + 220px',
+            removeClass: 'filtering-slide'
+          }
+        ]);
+      }
+    }, 500);
+
+    // $('.header-main').scroolly([
+    //     {
+    //         from: 'doc-top + 122px',
+    //         addClass: 'sticky'
+    //     },
+    //     {
+    //         to: 'doc-top + 1px',
+    //         removeClass: 'sticky'
+    //     }
+    // ]);
+    //
+    // if($('.filtering')[0]) {
+    //   $('.filtering').scroolly([
+    //     {
+    //       from: 'doc-top + 420px',
+    //       addClass: 'filtering-slide'
+    //     },
+    //     {
+    //       to:'doc-top + 220px',
+    //       removeClass: 'filtering-slide'
+    //     }
+    //   ]);
+    // }
 
     // if ($('.page-reservation')[0]) {
     //   $('.booking-form').scroolly([
@@ -56,7 +95,7 @@ $(function () {
     //   ], $('.main-section'));
     // }
 
-    if ($('.makeOrder')[0] || $('.booking-form')[0]) {
+    if ($('.makeOrder')[0] || $('.filtering')[0]) {
 
         Date.parseDate = function( input, format ){
             return moment(input,format).toDate();

@@ -388,50 +388,6 @@ main {
     display: block;
     max-width: 40rem;
     margin: 0.6rem auto 0; }
-  main .booking-form {
-    margin: 4rem auto; }
-    main .booking-form legend {
-      text-align: center;
-      font-size: 2.4rem;
-      font-family: "Droid Serif", Arial, Helvetica, sans-serif;
-      color: #000; }
-    main .booking-form input, main .booking-form select {
-      display: block;
-      width: 100%;
-      height: 4.2rem;
-      margin: 1rem 0;
-      padding: 0 1rem;
-      background: #fff;
-      outline: none;
-      border: 1px solid #c2c2c2;
-      border-bottom-width: 3px;
-      color: #000;
-      cursor: pointer; }
-    main .booking-form .check-col {
-      display: inline-block;
-      width: 49%; }
-      main .booking-form .check-col input {
-        background-color: #fff; }
-    main .booking-form select {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none; }
-    main .booking-form label {
-      position: relative;
-      display: block;
-      font-size: 1.4rem; }
-    main .booking-form .flaticon-calendar-icons {
-      position: absolute;
-      right: 1rem;
-      bottom: -3.7rem; }
-    main .booking-form .submit-button input {
-      width: 50%;
-      height: 3.7rem;
-      border: none;
-      margin: 1rem auto;
-      background: #b19261;
-      color: #fff;
-      transition: background-color 0.6s ease; }
 
 .makeOrder {
   width: 30rem;
@@ -486,6 +442,57 @@ main {
     background: #fff;
     color: #000;
     text-shadow: none; }
+
+.filtering {
+  position: relative;
+  padding: 0.8rem;
+  text-align: center;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  color: #a6a6a6;
+  transition: all 0.3s ease;
+  background: #fff; }
+  .filtering .selectric {
+    margin-top: 0;
+    margin-bottom: 0;
+    border-bottom-width: 1px; }
+
+.filtering-checkIn, .filtering-checkOut, .filtering-people, .filtering-hotel, .filtering-twin, .filtering-order {
+  position: relative;
+  display: inline-block;
+  width: 49%;
+  margin-bottom: 1rem; }
+  .filtering-checkIn input, .filtering-checkOut input, .filtering-people input, .filtering-hotel input, .filtering-twin input, .filtering-order input {
+    width: 100%;
+    height: 4rem;
+    padding-left: 1rem;
+    color: #000;
+    background: #fff;
+    cursor: pointer; }
+
+.filtering-checkIn .flaticon-calendar-icons, .filtering-checkOut .flaticon-calendar-icons {
+  position: absolute;
+  top: 2.5rem;
+  right: 0.5rem; }
+  .filtering-checkIn .flaticon-calendar-icons:before, .filtering-checkOut .flaticon-calendar-icons:before {
+    margin-left: 0; }
+
+.filtering-checkIn input, .filtering-checkOut input {
+  border: 1px solid #a6a6a6;
+  cursor: pointer; }
+
+.filtering-twin {
+  padding-right: 3rem;
+  line-height: 1.3rem; }
+  .filtering-twin input {
+    width: auto;
+    height: auto;
+    float: right; }
+
+.filtering-slide {
+  position: fixed;
+  width: 100%;
+  top: 60px;
+  z-index: 100; }
 
 .slider {
   display: none; }
@@ -753,7 +760,8 @@ main {
   color: #000; }
 
 .category-heading {
-  border-bottom: 2px solid #000; }
+  border-bottom: 2px solid #000;
+  text-align: right; }
 
 .category-gallery {
   display: none;
@@ -1192,10 +1200,6 @@ main {
 .page-room .lSSlideOuter .lSPager.lSGallery {
   max-height: 6rem;
   display: none; }
-.page-room .booking-form .breakfast-checkbox {
-  text-align: center; }
-  .page-room .booking-form .breakfast-checkbox label {
-    margin-bottom: 0.1rem; }
 
 .room-equipment {
   padding-bottom: 1rem;
@@ -1231,18 +1235,6 @@ main {
   color: #000; }
 
 @media screen and (min-width: 380px) {
-  main .booking-form label {
-    margin-bottom: -1.1rem; }
-  main .booking-form input, main .booking-form select {
-    margin-bottom: 0.4rem; }
-  main .booking-form .form-col {
-    display: inline-block;
-    width: 50%; }
-  main .booking-form .submit-button {
-    margin-top: 2rem; }
-  main .booking-form .fa-calendar {
-    bottom: -2.7rem; }
-
   .page-reservation .form-col {
     position: relative;
     float: left;
@@ -1315,6 +1307,21 @@ main {
     float: left; }
   .page-contacts .contacts + .contacts {
     float: right; } }
+@media screen and (min-width: 580px) {
+  .filtering {
+    padding-top: 4.5rem; }
+
+  .filtering-checkIn, .filtering-checkOut, .filtering-people, .filtering-hotel, .filtering-twin, .filtering-order {
+    width: 16%;
+    vertical-align: middle;
+    margin-bottom: 0; }
+    .filtering-checkIn span, .filtering-checkOut span, .filtering-people span, .filtering-hotel span, .filtering-twin span, .filtering-order span {
+      position: absolute;
+      top: -4.2rem;
+      left: 0; }
+
+  .filtering-checkIn .flaticon-calendar-icons, .filtering-checkOut .flaticon-calendar-icons {
+    display: none; } }
 @media screen and (min-width: 720px) {
   .makeOrder {
     background: rgba(255, 255, 255, 0.6);
@@ -1328,7 +1335,7 @@ main {
     float: left;
     margin-right: 1rem; }
 
-  main .main-section, main .booking-form {
+  main .main-section {
     background-color: rgba(255, 255, 255, 0.75); }
   main .main-section {
     padding: 0 2rem 0.5rem;
@@ -1344,14 +1351,6 @@ main {
   .page-reservation .main-section {
     margin-bottom: 2rem;
     box-shadow: 3px 3px 14px 0 rgba(0, 0, 0, 0.45), -3px -3px 14px rgba(0, 0, 0, 0.45); }
-  .page-reservation .booking-form {
-    width: 100%;
-    margin-bottom: 0;
-    background-color: transparent; }
-    .page-reservation .booking-form .form-col {
-      width: 33%;
-      margin-bottom: 0;
-      z-index: auto; }
   .page-reservation .category {
     padding: 1.5rem;
     padding-top: 0.1rem; }
@@ -1396,6 +1395,19 @@ main {
     float: left; }
   .page-contacts .map-block p + p {
     float: right; } }
+@media screen and (min-width: 802px) {
+  .filtering-checkIn span, .filtering-checkOut span, .filtering-people span, .filtering-hotel span, .filtering-twin span, .filtering-order span {
+    position: static;
+    display: inherit; }
+
+  .filtering {
+    padding-top: 0.8rem; }
+
+  .filtering-checkIn .flaticon-calendar-icons, .filtering-checkOut .flaticon-calendar-icons {
+    display: block; }
+
+  .filtering-order {
+    padding-top: 2.2rem; } }
 @media screen and (min-width: 997px) {
   .main-menu-handle {
     display: none; }
@@ -1461,9 +1473,6 @@ main {
       max-width: 117rem;
       margin: 0 auto; }
 
-  .page-reservation .booking-form {
-    margin-bottom: 1rem; }
-
   .page-gallery .gallery li, .page-blog .gallery li {
     width: 25%; }
 
@@ -1493,7 +1502,7 @@ main {
     padding: 0 3rem 16rem; }
     main .main-section {
       float: right;
-      width: 65%;
+      width: 72%;
       padding-right: 0; }
     main .booking-form {
       margin-top: 0; }

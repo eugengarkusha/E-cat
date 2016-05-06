@@ -45,7 +45,51 @@
 
         <h1>Забронируйте номер</h1>
 
-        <form action="#" class="booking-form clearfix" id="filterBlock">
+        <div class="filtering">
+
+          <div class="filtering-checkIn">
+            <i class="flaticon-calendar-icons"></i>
+            <span>Дата заселения:</span>
+            <input type="text" name="checkIn" id="checkIn" value="Дата заселения" required readonly>
+          </div>
+
+          <div class="filtering-checkOut">
+            <i class="flaticon-calendar-icons"></i>
+            <span>Дата выселения:</span>
+            <input type="text" name="checkOut" id="checkOut" value="Дата выселения" required readonly>
+          </div>
+
+          <div class="filtering-people">
+            <span>Кол-во человек:</span>
+            <select name="peopleQuantity" id="peopleQuantity" required>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+
+          <div class="filtering-hotel">
+            <span>Гостинница:</span>
+            <select name="hotel" id="hotel" required>
+              <option value="">Все</option>
+              <option value="Екатерина">Екатерина</option>
+              <option value="Екатерина II">Екатерина II</option>
+            </select>
+          </div>
+
+          <div class="filtering-twin">
+            <label for="twin">Твин</label>
+            <input type="checkbox" name="twin" id="twin">
+          </div>
+
+          <div class="filtering-order">
+            <input type="button" value="Заказать">
+          </div>
+
+        </div>
+
+        <!-- <form action="#" class="filtering clearfix" id="filterBlock">
 
           <fieldset>
             <div class="booking-row clearfix">
@@ -94,7 +138,7 @@
 
           </fieldset>
 
-        </form>
+        </form> -->
 
       </section>
 

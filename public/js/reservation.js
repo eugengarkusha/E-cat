@@ -108,7 +108,7 @@ $(function () {
       };
 
       globalFilt.hotel = {
-        name: elemAndVal($('.booking-form')[0], '#hotel').value
+        name: elemAndVal($('.filtering')[0], '#hotel').value
       };
       if (globalFilt.hotel.name === '') delete globalFilt.hotel.name;
 
@@ -281,7 +281,7 @@ $(function () {
 
     $.ajax(jsRoutes.controllers.Application.getDummyOffers(from, to))
       .done(function( resp ) {
-        $('.booking-form').after(resp);
+        $('.filtering').after(resp);
 
         $('#checkIn').val(moment((from).toString().slice(0,-6)).format('YYYY.MM.DD'));
         $('#checkOut').val(moment((to).toString().slice(0,-6)).format('YYYY.MM.DD'));
@@ -290,7 +290,7 @@ $(function () {
 
         changeCat('.category-list');
 
-        changeFilter($('.booking-form')[0]);
+        changeFilter($('.filtering')[0]);
 
 
         (function () {
