@@ -24,11 +24,16 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically."
 routesGenerator := InjectedRoutesGenerator
-//, "ecat.model.ajax.Mappings._
+//
 routesImport ++= List("ecat.model.Bindables._",
                        "java.time.LocalDateTime",
                        "play.api.libs.json._",
                        "schema.RecordFilters.Filter",
                        "ecat.model.Schema",
-                       "ecat.model.Filters.filterReads")
+                       "ecat.model.Filters.filterReads",
+                       "ecat.model.ajax.CategoryControlProtocol._")
+
+TwirlKeys.templateImports ++= List("ecat.model.Schema._",
+                                    "shapeless._",
+                                     "shapeless.record._")
 

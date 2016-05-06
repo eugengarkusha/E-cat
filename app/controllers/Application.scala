@@ -4,8 +4,7 @@ import java.time.{LocalDateTime, LocalTime, ZoneOffset}
 import javax.xml.ws.BindingProvider
 
 import async.client.ObmenSait
-import ecat.model.Prices
-import ecat.model.{Category, Hotel, Room, Tariff}
+import ecat.model.{Hotel, _}
 import play.api.cache.CacheApi
 import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.mvc._
@@ -22,7 +21,7 @@ import ecat.util.DateTime.interval
 import play.api.Play
 import schema.RecordFilters.Filter
 import ecat.model.Schema._
-import ecat.model.ajax.Mappings.CategoryCtrl
+import ecat.model.ajax.CategoryControlProtocol.CatCtrlRequest
 //TODO: clean this fucking mess!
 class Application (cache: CacheApi, env: play.api.Environment ) extends Controller {
 
@@ -71,50 +70,50 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
   }
 
-//  def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action.async {  implicit req =>
-//    getHotels(from,to).map(hotels=>Ok(views.html.pages.offers(hotels)))
-//  }
+  def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action.async {  implicit req =>
+    getHotels(from,to).map(hotels=>Ok(views.html.pages.offers(hotels)))
+  }
 
-//  def main = Action{
-//    Ok(views.html.index())
-//  }
-//  def ekaterina = Action{
-//    Ok(views.html.pages.hotels.ekaterina.ekaterina())
-//  }
-//  def ekaterina2 = Action{
-//    Ok(views.html.pages.hotels.ekaterina2.ekaterina2())
-//  }
-//  def gallery = Action{
-//    Ok(views.html.pages.gallery())
-//  }
-//  def blog = Action{
-//    Ok(views.html.pages.blog())
-//  }
-//  def news = Action{
-//    Ok(views.html.pages.news())
-//  }
-//  def promo = Action{
-//    Ok(views.html.pages.promo())
-//  }
-//  def about = Action{
-//    Ok(views.html.pages.about())
-//  }
-//  def contacts = Action{
-//    Ok(views.html.pages.contacts())
-//  }
-//  def comment = Action{
-//    Ok(views.html.pages.comment())
-//  }
-//  def post = Action{
-//    Ok(views.html.pages.blog_pages.post())
-//  }
-//  def event = Action{
-//    Ok(views.html.pages.news_pages.event())
-//  }
-//
-//  def reservation(from:String, to:String) = Action{implicit  req =>
-//    Ok(views.html.pages.reservation(from, to))
-//  }
+  def main = Action{
+    Ok(views.html.index())
+  }
+  def ekaterina = Action{
+    Ok(views.html.pages.hotels.ekaterina.ekaterina())
+  }
+  def ekaterina2 = Action{
+    Ok(views.html.pages.hotels.ekaterina2.ekaterina2())
+  }
+  def gallery = Action{
+    Ok(views.html.pages.gallery())
+  }
+  def blog = Action{
+    Ok(views.html.pages.blog())
+  }
+  def news = Action{
+    Ok(views.html.pages.news())
+  }
+  def promo = Action{
+    Ok(views.html.pages.promo())
+  }
+  def about = Action{
+    Ok(views.html.pages.about())
+  }
+  def contacts = Action{
+    Ok(views.html.pages.contacts())
+  }
+  def comment = Action{
+    Ok(views.html.pages.comment())
+  }
+  def post = Action{
+    Ok(views.html.pages.blog_pages.post())
+  }
+  def event = Action{
+    Ok(views.html.pages.news_pages.event())
+  }
+
+  def reservation(from:String, to:String) = Action{implicit  req =>
+    Ok(views.html.pages.reservation(from, to))
+  }
 //
 //
 //
@@ -154,9 +153,9 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 //    }
 //  }
 //
-//  def filter(from: LocalDateTime, to: LocalDateTime, filter: Filter[Hotel]) = Action.async{ implicit req =>
-//    getHotels(from, to).map(hotels => Ok(views.html.pages.offers(hotels.flatMap(filter))))
-//  }
+  def filter(from: LocalDateTime, to: LocalDateTime, filter: Filter[Schema.Hotel]) = Action.async{ implicit req =>
+    getHotels(from, to).map(hotels => Ok(views.html.pages.offers(hotels.flatMap(filter))))
+  }
 
 
 

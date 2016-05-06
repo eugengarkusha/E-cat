@@ -1,4 +1,5 @@
-@import  ecat.model.Schema.{Category, Prices}
+@import ecat.model.CategoryOps._
+
 @(c: Category, h: String)(implicit req: play.api.mvc.RequestHeader)
 
 <div class="category clearfix" data-catId=@c.get('id) data-hash=@c.hashCode data-hotelId=@h>
@@ -49,7 +50,7 @@
 
       <div class="option-data option-data-select">
         <select data-guestscnt=@c.get('id) name="guest">
-          @for(guest <- 1 to c.maxGuestCnt(1)) {
+          @for(guest <- 1 to maxGuestCnt(c,1)) {
             <option value=@guest>@guest</option>
           }
         </select>
@@ -98,7 +99,7 @@
       <div class="option-data option-data-select">
 
         <select data-roomcnt name="room_count">
-          @for(room <- 1 to c.maxRoomCnt(1)) {
+          @for(room <- 1 to availableRoomCnt(c, 1)) {
             <option value=@room>@room</option>
           }
         </select>
@@ -117,7 +118,7 @@
       </div>
       <h2>Тарифы</h2>
 
-      @for(tg <- @c.get('tariffGroups)) {
+      @for(tg <- c.get('tariffGroups)) {
         <div class="tariff tariff-first">
 
           <div class="tariff-heading">
