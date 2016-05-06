@@ -1,4 +1,4 @@
-@import  ecat.model.Hotel
+@import  ecat.model.Schema.Hotel
 
 @(hotels: Seq[Hotel])(implicit req: play.api.mvc.RequestHeader)
 
@@ -8,11 +8,11 @@
   @for(h <- hotels) {
 
     <div class="hotel" id=@h.id>
-      <h2>@h.name</h2>
+      <h2>@h.get('name)</h2>
 
-      @for(c <- h.categories) {
+      @for(c <- h.get('categories)) {
 
-        @views.html.pages.category.render(c,h.id,req)
+        @views.html.pages.category.render(c, h.get('id), req)
 
       }
     </div>

@@ -1,9 +1,9 @@
-@import  ecat.model.{Category, Prices}
+@import  ecat.model.Schema.{Category, Prices}
 @(c: Category, h: String)(implicit req: play.api.mvc.RequestHeader)
 
-<div class="category clearfix" data-catId=@c.id data-hash=@c.hashCode data-hotelId=@h>
+<div class="category clearfix" data-catId=@c.get('id) data-hash=@c.hashCode data-hotelId=@h>
 
-  <h3 class="category-heading">@c.name</h3>
+  <h3 class="category-heading">@c.get('name)</h3>
 
   <div class="category-detail">
 
@@ -43,12 +43,12 @@
 
   <div class="options">
 
-    <div class="option option-guest" data-guest=@c.id>
+    <div class="option option-guest" data-guest=@c.get('id)>
 
       <span class="option-description">Кол-во людей:</span>
 
       <div class="option-data option-data-select">
-        <select data-guestscnt=@c.id name="guest">
+        <select data-guestscnt=@c.get('id) name="guest">
           @for(guest <- 1 to c.maxGuestCnt(1)) {
             <option value=@guest>@guest</option>
           }
