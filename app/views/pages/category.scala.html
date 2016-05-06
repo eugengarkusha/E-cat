@@ -1,36 +1,53 @@
 @import  ecat.model.{Category, Prices}
-@import  ecat.util.MiscFormats.priceFormat
 @(c: Category, h: String)(implicit req: play.api.mvc.RequestHeader)
 
+<div class="category clearfix" data-catId=@c.id data-hash=@c.hashCode data-hotelId=@h>
 
-<div class="category-item clearfix" data-catId=@c.id data-hash=@c.hashCode data-hotelId=@h>
+  <h3 class="category-heading">@c.name</h3>
 
-  <h3>@c.name</h3>
+  <div class="category-detail">
 
-  <div class="category-item__detail">
-
-      <div class="category-item__image">
+      <div class="category-image">
 
         <img src='@routes.Assets.versioned("img/room.jpg")' alt="image">
       </div>
 
-    <div class="category-item__gallery">
-
+    <div class="category-gallery">
+      <ul>
+        <li data-thumb="@routes.Assets.versioned("img/category/1.jpg")" data-src="@routes.Assets.versioned("img/category/1.jpg")"><img src="@routes.Assets.versioned("img/category/1.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/2.jpg")" data-src="@routes.Assets.versioned("img/category/2.jpg")"><img src="@routes.Assets.versioned("img/category/2.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/3.jpg")" data-src="@routes.Assets.versioned("img/category/3.jpg")"><img src="@routes.Assets.versioned("img/category/3.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/4.jpg")" data-src="@routes.Assets.versioned("img/category/4.jpg")"><img src="@routes.Assets.versioned("img/category/4.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/5.jpg")" data-src="@routes.Assets.versioned("img/category/5.jpg")"><img src="@routes.Assets.versioned("img/category/5.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/6.jpg")" data-src="@routes.Assets.versioned("img/category/6.jpg")"><img src="@routes.Assets.versioned("img/category/6.jpg")" alt=""></li>
+        <li data-thumb="@routes.Assets.versioned("img/category/7.jpg")" data-src="@routes.Assets.versioned("img/category/7.jpg")"><img src="@routes.Assets.versioned("img/category/7.jpg")" alt=""></li>
+      </ul>
     </div>
 
       <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum eum quos cupiditate vero laborum dignissimos fuga maxime rem, sapiente, nam quo porro, ipsam autem ut illo recusandae placeat pariatur optio, quasi perspiciatis eaque totam. Recusandae autem et vel eos accusantium.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque iusto earum mollitia, facere perferendis odit tempore architecto suscipit soluta! Beatae!
       </p>
+
+      <div class="category-roomOptions">
+        <i class="flaticon-airconditioner"></i>
+        <i class="flaticon-bath21"></i>
+        <i class="flaticon-beauty1"></i>
+        <i class="flaticon-drink110"></i>
+        <i class="flaticon-clothing275"></i>
+        <i class="flaticon-clothing685"></i>
+        <i class="flaticon-tv14"></i>
+        <i class="flaticon-moneybox"></i>
+      </div>
 
   </div>
 
   <div class="options">
 
-    <div class="options__item options__item--guest" data-guest=@c.id>
+    <div class="option option-guest" data-guest=@c.id>
 
-      <span class="options__item__description">Кол-во людей:</span>
+      <span class="option-description">Кол-во людей:</span>
 
-      <div class="options__item__data options__item__data--select">
+      <div class="option-data option-data-select">
         <select data-guestscnt=@c.id name="guest">
           @for(guest <- 1 to c.maxGuestCnt(1)) {
             <option value=@guest>@guest</option>
@@ -40,9 +57,9 @@
 
     </div>
 
-    <div class="options__item options__item--add-guest">
-      <span class="options__item__description">Дополнительное место:</span>
-      <div class="options__item__data options__item__data--select">
+    <div class="option option-add-guest">
+      <span class="option-description">Доп место:</span>
+      <div class="option-data option-data-select">
         <select name="addGuest">
           <option value="0">0</option>
           <option value="1">1</option>
@@ -52,33 +69,33 @@
       </div>
     </div>
 
-    <div class="options__item options__item--early">
-      <span class="options__item__description">Ранний заезд:</span>
-      <div class="options__item__data options__item__data--checkbox">
-        <input data-eci type="checkbox">
+    <div class="option option-early">
+      <span class="option-description">Заезд:</span>
+      <div class="option-data option-data-eci">
+        <input data-eci type="text" name="timepicker" class="timepicker">
       </div>
     </div>
 
-    <div class="options__item options__item--late">
-      <span class="options__item__description">Поздний заезд:</span>
-      <div class="options__item__data options__item__data--checkbox">
-        <input data-lco type="checkbox">
+    <div class="option option-late">
+      <span class="option-description">Выезд:</span>
+      <div class="option-data option-data-lco">
+        <input data-lco type="text" name="timepicker" class="timepicker">
       </div>
     </div>
 
 
-    <div class="options__item options__item--breakfast">
-      <label for="breakfast" class="options__item__description">Завтрак:</label>
-      <div class="options__item__data options__item__data--checkbox">
-        <input data-breakfast type="checkbox">
+    <div class="option option-breakfast">
+      <label for="breakfast" class="option-description">Завтрак:</label>
+      <div class="option-data option-data-checkbox">
+        <input id="breakfast" data-breakfast type="checkbox">
       </div>
     </div>
 
-    <div class="options__item options__item--rooms">
+    <div class="option option-rooms">
 
-      <label for="room_count" class="options__item__description">Кол-во номеров:</label>
+      <label for="room_count" class="option-description">Кол-во номеров:</label>
 
-      <div class="options__item__data options__item__data--select">
+      <div class="option-data option-data-select">
 
         <select data-roomcnt name="room_count">
           @for(room <- 1 to c.maxRoomCnt(1)) {
@@ -92,14 +109,83 @@
 
   </div>
 
-  <div class="category__item_result clearfix">
+  <form>
 
-    <div class="category__item__result--price">
-      <span class="flaticon-coin32"></span>
-      <span data-price=@Prices.fromLong(c.prices.room)>@priceFormat.format(Prices.fromLong(c.prices.room))</span><span> грн</span>
+    <div class="tariffs">
+      <div class="tariffs-btn">
+        <span></span>
+      </div>
+      <h2>Тарифы</h2>
+
+      <div class="tariff tariff-first">
+
+        <div class="tariff-heading">
+          <h3>Стандартные условия</h3>
+          <ul class="tariff-list">
+            <li>возможен возврат</li>
+        </div>
+
+        <div class="tariff-overall">
+          <i class="flaticon-coin32"></i>
+          <span class="tariff-price">2000 грн</span>
+        </div>
+
+        <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
+
+      </div>
+
+      <div class="tariff">
+
+        <div class="tariff-heading">
+          <h3>Особые условия</h3>
+          <ul class="tariff-list">
+            <li>-10% к завтраку</li>
+            <li>-15% за проживание</li>
+            <li>-5% к чему-то еще</li>
+          </ul>
+        </div>
+
+        <div class="tariff-overall">
+          <i class="flaticon-coin32"></i>
+          <span class="tariff-price">2000 грн</span>
+        </div>
+
+        <input class="tariff-radio" type="radio" name="tariff" value="two">
+
+      </div>
+
+      <div class="tariff">
+
+        <div class="tariff-heading">
+          <h3>Особые условия</h3>
+          <ul class="tariff-list">
+            <li>-10% к завтраку</li>
+            <li>-15% за проживание</li>
+            <li>-5% к чему-то еще</li>
+          </ul>
+        </div>
+
+        <div class="tariff-overall">
+          <i class="flaticon-coin32"></i>
+          <span class="tariff-price">2000 грн</span>
+        </div>
+
+        <input class="tariff-radio" type="radio" name="tariff" value="three">
+
+      </div>
+
     </div>
 
-    <div class="category__item__result--add-to-order">
+  </form>
+
+  <div class="category-result clearfix">
+
+    <!-- <div class="category-result-price">
+      <span class="flaticon-coin32"></span>
+      <span data-price=@Prices.fromLong(c.prices.room)>@Prices.fromLong(c.prices.room)</span><span> грн</span>
+    </div> -->
+
+    <div class="category-result-addToOrder">
       <span>Выбрать</span>
       <input type="checkbox">
     </div>

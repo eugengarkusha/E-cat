@@ -130,6 +130,9 @@ blockquote {
     bottom: -0.9rem;
     left: 3.2rem; }
 
+[type="checkbox"]:hover {
+  cursor: pointer; }
+
 .header-main-wrapper {
   position: relative;
   height: 12.6rem;
@@ -385,50 +388,6 @@ main {
     display: block;
     max-width: 40rem;
     margin: 0.6rem auto 0; }
-  main .booking-form {
-    margin: 4rem auto; }
-    main .booking-form legend {
-      text-align: center;
-      font-size: 2.4rem;
-      font-family: "Droid Serif", Arial, Helvetica, sans-serif;
-      color: #000; }
-    main .booking-form input, main .booking-form select {
-      display: block;
-      width: 100%;
-      height: 4.2rem;
-      margin: 1rem 0;
-      padding: 0 1rem;
-      background: #fff;
-      outline: none;
-      border: 1px solid #c2c2c2;
-      border-bottom-width: 3px;
-      color: #000;
-      cursor: pointer; }
-    main .booking-form .check-col {
-      display: inline-block;
-      width: 49%; }
-      main .booking-form .check-col input {
-        background-color: #fff; }
-    main .booking-form select {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none; }
-    main .booking-form label {
-      position: relative;
-      display: block;
-      font-size: 1.4rem; }
-    main .booking-form .flaticon-calendar-icons {
-      position: absolute;
-      right: 1rem;
-      bottom: -3.7rem; }
-    main .booking-form .submit-button input {
-      width: 50%;
-      height: 3.7rem;
-      border: none;
-      margin: 1rem auto;
-      background: #b19261;
-      color: #fff;
-      transition: background-color 0.6s ease; }
 
 .makeOrder {
   width: 30rem;
@@ -483,6 +442,57 @@ main {
     background: #fff;
     color: #000;
     text-shadow: none; }
+
+.filtering {
+  position: relative;
+  padding: 0.8rem;
+  text-align: center;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  color: #a6a6a6;
+  transition: all 0.3s ease;
+  background: #fff; }
+  .filtering .selectric {
+    margin-top: 0;
+    margin-bottom: 0;
+    border-bottom-width: 1px; }
+
+.filtering-checkIn, .filtering-checkOut, .filtering-people, .filtering-hotel, .filtering-twin, .filtering-order {
+  position: relative;
+  display: inline-block;
+  width: 49%;
+  margin-bottom: 1rem; }
+  .filtering-checkIn input, .filtering-checkOut input, .filtering-people input, .filtering-hotel input, .filtering-twin input, .filtering-order input {
+    width: 100%;
+    height: 4rem;
+    padding-left: 1rem;
+    color: #000;
+    background: #fff;
+    cursor: pointer; }
+
+.filtering-checkIn .flaticon-calendar-icons, .filtering-checkOut .flaticon-calendar-icons {
+  position: absolute;
+  top: 2.5rem;
+  right: 0.5rem; }
+  .filtering-checkIn .flaticon-calendar-icons:before, .filtering-checkOut .flaticon-calendar-icons:before {
+    margin-left: 0; }
+
+.filtering-checkIn input, .filtering-checkOut input {
+  border: 1px solid #a6a6a6;
+  cursor: pointer; }
+
+.filtering-twin {
+  padding-right: 3rem;
+  line-height: 1.3rem; }
+  .filtering-twin input {
+    width: auto;
+    height: auto;
+    float: right; }
+
+.filtering-slide {
+  position: fixed;
+  width: 100%;
+  top: 60px;
+  z-index: 100; }
 
 .slider {
   display: none; }
@@ -574,6 +584,7 @@ main {
         color: #b19261; }
 
 .contact-box {
+  display: none;
   width: 32rem;
   margin: 3rem auto;
   border: 1px solid #c0c0c0; }
@@ -743,25 +754,59 @@ main {
     top: 131px;
     left: 50%; }
 
-.page-reservation .category-item {
-  margin-bottom: 1.2rem;
+.category {
+  margin-bottom: 4rem;
   padding: 0.5rem;
-  color: #000;
-  outline: 1px solid; }
-.page-reservation .category-item__gallery {
-  display: none; }
-.page-reservation .category-list {
+  color: #000; }
+
+.category-heading {
+  border-bottom: 2px solid #000;
+  text-align: right; }
+
+.category-gallery {
+  display: none;
+  max-width: 85rem;
+  margin: 0 auto;
+  overflow: hidden; }
+  .category-gallery ul {
+    list-style: none outside none;
+    padding-left: 0;
+    margin-bottom: 0;
+    max-height: 46rem; }
+    .category-gallery ul li {
+      display: block;
+      float: left;
+      margin-right: 0.6rem;
+      cursor: pointer; }
+  .category-gallery img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    cursor: pointer; }
+
+.category-list {
   padding: 0.8rem; }
-.page-reservation .category-item__detail {
-  padding: 1rem 0; }
-.page-reservation .options__item {
+
+.category-roomOptions {
+  padding: 0.8rem;
+  text-align: center; }
+
+.category-roomOptions [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-size: 28px;
+  margin-left: 0;
+  margin-right: 12px;
+  color: #a6a6a6; }
+
+.option {
   display: inline-block;
   width: 100%;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.25); }
-.page-reservation .options__item--guest, .page-reservation .options__item--rooms {
+
+.option-guest, .option-rooms {
   width: 100%; }
-.page-reservation .options__item__data--select {
+
+.option-data-select {
   position: relative;
   display: inline-block;
   width: 30%;
@@ -769,25 +814,112 @@ main {
   margin-top: -0.4rem;
   margin-bottom: -2rem;
   padding-bottom: 0.4rem; }
-.page-reservation .options__item__data--checkbox input {
+
+.option-data-checkbox input {
   width: 2.5rem;
   height: 2.5rem; }
-.page-reservation .options__item__data {
-  float: right; }
-.page-reservation .options__item__description {
-  vertical-align: top; }
-.page-reservation .category__item_result {
-  clear: both; }
-.page-reservation .category__item__result--price {
+
+.option-data-eci .timepicker, .option-data-lco .timepicker {
+  width: 5.5rem;
+  width: 9.2rem;
+  height: 3.7rem;
+  padding-left: 8px; }
+
+.option-data {
+  float: right;
+  width: 9.2rem; }
+
+.option-description {
+  vertical-align: top;
   float: left; }
-.page-reservation .category__item__result--add-to-order {
+
+.category-result {
+  clear: both;
+  margin-top: 3.5rem;
+  line-height: 22px; }
+
+.category-result-price {
+  float: left; }
+
+.category-result-addToOrder {
   float: right;
   padding-right: 0.5rem; }
-  .page-reservation .category__item__result--add-to-order span {
+  .category-result-addToOrder span {
     vertical-align: top; }
-  .page-reservation .category__item__result--add-to-order input {
+  .category-result-addToOrder input {
     width: 2.5rem;
     height: 2.5rem; }
+
+.tariffs {
+  margin-top: 2rem;
+  height: 4.5rem;
+  border: 1px dotted #000;
+  border-radius: 4px;
+  overflow: hidden;
+  clear: both;
+  transition: all 0.3s ease; }
+  .tariffs h2 {
+    margin-top: 10px;
+    margin-left: 8px;
+    font-weight: normal;
+    font-style: italic;
+    font-family: "Great Vibes", Arial, Helvetica, sans-serif; }
+
+.tariffs-open {
+  height: auto;
+  overflow: auto;
+  border: none; }
+  .tariffs-open h2 {
+    display: none; }
+  .tariffs-open .tariffs-btn {
+    display: none; }
+
+.tariff {
+  position: relative;
+  border-bottom: 1px dashed;
+  padding-bottom: 1.5rem; }
+
+.tariffs-btn {
+  position: relative;
+  width: 40px;
+  height: 30px;
+  border: 1px solid #583908;
+  border-radius: 4px;
+  float: right;
+  margin-top: 7px;
+  margin-right: 12px;
+  background: #B19261; }
+  .tariffs-btn span {
+    position: relative; }
+
+.tariffs-btn:before, .tariffs-btn:after, .tariffs-btn span:before {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 3px;
+  background: #fff;
+  position: absolute; }
+
+.tariffs-btn::before {
+  top: 5px;
+  left: 4px; }
+
+.tariffs-btn:after {
+  bottom: 6px;
+  left: 4px; }
+
+.tariffs-btn span:before {
+  top: 12px;
+  left: 4px; }
+
+.tariff-list {
+  padding-left: 0;
+  list-style-type: circle;
+  list-style-position: inside; }
+
+.tariff-overall {
+  margin-top: 20px;
+  padding: 5px; }
 
 .page-gallery .gallery {
   list-style: none;
@@ -1068,10 +1200,6 @@ main {
 .page-room .lSSlideOuter .lSPager.lSGallery {
   max-height: 6rem;
   display: none; }
-.page-room .booking-form .breakfast-checkbox {
-  text-align: center; }
-  .page-room .booking-form .breakfast-checkbox label {
-    margin-bottom: 0.1rem; }
 
 .room-equipment {
   padding-bottom: 1rem;
@@ -1107,18 +1235,6 @@ main {
   color: #000; }
 
 @media screen and (min-width: 380px) {
-  main .booking-form label {
-    margin-bottom: -1.1rem; }
-  main .booking-form input, main .booking-form select {
-    margin-bottom: 0.4rem; }
-  main .booking-form .form-col {
-    display: inline-block;
-    width: 50%; }
-  main .booking-form .submit-button {
-    margin-top: 2rem; }
-  main .booking-form .fa-calendar {
-    bottom: -2.7rem; }
-
   .page-reservation .form-col {
     position: relative;
     float: left;
@@ -1191,6 +1307,21 @@ main {
     float: left; }
   .page-contacts .contacts + .contacts {
     float: right; } }
+@media screen and (min-width: 580px) {
+  .filtering {
+    padding-top: 4.5rem; }
+
+  .filtering-checkIn, .filtering-checkOut, .filtering-people, .filtering-hotel, .filtering-twin, .filtering-order {
+    width: 16%;
+    vertical-align: middle;
+    margin-bottom: 0; }
+    .filtering-checkIn span, .filtering-checkOut span, .filtering-people span, .filtering-hotel span, .filtering-twin span, .filtering-order span {
+      position: absolute;
+      top: -4.2rem;
+      left: 0; }
+
+  .filtering-checkIn .flaticon-calendar-icons, .filtering-checkOut .flaticon-calendar-icons {
+    display: none; } }
 @media screen and (min-width: 720px) {
   .makeOrder {
     background: rgba(255, 255, 255, 0.6);
@@ -1204,7 +1335,7 @@ main {
     float: left;
     margin-right: 1rem; }
 
-  main .main-section, main .booking-form {
+  main .main-section {
     background-color: rgba(255, 255, 255, 0.75); }
   main .main-section {
     padding: 0 2rem 0.5rem;
@@ -1220,28 +1351,38 @@ main {
   .page-reservation .main-section {
     margin-bottom: 2rem;
     box-shadow: 3px 3px 14px 0 rgba(0, 0, 0, 0.45), -3px -3px 14px rgba(0, 0, 0, 0.45); }
-  .page-reservation .booking-form {
-    width: 100%;
-    margin-bottom: 0;
-    background-color: transparent; }
-    .page-reservation .booking-form .form-col {
-      width: 33%;
-      margin-bottom: 0;
-      z-index: auto; }
-  .page-reservation .category-item {
+  .page-reservation .category {
     padding: 1.5rem;
     padding-top: 0.1rem; }
-  .page-reservation .category-item__detail {
+  .page-reservation .category-detail {
     float: left;
     width: 40%;
-    padding-bottom: 0; }
+    margin-bottom: 2rem;
+    padding: 0.8rem;
+    padding-bottom: 2rem;
+    box-shadow: 3px 2px 1px rgba(0, 0, 0, 0.2), -2px -2px 1px rgba(0, 0, 0, 0.2); }
   .page-reservation .options {
-    float: right;
-    width: 55%; }
-  .page-reservation .category__item_result {
-    width: 56%;
-    float: right;
-    margin-top: -5rem; }
+    float: left;
+    width: 60%;
+    padding: 1.4rem 0 0 0.8rem; }
+  .page-reservation .category-result {
+    line-height: 31px;
+    border-bottom: 1px solid #ADA5A5; }
+  .page-reservation .category-image {
+    display: none; }
+  .page-reservation .category-gallery {
+    display: block; }
+  .page-reservation .tariff-heading, .page-reservation .tariff-overall {
+    display: inline-block; }
+  .page-reservation .tariff-heading {
+    width: 50%; }
+    .page-reservation .tariff-heading h3 {
+      margin-top: 1rem;
+      margin-bottom: 0; }
+    .page-reservation .tariff-heading p {
+      margin-top: 0.6rem; }
+  .page-reservation .tariff-overall {
+    width: 20%; }
 
   .page-news .news-article {
     width: 50%;
@@ -1254,6 +1395,19 @@ main {
     float: left; }
   .page-contacts .map-block p + p {
     float: right; } }
+@media screen and (min-width: 802px) {
+  .filtering-checkIn span, .filtering-checkOut span, .filtering-people span, .filtering-hotel span, .filtering-twin span, .filtering-order span {
+    position: static;
+    display: inherit; }
+
+  .filtering {
+    padding-top: 0.8rem; }
+
+  .filtering-checkIn .flaticon-calendar-icons, .filtering-checkOut .flaticon-calendar-icons {
+    display: block; }
+
+  .filtering-order {
+    padding-top: 2.2rem; } }
 @media screen and (min-width: 997px) {
   .main-menu-handle {
     display: none; }
@@ -1319,9 +1473,6 @@ main {
       max-width: 117rem;
       margin: 0 auto; }
 
-  .page-reservation .booking-form {
-    margin-bottom: 1rem; }
-
   .page-gallery .gallery li, .page-blog .gallery li {
     width: 25%; }
 
@@ -1351,12 +1502,13 @@ main {
     padding: 0 3rem 16rem; }
     main .main-section {
       float: right;
-      width: 65%;
+      width: 72%;
       padding-right: 0; }
     main .booking-form {
       margin-top: 0; }
     main .contact-box {
-      float: left;
+      display: block;
+      position: fixed;
       margin: 0; }
 
   .page-hotel-ekaterina .main-section {
@@ -1390,6 +1542,46 @@ main {
   .page-reservation .main-section {
     float: right;
     max-width: 74%;
-    width: 74%; } }
+    width: 74%; }
+  .page-reservation .options {
+    width: 33%;
+    margin-top: 5rem;
+    padding-left: 2rem;
+    padding-right: 2rem; }
+  .page-reservation .tariffs {
+    width: 27%;
+    border: none;
+    border-radius: 0;
+    border-left: 1px solid;
+    margin-top: 8.8rem;
+    padding-left: 2rem;
+    height: auto;
+    overflow: auto;
+    clear: none; }
+    .page-reservation .tariffs h2 {
+      display: none; }
+  .page-reservation .tariff-first {
+    border-top: 1px dashed #000; }
+  .page-reservation .tariffs-btn {
+    display: none; }
+  .page-reservation .tariff {
+    padding-bottom: 0; }
+  .page-reservation .tariff-heading {
+    width: 65%;
+    border-right: 1px dashed #000; }
+  .page-reservation .tariff-overall {
+    width: 33%;
+    border-top: 2px solid #b19261;
+    padding: 0;
+    vertical-align: bottom; }
+    .page-reservation .tariff-overall [class^="flaticon-"]:before, .page-reservation .tariff-overall [class*=" flaticon-"]:before, .page-reservation .tariff-overall [class^="flaticon-"]:after, .page-reservation .tariff-overall [class*=" flaticon-"]:after {
+      margin-left: 0; }
+  .page-reservation .tariff-radio {
+    position: absolute;
+    top: 26px;
+    right: 35px;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer; } }
 
 /*# sourceMappingURL=style.css.map */

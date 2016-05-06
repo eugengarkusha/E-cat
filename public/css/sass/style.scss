@@ -32,7 +32,7 @@ $color-footer-border: #c2c2c2;
 
 //================== FONTS ===================//
 
-@mixin droid-sefir {
+@mixin droid-serif {
   font-family: "Droid Serif", Arial, Helvetica, sans-serif;
 }
 @mixin droid-sans {
@@ -202,6 +202,10 @@ blockquote {
     left: 3.2rem;
   }
 
+}
+
+[type="checkbox"]:hover {
+  cursor: pointer;
 }
 
 //=================================== HEADER ===================================
@@ -555,69 +559,69 @@ main {
 
   //========================= BOOKING FORM ============================//
 
-  .booking-form {
-    margin: 4rem auto;
-
-    legend {
-      text-align: center;
-      font-size: 2.4rem;
-      font-family: "Droid Serif", Arial, Helvetica, sans-serif;
-      color: $color-black;
-    }
-
-    input, select {
-      display: block;
-      width: 100%;
-      height: 4.2rem;
-      margin: 1rem 0;
-      padding: 0 1rem;
-      background: $color-white;
-      outline: none;
-      border: 1px solid $color-footer-border;
-      border-bottom-width: 3px;
-      color: $color-black;
-      cursor: pointer;
-    }
-
-    .check-col {
-      display: inline-block;
-      width: 49%;
-
-      input {
-        background-color: $color-white;
-      }
-    }
-
-    select {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-    }
-
-    label {
-      position: relative;
-      display: block;
-      font-size: 1.4rem;
-    }
-
-    .flaticon-calendar-icons {
-      position: absolute;
-      right: 1rem;
-      bottom: -3.7rem;
-    }
-
-    .submit-button input {
-      width: 50%;
-      height: 3.7rem;
-      border: none;
-      margin: 1rem auto;
-      background: #b19261;
-      color: #fff;
-      transition: background-color 0.6s ease;
-    }
-
-  }
-
+//   .booking-form {
+//     margin: 4rem auto;
+//
+//     legend {
+//       text-align: center;
+//       font-size: 2.4rem;
+//       font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+//       color: $color-black;
+//     }
+//
+//     input, select {
+//       display: block;
+//       width: 100%;
+//       height: 4.2rem;
+//       margin: 1rem 0;
+//       padding: 0 1rem;
+//       background: $color-white;
+//       outline: none;
+//       border: 1px solid $color-footer-border;
+//       border-bottom-width: 3px;
+//       color: $color-black;
+//       cursor: pointer;
+//     }
+//
+//     .check-col {
+//       display: inline-block;
+//       width: 49%;
+//
+//       input {
+//         background-color: $color-white;
+//       }
+//     }
+//
+//     select {
+//       -webkit-appearance: none;
+//       -moz-appearance: none;
+//       appearance: none;
+//     }
+//
+//     label {
+//       position: relative;
+//       display: block;
+//       font-size: 1.4rem;
+//     }
+//
+//     .flaticon-calendar-icons {
+//       position: absolute;
+//       right: 1rem;
+//       bottom: -3.7rem;
+//     }
+//
+//     .submit-button input {
+//       width: 50%;
+//       height: 3.7rem;
+//       border: none;
+//       margin: 1rem auto;
+//       background: #b19261;
+//       color: #fff;
+//       transition: background-color 0.6s ease;
+//     }
+//
+//   }
+//
 }
 
 //=========================== makeOrder ========================
@@ -648,7 +652,7 @@ main {
     border-radius: 4px;
     margin: 2rem auto;
     padding: 1rem 1.5rem;
-    @include droid-sefir;
+    @include droid-serif;
     color: #000;
     font-size: 1.6rem;
     box-shadow: 2px 2px 5px rgba(0,0,0,.5);
@@ -690,7 +694,77 @@ main {
   }
 }
 
-// =============================================================
+// ======================== end of makeOrder =======================
+
+// ======================== filtering ===========================
+  .filtering {
+    position: relative;
+    padding: 0.8rem;
+    text-align: center;
+    box-shadow: 1px 1px 2px rgba(0,0,0,.4);
+    color: $color-text-primary;
+    transition: all 0.3s ease;
+    background: #fff;
+
+    .selectric {
+      margin-top: 0;
+      margin-bottom: 0;
+      border-bottom-width: 1px;
+    }
+
+  }
+
+  .filtering-checkIn, .filtering-checkOut, .filtering-people, .filtering-hotel, .filtering-twin, .filtering-order {
+    position: relative;
+    display: inline-block;
+    width: 49%;
+    margin-bottom: 1rem;
+
+    input {
+      width: 100%;
+      height: 4rem;
+      padding-left: 1rem;
+      color: #000;
+      background: #fff;
+      cursor: pointer;
+    }
+
+  }
+
+  .filtering-checkIn .flaticon-calendar-icons, .filtering-checkOut .flaticon-calendar-icons {
+    position: absolute;
+    top: 2.5rem;
+    right: 0.5rem;
+
+    &:before {
+      margin-left: 0;
+    }
+
+  }
+
+  .filtering-checkIn input, .filtering-checkOut input {
+    border: 1px solid $color-text-primary;
+    cursor: pointer;
+  }
+
+  .filtering-twin {
+    padding-right: 3rem;
+    line-height: 1.3rem;
+
+    input {
+      width: auto;
+      height: auto;
+      float: right;
+    }
+  }
+
+  .filtering-slide {
+    position: fixed;
+    width: 100%;
+    top: 60px;
+    z-index: 100;
+  }
+// ======================== end of filtering =======================
 
 .slider {
   display: none;
@@ -827,6 +901,7 @@ main {
 }
 
 .contact-box {
+  display: none;
   width: 32rem;
   margin: 3rem auto;
   @include border-grey;
@@ -1034,7 +1109,7 @@ main {
       margin-top: -3.3rem;
       margin-bottom: -1rem;
       padding: 0 0.5rem 0.5rem;
-      @include droid-sefir;
+      @include droid-serif;
       color: black;
       font-size: 1.4em;
       font-weight: normal;
@@ -1082,89 +1157,228 @@ main {
 
 //========================PAGE RESERVATION====================
 
-.page-reservation {
+.category {
+  margin-bottom: 4rem;
+  padding: 0.5rem;
+  color: $color-black;
+}
 
-  .category-item {
-    margin-bottom: 1.2rem;
-    padding: 0.5rem;
-    color: $color-black;
-    outline: 1px solid;
-  }
+.category-heading {
+  border-bottom: 2px solid #000;
+  text-align: right;
+}
 
-  .category-item__gallery {
-    display: none;
-  }
+.category-gallery {
+  display: none;
+  max-width: 85rem;
+  margin: 0 auto;
+  overflow: hidden;
 
-  .category-list {
-    padding: 0.8rem;
-  }
+  ul {
+    list-style: none outside none;
+    padding-left: 0;
+    margin-bottom: 0;
+    max-height: 46rem;
 
-  .category-item__detail {
-    padding: 1rem 0;
-  }
-
-  .options__item {
-    display: inline-block;
-    width: 100%;
-    padding: 0.5rem;
-    border-bottom: 1px dotted rgba(0,0,0,.25);
-  }
-
-  .options__item--guest, .options__item--rooms {
-    width: 100%;
-  }
-
-  .options__item__data--select {
-    position: relative;
-    display: inline-block;
-    width: 30%;
-    top: -0.5rem;
-    margin-top: -0.4rem;
-    margin-bottom: -2rem;
-    padding-bottom: 0.4rem;
-  }
-
-  .options__item__data--checkbox {
-
-    input {
-      width: 2.5rem;
-      height: 2.5rem;
+    li {
+      display: block;
+      float: left;
+      margin-right: 0.6rem;
+      cursor: pointer;
     }
 
   }
 
-  .options__item__data {
-    float: right;
+  img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    cursor: pointer;
   }
 
-  .options__item__description {
+}
+
+.category-list {
+  padding: 0.8rem;
+}
+
+.category-roomOptions {
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.category-roomOptions [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-size: 28px;
+  margin-left: 0;
+  margin-right: 12px;
+  color: $color-text-primary;
+}
+
+.option {
+  display: inline-block;
+  width: 100%;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px dotted rgba(0,0,0,.25);
+}
+
+.option-guest, .option-rooms {
+  width: 100%;
+}
+
+.option-data-select {
+  position: relative;
+  display: inline-block;
+  width: 30%;
+  top: -0.5rem;
+  margin-top: -0.4rem;
+  margin-bottom: -2rem;
+  padding-bottom: 0.4rem;
+}
+
+.option-data-checkbox {
+
+  input {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+}
+
+.option-data-eci .timepicker, .option-data-lco .timepicker {
+  width: 5.5rem;
+  width: 9.2rem;
+  height: 3.7rem;
+  padding-left: 8px;
+}
+
+.option-data {
+  float: right;
+  width: 9.2rem;
+}
+
+.option-description {
+  vertical-align: top;
+  float: left;
+}
+
+.category-result {
+  clear: both;
+  margin-top: 3.5rem;
+  line-height: 22px;
+}
+
+.category-result-price {
+  float: left;
+}
+
+.category-result-addToOrder {
+  float: right;
+  padding-right: 0.5rem;
+
+  span {
     vertical-align: top;
   }
 
-  .category__item_result {
-    clear: both;
+  input {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
-  .category__item__result--price {
-    float: left;
+}
+
+.tariffs {
+  margin-top: 2rem;
+  height: 4.5rem;
+  border: 1px dotted #000;
+  border-radius: 4px;
+  overflow: hidden;
+  clear: both;
+  transition: all 0.3s ease;
+
+  h2 {
+    margin-top: 10px;
+    margin-left: 8px;
+    font-weight: normal;
+    font-style: italic;
+    @include great-vibes;
   }
 
-  .category__item__result--add-to-order {
-    float: right;
-    padding-right: 0.5rem;
+}
 
-    span {
-      vertical-align: top;
-    }
+.tariffs-open {
+  height: auto;
+  overflow: auto;
+  border: none;
 
-    input {
-      width: 2.5rem;
-      height: 2.5rem;
-    }
-
+  h2 {
+    display: none;
   }
 
- }
+  .tariffs-btn {
+    display: none;
+  }
+
+}
+
+.tariff {
+  position: relative;
+  border-bottom: 1px dashed;
+  padding-bottom: 1.5rem;
+}
+
+.tariffs-btn {
+  position: relative;
+  width: 40px;
+  height: 30px;
+  border: 1px solid #583908;
+  border-radius: 4px;
+  float: right;
+  margin-top: 7px;
+  margin-right: 12px;
+  background: #B19261;
+
+  span {
+    position: relative;
+  }
+
+}
+
+.tariffs-btn:before, .tariffs-btn:after, .tariffs-btn span:before {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 3px;
+  background: #fff;
+  position: absolute;
+}
+
+.tariffs-btn::before {
+  top: 5px;
+  left: 4px;
+}
+
+.tariffs-btn:after {
+  bottom: 6px;
+  left: 4px;
+}
+
+.tariffs-btn span:before {
+  top: 12px;
+  left: 4px;
+}
+
+.tariff-list {
+  padding-left: 0;
+  list-style-type: circle;
+  list-style-position: inside;
+}
+
+.tariff-overall {
+  margin-top: 20px;
+  padding: 5px;
+}
+
+
 
 //==========================PAGE GALLERY=======================
 
@@ -1258,7 +1472,7 @@ main {
     h2 {
 
       a {
-        @include droid-sefir;
+        @include droid-serif;
         font-weight: normal;
         font-size: 2.4rem;
         color: $color-primary;
@@ -1318,7 +1532,7 @@ main {
 
     h3 {
       margin: 0;
-      @include droid-sefir;
+      @include droid-serif;
       font-weight: normal;
       font-size: 1.6rem;
       line-height: 3.4rem;
@@ -1459,7 +1673,7 @@ main {
   }
 
   h2 {
-    @include droid-sefir;
+    @include droid-serif;
     font-size: 2.2rem;
     font-weight: normal;
     text-align: center;
@@ -1656,18 +1870,18 @@ main {
 
   }
 
-  .booking-form {
-
-    .breakfast-checkbox {
-      text-align: center;
-
-      label {
-        margin-bottom: 0.1rem;
-      }
-
-    }
-
-  }
+  // .booking-form {
+  //
+  //   .breakfast-checkbox {
+  //     text-align: center;
+  //
+  //     label {
+  //       margin-bottom: 0.1rem;
+  //     }
+  //
+  //   }
+  //
+  // }
 
 }
 
@@ -1735,30 +1949,30 @@ main {
 //======================= 380 ==========================
 
 @media screen and (min-width: 380px) {
-  main .booking-form {
-
-    label {
-      margin-bottom: -1.1rem;
-    }
-
-    input, select {
-      margin-bottom: 0.4rem;
-    }
-
-    .form-col {
-      display: inline-block;
-      width: 50%;
-    }
-
-    .submit-button {
-      margin-top: 2rem;
-    }
-
-    .fa-calendar {
-      bottom: -2.7rem;
-    }
-
-  }
+  // main .booking-form {
+  //
+  //   label {
+  //     margin-bottom: -1.1rem;
+  //   }
+  //
+  //   input, select {
+  //     margin-bottom: 0.4rem;
+  //   }
+  //
+  //   .form-col {
+  //     display: inline-block;
+  //     width: 50%;
+  //   }
+  //
+  //   .submit-button {
+  //     margin-top: 2rem;
+  //   }
+  //
+  //   .fa-calendar {
+  //     bottom: -2.7rem;
+  //   }
+  //
+  // }
 
   .page-reservation {
     .form-col {
@@ -1906,6 +2120,29 @@ main {
 
 }
 
+@media screen and (min-width: 580px) {
+  .filtering {
+    padding-top: 4.5rem;
+  }
+
+  .filtering-checkIn, .filtering-checkOut, .filtering-people, .filtering-hotel, .filtering-twin, .filtering-order {
+    width: 16%;
+    vertical-align: middle;
+    margin-bottom: 0;
+
+    span {
+      position: absolute;
+      top: -4.2rem;
+      left: 0;
+    }
+
+  }
+
+  .filtering-checkIn .flaticon-calendar-icons, .filtering-checkOut .flaticon-calendar-icons {
+    display: none;
+  }
+}
+
 //======================= 720 =========================
 
 @media screen and (min-width: 720px) {
@@ -1927,7 +2164,7 @@ main {
 
   main {
 
-    .main-section, .booking-form {
+    .main-section {
       background-color: rgba(255, 255, 255, 0.75);
     }
 
@@ -1963,38 +2200,71 @@ main {
       box-shadow: 3px 3px 14px 0 rgba(0,0,0,.45), -3px -3px 14px rgba(0,0,0,.45);
     }
 
-    .booking-form {
-      width: 100%;
-      margin-bottom: 0;
-      background-color: transparent;
+    // .booking-form {
+    //   width: 100%;
+    //   margin-bottom: 0;
+    //   background-color: transparent;
+    //
+    //   .form-col {
+    //     width: 33%;
+    //     margin-bottom: 0;
+    //     z-index: auto;
+    //   }
+    // }
 
-      .form-col {
-        width: 33%;
-        margin-bottom: 0;
-        z-index: auto;
-      }
-    }
-
-    .category-item {
+    .category {
       padding: 1.5rem;
       padding-top: 0.1rem;
     }
 
-    .category-item__detail {
+    .category-detail {
       float: left;
       width: 40%;
-      padding-bottom: 0;
+      margin-bottom: 2rem;
+      padding: 0.8rem;
+      padding-bottom: 2rem;
+      box-shadow: 3px 2px 1px rgba(0,0,0,.2), -2px -2px 1px rgba(0,0,0,.2);
     }
 
     .options {
-      float: right;
-      width: 55%;
+      float: left;
+      width: 60%;
+      padding: 1.4rem 0 0 0.8rem;
     }
 
-    .category__item_result {
-      width: 56%;
-      float: right;
-      margin-top: -5rem;
+    .category-result {
+      line-height: 31px;
+      border-bottom: 1px solid #ADA5A5;
+    }
+
+    .category-image {
+      display: none;
+    }
+
+    .category-gallery {
+      display: block;
+    }
+
+    .tariff-heading, .tariff-overall {
+      display: inline-block;
+    }
+
+    .tariff-heading {
+      width: 50%;
+
+      h3 {
+        margin-top: 1rem;
+        margin-bottom: 0;
+      }
+
+      p {
+        margin-top: 0.6rem;
+      }
+
+    }
+
+    .tariff-overall {
+      width: 20%;
     }
 
   }
@@ -2032,6 +2302,25 @@ main {
 
   }
 
+}
+
+@media screen and(min-width: 802px) {
+  .filtering-checkIn span, .filtering-checkOut span, .filtering-people span, .filtering-hotel span, .filtering-twin span, .filtering-order span {
+    position: static;
+    display: inherit;
+  }
+
+  .filtering {
+    padding-top: 0.8rem;
+  }
+
+  .filtering-checkIn .flaticon-calendar-icons, .filtering-checkOut .flaticon-calendar-icons {
+    display: block;
+  }
+
+  .filtering-order {
+    padding-top: 2.2rem;
+  }
 }
 
 //======================= 997 =========================
@@ -2133,11 +2422,11 @@ main {
 
   }
 
-  .page-reservation {
-    .booking-form {
-      margin-bottom: 1rem;
-    }
-  }
+  // .page-reservation {
+  //   .booking-form {
+  //     margin-bottom: 1rem;
+  //   }
+  // }
 
 
 
@@ -2204,7 +2493,7 @@ main {
 
       .main-section {
         float: right;
-        width: 65%;
+        width: 72%;
         padding-right: 0;
       }
 
@@ -2214,7 +2503,8 @@ main {
       }
 
       .contact-box {
-        float: left;
+        display: block;
+        position: fixed;
         margin: 0;
       }
 
@@ -2283,11 +2573,78 @@ main {
 
     .page-reservation {
 
-
       .main-section {
         float: right;
         max-width: 74%;
         width: 74%;
+      }
+
+      .options {
+        width: 33%;
+        margin-top: 5rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+
+      .option-description {
+      }
+
+      .option-data {
+      }
+
+      .tariffs {
+        width: 27%;
+        border: none;
+        border-radius: 0;
+        border-left: 1px solid;
+        margin-top: 8.8rem;
+        padding-left: 2rem;
+        height: auto;
+        overflow: auto;
+        clear: none;
+
+        h2 {
+          display: none;
+        }
+
+      }
+
+      .tariff-first {
+        border-top: 1px dashed #000;
+      }
+
+      .tariffs-btn {
+        display: none;
+      }
+
+      .tariff {
+        padding-bottom: 0;
+      }
+
+      .tariff-heading {
+        width: 65%;
+        border-right: 1px dashed #000;
+      }
+
+      .tariff-overall {
+        width: 33%;
+        border-top: 2px solid $color-primary;
+        padding: 0;
+        vertical-align: bottom;
+
+        [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+          margin-left: 0;
+        }
+
+      }
+
+      .tariff-radio {
+        position: absolute;
+        top: 26px;
+        right: 35px;
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
       }
 
   }
