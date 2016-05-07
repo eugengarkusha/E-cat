@@ -39,7 +39,7 @@ object CategoryControlProtocol {
 
     import req._
 
-    def calcGroupPrice (p: Prices, hotelCiTime:LocalTime, hotelCoTime:LocalTime): Double= {
+    def calcGroupPrice (p: Prices, eci:Boolean, lco:Boolean): Double= {
 
       def addIf(cond: Boolean, l: Long, r:Long) = if (cond) l + r else r
       (roomCnt * addIf(lco, p.get('lco), addIf(eci, p.get('eci), addIf(bkf, p.get('bkf), p.get('room))))).toDouble / 100
