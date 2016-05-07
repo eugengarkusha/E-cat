@@ -35,5 +35,5 @@ routesImport ++= List("ecat.model.Bindables._",
 
 TwirlKeys.templateImports ++= List("ecat.model.Schema._",
                                     "shapeless._",
-                                     "shapeless.record._")
+                                    "shapeless.record._")
 

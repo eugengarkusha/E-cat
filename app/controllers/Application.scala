@@ -11,10 +11,10 @@ import play.api.mvc._
 import ecat.util.DateTime.localDateTimeOrdering
 import schema.RecordJsonFormats._
 import ecat.util.JsonFormats._
-
+import ecat.model.ajax.CategoryControlProtocol, CategoryControlProtocol._
 import scala.concurrent.duration._
 import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
-
+import shapeless._, record._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import ecat.util.DateTime.interval
@@ -28,13 +28,15 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   //replace with real proxy call
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
 
+    val (_fakeFrom, _fakeTo) = (LocalDateTime.of(2016,5,6,0,0,0),LocalDateTime.of(2016,6,30,0,0,0))
 
-    def lbl = "H:"+interval(from, to)
-//    def hotels = Json.parse(scala.io.Source.fromFile(env.getFile("conf/json")).mkString).as[Seq[Hotel]]
-    def  load = Future(fetchData(from,to)).map { s =>
-      val h = Hotel.fromXml(scala.xml.XML.loadString(s), from, to.minusDays(1)).fold(err => throw new Exception(err.toString), identity)
-      cache.set(lbl,h, 3.minutes)
-      println("h="+h)
+
+//    def lbl = "H:"+interval(from, to)
+
+    def  load = Future(fetchData(_fakeFrom,_fakeTo)).map { s =>
+      val h = Hotel.fromXml(scala.xml.XML.loadString(s), _fakeFrom, _fakeTo).fold(err => throw new Exception(err.toString), identity)
+//      cache.set(lbl,h, 3.minutes)
+//      println("h="+h)
       h
     }
 //
@@ -64,9 +66,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   }
 
   def tst= Action.async{
-    getHotels(LocalDateTime.of(2016,5,5,22,32,28),LocalDateTime.of(2016,6,30,0,0,0)).map{r=>
-      Ok(r.toString)
-    }
+    getHotels(null,null).map(r=>Ok(r.toString))
 
   }
 
@@ -114,47 +114,29 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   def reservation(from:String, to:String) = Action{implicit  req =>
     Ok(views.html.pages.reservation(from, to))
   }
-//
-//
-//
 
-//Category code in unrelated to reality
-//  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CategoryCtrl) = Action.async{req =>
-//    getHotels(from, to).map { hotels =>
-//    val resp =  Ok{
-//
-//      filter(hotels).map{
-//        case Right(c)=>{
-//
-//         val trfs =  cat.get('tariffs)
-//         val grpd:Map[String,Tariff] = trfs.groupBy(_.get('name))//.sortBy(_.get('startDate)) noneed to sort
-//         val base = grpd.getOrElse("Проживание", throw new Exception("no base tariff deteced(by name Проживание)"))
-//
-//
-//
-////          tariffs ++
-//            Json.obj(
-//              "changed" -> false,
-//              "price" -> ctrl.price(filteredC.prices),
-//              "maxGuestCnt" -> cat.maxGuestCnt(filteredC.roomCnt),
-//              "maxRoomCnt" -> cat.maxRoomCnt(filteredC.guestsCnt)
-//            )
-//        }
-//        case Left(c)=>{
-//          Json.obj(
-//            "changed" -> true,
-//            "categoryHtml" -> views.html.pages.category.render(c, h.id, req).toString
-//          )
-//        }
-//      }.getOrElse(Json.obj("changed" -> true, "categoryHtml" -> ""))
-//
-//
-//
-//    }
-//  }
+
+  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest ) = Action.async{req =>
+
+    getHotels(from, to).map { hotels =>
+
+      val resp = CategoryControlProtocol.process(ctrl, hotels) match {
+
+        case Some(Right(resp))=>Json.obj("changed" -> false, "ctrl"->ctrl)
+
+        case Some(Left((category, hotel)))=>{
+          Json.obj("changed" -> true, "categoryHtml" -> views.html.pages.category.render(category, hotel.get('id), req).toString)
+        }
+        case None => Json.obj("changed" -> true, "categoryHtml" -> "")
+      }
+
+      Ok(resp)
+    }
+  }
+
 //
   def filter(from: LocalDateTime, to: LocalDateTime, filter: Filter[Schema.Hotel]) = Action.async{ implicit req =>
-    getHotels(from, to).map(hotels => Ok(views.html.pages.offers(hotels.flatMap(filter))))
+    getHotels(from, to).map(hotels => Ok(views.html.pages.offers(hotels.flatMap(filter(_)))))
   }
 
 

@@ -27,7 +27,7 @@ object CategoryControlProtocol {
                             ci: LocalTime,
                             co: LocalTime)
 
-  case class CatCtrlResponse(maxGuestCnt:Int, availableRoomCnt:Int, prices:Map[String,Double])
+  case class CatCtrlResponse(maxGuestCnt:Int, availableRoomCnt:Int, prices:Map[String,Double],eci:Boolean, lco:Boolean)
 
 
   implicit val catCtrlReads = Json.format[CatCtrlRequest]
@@ -35,52 +35,54 @@ object CategoryControlProtocol {
 
 
 
-
-  def process(req: CatCtrlRequest, hotels: Seq[Hotel]):Option[Either[Category, CatCtrlResponse]] = {
+  def process(req: CatCtrlRequest, hotels: Seq[Hotel]):Option[Either[(Category, Hotel), CatCtrlResponse]] = {
 
     import req._
 
     def calcGroupPrice (p: Prices, hotelCiTime:LocalTime, hotelCoTime:LocalTime): Double= {
-      def eci = ci.compareTo(hotelCiTime) < 0
-      def lco = co.compareTo(hotelCoTime) > 0
+
       def addIf(cond: Boolean, l: Long, r:Long) = if (cond) l + r else r
       (roomCnt * addIf(lco, p.get('lco), addIf(eci, p.get('eci), addIf(bkf, p.get('bkf), p.get('room))))).toDouble / 100
     }
 
     //TODO: consider rewriting in terms of filtering AST when it is implemented(in would also cover filtering by roomCnt)
-    val preFiltered: Seq[(Category, Hotel)] = for{
+    val result  = for{
       h<- hotels.filter(_.get('id) == hotelId)
       c<- h.get('categories).filter(_.get('id) == catId)
-    }yield c->h
+    }yield {
 
-    assert(preFiltered.size > 1)
-
-    preFiltered.headOption.map { case(category, hotel) =>
-      if(category.get('tariffGroups).hashCode != tariffsHash){
+      if(c.get('tariffGroups).hashCode != tariffsHash){
         println(s"Tariffs has changed during booking process. Redrawing category: $catId")
-        Left(category)
+        Left(c->h)
       }
       else {
 
-        val filteredCat = category.updateWith('rooms)(_.filter(r => r.get('guestsCnt) >= guestsCnt && (!twinRequired || r.get('twin))))
+        val filteredCat = c.updateWith('rooms)(_.filter(r => r.get('guestsCnt) >= guestsCnt && (!twinRequired || r.get('twin))))
 
         if (filteredCat.get('rooms).size < roomCnt) {
           println(s"category has changed during booking process.Redrawing category: $catId")
-          Left(category)
+          Left(c->h)
         }
         else {
 
+          val eci = ci.compareTo(h.get('checkInTime)) < 0
+          val lco = co.compareTo(h.get('checkOutTime)) > 0
           def prices: Map[String, Double] = {
             filteredCat.get('tariffGroups)
-            .map{ tg =>
-               tg.get('name) -> calcGroupPrice(tg.get('overalPrices), hotel.get('checkInTime), hotel.get('checkOutTime))
-            }(collection.breakOut)
+              .map{ tg =>
+                tg.get('name) -> calcGroupPrice(tg.get('overalPrices), eci, lco)
+              }(collection.breakOut)
           }
 
-          Right(CatCtrlResponse (maxGuestCnt(filteredCat,roomCnt), availableRoomCnt(filteredCat, guestsCnt),prices))
+          Right(CatCtrlResponse (maxGuestCnt(filteredCat,roomCnt), availableRoomCnt(filteredCat, guestsCnt), prices,eci,lco))
 
         }
       }
     }
+
+    assert(result.size <= 1)
+
+    result.headOption
+
   }
 }

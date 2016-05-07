@@ -88,9 +88,6 @@
             <tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160506000000" dateK="20160510000000" roomprice="2300" bkfprice="50" eciprice="1150" lcoprice="1150"/>
             <tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160510000000" dateK="20160630000000" roomprice="2100" bkfprice="50" eciprice="1050" lcoprice="1050"/>
             <tarif id="000000021" name="тариф2" dateN="20160513000000" dateK="20160515000000" roomprice="1900" bkfprice="50" eciprice="950" lcoprice="950"/>
-            <tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160506000000" dateK="20160510000000" roomprice="2300" bkfprice="50" eciprice="1150" lcoprice="1150"/>
-            <tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160510000000" dateK="20160630000000" roomprice="2100" bkfprice="50" eciprice="1050" lcoprice="1050"/>
-            <tarif id="000000021" name="тариф2" dateN="20160513000000" dateK="20160515000000" roomprice="1900" bkfprice="50" eciprice="950" lcoprice="950"/>
             <room num="401" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
                 <option>Окна во двор</option>
             </room>
