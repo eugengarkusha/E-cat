@@ -490,8 +490,8 @@ main {
 
 .filtering-slide {
   position: fixed;
-  width: 100%;
-  top: 60px;
+  width: 67%;
+  top: 59px;
   z-index: 100; }
 
 .slider {
@@ -824,6 +824,17 @@ main {
   width: 9.2rem;
   height: 3.7rem;
   padding-left: 8px; }
+
+.eci, .lco {
+  display: none;
+  clear: both;
+  float: left;
+  border: 1px solid;
+  border-radius: 7px;
+  color: #B12121;
+  padding: 3px;
+  font-size: 10px;
+  font-weight: bold; }
 
 .option-data {
   float: right;
@@ -1508,8 +1519,11 @@ main {
       margin-top: 0; }
     main .contact-box {
       display: block;
-      position: fixed;
+      float: left;
       margin: 0; }
+    main .contact-box-sliding {
+      position: fixed;
+      top: 70px; }
 
   .page-hotel-ekaterina .main-section {
     margin-bottom: 2rem; }
@@ -1567,19 +1581,19 @@ main {
   .page-reservation .tariff {
     padding-bottom: 0; }
   .page-reservation .tariff-heading {
-    width: 65%;
+    width: 58%;
     border-right: 1px dashed #000; }
   .page-reservation .tariff-overall {
-    width: 33%;
-    border-top: 2px solid #b19261;
+    width: 40%;
+    border-top: 1px solid #b19261;
     padding: 0;
     vertical-align: bottom; }
     .page-reservation .tariff-overall [class^="flaticon-"]:before, .page-reservation .tariff-overall [class*=" flaticon-"]:before, .page-reservation .tariff-overall [class^="flaticon-"]:after, .page-reservation .tariff-overall [class*=" flaticon-"]:after {
       margin-left: 0; }
   .page-reservation .tariff-radio {
     position: absolute;
-    top: 26px;
-    right: 35px;
+    top: 15px;
+    right: 43px;
     width: 2rem;
     height: 2rem;
     cursor: pointer; } }

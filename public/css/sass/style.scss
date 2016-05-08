@@ -760,8 +760,8 @@ main {
 
   .filtering-slide {
     position: fixed;
-    width: 100%;
-    top: 60px;
+    width: 67%;
+    top: 59px;
     z-index: 100;
   }
 // ======================== end of filtering =======================
@@ -1249,6 +1249,18 @@ main {
   width: 9.2rem;
   height: 3.7rem;
   padding-left: 8px;
+}
+
+.eci, .lco {
+  display: none;
+  clear: both;
+  float: left;
+  border: 1px solid;
+  border-radius: 7px;
+  color: #B12121;
+  padding: 3px;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .option-data {
@@ -2504,8 +2516,13 @@ main {
 
       .contact-box {
         display: block;
-        position: fixed;
+        float: left;
         margin: 0;
+      }
+      
+      .contact-box-sliding {
+        position: fixed;
+        top: 70px;
       }
 
   }
@@ -2622,13 +2639,13 @@ main {
       }
 
       .tariff-heading {
-        width: 65%;
+        width: 58%;
         border-right: 1px dashed #000;
       }
 
       .tariff-overall {
-        width: 33%;
-        border-top: 2px solid $color-primary;
+        width: 40%;
+        border-top: 1px solid $color-primary;
         padding: 0;
         vertical-align: bottom;
 
@@ -2640,8 +2657,8 @@ main {
 
       .tariff-radio {
         position: absolute;
-        top: 26px;
-        right: 35px;
+        top: 15px;
+        right: 43px;
         width: 2rem;
         height: 2rem;
         cursor: pointer;

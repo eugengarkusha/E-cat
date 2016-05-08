@@ -212,6 +212,9 @@ $(function () {
       for (var key in data.ctrl.prices) {
         $(cat).find('[data-tariff-name=' + key + ']').find('.tariff-price').text(data.ctrl.prices[key] + ' грн');
       }
+      
+      (data.ctrl.eci) ? $(cat).find('.eci').show() : $(cat).find('.eci').hide();
+      (data.ctrl.lco) ? $(cat).find('.lco').show() : $(cat).find('.lco').hide();
 
       console.timeEnd('setupOpt');
 

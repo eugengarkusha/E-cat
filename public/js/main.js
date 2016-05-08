@@ -5,6 +5,7 @@ $(function () {
     });
 
     setTimeout(function() {
+        
       $('.header-main').scroolly([
           {
               from: 'doc-top + 122px',
@@ -16,84 +17,33 @@ $(function () {
           }
       ]);
 
-      if($('.filtering')[0]) {
+      if ($('.filtering')[0]) {
         $('.filtering').scroolly([
           {
-            from: 'doc-top + 420px',
+            from: 'doc-top + 220px',
             addClass: 'filtering-slide'
           },
           {
-            to:'doc-top + 220px',
+            to: 'doc-top + 220px',
             removeClass: 'filtering-slide'
           }
         ]);
       }
+      
+      if ($('.contact-box')[0]) {
+          $('.contact-box').scroolly([
+              {
+                  from: 'doc-top + 156px',
+                  addClass: 'contact-box-sliding'
+              },
+              {
+                  to: 'doc-top + 110px',
+                  removeClass: 'contact-box-sliding'
+              }
+          ])
+      }
+      
     }, 500);
-
-    // $('.header-main').scroolly([
-    //     {
-    //         from: 'doc-top + 122px',
-    //         addClass: 'sticky'
-    //     },
-    //     {
-    //         to: 'doc-top + 1px',
-    //         removeClass: 'sticky'
-    //     }
-    // ]);
-    //
-    // if($('.filtering')[0]) {
-    //   $('.filtering').scroolly([
-    //     {
-    //       from: 'doc-top + 420px',
-    //       addClass: 'filtering-slide'
-    //     },
-    //     {
-    //       to:'doc-top + 220px',
-    //       removeClass: 'filtering-slide'
-    //     }
-    //   ]);
-    // }
-
-    // if ($('.page-reservation')[0]) {
-    //   $('.booking-form').scroolly([
-    //
-    //     {
-    //       to: 'con-top - 60px',
-    //       css: {
-    //           position: 'relative',
-    //           width: '100%',
-    //           top: '0',
-    //           left: '0',
-    //           height: 'auto'
-    //       }
-    //     },
-    //
-    //     {
-    //         from: 'el-top = vp-top + 60px',
-    //         css: {
-    //             position: 'fixed',
-    //             top: '60px',
-    //             left: '27%',
-    //             width: '71%',
-    //             backgroundColor: 'white',
-    //             height: '80px',
-    //             overflow: 'hidden',
-    //             zIndex: '999'
-    //         },
-    //         onCheckIn: function (el, rule) {
-    //             $('.main-section > h1').css({
-    //                 marginBottom: '192px'
-    //             });
-    //         },
-    //         onCheckOut: function (el, rule) {
-    //             $('.main-section > h1').css({
-    //                 marginBottom: 'inherit'
-    //             });
-    //         }
-    //     }
-    //
-    //   ], $('.main-section'));
-    // }
 
     if ($('.makeOrder')[0] || $('.filtering')[0]) {
 
