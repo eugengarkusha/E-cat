@@ -10,6 +10,7 @@ import schema.RecordFilters.Filter
 import Filters.filterReads
 import ecat.model.ajax.CategoryControlProtocol._
 import play.api.mvc.QueryStringBindable
+import ecat.util.JsonFormats.localTimeFormat
 
 
 /**
