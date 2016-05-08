@@ -36,14 +36,18 @@ object TariffOps {
     //groups should come aligned to date boundaries here
     def mergeAligned(baseGrp: List[Tariff], otherGrp: List[Tariff]): List[Tariff] ={
 
-      def getFromBase(start: LocalDateTime,days:Int):List[Tariff]={
-        val end = start.plus(days, ChronoUnit.DAYS)
-        alignToDates(start, end, cutPeriod(start, end, baseGrp))
+      def getFromBase(start: LocalDateTime, days:Int):List[Tariff]={
+        assert(days >= 0)
+        if(days == 0)Nil
+        else {
+          val end = start.plus(days, ChronoUnit.DAYS)
+          alignToDates(start, end, cutPeriod(start, end, baseGrp))
+        }
       }
 
       @tailrec
       def m (start :LocalDateTime, grp:List[Tariff], merged:List[Tariff]):List[Tariff] ={
-        if(grp.isEmpty)merged
+        if(grp.isEmpty) merged.++(getFromBase(start, ChronoUnit.DAYS.between(start, to).toInt))
         else {
           val tariffs = {
             val gap = ChronoUnit.DAYS.between(start, grp.head.get('startDate)).toInt
@@ -80,7 +84,6 @@ object TariffOps {
     tariffs.dropWhile(_.get('endDate).compareTo(start) <= 0).takeWhile(_.get('startDate).compareTo(end) < 0)
   }
 
-  def duration(t:Tariff)=ChronoUnit.DAYS.between(t.get('startDate), t.get('endDate))
 
   def fromXml(n: Node):Tariff = Record(
     id = n \@"id" ,
