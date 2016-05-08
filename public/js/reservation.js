@@ -205,9 +205,13 @@ $(function () {
     var setupOpt = function (data, cat) {
       console.time('setupOpt');
 
-      changeSelect(cat, '[data-guestscnt]', data.maxGuestCnt);
+      changeSelect(cat, '[data-guestscnt]', data.ctrl.maxGuestCnt);
 
-      changeSelect(cat, '[data-roomcnt]', data.maxRoomCnt);
+      changeSelect(cat, '[data-roomcnt]', data.ctrl.availableRoomCnt);
+      
+      for (var key in data.ctrl.prices) {
+        $(cat).find('[data-tariff-name=' + key + ']').find('.tariff-price').text(data.ctrl.prices[key] + ' грн');
+      }
 
       console.timeEnd('setupOpt');
 
@@ -270,12 +274,11 @@ $(function () {
             $(cat).replaceWith(category);
             console.log($(category).attr('data-catid'));
             changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
-          })() :
-          $(cat).find('[data-price]').text(resp.price);
+          })() : (function () {
+              console.dir(resp);
 
-          console.log(resp.price);
-
-           setupOpt(resp, cat);
+              setupOpt(resp, cat);
+          })()
 
            beautySelect();
            console.timeEnd('changeCat');

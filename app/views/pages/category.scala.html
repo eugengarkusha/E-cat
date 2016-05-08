@@ -119,7 +119,7 @@
       <h2>Тарифы</h2>
 
       @for(tg <- c.get('tariffGroups)) {
-        <div class="tariff tariff-first">
+        <div data-tariff-name=@tg.get('name) class="tariff tariff-first">
 
           <div class="tariff-heading">
             <h3>@tg.get('name)</h3>
