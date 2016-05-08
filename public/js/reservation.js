@@ -53,6 +53,7 @@ $(function () {
 
     var elemAndVal = function (container, selector, valueType) {
       console.time('elemAndVal');
+      console.log(selector);
       var result = {};
       result.element = container.querySelector(selector);
 
@@ -97,8 +98,6 @@ $(function () {
 
         roomCnt: elemAndVal(cat, '[data-roomcnt]', 'number'),
 
-        price: elemAndVal(cat, '[data-price]', 'number'),
-
         hotelId: (cat).dataset.hotelid,
 
         catId: (cat).dataset.catid,
@@ -116,8 +115,8 @@ $(function () {
 
 
       globalFilt.room = {
-        twin: elemAndVal($('.booking-form')[0], '#twin').value,
-        guests: elemAndVal($('.booking-form')[0], '#peopleQuantity', 'number').value
+        twin: elemAndVal($('.filtering')[0], '#twin').value,
+        guests: elemAndVal($('.filtering')[0], '#peopleQuantity', 'number').value
       };
       if (globalFilt.room.twin === false) delete globalFilt.room.twin;
 
@@ -163,14 +162,15 @@ $(function () {
       var opt = collectOpts(cat);
 
       var data = JSON.stringify({
-          'hotelId'  : opt.hotelId,
-          'catId'    : opt.catId,
-          'hash'     : opt.hash,
-          'guestsCnt': opt.guestsCnt.value,
-          'roomCnt'  : opt.roomCnt.value,
-          'bkf'      : opt.breakfast.value,
-          'eci'      : opt.eci.value,
-          'lco'      : opt.lco.value
+          'hotelId':                  opt.hotelId,
+          'catId':                     opt.catId,
+          'tariffGroupsHash': opt.hash,
+          'guestsCnt':             opt.guestsCnt.value,
+          'roomCnt':               opt.roomCnt.value,
+           'twinRequired':       elemAndVal($('.filtering')[0], '#twin').value,
+          'bkf':                         opt.breakfast.value,
+          'ci':                           opt.eci.value,
+          'co':                          opt.lco.value
       });
       console.timeEnd('stringOpts');
       return data;
@@ -256,12 +256,12 @@ $(function () {
 
       $(cat).change(function(e) {
           var cat     = $('.category').has(e.target)[0],
-              reqData = stringOpts(cat);
+              req = stringOpts(cat);
 
-            console.log(reqData);
+            console.log(req);
             console.log(globalFilt);
 
-        $.ajax(jsRoutes.controllers.Application.category(from, to, reqData, globalFilt.hotel, globalFilt.room, globalFilt.opt))
+        $.ajax(jsRoutes.controllers.Application.category(from, to, req))
         .done(function( resp ) {
 
           resp.changed ? (function () {
@@ -289,7 +289,7 @@ $(function () {
       $(selector).change(function(e) {
           var container = e.currentTarget,
                 req           = createFiltersReqObj(collectFilters(selector)),
-                from        = collectFilters(selector).from();
+                from        = collectFilters(selector).from(),
                 to            = collectFilters(selector).to();
                 
                 console.log(req);

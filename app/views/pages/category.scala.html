@@ -1,8 +1,8 @@
 @import ecat.model.ops.CategoryOps._
 
-@(c: Category, h: String)(implicit req: play.api.mvc.RequestHeader)
+@(c: Category, h: Hotel)(implicit req: play.api.mvc.RequestHeader)
 
-<div class="category clearfix" data-catId=@c.get('id) data-hash=@c.hashCode data-hotelId=@h>
+<div class="category clearfix" data-catId=@c.get('id) data-hash=@c.get('tariffGroups).hashCode data-hotelId=@h.get('id)>
 
   <h3 class="category-heading">@c.get('name)</h3>
 
@@ -73,14 +73,14 @@
     <div class="option option-early">
       <span class="option-description">Заезд:</span>
       <div class="option-data option-data-eci">
-        <input data-eci type="text" name="timepicker" class="timepicker">
+        <input data-eci type="text" name="timepicker" class="timepicker" value=@h.get('checkInTime)>
       </div>
     </div>
 
     <div class="option option-late">
       <span class="option-description">Выезд:</span>
       <div class="option-data option-data-lco">
-        <input data-lco type="text" name="timepicker" class="timepicker">
+        <input data-lco type="text" name="timepicker" class="timepicker" value=@h.get('checkOutTime)>
       </div>
     </div>
 
