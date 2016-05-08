@@ -1,6 +1,7 @@
-package ecat.model
+package ecat.model.ops
 
-import scalaz._, Scalaz._
+import scalaz.Scalaz._
+import scalaz._
 
 object ValidationOps {
 

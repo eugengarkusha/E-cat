@@ -1,18 +1,21 @@
-package ecat.model
+package ecat.model.ops
 
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
-
+import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
 import ecat.model.Schema.{Prices, Tariff, TariffGroup}
-
-import scala.annotation.tailrec
+import ecat.util.DateTime._
 import shapeless._
-import record._
-import syntax.std.traversable._
-import ecat.util.RecordInstances._
-import scalaz._
-import Scalaz._
 import shapeless.contrib.scalaz.instances._
+import shapeless.record._
+import ecat.util.RecordInstances._
+import ecat.model.ops.PricesOps._
+import scala.annotation.tailrec
+import scalaz.Scalaz._
+import scalaz._
+import shapeless.syntax.std.traversable._
+
+import scala.xml.Node
 
 object TariffOps {
   val baseGrpName = "ПРОЖИВАНИЕ"
@@ -56,7 +59,7 @@ object TariffOps {
     def overalPrices(group: List[Tariff]):Prices = {
       group.map {tariff =>
         val days = ChronoUnit.DAYS.between(tariff.get('startDate), tariff.get('endDate))
-        (tariff.get('pricesPerDay)).toList.map(_ * days).toHList[Schema.Prices].get
+        (tariff.get('pricesPerDay)).toList.map(_ * days).toHList[Prices].get
       }.reduce(_ |+| _)
     }
 
@@ -66,17 +69,29 @@ object TariffOps {
 
     Record(name = baseGrpName, tariffs = baseGroup, overalPrices = overalPrices(baseGroup))::
     (rawGroups - baseGrpName).map{ case (name ,rawGroup) =>
-        val mergedGroup = mergeAligned(baseGroup, alignToDates(from, to,rawGroup))
+        val mergedGroup = mergeAligned(baseGroup, alignToDates(from, to, rawGroup))
         Record(name = name, tariffs = mergedGroup, overalPrices = overalPrices(mergedGroup))
     }.toList
 
-
-
   }
-
 
   //tariffs should come sorted by startDate!
   def cutPeriod(start:LocalDateTime, end:LocalDateTime, tariffs:List[Tariff])={
     tariffs.dropWhile(_.get('endDate).compareTo(start) <= 0).takeWhile(_.get('startDate).compareTo(end) < 0)
   }
+
+  def duration(t:Tariff)=ChronoUnit.DAYS.between(t.get('startDate), t.get('endDate))
+
+  def fromXml(n: Node):Tariff = Record(
+    id = n \@"id" ,
+    name = n \@"name" ,
+    startDate = LocalDateTime.parse(n \@"dateN", fmt) ,
+    endDate = LocalDateTime.parse(n \@"dateK", fmt) ,
+    pricesPerDay = Record(
+      room = (n \@"roomprice").toDouble * 100 toLong,
+      bkf = (n \@"bkfprice").toDouble * 100 toLong,
+      eci = (n \@"eciprice").toDouble * 100 toLong,
+      lco = (n \@"lcoprice").toDouble * 100 toLong
+    )
+  )
 }

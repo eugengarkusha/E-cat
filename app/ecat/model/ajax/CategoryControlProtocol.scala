@@ -2,8 +2,9 @@ package ecat.model.ajax
 
 import java.time.LocalTime
 
-import ecat.model.{CategoryOps, Filters, Prices, Schema}
+import ecat.model.{Filters, Schema}
 import Schema._
+import ecat.model.ops.CategoryOps._
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import schema.RecordFilters.Filter
@@ -11,8 +12,8 @@ import schema.heplers.Materializer.materialize
 import ecat.util.DateTime._
 import shapeless._
 import record._
-import CategoryOps._
 import ecat.util.JsonFormats._
+import ecat.model.ops.PricesOps._
 
 object CategoryControlProtocol {
 
@@ -20,7 +21,7 @@ object CategoryControlProtocol {
   case class CatCtrlRequest(hotelId: String,
                             catId: String,
                             guestsCnt: Int,
-                            tariffsHash: Int,
+                            tariffGroupsHash: Int,
                             roomCnt: Int,
                             twinRequired: Boolean,
                             bkf: Boolean,
@@ -39,19 +40,13 @@ object CategoryControlProtocol {
 
     import req._
 
-    def calcGroupPrice (p: Prices, eci:Boolean, lco:Boolean): Double= {
-
-      def addIf(cond: Boolean, l: Long, r:Long) = if (cond) l + r else r
-      (roomCnt * addIf(lco, p.get('lco), addIf(eci, p.get('eci), addIf(bkf, p.get('bkf), p.get('room))))).toDouble / 100
-    }
-
     //TODO: consider rewriting in terms of filtering AST when it is implemented(in would also cover filtering by roomCnt)
     val result  = for{
       h<- hotels.filter(_.get('id) == hotelId)
       c<- h.get('categories).filter(_.get('id) == catId)
     }yield {
 
-      if(c.get('tariffGroups).hashCode != tariffsHash){
+      if(c.get('tariffGroups).hashCode != tariffGroupsHash){
         println(s"Tariffs has changed during booking process. Redrawing category: $catId")
         Left(c->h)
       }
@@ -70,7 +65,7 @@ object CategoryControlProtocol {
           def prices: Map[String, Double] = {
             filteredCat.get('tariffGroups)
               .map{ tg =>
-                tg.get('name) -> calcGroupPrice(tg.get('overalPrices), eci, lco)
+                tg.get('name) -> roomCnt * calcPrice(tg.get('overalPrices), bkf, eci, lco)
               }(collection.breakOut)
           }
 

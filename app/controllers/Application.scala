@@ -4,7 +4,7 @@ import java.time.{LocalDateTime, LocalTime, ZoneOffset}
 import javax.xml.ws.BindingProvider
 
 import async.client.ObmenSait
-import ecat.model.{Hotel, _}
+import ecat.model.ops.HotelOps
 import play.api.cache.CacheApi
 import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.mvc._
@@ -34,7 +34,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 //    def lbl = "H:"+interval(from, to)
 
     def  load = Future(fetchData(_fakeFrom,_fakeTo)).map { s =>
-      val h = Hotel.fromXml(scala.xml.XML.loadString(s), _fakeFrom, _fakeTo).fold(err => throw new Exception(err.toString), identity)
+      val h = HotelOps.fromXml(scala.xml.XML.loadString(s), _fakeFrom, _fakeTo).fold(err => throw new Exception(err.toString), identity)
 //      cache.set(lbl,h, 3.minutes)
 //      println("h="+h)
       h
@@ -135,8 +135,13 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   }
 
 //
-  def filter(from: LocalDateTime, to: LocalDateTime, filter: Filter[Schema.Hotel]) = Action.async{ implicit req =>
-    getHotels(from, to).map(hotels => Ok(views.html.pages.offers(hotels.flatMap(filter(_)))))
+  def filter(from: LocalDateTime, to: LocalDateTime, filter: Filter[Hotel]) = Action.async{ implicit req =>
+
+    getHotels(from, to).map{ hotels =>
+      val k = hotels.flatMap(filter(_))
+
+       Ok(views.html.pages.offers(hotels.flatMap(filter(_))))
+    }
   }
 
 

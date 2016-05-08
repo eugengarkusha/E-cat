@@ -1,13 +1,16 @@
 package ecat.model
 import java.time.LocalDateTime
 import java.time.temporal._
-import ValidationOps._
+
 import Schema._
+import ecat.model.ops.TariffOps._
+import ecat.model.ops.ValidationOps._
 import shapeless._
 import record._
-import TariffOps._
+
 import scalaz.{Ordering => _, _}
-import scalaz._, Scalaz._
+import scalaz._
+import Scalaz._
 import ecat.util.DateTime._
 
 
