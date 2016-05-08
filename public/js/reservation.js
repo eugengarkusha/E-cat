@@ -212,6 +212,40 @@ $(function () {
       console.timeEnd('setupOpt');
 
     };
+    
+    var createFiltersReqObj = function (opt) {
+      
+      var result  =  {
+        
+        name: {
+          op : "EQ",
+          v : opt.hotel.name
+        },
+        categories : {
+            elFilter: {
+              rooms: {
+                elFilter: {
+                  guestsCnt: {
+                    op: "GTEQ",
+                    v: opt.room.guests
+                  },
+                  twin: {
+                    op: "EQ",
+                    v: opt.room.twin
+                  }
+                }
+            }
+          }
+        }
+        
+      };
+      
+      if (!opt.hotel.name) delete result.name;
+      if (!opt.room.twin) delete result.categories.elFilter.rooms.elFilter.twin;
+      
+      return result;
+      
+    };
 
     // ***************************End of setup options***********************
 
@@ -254,11 +288,13 @@ $(function () {
       console.time('changeFilter');
       $(selector).change(function(e) {
           var container = e.currentTarget,
-              req       = collectFilters(selector);
+                req           = createFiltersReqObj(collectFilters(selector)),
+                from        = collectFilters(selector).from();
+                to            = collectFilters(selector).to();
+                
+                console.log(req);
 
-            console.log(req.from() + " : " + req.to() + " : " + JSON.stringify(req.hotel) + " : " + JSON.stringify(req.room) + " : " + '[]');
-
-            $.ajax(jsRoutes.controllers.Application.filter(req.from(), req.to(), JSON.stringify(req.hotel), JSON.stringify(req.room), '[]'))
+            $.ajax(jsRoutes.controllers.Application.filter(from, to, JSON.stringify(req)))
             .done(function( response ) {
 
               $('.category-list').replaceWith(response);
