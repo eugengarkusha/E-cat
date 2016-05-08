@@ -122,7 +122,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
       val resp = CategoryControlProtocol.process(ctrl, hotels) match {
 
-        case Some(Right(resp))=>Json.obj("changed" -> false, "ctrl"->ctrl)
+        case Some(Right(resp))=>Json.obj("changed" -> false, "ctrl"->resp)
 
         case Some(Left((category, hotel)))=>{
           Json.obj("changed" -> true, "categoryHtml" -> views.html.pages.category.render(category, hotel, req).toString)
