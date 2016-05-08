@@ -31,17 +31,17 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
     val (_fakeFrom, _fakeTo) = (LocalDateTime.of(2016,5,6,0,0,0),LocalDateTime.of(2016,6,30,0,0,0))
 
 
-//    def lbl = "H:"+interval(from, to)
+    def lbl = "H:"+interval(_fakeFrom, _fakeTo)
 
     def  load = Future(fetchData(_fakeFrom,_fakeTo)).map { s =>
       val h = HotelOps.fromXml(scala.xml.XML.loadString(s), _fakeFrom, _fakeTo).fold(err => throw new Exception(err.toString), identity)
-//      cache.set(lbl,h, 3.minutes)
+      cache.set(lbl,h, 40.minutes)
 //      println("h="+h)
       h
     }
 //
-//    cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse(load)
-    load
+    cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse(load)
+//    load
 //    Future.successful(hotels)
   }
 
