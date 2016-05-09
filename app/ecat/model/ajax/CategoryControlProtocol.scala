@@ -21,6 +21,7 @@ object CategoryControlProtocol {
   case class CatCtrlRequest(hotelId: String,
                             catId: String,
                             guestsCnt: Int,
+                            addGuestsCnt:Int,
                             tariffGroupsHash: Int,
                             roomCnt: Int,
                             twinRequired: Boolean,
@@ -28,7 +29,7 @@ object CategoryControlProtocol {
                             ci: LocalTime,
                             co: LocalTime)
 
-  case class CatCtrlResponse(maxGuestCnt:Int, availableRoomCnt:Int, prices:Map[String,Double],eci:Boolean, lco:Boolean)
+  case class CatCtrlResponse(maxGuestCnt:Int, maxAddGuesstsCnt: Int, availableRoomCnt:Int, prices:Map[String,Double],eci:Boolean, lco:Boolean)
 
 
   implicit val catCtrlReads = Json.format[CatCtrlRequest]
@@ -62,14 +63,24 @@ object CategoryControlProtocol {
 
           val eci = ci.compareTo(h.get('checkInTime)) < 0
           val lco = co.compareTo(h.get('checkOutTime)) > 0
+
           def prices: Map[String, Double] = {
             filteredCat.get('tariffGroups)
               .map{ tg =>
-                tg.get('name) -> roomCnt * calcPrice(tg.get('overalPrices), bkf, eci, lco)
+                tg.get('name) -> roomCnt * calcPrice(tg.get('overalPrices),guestsCnt,addGuestsCnt,bkf, eci, lco)
               }(collection.breakOut)
           }
 
-          Right(CatCtrlResponse (maxGuestCnt(filteredCat,roomCnt), availableRoomCnt(filteredCat, guestsCnt), prices,eci,lco))
+          Right(
+            CatCtrlResponse (
+              maxGuestCnt(filteredCat,roomCnt),
+              maxAddGuestCnt(filteredCat,roomCnt),
+              filteredCat.get('rooms).size ,
+              prices,
+              eci,
+              lco
+            )
+          )
 
         }
       }

@@ -101,7 +101,7 @@
       <div class="option-data option-data-select">
 
         <select data-roomcnt name="room_count">
-          @for(room <- 1 to availableRoomCnt(c, 1)) {
+          @for(room <- 1 to c.get('rooms).size) {
             <option value=@room>@room</option>
           }
         </select>

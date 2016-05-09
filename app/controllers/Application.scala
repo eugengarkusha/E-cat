@@ -1,6 +1,6 @@
 package controllers
 
-import java.time.{LocalDateTime, LocalTime, ZoneOffset}
+import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
 import javax.xml.ws.BindingProvider
 
 import async.client.ObmenSait
@@ -11,10 +11,14 @@ import play.api.mvc._
 import ecat.util.DateTime.localDateTimeOrdering
 import schema.RecordJsonFormats._
 import ecat.util.JsonFormats._
-import ecat.model.ajax.CategoryControlProtocol, CategoryControlProtocol._
+import ecat.model.ajax.CategoryControlProtocol
+import CategoryControlProtocol._
+
 import scala.concurrent.duration._
 import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
-import shapeless._, record._
+import shapeless._
+import record._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import ecat.util.DateTime.interval
@@ -45,10 +49,15 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 //    Future.successful(hotels)
   }
 
-  private def fetchData(from: LocalDateTime, to: LocalDateTime):String={
-//    proxy.getNomSvobod(fmt.format(from), fmt.format(to))
-    scala.io.Source.fromFile(env.getFile("conf/xml20160505223228_20160630000000"))(scala.io.Codec.UTF8).mkString
+  private def fetchData(from: LocalDateTime, to: LocalDateTime):String= {//(String, String, String)={
+    val emptyXml = "<empty></empty>"
+//   val middle = proxy.getNomSvobod(fmt.format(from), fmt.format(to))
+//   val left  = if(from.toLocalDate == LocalDate.now) emptyXml else proxy.getNomSvobod(fmt.format(from.minusDays(1)), fmt.format(from))
+//   val right = proxy.getNomSvobod(fmt.format(to), fmt.format(to.plusDays(1)))
 
+    val middle = scala.io.Source.fromFile(env.getFile("conf/xml20160505223228_20160630000000"))(scala.io.Codec.UTF8).mkString
+//    (emptyXml, middle, emptyXml)
+    middle
   }
 
 // TODO: create and maintain proxy outside the controller
