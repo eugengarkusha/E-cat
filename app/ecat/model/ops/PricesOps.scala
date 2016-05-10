@@ -11,7 +11,7 @@ object PricesOps {
 
     (addIf(lco, p.get('lco),
         addIf(eci, p.get('eci),
-          addIf(bkf, (addGuestsCnt + guestCnt) * p.get('bkf), p.get('room))))
+          addIf(bkf && p.get('bkf) > 0, (addGuestsCnt + guestCnt) * p.get('bkf), p.get('room))))
     ).toDouble / 100
   }
 
