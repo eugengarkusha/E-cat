@@ -208,6 +208,14 @@ blockquote {
   cursor: pointer;
 }
 
+.selectric .label {
+  height: 3.8rem;
+}
+
+.ui-timepicker-list li {
+  font-size: 13px;
+}
+
 //=================================== HEADER ===================================
 
 .header-main-wrapper {
@@ -499,6 +507,22 @@ blockquote {
 
 }
 
+.sticky-reservation {
+  
+  .stars, .logo:before, .logo:after {
+    transform:  scale(0.7,0.7);
+  }
+  
+  .logo:before, .logo:after {
+    margin-top: -1.4rem;
+  }
+  
+  .stars {
+    bottom: -1.2rem;
+  }
+  
+}
+
 //================================== MAIN ======================================
 
 main {
@@ -760,10 +784,17 @@ main {
 
   .filtering-slide {
     position: fixed;
-    width: 67%;
+    width: 77.5%;
     top: 59px;
     z-index: 100;
   }
+  
+  .filtering-placeholder {
+    display: none;
+    width: 100%;
+    height: 78px;
+  }
+  
 // ======================== end of filtering =======================
 
 .slider {
@@ -1221,8 +1252,16 @@ main {
   border-bottom: 1px dotted rgba(0,0,0,.25);
 }
 
+.option-early, .option-late {
+  position: relative;
+}
+
 .option-guest, .option-rooms {
   width: 100%;
+}
+
+.option-add-guest-hidden {
+  display: none;
 }
 
 .option-data-select {
@@ -1252,6 +1291,9 @@ main {
 }
 
 .eci, .lco {
+  position: absolute;
+  top: 1.8rem;
+  right: 11rem;
   display: none;
   clear: both;
   float: left;
@@ -2503,12 +2545,6 @@ main {
 
     padding: 0 3rem 16rem;
 
-      .main-section {
-        float: right;
-        width: 72%;
-        padding-right: 0;
-      }
-
       .booking-form {
         margin-top: 0;
 
@@ -2591,9 +2627,9 @@ main {
     .page-reservation {
 
       .main-section {
-        float: right;
-        max-width: 74%;
-        width: 74%;
+        float: none;
+        margin: 0 auto 2rem;
+        max-width: 85%;
       }
 
       .options {

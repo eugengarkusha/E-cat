@@ -9,38 +9,31 @@ $(function () {
       $('.header-main').scroolly([
           {
               from: 'doc-top + 122px',
-              addClass: 'sticky'
+              addClass: ($('.page-reservation')[0]) ? 'sticky sticky-reservation' : 'sticky'
           },
           {
               to: 'doc-top + 1px',
-              removeClass: 'sticky'
+              removeClass: 'sticky sticky-reservation'
           }
       ]);
 
       if ($('.filtering')[0]) {
         $('.filtering').scroolly([
           {
-            from: 'doc-top + 220px',
-            addClass: 'filtering-slide'
+            from: 'doc-top + 194px',
+            addClass: 'filtering-slide',
+            onCheckIn: function($element, rule) {
+              $('.filtering-placeholder').show();
+            },
+            onCheckOut: function($element, rule) {
+                $('.filtering-placeholder').hide();
+            }
           },
           {
-            to: 'doc-top + 220px',
+            to: 'doc-top + 194px',
             removeClass: 'filtering-slide'
           }
         ]);
-      }
-      
-      if ($('.contact-box')[0]) {
-          $('.contact-box').scroolly([
-              {
-                  from: 'doc-top + 156px',
-                  addClass: 'contact-box-sliding'
-              },
-              {
-                  to: 'doc-top + 110px',
-                  removeClass: 'contact-box-sliding'
-              }
-          ])
       }
       
     }, 500);

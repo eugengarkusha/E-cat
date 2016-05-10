@@ -56,6 +56,12 @@ $(function () {
       console.log(selector);
       var result = {};
       result.element = container.querySelector(selector);
+      
+      if (!result.element) {
+        result.value = 0;
+        console.log(result);
+        return result;
+      }
 
       result.value = (function () {
         if (result.element.type === 'checkbox') {
@@ -95,6 +101,8 @@ $(function () {
         lco: elemAndVal(cat, '[data-lco]'),
 
         guestsCnt: elemAndVal(cat, '[data-guestscnt]', 'number'),
+        
+        addGuestsCnt:  elemAndVal(cat, '[data-addguests]', 'number'),
 
         roomCnt: elemAndVal(cat, '[data-roomcnt]', 'number'),
 
@@ -166,6 +174,7 @@ $(function () {
           'catId':                     opt.catId,
           'tariffGroupsHash': opt.hash,
           'guestsCnt':             opt.guestsCnt.value,
+          'addGuestsCnt':        opt.addGuestsCnt.value,
           'roomCnt':               opt.roomCnt.value,
            'twinRequired':       elemAndVal($('.filtering')[0], '#twin').value,
           'bkf':                         opt.breakfast.value,
@@ -179,14 +188,19 @@ $(function () {
 
     // ***************** Setup Options ***************************
 
-    var changeSelect = function (container, elem, maxCnt) {
+    var changeSelect = function (cat, elem, maxCnt) {
       console.time('changeSelect');
+      
+      if (maxCnt === 0 && $(cat).find(elem).find('option').length !== 0) {
+        $(cat).find('option-add-guest').hide();
+      }
 
-      if ($(container).find(elem + 'option').length !== maxCnt) {
+      if (maxCnt !== 0 && $(cat).find(elem).find('option').length !== maxCnt || 
+      maxCnt !== 0 && $(cat).find(elem).find('option').length === 0) {
         (function () {
           var i       = 0,
-              $select = $(container).find(elem),
-              value   = $select.val();
+              $select = $(cat).find(elem),
+              value   = $select.val() || maxCnt;
           $select.html('');
           for (;i < maxCnt; i++) {
             var $option = $('<option>');
@@ -195,6 +209,10 @@ $(function () {
           }
 
           $select.val(value);
+          
+          if (maxCnt !== 0 && $(cat).find(elem).find('option').length === 0) {
+            $(cat).find('option-add-guest').show();
+          }
 
           console.timeEnd('changeSelect');
         })();
@@ -205,9 +223,11 @@ $(function () {
     var setupOpt = function (data, cat) {
       console.time('setupOpt');
 
-      changeSelect(cat, '[data-guestscnt]', data.ctrl.maxGuestCnt);
+      changeSelect(cat, '[name="guest"]', data.ctrl.maxGuestCnt);
+      
+      changeSelect(cat, '[name="addGuest"]', data.ctrl.maxAddGuesstsCnt);
 
-      changeSelect(cat, '[data-roomcnt]', data.ctrl.availableRoomCnt);
+      changeSelect(cat, '[name="room_count"]', data.ctrl.availableRoomCnt);
       
       for (var key in data.ctrl.prices) {
         $(cat).find('[data-tariff-name=' + key + ']').find('.tariff-price').text(data.ctrl.prices[key] + ' грн');
@@ -278,7 +298,7 @@ $(function () {
             console.log($(category).attr('data-catid'));
             changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
           })() : (function () {
-              console.dir(resp);
+              console.log(resp);
 
               setupOpt(resp, cat);
           })()

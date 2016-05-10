@@ -57,18 +57,27 @@
       </div>
 
     </div>
-
-    <div class="option option-add-guest">
-      <span class="option-description">Доп место:</span>
-      <div class="option-data option-data-select">
-        <select name="addGuest">
-          <option value="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
+    
+    @if(maxAddGuestCnt(c,1) > 0) {
+       <div class="option option-add-guest">
+        <span class="option-description">Доп место:</span>
+        <div class="option-data option-data-select">
+          <select name="addGuest" data-addguests=@maxAddGuestCnt(c,1)>
+            @for(guest <- 1 to maxAddGuestCnt(c,1)) {
+              <option value=@guest>@guest</option>
+            }
+          </select>
+        </div>
       </div>
-    </div>
+    } else {
+      <div class="option option-add-guest option-add-guest-hidden">
+        <span class="option-description">Доп место:</span>
+        <div class="option-data option-data-select">
+          <select name="addGuest">
+          </select>
+        </div>
+      </div>
+    }
 
     <div class="option option-early">
       <span class="option-description">Заезд:</span>
