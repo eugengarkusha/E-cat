@@ -1538,6 +1538,9 @@ main {
 
   main {
     padding: 0 3rem 16rem; }
+    main .main-section {
+      float: right;
+      width: 70%; }
     main .booking-form {
       margin-top: 0; }
     main .contact-box {
@@ -1574,7 +1577,13 @@ main {
       text-align: right; }
   .page-contacts .contacts + .contacts {
     margin-top: 2.5rem;
-    float: none; } }
+    float: none; }
+
+  .page-reservation .main-section {
+    float: none;
+    margin: 0 auto 2rem;
+    width: auto;
+    max-width: 85%; } }
 @media screen and (min-width: 1300px) {
   .page-reservation .main-section {
     float: none;

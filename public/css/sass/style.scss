@@ -2544,6 +2544,11 @@ main {
   main {
 
     padding: 0 3rem 16rem;
+    
+    .main-section {
+      float: right;
+      width: 70%;
+    }
 
       .booking-form {
         margin-top: 0;
@@ -2618,6 +2623,15 @@ main {
       float: none;
     }
 
+  }
+  
+  .page-reservation {
+    .main-section {
+        float: none;
+        margin: 0 auto 2rem;
+        width: auto;
+        max-width: 85%;
+      }
   }
 
 }
