@@ -7,7 +7,7 @@ import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.mvc.PathBindable.{Parsing => PParsing}
 import play.api.mvc.QueryStringBindable.{Parsing => QParsing}
 import schema.RecordFilters.Filter
-import Filters.filterReads
+import Filters.hotelFilterReads
 import ecat.model.ajax.CategoryControlProtocol._
 import play.api.mvc.QueryStringBindable
 import ecat.util.JsonFormats.localTimeFormat

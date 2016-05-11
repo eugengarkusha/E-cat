@@ -32,7 +32,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   //replace with real proxy call
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
 
-    val (_fakeFrom, _fakeTo) = (LocalDateTime.of(2016,5,6,0,0,0),LocalDateTime.of(2016,6,30,0,0,0))
+    val (_fakeFrom, _fakeTo) = (LocalDateTime.of(2016,5,6,0,0,0),LocalDateTime.of(2016,6,30,0,0,0))//(from,to)//
 
 
     def lbl = "H:"+interval(_fakeFrom, _fakeTo)
@@ -124,8 +124,8 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
     Ok(views.html.pages.reservation(from, to))
   }
 
-
-  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest ) = Action.async{req =>
+//need to process only filtered categories(othrewise redraw case is broken)
+  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest/*PASS FILTERS HERE*/ ) = Action.async{req =>
 
     getHotels(from, to).map { hotels =>
 

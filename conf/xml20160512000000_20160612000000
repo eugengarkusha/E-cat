@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<obmen>
+	<hotel id="000000001" name="Екатерина" eci="9" lco="20" ckeckin="13" checkout="12">
+		<category id="000000006" name="Сакура">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="201" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="2"/>
+		</category>
+		<category id="000000007" name="Пион">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="202" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="2"/>
+		</category>
+		<category id="000000008" name="Орхидея">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="203" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="2"/>
+		</category>
+		<category id="000000011" name="Лотос">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="204" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000009" name="Мак">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="205" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="2"/>
+		</category>
+		<category id="000000010" name="Чайная роза">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="206" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000013" name="Hi-tech">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="207" guests="2" addguests="1" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000014" name="Роза">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="208" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000012" name="VIP">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="209" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000015" name="Нарцисс">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="210" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="2"/>
+		</category>
+		<category id="000000016" name="Ландыш">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="211" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="2"/>
+		</category>
+		<category id="000000017" name="Сауна">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="212" guests="2" addguests="1" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000018" name="Карамель ">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="301" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+		<category id="000000019" name="Лилия">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="302" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+		<category id="000000020" name="Романтик">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="303" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+		<category id="000000021" name="Красная роза">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="304" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="3"/>
+		</category>
+		<category id="000000022" name="Тюльпан">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="305" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+		<category id="000000023" name="Ромашка">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" lcoprice="0.5"/>
+			<room num="306" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+	</hotel>
+	<hotel id="000000002" name="Екатерина II" eci="9" lco="20" ckeckin="13" checkout="12">
+		<category id="000000002" name="VIP апартаменты">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160514000000" roomprice="5000" bkfprice="50" eciprice="2500" lcoprice="2500"/>
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160514000000" dateK="20160612000000" roomprice="1550" bkfprice="50" eciprice="775" lcoprice="775"/>
+			<room num="101" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="1">
+				<option>Окна во двор</option>
+			</room>
+		</category>
+		<category id="000000004" name="Полулюкс">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1050" bkfprice="50" eciprice="525" lcoprice="525"/>
+			<tarif id="000000021" name="тариф2" dateN="20160513000000" dateK="20160515000000" roomprice="950" bkfprice="50" eciprice="475" lcoprice="475"/>
+			<room num="401" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Окна во двор</option>
+			</room>
+			<room num="402" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Вид на море</option>
+			</room>
+			<room num="403" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Окна во двор</option>
+			</room>
+			<room num="404" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Вид на море</option>
+			</room>
+			<room num="405" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Окна во двор</option>
+				<option>Холодильник от компрессор</option>
+			</room>
+			<room num="406" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Вид на море</option>
+			</room>
+			<room num="407" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Окна во двор</option>
+				<option>Холодильник от компрессор</option>
+			</room>
+			<room num="408" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="4">
+				<option>Вид на море</option>
+				<option>Может быть твином</option>
+			</room>
+			<room num="409" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Окна во двор</option>
+				<option>Холодильник от компрессор</option>
+			</room>
+			<room num="410" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Вид на море</option>
+			</room>
+			<room num="411" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="4">
+				<option>Окна во двор</option>
+			</room>
+			<room num="412" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="4">
+				<option>Вид на море</option>
+				<option>Может быть твином</option>
+			</room>
+		</category>
+		<category id="000000003" name="Эконом">
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="850" bkfprice="50" eciprice="425" lcoprice="425"/>
+			<room num="501" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="5">
+				<option>Окна во двор</option>
+				<option>Может быть твином</option>
+			</room>
+			<room num="502" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="5">
+				<option>Вид на море</option>
+			</room>
+			<room num="503" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="5"/>
+			<room num="504" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="5"/>
+			<room num="505" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="5"/>
+			<room num="506" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="5"/>
+			<room num="507" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="5"/>
+			<room num="508" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="5"/>
+			<room num="509" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="5"/>
+			<room num="510" guests="2" addguests="0" twin="false" bathroom="1=Душ" level="5"/>
+			<room num="511" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="5"/>
+			<room num="512" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="5"/>
+			<room num="514" guests="2" addguests="0" twin="true" bathroom="1=Душ" level="5"/>
+		</category>
+	</hotel>
+</obmen>

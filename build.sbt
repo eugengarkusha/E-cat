@@ -30,7 +30,7 @@ routesImport ++= List("ecat.model.Bindables._",
                        "play.api.libs.json._",
                        "schema.RecordFilters.Filter",
                        "ecat.model.Schema",
-                       "ecat.model.Filters.filterReads",
+                       "ecat.model.Filters.hotelFilterReads",
                        "ecat.model.ajax.CategoryControlProtocol._")
 
 TwirlKeys.templateImports ++= List("ecat.model.Schema._",
