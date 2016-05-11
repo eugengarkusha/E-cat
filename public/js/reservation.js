@@ -303,7 +303,7 @@ $(function () {
               setupOpt(resp, cat);
           })()
 
-           beautySelect();
+          //  beautySelect();
            console.timeEnd('changeCat');
         });
 
