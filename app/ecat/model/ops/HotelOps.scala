@@ -23,7 +23,6 @@ object HotelOps {
           .reduce(_ +++ _)
           .leftMap(errs => NonEmptyList(s"hotelId=$id:$errs"))
       }
-
       cats.map(c => Record(id = id, name = name, checkInTime = ci, checkOutTime = co , categories = c) :: Nil)
 
     }.reduce(_ +++ _)

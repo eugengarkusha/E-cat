@@ -8,21 +8,17 @@ import ecat.model.ops.HotelOps
 import play.api.cache.CacheApi
 import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.mvc._
-import ecat.util.DateTime.localDateTimeOrdering
 import schema.RecordJsonFormats._
 import ecat.util.JsonFormats._
 import ecat.model.ajax.CategoryControlProtocol
-import CategoryControlProtocol._
-
+import CategoryControlProtocol.{Gone=>_Gone,_}
+import views.html.pages.{category=>cat,_}
 import scala.concurrent.duration._
-import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
 import shapeless._
 import record._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import ecat.util.DateTime.interval
-import play.api.Play
 import schema.RecordFilters.Filter
 import ecat.model.Schema._
 import ecat.model.ajax.CategoryControlProtocol.CatCtrlRequest
@@ -125,18 +121,19 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   }
 
 //need to process only filtered categories(othrewise redraw case is broken)
-  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest/*PASS FILTERS HERE*/ ) = Action.async{req =>
+  def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest, hotelFilter: Filter[Hotel]) = Action.async{req =>
 
     getHotels(from, to).map { hotels =>
 
-      val resp = CategoryControlProtocol.process(ctrl, hotels) match {
+      val resp = CategoryControlProtocol.process(ctrl, hotels.flatMap(hotelFilter(_))) match {
 
-        case Some(Right(resp))=>Json.obj("changed" -> false, "ctrl"->resp)
+        case ctrl:CtrlResponse =>Json.obj("type" -> "basic", "ctrl"->ctrl)
 
-        case Some(Left((category, hotel)))=>{
-          Json.obj("changed" -> true, "categoryHtml" -> views.html.pages.category.render(category, hotel, req).toString)
-        }
-        case None => Json.obj("changed" -> true, "categoryHtml" -> "")
+        case TariffsRedraw(ctrl, tgrps) =>Json.obj("type" -> "tariffsRedraw", "ctrl"->ctrl, "html"-> "")//tariffGroups.render(tgrps).toString)
+
+        case FullRedraw(h, c)=> Json.obj("type" -> "fullRedraw", "html"-> cat.render(c, h, req).toString)
+
+        case _Gone => Json.obj("type" -> "gone")
       }
 
       Ok(resp)

@@ -29,7 +29,7 @@ routesImport ++= List("ecat.model.Bindables._",
                        "java.time.LocalDateTime",
                        "play.api.libs.json._",
                        "schema.RecordFilters.Filter",
-                       "ecat.model.Schema",
+                       "ecat.model.Schema._",
                        "ecat.model.Filters.hotelFilterReads",
                        "ecat.model.ajax.CategoryControlProtocol._")
 
