@@ -30,7 +30,7 @@ object CategoryOps {
     res
   }
 
-
+  def isBkfAvailable(c:Category) = true
 
   def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): ValidationNel[String, Category] = {
 

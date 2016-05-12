@@ -97,13 +97,14 @@
       <span class="lco">Поздний выезд</span>
     </div>
 
-
-    <div class="option option-breakfast">
-      <label for="breakfast" class="option-description">Завтрак:</label>
-      <div class="option-data option-data-checkbox">
-        <input id="breakfast" data-breakfast type="checkbox">
-      </div>
-    </div>
+    @if(isBkfAvailable(c)) {
+      <div class="option option-breakfast">
+        <label for="breakfast" class="option-description">Завтрак:</label>
+        <div class="option-data option-data-checkbox">
+          <input id="breakfast" data-breakfast type="checkbox">
+        </div>
+      </div> 
+    }
 
     <div class="option option-rooms">
 
