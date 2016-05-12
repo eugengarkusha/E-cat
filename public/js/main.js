@@ -41,10 +41,12 @@ $(function () {
     if ($('.makeOrder')[0] || $('.filtering')[0]) {
 
         Date.parseDate = function( input, format ){
-            return moment(input,format).toDate();
+            // return moment(input,format).toDate();
+            return moment.tz(new Date(input), 'Europe/Kiev').toDate();
         };
         Date.prototype.dateFormat = function( format ){
-            return moment(this).format(format);
+            // return moment(this).format(format);
+            return moment.tz(this, 'Europe/Kiev').format(format);
         };
 
         $.datetimepicker.setLocale('ru');
