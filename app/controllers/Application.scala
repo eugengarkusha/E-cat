@@ -120,7 +120,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
     Ok(views.html.pages.reservation(from, to))
   }
 
-//need to process only filtered categories(othrewise redraw case is broken)
+
   def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest, hotelFilter: Filter[Hotel]) = Action.async{req =>
 
     getHotels(from, to).map { hotels =>

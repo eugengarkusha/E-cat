@@ -74,8 +74,8 @@ object CategoryControlProtocol {
 
       filterBySettings(guestsCnt, addGuestsCnt, roomCnt, hotel.get('categories).head).map { filteredCat =>
 
-        val eci = ci.compareTo(hotel.get('checkInTime)) < 0
-        val lco = co.compareTo(hotel.get('checkOutTime)) > 0
+        val eci = ci.compareTo(hotel.get('checkInTime)) < 0 && ci.compareTo(hotel.get('eci))> 0
+        val lco = co.compareTo(hotel.get('checkOutTime)) > 0 && co.compareTo(hotel.get('lco)) < 0
         val tariffGroups = filteredCat.get('tariffGroups)
 
         def ctrl = CtrlResponse(
