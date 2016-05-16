@@ -28,7 +28,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   //replace with real proxy call
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
 
-    val (_fakeFrom, _fakeTo) = (LocalDateTime.of(2016,5,6,0,0,0),LocalDateTime.of(2016,6,30,0,0,0))//(from,to)//
+    val (_fakeFrom, _fakeTo) = (LocalDateTime.of(2016,5,12,0,0,0),LocalDateTime.of(2016,6,12,0,0,0))//(from,to)//
 
 
     def lbl = "H:"+interval(_fakeFrom, _fakeTo)
@@ -46,14 +46,8 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   }
 
   private def fetchData(from: LocalDateTime, to: LocalDateTime):String= {//(String, String, String)={
-    val emptyXml = "<empty></empty>"
-//   val middle = proxy.getNomSvobod(fmt.format(from), fmt.format(to))
-//   val left  = if(from.toLocalDate == LocalDate.now) emptyXml else proxy.getNomSvobod(fmt.format(from.minusDays(1)), fmt.format(from))
-//   val right = proxy.getNomSvobod(fmt.format(to), fmt.format(to.plusDays(1)))
-
-    val middle = scala.io.Source.fromFile(env.getFile("conf/xml20160512000000_20160612000000"))(scala.io.Codec.UTF8).mkString
-//    (emptyXml, middle, emptyXml)
-    middle
+    proxy.getNomSvobod(fmt.format(from), fmt.format(to))
+    scala.io.Source.fromFile(env.getFile("conf/xml20160512000000_20160612000000"))(scala.io.Codec.UTF8).mkString
   }
 
 // TODO: create and maintain proxy outside the controller
