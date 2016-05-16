@@ -51,7 +51,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 //   val left  = if(from.toLocalDate == LocalDate.now) emptyXml else proxy.getNomSvobod(fmt.format(from.minusDays(1)), fmt.format(from))
 //   val right = proxy.getNomSvobod(fmt.format(to), fmt.format(to.plusDays(1)))
 
-    val middle = scala.io.Source.fromFile(env.getFile("conf/xml20160505223228_20160630000000"))(scala.io.Codec.UTF8).mkString
+    val middle = scala.io.Source.fromFile(env.getFile("conf/xml20160512000000_20160612000000"))(scala.io.Codec.UTF8).mkString
 //    (emptyXml, middle, emptyXml)
     middle
   }
