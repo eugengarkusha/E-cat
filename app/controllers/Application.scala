@@ -11,11 +11,13 @@ import play.api.mvc._
 import schema.RecordJsonFormats._
 import ecat.util.JsonFormats._
 import ecat.model.ajax.CategoryControlProtocol
-import CategoryControlProtocol.{Gone=>_Gone,_}
-import views.html.pages.{category=>cat,_}
+import CategoryControlProtocol.{Gone => _Gone, _}
+import views.html.pages.{tariffs, category => cat, _}
+
 import scala.concurrent.duration._
 import shapeless._
 import record._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import ecat.util.DateTime.interval
@@ -123,7 +125,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
         case ctrl:CtrlResponse =>Json.obj("type" -> "basic", "ctrl"->ctrl)
 
-        case TariffsRedraw(ctrl, tgrps) =>Json.obj("type" -> "tariffsRedraw", "ctrl"->ctrl, "html"-> "")//tariffGroups.render(tgrps).toString)
+        case TariffsRedraw(ctrl, tgrps) =>Json.obj("type" -> "tariffsRedraw", "ctrl"->ctrl, "html"-> tgrps.map(tg=>tariffs(tg.get('name),-1)).mkString("\n"))
 
         case FullRedraw(h, c)=> Json.obj("type" -> "fullRedraw", "html"-> cat.render(c, h, req).toString)
 
