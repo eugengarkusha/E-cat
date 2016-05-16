@@ -125,85 +125,15 @@
 
     <div class="tariffs">
       <div class="tariffs-btn">
-        <span></span>
+      <span></span>
       </div>
       <h2>Тарифы</h2>
 
       @for(tg <- c.get('tariffGroups)) {
-        <div data-tariff-name=@tg.get('name) class="tariff tariff-first">
-
-          <div class="tariff-heading">
-            <h3>@tg.get('name)</h3>
-            <ul class="tariff-list">
-              <li>возможен возврат</li>
-          </div>
-
-          <div class="tariff-overall">
-            <i class="flaticon-coin32"></i>
-            <span class="tariff-price">@{tg.get('overalPrices).get('room) / 100} грн</span>
-          </div>
-
-          <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
-
-        </div>
+      
+      @views.html.pages.tariffs.render(tg.get('name), {tg.get('overalPrices).get('room) / 100})
+      
       }
-
-      <!-- <div class="tariff tariff-first">
-
-        <div class="tariff-heading">
-          <h3>Стандартные условия</h3>
-          <ul class="tariff-list">
-            <li>возможен возврат</li>
-        </div>
-
-        <div class="tariff-overall">
-          <i class="flaticon-coin32"></i>
-          <span class="tariff-price">2000 грн</span>
-        </div>
-
-        <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
-
-      </div>
-
-      <div class="tariff">
-
-        <div class="tariff-heading">
-          <h3>Особые условия</h3>
-          <ul class="tariff-list">
-            <li>-10% к завтраку</li>
-            <li>-15% за проживание</li>
-            <li>-5% к чему-то еще</li>
-          </ul>
-        </div>
-
-        <div class="tariff-overall">
-          <i class="flaticon-coin32"></i>
-          <span class="tariff-price">2000 грн</span>
-        </div>
-
-        <input class="tariff-radio" type="radio" name="tariff" value="two">
-
-      </div>
-
-      <div class="tariff">
-
-        <div class="tariff-heading">
-          <h3>Особые условия</h3>
-          <ul class="tariff-list">
-            <li>-10% к завтраку</li>
-            <li>-15% за проживание</li>
-            <li>-5% к чему-то еще</li>
-          </ul>
-        </div>
-
-        <div class="tariff-overall">
-          <i class="flaticon-coin32"></i>
-          <span class="tariff-price">2000 грн</span>
-        </div>
-
-        <input class="tariff-radio" type="radio" name="tariff" value="three">
-
-      </div> -->
 
     </div>
 

@@ -46,9 +46,11 @@ $(function () {
   };
 
   var globalFilt = {
+    from:  '',
+    to:    '',
     hotel: {},
-    room: {},
-    opt: []
+    room:  {},
+    opt:   []
   };
 
     var elemAndVal = function (container, selector, valueType) {
@@ -94,23 +96,23 @@ $(function () {
 
       var options = {
 
-        breakfast: elemAndVal(cat, '[data-breakfast]'),
+        breakfast:    elemAndVal(cat, '[data-breakfast]'),
 
-        eci: elemAndVal(cat, '[data-eci]'),
+        eci:          elemAndVal(cat, '[data-eci]'),
 
-        lco: elemAndVal(cat, '[data-lco]'),
+        lco:          elemAndVal(cat, '[data-lco]'),
 
-        guestsCnt: elemAndVal(cat, '[data-guestscnt]', 'number'),
+        guestsCnt:    elemAndVal(cat, '[data-guestscnt]', 'number'),
         
-        addGuestsCnt:  elemAndVal(cat, '[data-addguests]', 'number'),
+        addGuestsCnt: elemAndVal(cat, '[data-addguests]', 'number'),
 
-        roomCnt: elemAndVal(cat, '[data-roomcnt]', 'number'),
+        roomCnt:      elemAndVal(cat, '[data-roomcnt]', 'number'),
 
-        hotelId: (cat).dataset.hotelid,
+        hotelId:      (cat).dataset.hotelid,
 
-        catId: (cat).dataset.catid,
+        catId:        (cat).dataset.catid,
 
-        hash: +(cat).dataset.hash
+        hash:         +(cat).dataset.hash
 
       };
 
@@ -143,12 +145,8 @@ $(function () {
     var collectFilters = function (elem) {
       console.time('collectFilters');
       var filters = {
-        from: function () {
-          return elemAndVal(elem, '#checkIn').value.replace(/\./g,'') + '000000';
-        },
-        to: function () {
-          return elemAndVal(elem, '#checkOut').value.replace(/\./g,'') + '000000';
-        },
+        from: elemAndVal(elem, '#checkIn').value.replace(/\./g,'') + '000000',
+        to: elemAndVal(elem, '#checkOut').value.replace(/\./g,'') + '000000',
         hotel: {
           name: elemAndVal(elem, '#hotel').value
         },
@@ -159,6 +157,10 @@ $(function () {
       };
       if (filters.hotel.name === '') delete filters.hotel.name;
       if (filters.room.twin === false) delete filters.room.twin;
+      
+      globalFilt.from = filters.from;
+      globalFilt.to = filters.to;
+      
       console.timeEnd('collectFilters');
       console.log(filters);
       return filters;
@@ -166,20 +168,20 @@ $(function () {
 
     var stringOpts = function (cat) {
       console.time('stringOpts');
+      var filters = collectFilters($('.filtering')[0]);
 
       var opt = collectOpts(cat);
 
       var data = JSON.stringify({
-          'hotelId':                  opt.hotelId,
-          'catId':                     opt.catId,
-          'tariffGroupsHash': opt.hash,
-          'guestsCnt':             opt.guestsCnt.value,
-          'addGuestsCnt':        opt.addGuestsCnt.value,
-          'roomCnt':               opt.roomCnt.value,
-           'twinRequired':       elemAndVal($('.filtering')[0], '#twin').value,
-          'bkf':                         opt.breakfast.value,
-          'ci':                           opt.eci.value,
-          'co':                          opt.lco.value
+        'hotelId':          opt.hotelId,
+        'catId':            opt.catId,
+        'guestsCnt':        opt.guestsCnt.value,
+        'addGuestsCnt':     opt.addGuestsCnt.value,
+        'tariffGroupsHash': opt.hash,
+        'roomCnt':          opt.roomCnt.value,
+        'bkf':              opt.breakfast.value,
+        'ci':               opt.eci.value,
+        'co':               opt.lco.value
       });
       console.timeEnd('stringOpts');
       return data;
@@ -282,28 +284,55 @@ $(function () {
       cat = cat || '.category-list';
 
       $(cat).change(function(e) {
-          var cat     = $('.category').has(e.target)[0],
+          var cat = $('.category').has(e.target)[0],
               req = stringOpts(cat);
 
-            console.log(req);
+            console.log("REQUEST: " + req);
             console.log(globalFilt);
 
-        $.ajax(jsRoutes.controllers.Application.category(from, to, req))
+        $.ajax(jsRoutes.controllers.Application.category(from, to, req, JSON.stringify(createFiltersReqObj(collectFilters($('.filtering')[0])))))
         .done(function( resp ) {
-
-          resp.changed ? (function () {
+          console.log('RESPONCE:');
+          console.log(resp);
+          
+          if(resp.type === "basic") {
+            setupOpt(resp, cat);
+          }
+          
+          if(resp.type === "tariffsRedraw") {
+            alert('Тарифы изменились');
+            $(cat).find('.tariff').remove();
+            for(var i = 0; i < resp.ctrl.prices.length; i++) {
+              $(cat).append(resp.html);
+            }
+          }
+          
+          if(resp.type === "fullRedraw") {
             alert('Категория изменилась!');
             var category = resp.categoryHtml;
             $(cat).replaceWith(category);
             console.log($(category).attr('data-catid'));
             changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
-          })() : (function () {
-              console.log(resp);
+          }
+          
+          if(resp.type === "gone") {
+            alert('Категория удалена.');
+            $(cat).remove();
+          }
 
-              setupOpt(resp, cat);
-          })()
+          // resp.changed ? (function () {
+          //   alert('Категория изменилась!');
+          //   var category = resp.categoryHtml;
+          //   $(cat).replaceWith(category);
+          //   console.log($(category).attr('data-catid'));
+          //   changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
+          // })() : (function () {
 
-          //  beautySelect();
+          //     setupOpt(resp, cat);
+          // })()
+          
+          
+
            console.timeEnd('changeCat');
         });
 
@@ -314,9 +343,9 @@ $(function () {
       console.time('changeFilter');
       $(selector).change(function(e) {
           var container = e.currentTarget,
-                req           = createFiltersReqObj(collectFilters(selector)),
-                from        = collectFilters(selector).from(),
-                to            = collectFilters(selector).to();
+                req  = createFiltersReqObj(collectFilters(selector)),
+                from = collectFilters(selector).from(),
+                to   = collectFilters(selector).to();
                 
                 console.log(req);
 

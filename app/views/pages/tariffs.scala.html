@@ -1,0 +1,19 @@
+@(name: String, price: Number)
+
+    <div data-tariff-name=@name class="tariff">
+
+      <div class="tariff-heading">
+        <h3>@name</h3>
+        <ul class="tariff-list">
+          <li>возможен возврат</li>
+      </div>
+
+      <div class="tariff-overall">
+        <i class="flaticon-coin32"></i>
+        <span class="tariff-price">@price/ грн</span>
+      </div>
+
+      <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
+
+    </div>
+
