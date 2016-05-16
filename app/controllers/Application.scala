@@ -46,7 +46,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
   }
 
   private def fetchData(from: LocalDateTime, to: LocalDateTime):String= {//(String, String, String)={
-    proxy.getNomSvobod(fmt.format(from), fmt.format(to))
+    //proxy.getNomSvobod(fmt.format(from), fmt.format(to))
     scala.io.Source.fromFile(env.getFile("conf/xml20160512000000_20160612000000"))(scala.io.Codec.UTF8).mkString
   }
 
