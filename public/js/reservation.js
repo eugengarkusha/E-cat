@@ -112,7 +112,7 @@ $(function () {
 
         catId:        (cat).dataset.catid,
 
-        hash:         +(cat).dataset.hash
+        hash:         +$(cat).find(".tariffs")[0].dataset.hash
 
       };
 

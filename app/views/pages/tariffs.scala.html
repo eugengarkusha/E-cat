@@ -1,19 +1,32 @@
-@(name: String, price: Double)
+@(c: Category)
 
-    <div data-tariff-name=@name class="tariff">
+<div class="tariffs" data-hash=@c.get('tariffGroups).hashCode>
+  <div class="tariffs-btn">
+    <span></span>
+  </div>
+  <h2>Тарифы</h2>
+  
+  @for(tg <- c.get('tariffGroups)) {
+      
+  <div data-tariff-name=@tg.get('name) class="tariff">
 
-      <div class="tariff-heading">
-        <h3>@name</h3>
-        <ul class="tariff-list">
-          <li>возможен возврат</li>
-      </div>
-
-      <div class="tariff-overall">
-        <i class="flaticon-coin32"></i>
-        <span class="tariff-price">@price грн</span>
-      </div>
-
-      <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
-
+    <div class="tariff-heading">
+      <h3>@tg.get('name)</h3>
+      <ul class="tariff-list">
+        <li>возможен возврат</li>
+      </ul>
     </div>
+
+    <div class="tariff-overall">
+      <i class="flaticon-coin32"></i>
+      <span class="tariff-price">@{tg.get('overalPrices).get('room) / 100} грн</span>
+    </div>
+
+    <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
+
+  </div>
+      
+  }
+    
+</div>
 
