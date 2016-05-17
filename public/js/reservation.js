@@ -112,7 +112,7 @@ $(function () {
 
         catId:        (cat).dataset.catid,
 
-        hash:         +$(cat).find(".tariffs")[0].dataset.hash
+        hash:         +$(cat).find(".tariff")[0].dataset.hash
 
       };
 
@@ -302,8 +302,10 @@ $(function () {
           if(resp.type === "tariffsRedraw") {
             alert('Тарифы изменились');
             $(cat).find('.tariff').remove();
-            for(var i = 0; i < resp.ctrl.prices.length; i++) {
-              $(cat).append(resp.html);
+            console.log(resp.ctrl.prices.length);
+            for(key in resp.ctrl.prices) {
+              $(cat).find(".tariffs").append(resp.html);
+              setupOpt(resp, cat);
             }
           }
           

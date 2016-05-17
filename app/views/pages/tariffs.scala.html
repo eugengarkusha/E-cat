@@ -1,14 +1,10 @@
 @(tgs: Seq[TariffGroup])
 
-<div class="tariffs" data-hash=@tgs.hashCode>
-  <div class="tariffs-btn">
-    <span></span>
-  </div>
-  <h2>Тарифы</h2>
+
   
   @for(tg <- tgs) {
       
-  <div data-tariff-name=@tg.get('name) class="tariff">
+  <div data-tariff-name=@tg.get('name) class="tariff" data-hash=@tgs.hashCode>
 
     <div class="tariff-heading">
       <h3>@tg.get('name)</h3>
@@ -27,6 +23,4 @@
   </div>
       
   }
-    
-</div>
 
