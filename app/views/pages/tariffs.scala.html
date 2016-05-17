@@ -1,12 +1,12 @@
-@(c: Category)
+@(tgs: Seq[TariffGroup])
 
-<div class="tariffs" data-hash=@c.get('tariffGroups).hashCode>
+<div class="tariffs" data-hash=@tgs.hashCode>
   <div class="tariffs-btn">
     <span></span>
   </div>
   <h2>Тарифы</h2>
   
-  @for(tg <- c.get('tariffGroups)) {
+  @for(tg <- tgs) {
       
   <div data-tariff-name=@tg.get('name) class="tariff">
 

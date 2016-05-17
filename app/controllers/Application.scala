@@ -125,7 +125,7 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
         case ctrl:CtrlResponse =>Json.obj("type" -> "basic", "ctrl"->ctrl)
 
-        case TariffsRedraw(ctrl, tgrps) =>Json.obj("type" -> "tariffsRedraw", "ctrl"->ctrl, "html"-> tgrps.map(tg=>tariffs(tg.get('name),-1)).mkString("\n"))
+        case TariffsRedraw(ctrl, tgrps) =>Json.obj("type" -> "tariffsRedraw", "ctrl"->ctrl, "html"-> tariffs(tgrps).toString)
 
         case FullRedraw(h, c)=> Json.obj("type" -> "fullRedraw", "html"-> cat.render(c, h, req).toString)
 

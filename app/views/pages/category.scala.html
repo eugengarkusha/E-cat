@@ -129,11 +129,7 @@
       </div>
       <h2>Тарифы</h2>
 
-      @for(tg <- c.get('tariffGroups)) {
-      
-      @views.html.pages.tariffs.render(c)
-      
-      }
+      @views.html.pages.tariffs.render(c.get('tariffGroups))
 
     </div>
 
