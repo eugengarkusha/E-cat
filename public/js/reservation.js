@@ -55,57 +55,79 @@ $(function () {
   window.globalFilt = globalFilt;
   
   var hotelOps = {};
-    var catOps = {
-      noTime:  false,
-      addDays: false,
-      ltnEci:  false,
-      btnLco:  false
-    };
+  var catOps = {};
     
     var stringToMinutes = function(time) {
       return moment.duration(time).asMinutes();
     };
     
-    var checkTime = function(cat) {
+    var checkTime = function(cat, id) {
+      catOps[id] = catOps[id] || {
+        noTime:  false,
+        addDays: false,
+        ltnEci:  false,
+        btnLco:  false
+      };
+      
       var hotel = cat.dataset.hotelid;
       var ltnEci = hotelOps[hotel].eci >= catOps.timeIn;
       var btnLco = hotelOps[hotel].lco <= catOps.timeOut;
-      console.log("ECI: " + ltnEci + " LCO:" + btnLco);
-      console.log(hotelOps[hotel].lco + "  |  " + catOps.timeOut);
-      catOps.ltnEci = ltnEci;
-      catOps.btnLco = btnLco;
+      catOps[id].ltnEci = ltnEci;
+      catOps[id].btnLco = btnLco;
       
       return (ltnEci || btnLco);
     };
     
-    var additionalDays = function(cat) {
+    var availableTime = function(e, id) {
+      catOps[id] = catOps[id] || {
+        noTime:  false,
+        addDays: false,
+        ltnEci:  false,
+        btnLco:  false
+      };
+      console.log(catOps);
+      if(catOps[id].noTime) {
+        catOps[id].noTime = false;
+        $(e.target).parent().find('.time-no-available').hide();
+      }
+    };
+    
+    var additionalDays = function(cat, id, e) {
+      console.log('additionalDays');
+      catOps[id] = catOps[id] || {
+        noTime:  false,
+        addDays: false,
+        ltnEci:  false,
+        btnLco:  false
+      };
       
-      if(checkTime(cat)) {
-        catOps.addDays = true;
-        if(catOps.ltnEci) { 
+      if(checkTime(cat, id)) {
+        
+        catOps[id].addDays = true;
+        if(catOps[id].ltnEci) { 
           (function() {
             var from = +moment(globalFilt.from, "YYYYMMDD").subtract(1, 'd').format("YYYYMMDD000000");
             globalFilt.from = +from;
-            $('.additional-days-in').show();
+            $(e.target).parent().find('.additional-days-in').show();
           })()
         } else { 
-          $('.additional-days-in').hide();
+          $(e.target).parent().find('.additional-days-in').hide();
           globalFilt.from = +$('#checkIn').val().replace(/\./g,'') + '000000'; 
         }
-        if(catOps.btnLco) {
+        if(catOps[id].btnLco) {
           (function() {
             var to = +moment(globalFilt.to, "YYYYMMDD").add(1, 'd').format("YYYYMMDD000000");
             globalFilt.to = to; 
-            $('.additional-days-out').show();
+            $(e.target).parent().find('.additional-days-out').show();
           })()
         } else {
-          $('.additional-days-out').hide();
+          $(e.target).parent().find('.additional-days-out').hide();
           globalFilt.to = +$('#checkOut').val().replace(/\./g,'') + '000000';
         }
       } else {
-        catOps.addDays = false;
-        $('.additional-days-in').hide();
-        $('.additional-days-out').hide();
+        catOps[id].addDays = false;
+        $(cat).find('.additional-days-in').hide();
+        $(cat).find('.additional-days-out').hide();
         globalFilt.from = +($('#checkIn').val().replace(/\./g,'') + '000000');
         globalFilt.to = +($('#checkOut').val().replace(/\./g,'') + '000000');
       }
@@ -352,11 +374,12 @@ $(function () {
       cat = cat || '.category-list';
 
       $(cat).change(function(e) {
-          var cat = $('.category').has(e.target)[0],
-              req = stringOpts(cat);
+        var cat   = $('.category').has(e.target)[0],
+            req   = stringOpts(cat),
+            catID = cat.dataset.catid;
 
-            console.log("REQUEST: " + req);
-            console.log(globalFilt);
+        console.log("REQUEST: " + req);
+        console.log(globalFilt);
 
         $.ajax(jsRoutes.controllers.Application.category(+globalFilt.from, +globalFilt.to, req, JSON.stringify(createFiltersReqObj(collectFilters($('.filtering')[0])))))
         .done(function( resp ) {
@@ -364,9 +387,10 @@ $(function () {
           console.log(resp);
           
           if(resp.type === "basic") {
-            console.log(checkTime(cat));
+            
+            availableTime(e, catID);
            
-            additionalDays(cat);
+            additionalDays(cat, catID, e);
             
             setupOpt(resp, cat);
             
@@ -375,7 +399,9 @@ $(function () {
           if(resp.type === "tariffsRedraw") {
             alert('Тарифы изменились');
             
-            additionalDays(cat);
+            availableTime(e, catID);
+            
+            additionalDays(cat, catID, e);
             
             $(cat).find('.tariff').remove();
             console.log(resp.ctrl.prices.length);
@@ -385,22 +411,30 @@ $(function () {
             }
           }
           
-          if(resp.type === "fullRedraw") {
-            alert('Категория изменилась!');
+          if(resp.type === "fullRedraw" && !checkTime(cat, catID)) {
+            alert('Категория изменилась');
+            availableTime(e, catID);
             var category = resp.categoryHtml;
             $(cat).replaceWith(category);
             console.log($(category).attr('data-catid'));
             changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
           }
           
-          if(resp.type === "gone") {
-            alert('Категория удалена.');
+          if(resp.type === "gone" && !checkTime(cat, catID)) {
+            alert('Категория удалена');
+            availableTime(e);
             $(cat).remove();
           }
           
-          if(!checkTime(cat) && resp.type === "fullRedraw" || !checkTime(cat) && resp.type === "gone") {
-            catOps.noTime = true;
-            alert('Время недоступно.');
+          if(checkTime(cat, catID) && resp.type === "fullRedraw" || checkTime(cat, catID) && resp.type === "gone") {
+            catOps[catID] = catOps[catID] || {
+              noTime:  false,
+              addDays: false,
+              ltnEci:  false,
+              btnLco:  false
+            };
+            catOps[catID].noTime = true;
+            $(e.target).parent().find('.time-no-available').show();
           }
 
            console.timeEnd('changeCat');

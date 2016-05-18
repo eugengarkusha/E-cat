@@ -849,7 +849,7 @@ main {
   height: 3.7rem;
   padding-left: 8px; }
 
-.eci, .lco, .time-no-available-in, .time-no-available-out,
+.eci, .lco, .time-no-available,
 .additional-days-in, .additional-days-out {
   position: absolute;
   top: 1.8rem;
