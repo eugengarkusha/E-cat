@@ -63,6 +63,7 @@
         <span class="option-description">Доп место:</span>
         <div class="option-data option-data-select">
           <select name="addGuest" data-addguests=@maxAddGuestCnt(c,1)>
+            <option value="0">0</option>
             @for(guest <- 1 to maxAddGuestCnt(c,1)) {
               <option value=@guest>@guest</option>
             }
@@ -74,6 +75,7 @@
         <span class="option-description">Доп место:</span>
         <div class="option-data option-data-select">
           <select name="addGuest">
+            <option value="0">0</option>
           </select>
         </div>
       </div>

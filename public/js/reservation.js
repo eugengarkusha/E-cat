@@ -291,9 +291,9 @@ $(function () {
               $select = $(cat).find(elem),
               value   = $select.val() || maxCnt;
           $select.html('');
-          for (;i < maxCnt; i++) {
+          for (;i <= maxCnt; i++) {
             var $option = $('<option>');
-            $option.val(i + 1).text(i + 1);
+            $option.val(i).text(i);
             $select.append($option);
           }
 
