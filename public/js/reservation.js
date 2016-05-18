@@ -448,8 +448,8 @@ $(function () {
       $(selector).change(function(e) {
           var container = e.currentTarget,
                 req  = createFiltersReqObj(collectFilters(selector)),
-                from = +collectFilters(selector).from(),
-                to   = +collectFilters(selector).to();
+                from = +collectFilters(selector).from,
+                to   = +collectFilters(selector).to;
                 
                 console.log(req);
 
