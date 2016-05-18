@@ -1290,7 +1290,8 @@ main {
   padding-left: 8px;
 }
 
-.eci, .lco {
+.eci, .lco, .time-no-available-in, .time-no-available-out,
+.additional-days-in, .additional-days-out {
   position: absolute;
   top: 1.8rem;
   right: 11rem;

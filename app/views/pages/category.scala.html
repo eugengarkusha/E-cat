@@ -81,18 +81,22 @@
 
     <div class="option option-early">
       <span class="option-description">Заезд:</span>
-      <div class="option-data option-data-eci">
-        <input data-eci type="text" name="timepicker" class="timepicker" value=@h.get('checkInTime)>
+      <div class="option-data option-data-eci" data-checkInTime=@h.get('checkInTime)>
+        <input data-eci=@h.get('eci) type="text" name="timepicker" class="timepicker" value=@h.get('checkInTime)>
       </div>
       <span class="eci">Ранний заезд</span>
+      <span class="time-no-available-in">Время недоступно</span>
+      <span class="additional-days-in">Дополнительные сутки</span>
     </div>
 
     <div class="option option-late">
       <span class="option-description">Выезд:</span>
-      <div class="option-data option-data-lco">
-        <input data-lco type="text" name="timepicker" class="timepicker" value=@h.get('checkOutTime)>
+      <div class="option-data option-data-lco" data-checkOutTime=@h.get('checkOutTime)>
+        <input data-lco=@h.get('lco) type="text" name="timepicker" class="timepicker" value=@h.get('checkOutTime)>
       </div>
       <span class="lco">Поздний выезд</span>
+      <span class="time-no-available-out">Время недоступно</span>
+      <span class="additional-days-out">Дополнительные сутки</span>
     </div>
 
 

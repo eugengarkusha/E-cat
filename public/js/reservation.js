@@ -46,12 +46,71 @@ $(function () {
   };
 
   var globalFilt = {
-    from:  '',
-    to:    '',
+    from:  from,
+    to:    to,
     hotel: {},
     room:  {},
     opt:   []
   };
+  window.globalFilt = globalFilt;
+  
+  var hotelOps = {};
+    var catOps = {
+      noTime:  false,
+      addDays: false,
+      ltnEci:  false,
+      btnLco:  false
+    };
+    
+    var stringToMinutes = function(time) {
+      return moment.duration(time).asMinutes();
+    };
+    
+    var checkTime = function(cat) {
+      var hotel = cat.dataset.hotelid;
+      var ltnEci = hotelOps[hotel].eci >= catOps.timeIn;
+      var btnLco = hotelOps[hotel].lco <= catOps.timeOut;
+      console.log("ECI: " + ltnEci + " LCO:" + btnLco);
+      console.log(hotelOps[hotel].lco + "  |  " + catOps.timeOut);
+      catOps.ltnEci = ltnEci;
+      catOps.btnLco = btnLco;
+      
+      return (ltnEci || btnLco);
+    };
+    
+    var additionalDays = function(cat) {
+      
+      if(checkTime(cat)) {
+        catOps.addDays = true;
+        if(catOps.ltnEci) { 
+          (function() {
+            var from = +moment(globalFilt.from, "YYYYMMDD").subtract(1, 'd').format("YYYYMMDD000000");
+            globalFilt.from = +from;
+            $('.additional-days-in').show();
+          })()
+        } else { 
+          $('.additional-days-in').hide();
+          globalFilt.from = +$('#checkIn').val().replace(/\./g,'') + '000000'; 
+        }
+        if(catOps.btnLco) {
+          (function() {
+            var to = +moment(globalFilt.to, "YYYYMMDD").add(1, 'd').format("YYYYMMDD000000");
+            globalFilt.to = to; 
+            $('.additional-days-out').show();
+          })()
+        } else {
+          $('.additional-days-out').hide();
+          globalFilt.to = +$('#checkOut').val().replace(/\./g,'') + '000000';
+        }
+      } else {
+        catOps.addDays = false;
+        $('.additional-days-in').hide();
+        $('.additional-days-out').hide();
+        globalFilt.from = +($('#checkIn').val().replace(/\./g,'') + '000000');
+        globalFilt.to = +($('#checkOut').val().replace(/\./g,'') + '000000');
+      }
+      
+    };
 
     var elemAndVal = function (container, selector, valueType) {
       console.time('elemAndVal');
@@ -115,6 +174,9 @@ $(function () {
         hash:         +$(cat).find(".tariff")[0].dataset.hash
 
       };
+            
+      catOps.timeIn = stringToMinutes(options.eci.value);
+      catOps.timeOut = stringToMinutes(options.lco.value);
 
       globalFilt.hotel = {
         name: elemAndVal($('.filtering')[0], '#hotel').value
@@ -138,6 +200,7 @@ $(function () {
       globalFilt.opt = JSON.stringify(globalFilt.opt);
 
       console.timeEnd('collectOpts');
+      
       return options;
 
     };
@@ -158,8 +221,8 @@ $(function () {
       if (filters.hotel.name === '') delete filters.hotel.name;
       if (filters.room.twin === false) delete filters.room.twin;
       
-      globalFilt.from = filters.from;
-      globalFilt.to = filters.to;
+      globalFilt.from = +filters.from;
+      globalFilt.to = +filters.to;
       
       console.timeEnd('collectFilters');
       console.log(filters);
@@ -168,7 +231,7 @@ $(function () {
 
     var stringOpts = function (cat) {
       console.time('stringOpts');
-      var filters = collectFilters($('.filtering')[0]);
+      // var filters = collectFilters($('.filtering')[0]);
 
       var opt = collectOpts(cat);
 
@@ -183,6 +246,8 @@ $(function () {
         'ci':               opt.eci.value,
         'co':               opt.lco.value
       });
+      console.log(opt.eci.value);
+      
       console.timeEnd('stringOpts');
       return data;
 
@@ -237,6 +302,9 @@ $(function () {
       
       (data.ctrl.eci) ? $(cat).find('.eci').show() : $(cat).find('.eci').hide();
       (data.ctrl.lco) ? $(cat).find('.lco').show() : $(cat).find('.lco').hide();
+      
+      window.catOps = catOps;
+      console.log(window.catOps);
 
       console.timeEnd('setupOpt');
 
@@ -290,17 +358,25 @@ $(function () {
             console.log("REQUEST: " + req);
             console.log(globalFilt);
 
-        $.ajax(jsRoutes.controllers.Application.category(from, to, req, JSON.stringify(createFiltersReqObj(collectFilters($('.filtering')[0])))))
+        $.ajax(jsRoutes.controllers.Application.category(+globalFilt.from, +globalFilt.to, req, JSON.stringify(createFiltersReqObj(collectFilters($('.filtering')[0])))))
         .done(function( resp ) {
           console.log('RESPONCE:');
           console.log(resp);
           
           if(resp.type === "basic") {
+            console.log(checkTime(cat));
+           
+            additionalDays(cat);
+            
             setupOpt(resp, cat);
+            
           }
           
           if(resp.type === "tariffsRedraw") {
             alert('Тарифы изменились');
+            
+            additionalDays(cat);
+            
             $(cat).find('.tariff').remove();
             console.log(resp.ctrl.prices.length);
             for(key in resp.ctrl.prices) {
@@ -321,19 +397,11 @@ $(function () {
             alert('Категория удалена.');
             $(cat).remove();
           }
-
-          // resp.changed ? (function () {
-          //   alert('Категория изменилась!');
-          //   var category = resp.categoryHtml;
-          //   $(cat).replaceWith(category);
-          //   console.log($(category).attr('data-catid'));
-          //   changeCat('[data-catid=' + $(category).attr('data-catid') + ']');
-          // })() : (function () {
-
-          //     setupOpt(resp, cat);
-          // })()
           
-          
+          if(!checkTime(cat) && resp.type === "fullRedraw" || !checkTime(cat) && resp.type === "gone") {
+            catOps.noTime = true;
+            alert('Время недоступно.');
+          }
 
            console.timeEnd('changeCat');
         });
@@ -346,8 +414,8 @@ $(function () {
       $(selector).change(function(e) {
           var container = e.currentTarget,
                 req  = createFiltersReqObj(collectFilters(selector)),
-                from = collectFilters(selector).from(),
-                to   = collectFilters(selector).to();
+                from = +collectFilters(selector).from(),
+                to   = +collectFilters(selector).to();
                 
                 console.log(req);
 
@@ -375,6 +443,23 @@ $(function () {
     $.ajax(jsRoutes.controllers.Application.getDummyOffers(from, to))
       .done(function( resp ) {
         $('.filtering').after(resp);
+        
+        hotelOps = (function() {
+          var result = {};
+          
+          $('.hotel').each(function(index, elem) {
+            result[elem.id] = {};
+            result[elem.id].checkInTime = elem.dataset.checkintime;
+            result[elem.id].checkOutTime = elem.dataset.checkouttime;
+            result[elem.id].eci = stringToMinutes(elem.dataset.eci);
+            result[elem.id].lco = stringToMinutes(elem.dataset.lco);
+          });
+          
+          return result;
+          
+        })();
+        
+        console.log(hotelOps);
 
         $('#checkIn').val(moment((from).toString().slice(0,-6)).format('YYYY.MM.DD'));
         $('#checkOut').val(moment((to).toString().slice(0,-6)).format('YYYY.MM.DD'));
