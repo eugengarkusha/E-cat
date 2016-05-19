@@ -52,20 +52,21 @@ $(function () {
             format:         'YYYY.MM.DD',
             formatDate:     'YYYY.MM.DD',
             timepicker:     false,
-            validateOnBlur: true,
+            validateOnBlur: false,
             scrollMonth:    false,
             scrollTime:     false,
             minDate:        0
         });
 
         $('#checkIn').change(function(e) {
+            console.log('Click on #checkIn');
           console.log(document.querySelector('#checkIn').value);
           var min = document.querySelector('#checkIn').value;
           $('#checkOut').datetimepicker({
               format:         'YYYY.MM.DD',
               formatDate:     'YYYY.MM.DD',
               timepicker:     false,
-              validateOnBlur: true,
+              validateOnBlur: false,
               scrollMonth:    false,
               scrollTime:     false,
               minDate:        min
@@ -78,7 +79,7 @@ $(function () {
               format:         'YYYY.MM.DD',
               formatDate:     'YYYY.MM.DD',
               timepicker:     false,
-              validateOnBlur: true,
+              validateOnBlur: false,
               scrollMonth:    false,
               scrollTime:     false,
               minDate:        0,
