@@ -1306,6 +1306,16 @@ main {
   font-weight: bold;
 }
 
+.item-not-available {
+  position: absolute;
+  display: none;
+  width: 10rem;
+  height: 5rem;
+  top: 0.6rem;
+  left: -0.4rem;
+  z-index: 1;
+}
+
 .option-data {
   float: right;
   width: 9.2rem;
@@ -1327,6 +1337,7 @@ main {
 }
 
 .category-result-addToOrder {
+  position: relative;
   float: right;
   padding-right: 0.5rem;
 
@@ -1379,6 +1390,7 @@ main {
   position: relative;
   border-bottom: 1px dashed;
   padding-bottom: 1.5rem;
+  
 }
 
 .tariffs-btn {
