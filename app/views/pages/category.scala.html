@@ -2,7 +2,7 @@
 
 @(c: Category, h: Hotel)(implicit req: play.api.mvc.RequestHeader)
 
-<div class="category clearfix" data-catId=@c.get('id) data-hash=@c.get('tariffGroups).hashCode data-hotelId=@h.get('id)>
+<div class="category clearfix" data-catId=@c.get('id) data-hotelId=@h.get('id)>
 
   <h3 class="category-heading">@c.get('name)</h3>
 
@@ -49,6 +49,7 @@
       <span class="option-description">Кол-во людей:</span>
 
       <div class="option-data option-data-select">
+        <div class="item-not-available"></div>
         <select data-guestscnt=@c.get('id) name="guest">
           @for(guest <- 1 to maxGuestCnt(c,1)) {
             <option value=@guest>@guest</option>
@@ -62,6 +63,7 @@
        <div class="option option-add-guest">
         <span class="option-description">Доп место:</span>
         <div class="option-data option-data-select">
+          <div class="item-not-available"></div>
           <select name="addGuest" data-addguests=@maxAddGuestCnt(c,1)>
             <option value="0">0</option>
             @for(guest <- 1 to maxAddGuestCnt(c,1)) {
@@ -74,6 +76,7 @@
       <div class="option option-add-guest option-add-guest-hidden">
         <span class="option-description">Доп место:</span>
         <div class="option-data option-data-select">
+          <div class="item-not-available"></div>
           <select name="addGuest">
             <option value="0">0</option>
           </select>
@@ -83,18 +86,23 @@
 
     <div class="option option-early">
       <span class="option-description">Заезд:</span>
-      <div class="option-data option-data-eci">
-        <input data-eci type="text" name="timepicker" class="timepicker" value=@h.get('checkInTime)>
+      <div class="option-data option-data-eci" data-checkInTime=@h.get('checkInTime)>
+        <input data-eci=@h.get('eci) type="text" name="timeIn" class="timepicker" value=@h.get('checkInTime)>
+        <span class="eci">Ранний заезд</span>
+        <span class="time-no-available">Время недоступно</span>
+        <span class="additional-days">Дополнительные сутки</span>
       </div>
-      <span class="eci">Ранний заезд</span>
     </div>
 
     <div class="option option-late">
       <span class="option-description">Выезд:</span>
-      <div class="option-data option-data-lco">
-        <input data-lco type="text" name="timepicker" class="timepicker" value=@h.get('checkOutTime)>
+      <div class="option-data option-data-lco" data-checkOutTime=@h.get('checkOutTime)>
+        <input data-lco=@h.get('lco) type="text" name="timeOut" class="timepicker" value=@h.get('checkOutTime)>
+        <span class="lco">Поздний выезд</span>
+        <span class="time-no-available">Время недоступно</span>
+        <span class="additional-days">Дополнительные сутки</span>
       </div>
-      <span class="lco">Поздний выезд</span>
+      
     </div>
 
     @if(isBkfAvailable(c)) {
@@ -111,7 +119,7 @@
       <label for="room_count" class="option-description">Кол-во номеров:</label>
 
       <div class="option-data option-data-select">
-
+        <div class="item-not-available"></div>
         <select data-roomcnt name="room_count">
           @for(room <- 1 to c.get('rooms).size) {
             <option value=@room>@room</option>
@@ -123,94 +131,12 @@
     </div>
 
   </div>
+  
+  <div class="tariffs">
 
-  <form>
+      @views.html.pages.tariffs.render(c.get('tariffGroups))
 
-    <div class="tariffs">
-      <div class="tariffs-btn">
-        <span></span>
-      </div>
-      <h2>Тарифы</h2>
-
-      @for(tg <- c.get('tariffGroups)) {
-        <div data-tariff-name=@tg.get('name) class="tariff tariff-first">
-
-          <div class="tariff-heading">
-            <h3>@tg.get('name)</h3>
-            <ul class="tariff-list">
-              <li>возможен возврат</li>
-          </div>
-
-          <div class="tariff-overall">
-            <i class="flaticon-coin32"></i>
-            <span class="tariff-price">@{tg.get('overalPrices).get('room) / 100} грн</span>
-          </div>
-
-          <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
-
-        </div>
-      }
-
-      <!-- <div class="tariff tariff-first">
-
-        <div class="tariff-heading">
-          <h3>Стандартные условия</h3>
-          <ul class="tariff-list">
-            <li>возможен возврат</li>
-        </div>
-
-        <div class="tariff-overall">
-          <i class="flaticon-coin32"></i>
-          <span class="tariff-price">2000 грн</span>
-        </div>
-
-        <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
-
-      </div>
-
-      <div class="tariff">
-
-        <div class="tariff-heading">
-          <h3>Особые условия</h3>
-          <ul class="tariff-list">
-            <li>-10% к завтраку</li>
-            <li>-15% за проживание</li>
-            <li>-5% к чему-то еще</li>
-          </ul>
-        </div>
-
-        <div class="tariff-overall">
-          <i class="flaticon-coin32"></i>
-          <span class="tariff-price">2000 грн</span>
-        </div>
-
-        <input class="tariff-radio" type="radio" name="tariff" value="two">
-
-      </div>
-
-      <div class="tariff">
-
-        <div class="tariff-heading">
-          <h3>Особые условия</h3>
-          <ul class="tariff-list">
-            <li>-10% к завтраку</li>
-            <li>-15% за проживание</li>
-            <li>-5% к чему-то еще</li>
-          </ul>
-        </div>
-
-        <div class="tariff-overall">
-          <i class="flaticon-coin32"></i>
-          <span class="tariff-price">2000 грн</span>
-        </div>
-
-        <input class="tariff-radio" type="radio" name="tariff" value="three">
-
-      </div> -->
-
-    </div>
-
-  </form>
+  </div>
 
   <div class="category-result clearfix">
 

@@ -1290,7 +1290,8 @@ main {
   padding-left: 8px;
 }
 
-.eci, .lco {
+.eci, .lco, .time-no-available,
+.additional-days, .additional-days {
   position: absolute;
   top: 1.8rem;
   right: 11rem;
@@ -1303,6 +1304,16 @@ main {
   padding: 3px;
   font-size: 10px;
   font-weight: bold;
+}
+
+.item-not-available {
+  position: absolute;
+  display: none;
+  width: 10rem;
+  height: 5rem;
+  top: 0.6rem;
+  left: -0.4rem;
+  z-index: 1;
 }
 
 .option-data {
@@ -1326,6 +1337,7 @@ main {
 }
 
 .category-result-addToOrder {
+  position: relative;
   float: right;
   padding-right: 0.5rem;
 
@@ -1378,6 +1390,7 @@ main {
   position: relative;
   border-bottom: 1px dashed;
   padding-bottom: 1.5rem;
+  
 }
 
 .tariffs-btn {

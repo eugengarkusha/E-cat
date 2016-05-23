@@ -51,42 +51,45 @@ $(function () {
 
         $.datetimepicker.setLocale('ru');
         $('#checkIn').datetimepicker({
-            format:'YYYY.MM.DD',
-            formatDate:'YYYY.MM.DD',
-            timepicker:false,
-            validateOnBlur: true,
-            scrollMonth: false,
-            scrollTime: false,
-            minDate: 0
+            format:         'YYYY.MM.DD',
+            formatDate:     'YYYY.MM.DD',
+            timepicker:     false,
+            validateOnBlur: false,
+            scrollMonth:    false,
+            scrollTime:     false,
+            minDate:        0
         });
 
         $('#checkIn').change(function(e) {
+            console.log('Click on #checkIn');
           console.log(document.querySelector('#checkIn').value);
           var min = document.querySelector('#checkIn').value;
           $('#checkOut').datetimepicker({
-              format:'YYYY.MM.DD',
-              formatDate:'YYYY.MM.DD',
-              timepicker:false,
-              validateOnBlur: true,
-              scrollMonth: false,
-              scrollTime: false,
-              minDate: min
+              format:         'YYYY.MM.DD',
+              formatDate:     'YYYY.MM.DD',
+              timepicker:     false,
+              validateOnBlur: false,
+              scrollMonth:    false,
+              scrollTime:     false,
+              minDate:        min
           });
         });
 
         $('#checkOut').change(function(e) {
           var max = document.querySelector('#checkOut').value;
           $('#checkIn').datetimepicker({
-              format:'YYYY.MM.DD',
-              formatDate:'YYYY.MM.DD',
-              timepicker:false,
-              validateOnBlur: true,
-              scrollMonth: false,
-              scrollTime: false,
-              minDate: 0,
-              maxDate: max
+              format:         'YYYY.MM.DD',
+              formatDate:     'YYYY.MM.DD',
+              timepicker:     false,
+              validateOnBlur: false,
+              scrollMonth:    false,
+              scrollTime:     false,
+              minDate:        0,
+              maxDate:        max
           });
         });
+        
+        // set time HH:MM:SS for FROM if first date is TODAY
 
         if($('.makeOrder')[0]) {
           var link        = document.querySelector('#makeOrder__btn'),

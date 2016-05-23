@@ -14,5 +14,5 @@ object Schema {
   type Tariff = Record.`'id-> String, 'name->String, 'startDate-> LocalDateTime, 'endDate-> LocalDateTime, 'pricesPerDay -> Prices`.T  //'roomPrice-> Long, 'bkf-> Long, 'eci-> Long, 'lco-> Long`
   type TariffGroup = Record.`'name->String, 'tariffs->List[Tariff], 'overalPrices->Prices`.T
   type Category = Record.`'id-> String, 'name->String, 'rooms-> List[Room], 'tariffGroups-> List[TariffGroup]`.T
-  type Hotel =  Record.`'id-> String, 'name-> String, 'checkInTime-> LocalTime, 'checkOutTime-> LocalTime, 'categories-> List[Category]`.T
+  type Hotel =  Record.`'id-> String, 'name-> String, 'checkInTime-> LocalTime, 'checkOutTime-> LocalTime,'eci-> LocalTime, 'lco-> LocalTime, 'categories-> List[Category]`.T
 }

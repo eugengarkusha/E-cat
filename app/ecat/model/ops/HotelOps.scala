@@ -17,14 +17,15 @@ object HotelOps {
       def name = hotelNode \@ "name"
       def ci = LocalTime.of(hotelNode \@ "ckeckin" toInt, 0)
       def co = LocalTime.of(hotelNode \@ "checkout" toInt, 0)
+      def eci = LocalTime.of(hotelNode \@ "eci" toInt, 0)
+      def lco = LocalTime.of(hotelNode \@ "lco" toInt, 0)
       def cats:ValidationNel[String, List[Category]] = {
         (hotelNode \ "category").toList
           .map(c=>CategoryOps.fromXml(c, from, to).map(_ :: Nil))
           .reduce(_ +++ _)
           .leftMap(errs => NonEmptyList(s"hotelId=$id:$errs"))
       }
-
-      cats.map(c => Record(id = id, name = name, checkInTime = ci, checkOutTime = co , categories = c) :: Nil)
+      cats.map(c => Record(id = id, name = name, checkInTime = ci, checkOutTime = co ,eci = eci, lco= lco, categories = c) :: Nil)
 
     }.reduce(_ +++ _)
   }

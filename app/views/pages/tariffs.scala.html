@@ -1,0 +1,26 @@
+@(tgs: Seq[TariffGroup])
+
+
+  
+  @for(tg <- tgs) {
+      
+  <div data-tariff-name=@tg.get('name) class="tariff" data-hash=@tgs.hashCode>
+
+    <div class="tariff-heading">
+      <h3>@tg.get('name)</h3>
+      <ul class="tariff-list">
+        <li>возможен возврат</li>
+      </ul>
+    </div>
+
+    <div class="tariff-overall">
+      <i class="flaticon-coin32"></i>
+      <span class="tariff-price">@{tg.get('overalPrices).get('room) / 100} грн</span>
+    </div>
+
+    <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
+
+  </div>
+      
+  }
+
