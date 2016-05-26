@@ -397,10 +397,6 @@ main {
   main p {
     font-size: 1.35rem;
     text-align: justify; }
-  main .main-section img {
-    display: block;
-    max-width: 40rem;
-    margin: 0.6rem auto 0; }
 
 .makeOrder {
   width: 30rem;
@@ -880,6 +876,49 @@ main {
 .option-description {
   vertical-align: top;
   float: left; }
+
+.option-data-list {
+  position: relative;
+  display: none; }
+
+.ctrl-list {
+  display: none;
+  list-style: none;
+  border: 1px solid #c2c2c2;
+  border-bottom: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  background: #fff;
+  z-index: 1; }
+  .ctrl-list li {
+    padding: 7px;
+    margin-bottom: 5px;
+    border-bottom: 1px dotted #000; }
+    .ctrl-list li:last-child {
+      margin-bottom: 0; }
+    .ctrl-list li img {
+      width: 25%; }
+    .ctrl-list li input {
+      float: right;
+      width: 20px;
+      height: 20px; }
+
+.option-data-list-btn {
+  border: 1px solid #c2c2c2;
+  height: 37px;
+  padding: 10px;
+  cursor: pointer; }
+  .option-data-list-btn img {
+    float: right;
+    width: 20%; }
+
+.option-data-list-active {
+  display: block; }
+
+.ctrl-list-active {
+  display: block; }
 
 .category-result {
   clear: both;

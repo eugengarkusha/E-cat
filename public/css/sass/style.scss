@@ -575,11 +575,11 @@ main {
     text-align: justify;
   }
 
-  .main-section img {
-    display: block;
-    max-width: 40rem;
-    margin: 0.6rem auto 0;
-  }
+  // .main-section img {
+  //   display: block;
+  //   max-width: 40rem;
+  //   margin: 0.6rem auto 0;
+  // }
 
   //========================= BOOKING FORM ============================//
 
@@ -1325,6 +1325,71 @@ main {
   vertical-align: top;
   float: left;
 }
+
+// =======================Twin & Breakfast========================
+
+.option-data-list {
+  position: relative;
+  display: none;
+}
+
+.ctrl-list {
+  display: none;
+  list-style: none;
+  border: 1px solid $color-footer-border;
+  border-bottom: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  background: #fff;
+  z-index: 1;
+  
+  li {
+    padding: 7px;
+    margin-bottom: 5px;
+    border-bottom: 1px dotted #000;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    img {
+      width: 25%;
+    }
+    
+    input {
+      float: right;
+      width: 20px;
+      height: 20px;
+    }
+    
+  }
+    
+}
+
+.option-data-list-btn {
+  border: 1px solid $color-footer-border;
+  height: 37px;
+  padding: 10px;
+  cursor: pointer;
+  
+  img {
+    float: right;
+    width: 20%;
+  }
+  
+}
+
+.option-data-list-active {
+  display: block;
+}
+
+.ctrl-list-active {
+  display: block;
+}
+
+// =======================END Twin & Breakfast========================
 
 .category-result {
   clear: both;

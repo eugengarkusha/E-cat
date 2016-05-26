@@ -61,13 +61,11 @@ $(function () {
 
   var elemAndVal = function (container, selector, valueType) {
     console.time('elemAndVal');
-    console.log(selector);
     var result = {};
     result.element = container.querySelector(selector);
     
     if (!result.element) {
       result.value = 0;
-      console.log(result);
       return result;
     }
 
@@ -138,7 +136,6 @@ $(function () {
 
     globalFilt.room = JSON.stringify(globalFilt.room);
 
-    console.log(JSON.stringify(globalFilt.room));
     globalFilt.opt = [];
 
     globalFilt.opt = JSON.stringify(globalFilt.opt);
@@ -169,7 +166,6 @@ $(function () {
     globalFilt.to = +filters.to;
     
     console.timeEnd('collectFilters');
-    console.log(filters);
     return filters;
   };
 
@@ -189,7 +185,6 @@ $(function () {
       'ci':               opt.eci.value,
       'co':               opt.lco.value
     });
-    console.log(opt.eci.value);
     
     console.timeEnd('stringOpts');
     return data;
@@ -290,8 +285,6 @@ $(function () {
     
   var usualResponceHandling = function(ask, cat, e){
     
-    console.log('usualResponceHandling');
-    
     ask.done(function(resp) {
       
       $(e.target).parent().find('.additional-days, .time-no-available').hide();
@@ -331,8 +324,6 @@ $(function () {
     
   var specialResponceHandling = function(ask, cat, e) {
     
-    console.log('specialResponceHandling');
-    
     ask.done(function(resp) {
       $(e.target).parent().find('.eci, .lco').hide();          
         
@@ -357,6 +348,54 @@ $(function () {
     })
     
   };
+  
+  var multiCtrl = function (cat, e) {
+    console.log('MUltiCtrl');
+    var roomCnt = e.target.value;
+    var $listWrap = $(cat).find('.option-data-list');
+    var $listTwin = $listWrap.find('.ctrl-list-twin');
+    var itemTwin = $listTwin.find('li').html();
+    var $listBfk = $listWrap.find('.ctrl-list-bfk');
+    var itemBfk = $listBfk.find('li').html();
+    var twinCont = 0;
+    var bfkCnt = 0;
+    
+    $listTwin.html('');
+    $listBfk.html('');
+    
+    if(roomCnt > 1) {
+      $(cat).find('.option-data-checkbox').hide();
+      $listWrap.addClass('option-data-list-active');
+      for(var i = 0; i < roomCnt; i++) {
+        $listTwin.append($('<li>').html(itemTwin));
+        $listBfk.append($('<li>').html(itemBfk));
+      }
+      
+      $('.option-data-list-btn').click(function (e) {
+        var btn = e.target;
+        var $list = $(btn).parent();
+        var $ctrlList = $list.find('.ctrl-list');
+        $ctrlList.addClass('ctrl-list-active');
+        $(document).click(function (e) {
+          if($list.find(e.target)[0]) return;
+          $ctrlList.removeClass('ctrl-list-active');
+        });
+      });
+      
+      // $(cat).find('.ctrl-list input').change(function (e) {
+      //   var elem = e.target;
+      //   if(elem.value) {
+          
+      //   }
+      // });
+      
+    } else {
+      $(cat).find('.option-data-checkbox').show();
+      $lists.parent().removeClass('option-data-list-active');
+    }
+    
+    return;
+  };
 
   var changeCat = function (cat) {
 
@@ -369,14 +408,10 @@ $(function () {
           from = globalFilt.from;
           to   = globalFilt.to;
 
-      console.log("REQUEST: " + req);
-      console.log(e.target.name);
-      
-      // if(e.target.name !== 'timeIn' && e.target.name !== 'timeOut') {
-        
-      //   usualResponceHandling(from, to, req, cat, e);
-        
-      // }
+      if(e.target.name === 'room_count') {
+        console.log('ROOOOOOOOOOOOOOOOOMS');
+        multiCtrl(cat, e);
+      }
       
       if(e.target.name === 'timeIn' || e.target.name === 'timeOut') {
         
@@ -391,8 +426,6 @@ $(function () {
               +moment(to, "YYYYMMDD").add(1, 'd').format("YYYYMMDD000000") :
               to;
               
-              console.log('catCI: ' + catCI + ' catCO: ' + catCO);
-            
         if(e.target.name === 'timeIn' && catCI <= hotelCI || e.target.name === 'timeOut' && catCO >= hotelCO) {
           
           specialResponceHandling(askFor(from, to, req), cat, e);
@@ -400,12 +433,6 @@ $(function () {
         } else { 
           usualResponceHandling(askFor(from, to, req), cat, e);
          }
-        
-        // if(e.target.name === 'timeIn' && catCI > hotelCI || e.target.name === 'timeOut' && catCO < hotelCO) {
-          
-        //   usualResponceHandling(from, to, req, cat, e);
-          
-        // }
         
       } else { 
         usualResponceHandling(askFor(from, to, req), cat, e); 
@@ -422,8 +449,6 @@ $(function () {
               from = +collectFilters(selector).from,
               to   = +collectFilters(selector).to;
               
-              console.log(req);
-
           $.ajax(jsRoutes.controllers.Application.filter(from, to, JSON.stringify(req)))
           .done(function( response ) {
 
@@ -461,34 +486,6 @@ $(function () {
 
       (function () {
         
-        $('.header-main').scroolly([
-          {
-              from: 'doc-top + 122px',
-              addClass: ($('.page-reservation')[0]) ? 'sticky sticky-reservation' : 'sticky'
-          },
-          {
-              to: 'doc-top + 1px',
-              removeClass: 'sticky sticky-reservation'
-          }
-        ]);
-      
-      $('.filtering').scroolly([
-          {
-            from: 'doc-top + 194px',
-            addClass: 'filtering-slide',
-            onCheckIn: function($element, rule) {
-              $('.filtering-placeholder').show();
-            },
-            onCheckOut: function($element, rule) {
-                $('.filtering-placeholder').hide();
-            }
-          },
-          {
-            to: 'doc-top + 194px',
-            removeClass: 'filtering-slide'
-          }
-        ]);
-
         var min = $('#checkIn').val();
         var max = $('#checkOut').val();
         console.log('checkIn value: ' + min);
