@@ -357,11 +357,10 @@ $(function () {
     var itemTwin = $listTwin.find('li').html();
     var $listBfk = $listWrap.find('.ctrl-list-bfk');
     var itemBfk = $listBfk.find('li').html();
-    var twinCont = 0;
-    var bfkCnt = 0;
     
     $listTwin.html('');
     $listBfk.html('');
+    $listWrap.find('.count').text('0');
     
     if(roomCnt > 1) {
       $(cat).find('.option-data-checkbox').hide();
@@ -382,12 +381,17 @@ $(function () {
         });
       });
       
-      // $(cat).find('.ctrl-list input').change(function (e) {
-      //   var elem = e.target;
-      //   if(elem.value) {
-          
-      //   }
-      // });
+      $(cat).find('.ctrl-list input').change(function (e) {
+        var elem = e.target;
+        var $count = $(elem).parent().parent().siblings('.option-data-list-btn')
+          .find('.count');
+        var countVal = +$count.text();
+        if(elem.checked) {
+          $count.text(countVal + 1);
+        } else {
+          $count.text(countVal - 1);
+        }
+      });
       
     } else {
       $(cat).find('.option-data-checkbox').show();
