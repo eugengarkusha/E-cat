@@ -1368,6 +1368,29 @@ main {
     
 }
 
+[src$="bed-active.png"] {
+  display: none;
+}
+
+[src$="dinner-active.png"] {
+  display: none;
+}
+
+.ctrl-list-item-active {
+  [src$="bed.png"] {
+      display: none;
+    }
+  [src$="bed-active.png"] {
+      display: inline;
+    }
+  [src$="dinner.png"] {
+    display: none;
+  }
+  [src$="dinner-active.png"] {
+    display: inline;
+  }
+}
+
 .option-data-list-btn {
   border: 1px solid $color-footer-border;
   height: 37px;

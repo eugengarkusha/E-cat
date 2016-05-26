@@ -349,14 +349,16 @@ $(function () {
     
   };
   
+  var ctrlitems = {};
+  
   var multiCtrl = function (cat, e) {
     console.log('MUltiCtrl');
     var roomCnt = e.target.value;
     var $listWrap = $(cat).find('.option-data-list');
     var $listTwin = $listWrap.find('.ctrl-list-twin');
-    var itemTwin = $listTwin.find('li').html();
     var $listBfk = $listWrap.find('.ctrl-list-bfk');
-    var itemBfk = $listBfk.find('li').html();
+    ctrlitems.twin = ctrlitems.twin || $listTwin.find('li').html();
+    ctrlitems.bfk =  ctrlitems.bfk || $listBfk.find('li').html();
     
     $listTwin.html('');
     $listBfk.html('');
@@ -366,8 +368,8 @@ $(function () {
       $(cat).find('.option-data-checkbox').hide();
       $listWrap.addClass('option-data-list-active');
       for(var i = 0; i < roomCnt; i++) {
-        $listTwin.append($('<li>').html(itemTwin));
-        $listBfk.append($('<li>').html(itemBfk));
+        $listTwin.append($('<li>').html(ctrlitems.twin));
+        $listBfk.append($('<li>').html(ctrlitems.bfk));
       }
       
       $('.option-data-list-btn').click(function (e) {
@@ -388,14 +390,16 @@ $(function () {
         var countVal = +$count.text();
         if(elem.checked) {
           $count.text(countVal + 1);
+          $(elem).parent().addClass('ctrl-list-item-active');
         } else {
           $count.text(countVal - 1);
+          $(elem).parent().removeClass('ctrl-list-item-active');
         }
       });
       
     } else {
       $(cat).find('.option-data-checkbox').show();
-      $lists.parent().removeClass('option-data-list-active');
+      $listWrap.removeClass('option-data-list-active');
     }
     
     return;
