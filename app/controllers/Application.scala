@@ -10,8 +10,6 @@ import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.mvc._
 import schema.RecordJsonFormats._
 import ecat.util.JsonFormats._
-import ecat.model.ajax.CategoryControlProtocol
-import CategoryControlProtocol.{Gone => _Gone, _}
 import views.html.pages.{tariffs, category => cat, _}
 
 import scala.concurrent.duration._
@@ -23,7 +21,8 @@ import scala.concurrent.Future
 import ecat.util.DateTime.interval
 import schema.RecordFilters.Filter
 import ecat.model.Schema._
-import ecat.model.ajax.CategoryControlProtocol.CatCtrlRequest
+import ecat.model.ajax.catctrl.CategoryControlProtocol,CategoryControlProtocol._
+
 //TODO: clean this fucking mess!
 class Application (cache: CacheApi, env: play.api.Environment ) extends Controller {
 

@@ -1,6 +1,4 @@
-package ecat.model.ajax
-
-import java.time.LocalTime
+package ecat.model.ajax.catctrl
 
 import ecat.model.{Filters, Schema}
 import Schema._
@@ -15,6 +13,7 @@ import record._
 import ecat.util.JsonFormats._
 import ecat.model.ops.PricesOps._
 import ecat.model.Filters._
+import java.time.LocalTime
 
 object CategoryControlProtocol {
 
