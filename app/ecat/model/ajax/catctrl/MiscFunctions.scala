@@ -1,14 +1,20 @@
 package ecat.model.ajax.catctrl
 
-object Multictrl {
+import ecat.model.Schema.Room
+import ecat.model.ajax.catctrl.CategoryControlProtocol.RoomCtrlRequest
 
-  def limits(data: Map[Int, List[Int]], inp: Map[Int, List[Int]]): Option[Map[Int, List[Int]]] = {
+object MiscFunctions {
 
+
+  //find better name for this
+  def limits(data: List[List[Int]], input: Map[Int, List[Int]]): Option[Map[Int, List[Int]]] = {
+
+    val _data: Map[Int, List[Int]] = data.iterator.zipWithIndex.map(_.swap).toMap
 
     // traverse it with option, if no data el cover inp el - return none
     //data ids->covering input ids
-    def groupped: Map[Set[Int], Set[Int]] = inp.foldLeft(Map.empty[Set[Int],Set[Int]]){case (agr,(id,points))=>
-      val dps = data.iterator.filter(_._2.iterator.zip(points.iterator).forall(t => t._1 >= t._2)).map(_._1).toSet
+    def groupped: Map[Set[Int], Set[Int]] = input.foldLeft(Map.empty[Set[Int],Set[Int]]){case (agr,(id,points))=>
+      val dps = _data.iterator.filter(_._2.iterator.zip(points.iterator).forall(t => t._1 >= t._2)).map(_._1).toSet
       agr + (dps -> agr.get(dps).fold(Set(id))(_ + id))
     }
 
@@ -31,7 +37,7 @@ object Multictrl {
         processLocked(
           fltm-dpIds,
           locked ++ dpIds,
-          limits ++ inpIds.map(_ -> multiMax(dpIds.map(data(_))))
+          limits ++ inpIds.map(_ -> multiMax(dpIds.map(_data(_))))
         )
       }
     }
@@ -47,8 +53,8 @@ object Multictrl {
         else {
           processOthers(
             m.tail,     //make dpIds a list
-            limits ++ inpIds.map(_ -> multiMax(dpIds.map(data(_)))),
-            usedDpIds ++ fltDpIds.toList.map(id => id -> data(id).reduce(_ * _)).sortBy(_._2).take(inpIds.size).map(_._1)
+            limits ++ inpIds.map(_ -> multiMax(dpIds.map(_data(_)))),
+            usedDpIds ++ fltDpIds.toList.map(id => id -> _data(id).reduce(_ * _)).sortBy(_._2).take(inpIds.size).map(_._1)
           )
         }
       }

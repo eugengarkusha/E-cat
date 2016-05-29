@@ -90,11 +90,6 @@ object TariffOps {
     name = n \@"name" ,
     startDate = LocalDateTime.parse(n \@"dateN", fmt) ,
     endDate = LocalDateTime.parse(n \@"dateK", fmt) ,
-    pricesPerDay = Record(
-      room = (n \@"roomprice").toDouble * 100 toLong,
-      bkf = (n \@"bkfprice").toDouble * 100 toLong,
-      eci = (n \@"eciprice").toDouble * 100 toLong,
-      lco = (n \@"lcoprice").toDouble * 100 toLong
-    )
+    pricesPerDay = PricesOps.fromXml(n)
   )
 }

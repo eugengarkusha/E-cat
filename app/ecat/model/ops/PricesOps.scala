@@ -3,16 +3,31 @@ package ecat.model.ops
 import ecat.model.Schema._
 import shapeless.record._
 
+import scala.xml.Node
+
 object PricesOps {
 
-  def calcPrice (p: Prices, guestCnt:Int,addGuestsCnt:Int, bkf:Boolean, eci:Boolean, lco:Boolean): Double= {
 
-    def addIf(cond: Boolean, l: Long, r:Long) = if (cond) l + r else r
+  def fromXml(n:Node):Prices={
+    Record(
+      room = (n \@"roomprice").toDouble * 100 toLong,
+      bkf = (n \@"bkfprice").toDouble * 100 toLong,
+      twin = (n \@"twinPrice").toDouble * 100 toLong,
+      eci = (n \@"eciprice").toDouble * 100 toLong,
+      lco = (n \@"lcoprice").toDouble * 100 toLong
+    )
+  }
+  def calcPrice (p: Prices, guestCnt:Int, addGuestsCnt:Int, bkf:Boolean, twin:Boolean, eci:Boolean, lco:Boolean): Double= {
 
-    (addIf(lco, p.get('lco),
-        addIf(eci, p.get('eci),
-          addIf(bkf && p.get('bkf) > 0, (addGuestsCnt + guestCnt) * p.get('bkf), p.get('room))))
-    ).toDouble / 100
+    {
+      def pr(cond: Boolean, p: Long) = if (cond) p else 0
+      pr(bkf,(addGuestsCnt + guestCnt) * p.get('bkf)) +
+      pr(twin, p.get('twin))+
+      pr(eci, p.get('eci))+
+      pr(lco, p.get('lco))+
+      p.get('room)
+    }.toDouble / 100
+
   }
 
 }

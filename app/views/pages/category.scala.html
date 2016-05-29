@@ -51,7 +51,7 @@
       <div class="option-data option-data-select">
         <div class="item-not-available"></div>
         <select data-guestscnt=@c.get('id) name="guest">
-          @for(guest <- 1 to maxGuestCnt(c,1)) {
+          @for(guest <- 1 to maxGuestCnt(c)) {
             <option value=@guest>@guest</option>
           }
         </select>
@@ -59,14 +59,14 @@
 
     </div>
     
-    @if(maxAddGuestCnt(c,1) > 0) {
+    @if(maxAddGuestCnt(c) > 0) {
        <div class="option option-add-guest">
         <span class="option-description">Доп место:</span>
         <div class="option-data option-data-select">
           <div class="item-not-available"></div>
-          <select name="addGuest" data-addguests=@maxAddGuestCnt(c,1)>
+          <select name="addGuest" data-addguests=@maxAddGuestCnt(c)>
             <option value="0">0</option>
-            @for(guest <- 1 to maxAddGuestCnt(c,1)) {
+            @for(guest <- 1 to maxAddGuestCnt(c)) {
               <option value=@guest>@guest</option>
             }
           </select>

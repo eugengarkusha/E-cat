@@ -13,23 +13,11 @@ import scalaz.{NonEmptyList, Category=>_,Ordering=>_,_}, Scalaz._
 object CategoryOps {
 
 
-  def maxGuestCnt(cat:Category, roomCnt: Int)={
-    val res = {
-      if(roomCnt == 1)cat.get('rooms).iterator.map(_.get('guestsCnt)).max
-      else cat.get('rooms).map(_.get('guestsCnt)).sorted(implicitly[Ordering[Int]].reverse)(roomCnt - 1)
-    }
-    assert(res > 0)
-    res
-  }
+  def maxGuestCnt(cat:Category)=cat.get('rooms).iterator.map(_.get('guestsCnt)).max
 
-  def maxAddGuestCnt(cat:Category, roomCnt: Int)={
-    val res = {
-      if(roomCnt == 1)cat.get('rooms).iterator.map(_.get('additionalGuestsCnt)).max
-      else cat.get('rooms).map(_.get('additionalGuestsCnt)).sorted(implicitly[Ordering[Int]].reverse)(roomCnt - 1)
-    }
-    res
-  }
+  def maxAddGuestCnt(cat:Category)= cat.get('rooms).iterator.map(_.get('additionalGuestsCnt)).max
 
+  //TODO
   def isBkfAvailable(c:Category) = true
 
   def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): ValidationNel[String, Category] = {
