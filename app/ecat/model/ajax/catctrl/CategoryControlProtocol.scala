@@ -87,17 +87,7 @@ object CategoryControlProtocol {
             id = rr.get('id),
             limits = lims(rr.get('id)),
             prices = tarGrps.map{ tg=>
-              val price = {
-                calcPrice(
-                  tg.get('overalPrices),
-                  rr.get('guestsCnt),
-                  rr.get('addGuestsCnt),
-                  rr.get('bkf),
-                  rr.get('twin),
-                  eci,
-                  lco
-                )
-              }
+              def price = calcPrice(tg.get('overalPrices), rr.get('guestsCnt), rr.get('addGuestsCnt), rr.get('bkf), rr.get('twin), eci, lco)
               tg.get('name) -> price
             }.toMap
           )
