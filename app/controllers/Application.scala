@@ -6,9 +6,10 @@ import javax.xml.ws.BindingProvider
 import async.client.ObmenSait
 import ecat.model.ops.HotelOps
 import play.api.cache.CacheApi
-import play.api.libs.json.{JsArray, JsObject, Json}
+import play.api.libs.json._
 import play.api.mvc._
-import schema.RecordJsonFormats._
+//product writes has leads to an issue with Map setialization(conflicts with writes of traversable of tuples wich are products and writable by productwrites)
+import schema.RecordJsonFormats.{productWrites=>_,_}
 import ecat.util.JsonFormats._
 import views.html.pages.{tariffs, category => cat, _}
 
@@ -21,7 +22,8 @@ import scala.concurrent.Future
 import ecat.util.DateTime.interval
 import schema.RecordFilters.Filter
 import ecat.model.Schema._
-import ecat.model.ajax.catctrl.CategoryControlProtocol,CategoryControlProtocol._
+import ecat.model.ajax.catctrl.CategoryControlProtocol
+import CategoryControlProtocol.{Gone=>CatGone,_}
 
 //TODO: clean this fucking mess!
 class Application (cache: CacheApi, env: play.api.Environment ) extends Controller {
@@ -117,22 +119,15 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
 
 
   def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest, hotelFilter: Filter[Hotel]) = Action.async{req =>
-
-    getHotels(from, to).map { hotels =>
-
-      val resp = CategoryControlProtocol.process(ctrl, hotels.flatMap(hotelFilter(_))) match {
-
-        case ctrl:CtrlResponse =>Json.obj("type" -> "basic", "ctrl"->ctrl)
-
-        case TariffsRedraw(ctrl, tgrps) =>Json.obj("type" -> "tariffsRedraw", "ctrl"->ctrl, "html"-> tariffs(tgrps).toString)
-
-        case FullRedraw(h, c)=> Json.obj("type" -> "fullRedraw", "html"-> cat.render(c, h, req).toString)
-
-        case _Gone => Json.obj("type" -> "gone")
-      }
-
-      Ok(resp)
+    // putting inside a function to have an access to req. TODO: implement updateWith on coproducts!!
+     object resp2Js extends Poly1{
+      implicit def _ctrl = at[CtrlResponse](ctrl=>Json.obj("type" -> "basic", "ctrl"->ctrl))
+      implicit def _tariffs = at[TariffsRedraw](tr=>Json.obj("type" -> "tariffsRedraw", "ctrl"->tr.get('ctrl), "html"-> tariffs(tr.get('tg)).toString))
+      implicit def full = at[FullRedraw](fr=>Json.obj("type" -> "fullRedraw", "html"->cat(fr.get('category),fr.get('hotel))(req).toString))
+      implicit def gone = at[CatGone.type](tr=>Json.obj("type" -> "gone"))
     }
+
+    getHotels(from, to).map { hotels =>Ok(CategoryControlProtocol.process(ctrl, hotels.flatMap(hotelFilter(_))).map(resp2Js).unify)}
   }
 
 //

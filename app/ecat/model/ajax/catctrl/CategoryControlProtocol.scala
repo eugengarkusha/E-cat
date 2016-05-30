@@ -14,41 +14,25 @@ import ecat.util.JsonFormats._
 import ecat.model.ops.PricesOps._
 import ecat.model.Filters._
 import java.time.LocalTime
-import ecat.model.ajax.catctrl.MiscFunctions
-import ecat.model.ajax.catctrl.MiscFunctions._
+import MiscFunctions._
 
 object CategoryControlProtocol {
 
- //todo: think on reimplementing with records(1)no need for separate formats 2)following the concept of full case clase substitution)
-  case class CatCtrlRequest(hotelId: String,
-                            catId: String,
-                            roomReqs: List[RoomCtrlRequest],
-                            tariffGroupsHash: Int,
-                            ci: LocalTime,
-                            co: LocalTime)
+  type RoomCtrlRequest = Record.`'id->Int,'guestsCnt-> Int,'addGuestsCnt->Int,'twin->Boolean,'bkf-> Boolean`.T
 
-  case class RoomCtrlRequest(id:Int,
-                             guestsCnt: Int,
-                             addGuestsCnt:Int,
-                             twin:Boolean,
-                             bkf: Boolean)
+  type CatCtrlRequest = Record.`'hotelId->String,'catId->String,'roomReqs->List[RoomCtrlRequest],'tariffGroupsHash-> Int, 'ci-> LocalTime,'co-> LocalTime`.T
 
+  //shapeless has a bug :" Malformed literal or standard type (Map[String" if map is put inline.TODO: test with shapeless 2.3.1
+  type prices=Map[String, Double]
+  type RoomLimits = Record.`'guestsCnt->Int, 'addGuestsCnt-> Int, 'twin->Boolean`.T
+  type RoomCtrlResponse = Record.`'id-> Int, 'limits-> RoomLimits, 'prices->prices`.T
+  type CtrlResponse = Record.`'eci->Boolean, 'lco->Boolean, 'roomCtrls-> List[RoomCtrlResponse]`.T
+  type TariffsRedraw = Record.`'ctrl-> CtrlResponse, 'tg->List[TariffGroup]`.T
+  type FullRedraw = Record.`'hotel-> Hotel, 'category-> Category`.T
+  case object Gone
 
-  sealed trait Response
-  case class CtrlResponse(eci:Boolean, lco:Boolean, roomCtrls: List[RoomCtrlResponse])extends Response
-  case class RoomCtrlResponse(id: Int, limits: RoomLimits, prices: Map[String, Double])
-  case class RoomLimits(guestsCnt:Int, addGuestsCnt: Int, twin:Boolean)
-  case class TariffsRedraw(ctrl: CtrlResponse, tg:List[TariffGroup])extends Response
-  case class FullRedraw(hotel: Hotel, category: Category)extends Response
-  case object Gone extends Response
-
-
-  //Formats
-  implicit val roomCtrlReqFormat = Json.format[RoomCtrlRequest]
-  implicit val catCtrlReqFormat =  Json.format[CatCtrlRequest]
-  implicit val roomLimitsFormat = Json.format[RoomLimits]
-  implicit val roomCtrlRespFormat = Json.format[RoomCtrlResponse]
-  implicit val ctrlRespFormat = Json.format[CtrlResponse]
+  type Response = CtrlResponse:+:TariffsRedraw:+:FullRedraw:+:Gone.type:+:CNil
+  val respCp = Coproduct[Response]
 
 
   def process(req: CatCtrlRequest, hotels: Seq[Hotel]): Response = {
@@ -67,16 +51,16 @@ object CategoryControlProtocol {
     }
 
 
-    import req._
+
+    val hotelId :: catId :: roomReqs:: tariffGroupsHash :: ci :: co :: HNil =  req
 
     filterByIds(hotelId, catId, hotels).fold[Response]{
       println(s"category(id = $catId) has gone during booking process.")
-      Gone
+      respCp(Gone)
     }{hotel=>
 
       val category =  hotel.get('categories).head
       val rooms = category.get('rooms)
-
 
       val limsOpt:Option[Map[Int, RoomLimits]]={
 
@@ -84,33 +68,47 @@ object CategoryControlProtocol {
 
         MiscFunctions.limits(
           data = rooms.map(r=>List(r.get('guestsCnt),r.get('additionalGuestsCnt),toInt(r.get('twin)))),
-          input = req.roomReqs.map(c => c.id -> List(c.guestsCnt,c.addGuestsCnt, toInt(c.twin)))(collection.breakOut)
-        ).map(_.map{case (id, lims)=> id->RoomLimits(lims(0),lims(1),lims(2)>0)})
+          input = roomReqs.map(rr => rr.get('id) -> List(rr.get('guestsCnt),rr.get('addGuestsCnt), toInt(rr.get('twin))))(collection.breakOut)
+        ).map(_.map{case (id, lims)=> id->Record(guestsCnt=lims(0),addGuestsCnt=lims(1),twin= lims(2)>0)})
       }
 
       limsOpt.fold[Response] {
         println(s"category has changed during booking process.Redrawing category: $catId")
-        FullRedraw(hotel, hotel.get('categories).head)
+        respCp(Record(hotel=hotel, category=hotel.get('categories).head))
       } {lims=>
+
         val eci = ci.compareTo(hotel.get('checkInTime)) < 0 && ci.compareTo(hotel.get('eci))> 0
         val lco = co.compareTo(hotel.get('checkOutTime)) > 0 && co.compareTo(hotel.get('lco)) < 0
 
         val tarGrps = category.get('tariffGroups)
 
-        val roomCtrlResps = roomReqs.map { rc=>
-          RoomCtrlResponse(
-            rc.id,
-            limits = lims(rc.id),
-            prices = tarGrps.map(tg=>tg.get('name) -> calcPrice(tg.get('overalPrices), rc.guestsCnt, rc.addGuestsCnt, rc.bkf, rc.twin, eci, lco))(collection.breakOut)
+        def roomCtrlResps:List[RoomCtrlResponse] = roomReqs.map { rr=>
+          Record(
+            id = rr.get('id),
+            limits = lims(rr.get('id)),
+            prices = tarGrps.map{ tg=>
+              val price = {
+                calcPrice(
+                  tg.get('overalPrices),
+                  rr.get('guestsCnt),
+                  rr.get('addGuestsCnt),
+                  rr.get('bkf),
+                  rr.get('twin),
+                  eci,
+                  lco
+                )
+              }
+              tg.get('name) -> price
+            }.toMap
           )
         }
 
-        def resp = CtrlResponse(eci,lco,roomCtrlResps)
+        def resp:CtrlResponse = Record(eci=eci,lco=lco,roomCtrls=roomCtrlResps)
 
-        if (tarGrps.hashCode == tariffGroupsHash) resp
+        if (tarGrps.hashCode == tariffGroupsHash) respCp(resp)
         else {
-          println(s"Tariffs has changed during booksbting process. Redrawing Tariffs: $catId")
-          TariffsRedraw(resp, tarGrps)
+          println(s"Tariffs has changed during booking process. Redrawing Tariffs: $catId")
+          respCp(Record(ctrl = resp,tg = tarGrps))
         }
       }
     }

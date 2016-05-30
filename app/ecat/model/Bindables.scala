@@ -11,6 +11,7 @@ import Filters.hotelFilterReads
 import ecat.model.ajax.catctrl.CategoryControlProtocol.CatCtrlRequest
 import play.api.mvc.QueryStringBindable
 import ecat.util.JsonFormats.localTimeFormat
+import schema.RecordJsonFormats.{productReads=>_,_}
 
 
 /**
