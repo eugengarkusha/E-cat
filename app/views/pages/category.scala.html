@@ -41,49 +41,88 @@
       </div>
 
   </div>
+  
+  <div class="category-controls clearfix">
+    <ul class="tabs">
+      <li class="tabs-item tabs-item--init"><span href="#">Tab1</span></li>
+    </ul>
+    
+    <div class="cat-settings clearfix">
+      
+      <div class="cat-settings-item">
+        <div class="options">
 
-  <div class="options">
+        <div class="option option-guest" data-guest=@c.get('id)>
 
-    <div class="option option-guest" data-guest=@c.get('id)>
+          <span class="option-description">Кол-во людей:</span>
 
-      <span class="option-description">Кол-во людей:</span>
+          <div class="option-data option-data-select">
+            <div class="item-not-available"></div>
+            <select data-guestscnt=@c.get('id) name="guest">
+              @for(guest <- 1 to maxGuestCnt(c)) {
+                <option value=@guest>@guest</option>
+              }
+            </select>
+          </div>
 
-      <div class="option-data option-data-select">
-        <div class="item-not-available"></div>
-        <select data-guestscnt=@c.get('id) name="guest">
-          @for(guest <- 1 to maxGuestCnt(c)) {
-            <option value=@guest>@guest</option>
-          }
-        </select>
+        </div>
+        
+        @if(maxAddGuestCnt(c) > 0) {
+          <div class="option option-add-guest">
+            <span class="option-description">Доп место:</span>
+            <div class="option-data option-data-select">
+              <div class="item-not-available"></div>
+              <select name="addGuest" data-addguests=@maxAddGuestCnt(c)>
+                <option value="0">0</option>
+                @for(guest <- 1 to maxAddGuestCnt(c)) {
+                  <option value=@guest>@guest</option>
+                }
+              </select>
+            </div>
+          </div>
+        } else {
+          <div class="option option-add-guest option-add-guest-hidden">
+            <span class="option-description">Доп место:</span>
+            <div class="option-data option-data-select">
+              <div class="item-not-available"></div>
+              <select name="addGuest">
+                <option value="0">0</option>
+              </select>
+            </div>
+          </div>
+        }
+        
+        <div class="option option-twin">
+          <span class="option-description">Твин:</span>
+          <div class="option-data option-data-checkbox">
+            <input id="optionTwin" data-twin type="checkbox">
+          </div>
+        </div> 
+
+        @if(isBkfAvailable(c)) {
+          <div class="option option-breakfast">
+            <span class="option-description">Завтрак:</span>
+            <div class="option-data option-data-checkbox">
+              <input id="breakfast" data-breakfast type="checkbox">
+            </div>
+          </div> 
+        }
+
+        </div>
+        
+        <div class="tariffs">
+
+          @views.html.pages.tariffs.render(c.get('tariffGroups))
+
+        </div>
+        
       </div>
-
+    
     </div>
     
-    @if(maxAddGuestCnt(c) > 0) {
-       <div class="option option-add-guest">
-        <span class="option-description">Доп место:</span>
-        <div class="option-data option-data-select">
-          <div class="item-not-available"></div>
-          <select name="addGuest" data-addguests=@maxAddGuestCnt(c)>
-            <option value="0">0</option>
-            @for(guest <- 1 to maxAddGuestCnt(c)) {
-              <option value=@guest>@guest</option>
-            }
-          </select>
-        </div>
-      </div>
-    } else {
-      <div class="option option-add-guest option-add-guest-hidden">
-        <span class="option-description">Доп место:</span>
-        <div class="option-data option-data-select">
-          <div class="item-not-available"></div>
-          <select name="addGuest">
-            <option value="0">0</option>
-          </select>
-        </div>
-      </div>
-    }
-
+  </div>
+  
+  <div class="cat-settings-general">
     <div class="option option-early">
       <span class="option-description">Заезд:</span>
       <div class="option-data option-data-eci" data-checkInTime=@h.get('checkInTime)>
@@ -102,59 +141,10 @@
         <span class="time-no-available">Время недоступно</span>
         <span class="additional-days">Дополнительные сутки</span>
       </div>
-      
     </div>
-    
-    <div class="option option-twin">
-      <span class="option-description">Твин:</span>
-      <div class="option-data option-data-checkbox">
-        <input id="optionTwin" data-twin type="checkbox">
-      </div>
-      
-      <div class="option-data option-data-list option-data-list-twin">
-        <div class="option-data-list-btn">
-          <span class="count">0</span>
-          <img src="@routes.Assets.versioned("img/down.png")" alt="down">
-        </div>
-        <ul class="ctrl-list ctrl-list-twin">
-          <li>
-            <img src="@routes.Assets.versioned("img/bed.png")" alt="bed">
-            <img src="@routes.Assets.versioned("img/bed-active.png")" alt="bed">
-            <input type="checkbox">
-          </li>
-        </ul>
-      </div>
-      
-    </div> 
-
-    @if(isBkfAvailable(c)) {
-      <div class="option option-breakfast">
-        <span class="option-description">Завтрак:</span>
-        <div class="option-data option-data-checkbox">
-          <input id="breakfast" data-breakfast type="checkbox">
-        </div>
-        
-        <div class="option-data option-data-list option-data-list-bfk">
-          <div class="option-data-list-btn">
-            <span class="count">0</span>
-            <img src="@routes.Assets.versioned("img/down.png")" alt="down">
-          </div>
-          <ul class="ctrl-list ctrl-list-bfk">
-            <li>
-              <img src="@routes.Assets.versioned("img/dinner.png")" alt="dinner">
-              <img src="@routes.Assets.versioned("img/dinner-active.png")" alt="dinner">
-              <input type="checkbox">
-            </li>
-          </ul>
-        </div>
-      
-      </div> 
-    }
-
+  
     <div class="option option-rooms">
-
       <span class="option-description">Кол-во номеров:</span>
-
       <div class="option-data option-data-select">
         <div class="item-not-available"></div>
         <select data-roomcnt name="room_count">
@@ -162,17 +152,8 @@
             <option value=@room>@room</option>
           }
         </select>
-
       </div>
-
     </div>
-
-  </div>
-  
-  <div class="tariffs">
-
-      @views.html.pages.tariffs.render(c.get('tariffGroups))
-
   </div>
 
   <div class="category-result clearfix">

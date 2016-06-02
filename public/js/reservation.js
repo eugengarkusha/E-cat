@@ -1,7 +1,7 @@
 $(function () {
 
-  var beautySelect = function () {
-    $('select').selectric({
+  var beautySelect = function (selector) {
+    $(selector).find('select').selectric({
       responsive: true
     });
   };
@@ -349,60 +349,66 @@ $(function () {
     
   };
   
-  var ctrlitems = {};
-  
-  var multiCtrl = function (cat, e) {
-    console.log('MUltiCtrl');
-    var roomCnt = e.target.value;
-    var $listWrap = $(cat).find('.option-data-list');
-    var $listTwin = $listWrap.find('.ctrl-list-twin');
-    var $listBfk = $listWrap.find('.ctrl-list-bfk');
-    ctrlitems.twin = ctrlitems.twin || $listTwin.find('li').html();
-    ctrlitems.bfk =  ctrlitems.bfk || $listBfk.find('li').html();
+  var tabs = function (cat, amount, tabsList, catSettingsList) {
+    console.log('tabs', amount);
     
-    $listTwin.html('');
-    $listBfk.html('');
-    $listWrap.find('.count').text('0');
+    var catSettings     = catCtrl[cat.dataset.catid].clone();
+        tabsList        = cat.querySelector(tabsList),
+        catSettingsList = cat.querySelector(catSettingsList),
+        amount          = amount;
     
-    if(roomCnt > 1) {
-      $(cat).find('.option-data-checkbox').hide();
-      $listWrap.addClass('option-data-list-active');
-      for(var i = 0; i < roomCnt; i++) {
-        $listTwin.append($('<li>').html(ctrlitems.twin));
-        $listBfk.append($('<li>').html(ctrlitems.bfk));
+    var populatetabs = function () {
+      console.log('populatetabs', catSettings);
+      
+      tabsList.style.display = 'block';
+      tabsList.innerHTML = '';
+      catSettingsList.innerHTML = '';
+      
+      for(var i = 0; i < amount; i++) {
+        var id = 'tab' + i;
+        var tab = (function () {
+          var li = document.createElement('li');
+          li.className = 'tabs-item';
+          li.setAttribute('data-tabid', id);
+          var span = document.createElement('span');
+          span.textContent = 'Комната №' + (i + 1);
+          li.appendChild(span);
+          return li; 
+        })();
+        var settings = catSettings.clone();
+        settings.attr({
+          'data-tabviewid': id
+        });
+        settings.hide();
+        
+        tabsList.appendChild(tab);
+        catSettingsList.appendChild(settings[0]);
       }
       
-      $('.option-data-list-btn').click(function (e) {
-        var btn = e.target;
-        var $list = $(btn).parent();
-        var $ctrlList = $list.find('.ctrl-list');
-        $ctrlList.addClass('ctrl-list-active');
-        $(document).click(function (e) {
-          if($list.find(e.target)[0]) return;
-          $ctrlList.removeClass('ctrl-list-active');
-        });
+      $(cat).find('.tabs-item').click(function (e) {
+        $(cat).find('.tabs-item').removeClass('tabs-item--active');
+        $(e.currentTarget).addClass('tabs-item--active');
+        $(cat).find('.cat-settings-item').hide();
+        $(cat).find('[data-tabviewid=' + e.currentTarget.dataset.tabid + ']').show();
+        console.log(e.currentTarget);
       });
       
-      $(cat).find('.ctrl-list input').change(function (e) {
-        var elem = e.target;
-        var $count = $(elem).parent().parent().siblings('.option-data-list-btn')
-          .find('.count');
-        var countVal = +$count.text();
-        if(elem.checked) {
-          $count.text(countVal + 1);
-          $(elem).parent().addClass('ctrl-list-item-active');
-        } else {
-          $count.text(countVal - 1);
-          $(elem).parent().removeClass('ctrl-list-item-active');
-        }
-      });
-      
-    } else {
-      $(cat).find('.option-data-checkbox').show();
-      $listWrap.removeClass('option-data-list-active');
-    }
+      tabsList.firstChild.classList.add('tabs-item--active');
+      catSettingsList.firstChild.style.display = 'block';
+      beautySelect(cat);
+    };
     
-    return;
+    var cleartabs = function () {
+      console.log('cleartabs', catSettings[0]);
+      tabsList.innerHTML = '';
+      tabsList.style.display = 'none';
+      catSettingsList.innerHTML = '';
+      catSettingsList.appendChild(catSettings[0]);
+      beautySelect(cat);
+    };
+    
+    (amount > 1) ? populatetabs() : cleartabs();
+    
   };
 
   var changeCat = function (cat) {
@@ -415,36 +421,38 @@ $(function () {
           req  = stringOpts(cat),
           from = globalFilt.from;
           to   = globalFilt.to;
+          
+          console.log(req);
 
       if(e.target.name === 'room_count') {
         console.log('ROOOOOOOOOOOOOOOOOMS');
-        multiCtrl(cat, e);
+        tabs(cat, e.target.value, '.tabs', '.cat-settings');
       }
       
-      if(e.target.name === 'timeIn' || e.target.name === 'timeOut') {
+      // if(e.target.name === 'timeIn' || e.target.name === 'timeOut') {
         
-        var hotelCI = stringToMinutes($(cat).parent().data('eci')),
-            hotelCO = stringToMinutes($(cat).parent().data('lco')),
-            catCI   = stringToMinutes($(cat).find('[name="timeIn"]').val()),
-            catCO   = stringToMinutes($(cat).find('[name="timeOut"]').val()),
-            from    = (catCI <= hotelCI) ?
-              +moment(from, "YYYYMMDD").subtract(1, 'd').format("YYYYMMDD000000") :
-              from;
-            to      = (catCO >= hotelCO) ?
-              +moment(to, "YYYYMMDD").add(1, 'd').format("YYYYMMDD000000") :
-              to;
+      //   var hotelCI = stringToMinutes($(cat).parent().data('eci')),
+      //       hotelCO = stringToMinutes($(cat).parent().data('lco')),
+      //       catCI   = stringToMinutes($(cat).find('[name="timeIn"]').val()),
+      //       catCO   = stringToMinutes($(cat).find('[name="timeOut"]').val()),
+      //       from    = (catCI <= hotelCI) ?
+      //         +moment(from, "YYYYMMDD").subtract(1, 'd').format("YYYYMMDD000000") :
+      //         from;
+      //       to      = (catCO >= hotelCO) ?
+      //         +moment(to, "YYYYMMDD").add(1, 'd').format("YYYYMMDD000000") :
+      //         to;
               
-        if(e.target.name === 'timeIn' && catCI <= hotelCI || e.target.name === 'timeOut' && catCO >= hotelCO) {
+      //   if(e.target.name === 'timeIn' && catCI <= hotelCI || e.target.name === 'timeOut' && catCO >= hotelCO) {
           
-          specialResponceHandling(askFor(from, to, req), cat, e);
+      //     specialResponceHandling(askFor(from, to, req), cat, e);
           
-        } else { 
-          usualResponceHandling(askFor(from, to, req), cat, e);
-         }
+      //   } else { 
+      //     usualResponceHandling(askFor(from, to, req), cat, e);
+      //    }
         
-      } else { 
-        usualResponceHandling(askFor(from, to, req), cat, e); 
-      }
+      // } else { 
+      //   usualResponceHandling(askFor(from, to, req), cat, e); 
+      // }
 
     });
   };
@@ -461,6 +469,8 @@ $(function () {
           .done(function( response ) {
 
             $('.category-list').replaceWith(response);
+            
+            saveInitCatCtrl();
 
             categoryGallery();
 
@@ -468,30 +478,40 @@ $(function () {
 
             tariffsOpen();
 
-            beautySelect();
+            beautySelect('.category-list');
 
             changeCat();
             console.timeEnd('changeFilter');
           });
     });
   };
+  
+  var catCtrl = {};  
+    
+  var saveInitCatCtrl = function () {
+    $('.category').each(function (index, elem) {
+      var catSettings = $(elem).find('.cat-settings-item').clone();
+      catCtrl[elem.dataset.catid] = catSettings;
+    })
+  }
 
 //   ************************Starting dynamic****************************
 
   $.ajax(jsRoutes.controllers.Application.getDummyOffers(from, to))
     .done(function( resp ) {
       $('.filtering').after(resp);
-
+      
+      saveInitCatCtrl();
+      
       $('#checkIn').val(moment((from).toString().slice(0,-6)).format('YYYY.MM.DD'));
       $('#checkOut').val(moment((to).toString().slice(0,-6)).format('YYYY.MM.DD'));
 
-      beautySelect();
+      beautySelect('.category-list, .filtering');
 
       changeCat('.category-list');
 
       changeFilter($('.filtering')[0]);
-
-
+      
       (function () {
         
         var min = $('#checkIn').val();
@@ -523,6 +543,34 @@ $(function () {
         categoryTimepicker();
 
         tariffsOpen();
+        
+        $('.header-main').scroolly([
+          {
+              from: 'doc-top + 122px',
+              addClass: ($('.page-reservation')[0]) ? 'sticky sticky-reservation' : 'sticky'
+          },
+          {
+              to: 'doc-top + 1px',
+              removeClass: 'sticky sticky-reservation'
+          }
+      ]);
+        
+        $('.filtering').scroolly([
+          {
+            from: 'doc-top + 194px',
+            addClass: 'filtering-slide',
+            onCheckIn: function($element, rule) {
+              $('.filtering-placeholder').show();
+            },
+            onCheckOut: function($element, rule) {
+                $('.filtering-placeholder').hide();
+            }
+          },
+          {
+            to: 'doc-top + 194px',
+            removeClass: 'filtering-slide'
+          }
+        ]);
 
       })();
 

@@ -769,6 +769,7 @@ main {
     left: 50%; }
 
 .category {
+  position: relative;
   margin-bottom: 4rem;
   padding: 0.5rem;
   color: #000; }
@@ -800,6 +801,15 @@ main {
 
 .category-list {
   padding: 0.8rem; }
+
+.cat-settings-general {
+  position: absolute;
+  top: 54%;
+  left: 41.5%;
+  width: 33%;
+  border: 1px dashed #000;
+  padding: 10px;
+  border-radius: 12px; }
 
 .category-roomOptions {
   padding: 0.8rem;
@@ -843,7 +853,8 @@ main {
   width: 5.5rem;
   width: 9.2rem;
   height: 3.7rem;
-  padding-left: 8px; }
+  padding-left: 8px;
+  cursor: pointer; }
 
 .eci, .lco, .time-no-available,
 .additional-days, .additional-days {
@@ -877,63 +888,48 @@ main {
   vertical-align: top;
   float: left; }
 
-.option-data-list {
-  position: relative;
-  display: none; }
+.category-controls {
+  position: relative; }
 
-.ctrl-list {
-  display: none;
-  list-style: none;
-  border: 1px solid #c2c2c2;
-  border-bottom: none;
+.category-controls {
+  width: 60%;
+  float: right; }
+
+.tabs {
   margin: 0;
-  padding: 0;
+  padding-left: 20px;
   position: absolute;
+  overflow: scroll;
   width: 100%;
-  background: #fff;
-  z-index: 1; }
-  .ctrl-list li {
-    padding: 7px;
-    margin-bottom: 5px;
-    border-bottom: 1px dotted #000; }
-    .ctrl-list li:last-child {
-      margin-bottom: 0; }
-    .ctrl-list li img {
-      width: 25%; }
-    .ctrl-list li input {
-      float: right;
-      width: 20px;
-      height: 20px; }
+  white-space: nowrap; }
 
-[src$="bed-active.png"] {
-  display: none; }
-
-[src$="dinner-active.png"] {
-  display: none; }
-
-.ctrl-list-item-active [src$="bed.png"] {
-  display: none; }
-.ctrl-list-item-active [src$="bed-active.png"] {
-  display: inline; }
-.ctrl-list-item-active [src$="dinner.png"] {
-  display: none; }
-.ctrl-list-item-active [src$="dinner-active.png"] {
-  display: inline; }
-
-.option-data-list-btn {
-  border: 1px solid #c2c2c2;
-  height: 37px;
-  padding: 10px;
+.tabs-item {
+  display: inline-block;
+  border: 1px solid #000;
   cursor: pointer; }
-  .option-data-list-btn img {
-    float: right;
-    width: 20%; }
+  .tabs-item:hover {
+    background: #D2BE9F; }
+  .tabs-item span {
+    display: inline-block;
+    padding: 7px; }
 
-.option-data-list-active {
-  display: block; }
+.tabs-item--active {
+  background: #b19261; }
+  .tabs-item--active:hover {
+    background: #b19261; }
 
-.ctrl-list-active {
-  display: block; }
+.tabs-item--init {
+  display: none; }
+
+.cat-settings {
+  position: relative;
+  top: 50px; }
+
+.cat-settings-item {
+  position: absolute; }
+
+.cat-settings-item--init {
+  display: none; }
 
 .category-result {
   clear: both;
@@ -1655,16 +1651,12 @@ main {
     margin: 0 auto 2rem;
     max-width: 85%; }
   .page-reservation .options {
-    width: 33%;
-    margin-top: 5rem;
     padding-left: 2rem;
     padding-right: 2rem; }
   .page-reservation .tariffs {
-    width: 27%;
     border: none;
     border-radius: 0;
     border-left: 1px solid;
-    margin-top: 8.8rem;
     padding-left: 2rem;
     height: auto;
     overflow: auto;
