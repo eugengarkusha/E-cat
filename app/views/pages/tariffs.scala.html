@@ -1,6 +1,6 @@
 @(tgs: Seq[TariffGroup])
 
-
+<form>
   
   @for(tg <- tgs) {
       
@@ -18,9 +18,11 @@
       <span class="tariff-price">@{tg.get('overalPrices).get('room) / 100} грн</span>
     </div>
 
-    <input class="tariff-radio" type="radio" name="tariff" value="one" checked>
+    <input class="tariff-radio" type="radio" name="tariff" value="one" @if(tg.get('name) == "ПРОЖИВАНИЕ") { checked }>
 
   </div>
       
   }
+  
+</form>
 

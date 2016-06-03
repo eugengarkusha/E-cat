@@ -931,6 +931,9 @@ main {
 .cat-settings-item--init {
   display: none; }
 
+.cat-settings-item--active {
+  display: block; }
+
 .category-result {
   clear: both;
   margin-top: 3.5rem;
