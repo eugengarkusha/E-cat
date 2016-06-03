@@ -13,12 +13,23 @@ import scalaz.{NonEmptyList, Category=>_,Ordering=>_,_}, Scalaz._
 object CategoryOps {
 
 
-  def maxGuestCnt(cat:Category)=cat.get('rooms).iterator.map(_.get('guestsCnt)).max
+  def maxGuestCnt(c:Category):Int =c.get('rooms).iterator.map(_.get('guestsCnt)).max
 
-  def maxAddGuestCnt(cat:Category)= cat.get('rooms).iterator.map(_.get('additionalGuestsCnt)).max
+  def maxAddGuestCnt(c:Category):Int = c.get('rooms).iterator.map(_.get('additionalGuestsCnt)).max
 
-  //TODO
-  def isBkfAvailable(c:Category) = true
+  def isBkfAvailable(c:Category):Boolean = {
+    //TODO: add bkf availability control based on tariffs choice(so this method returns map[tarifid,boolean])
+    c.get('tariffGroups).forall{tg=>
+      val tariffs = tg.get('tariffs)
+      val bkfNaCnt = tariffs.count(_.get('pricesPerDay).get('bkf) == -1)
+      val bkfAvlaiable = bkfNaCnt == 0
+      if (!bkfAvlaiable && bkfNaCnt<tariffs.size)println("tariff group has inconsistent breakfast availability\n"+tg)
+      bkfAvlaiable
+    }
+
+  }
+
+  def isTwinAvailable(c:Category):Boolean = c.get('rooms).find(_.get('twin)).isDefined
 
   def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): ValidationNel[String, Category] = {
 

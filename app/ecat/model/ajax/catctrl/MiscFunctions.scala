@@ -6,7 +6,7 @@ import ecat.model.ajax.catctrl.CategoryControlProtocol.RoomCtrlRequest
 object MiscFunctions {
 
 
-  //find better name for this
+  //find better name for this// TODO: Refactor keys to Any
   def limits(data: List[List[Int]], input: Map[Int, List[Int]]): Option[Map[Int, List[Int]]] = {
 
     val _data: Map[Int, List[Int]] = data.iterator.zipWithIndex.map(_.swap).toMap

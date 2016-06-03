@@ -89,13 +89,14 @@
             </div>
           </div>
         }
-        
-        <div class="option option-twin">
-          <span class="option-description">Твин:</span>
-          <div class="option-data option-data-checkbox">
-            <input id="optionTwin" data-twin type="checkbox">
+        @if(isTwinAvailable(c)){
+          <div class="option option-twin">
+            <span class="option-description">Твин:</span>
+            <div class="option-data option-data-checkbox">
+              <input id="optionTwin" data-twin type="checkbox">
+            </div>
           </div>
-        </div> 
+        }
 
         @if(isBkfAvailable(c)) {
           <div class="option option-breakfast">
