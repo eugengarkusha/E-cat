@@ -50,14 +50,35 @@ class MiscFunctions extends  FunSuite {
     assert(limits(data, inp) == None)
   }
 
+  test ("small groups are covered first"){
+  val inp  = Map((5,List(1, 0, 0)),
+    (10,List(1, 0, 0)),
+    (1,List(1, 0, 1)),
+    (6,List(1, 0, 0)),
+    (9,List(1, 0, 0)),
+    (2,List(1, 0, 0)),
+    (7,List(1, 0, 0)),
+    (3,List(1, 0, 0)),
+    (11,List(1, 0, 0)),
+    (8,List(1, 0, 0)),
+    (4,List(1, 0, 0)))
+
+    val data = List(
+      List(2, 0, 0),
+        List(2, 0, 0),
+        List(2, 0, 0),
+        List(2, 0, 0),
+        List(2, 0, 0),
+        List(2, 0, 0),
+        List(2, 0, 0),
+        List(2, 0, 1),
+        List(2, 0, 0),
+        List(2, 0, 0),
+        List(2, 0, 0),
+        List(2, 0, 1)
+    )
+    val lim = List(2, 0, 1)
+    assert(limits(data, inp) == Some(Map(5 -> lim, 10 -> lim, 1 -> lim, 6 -> lim, 9 -> lim, 2 -> lim, 7 -> lim, 3 -> lim, 11 -> lim, 8 -> lim, 4 -> lim)))
+  }
 
 }
-//  "Application" should {
-//
-//    "work from within a browser" in new WithBrowser {
-//
-//      browser.goTo("http://localhost:" + port)
-//
-//      browser.pageSource must contain("Your new application is ready.")
-//    }
-//  }

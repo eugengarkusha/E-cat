@@ -2,14 +2,19 @@ package ecat.model.ops
 
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
+
 import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
 import ecat.model.Schema.{Prices, Tariff, TariffGroup}
 import ecat.util.DateTime._
 import shapeless._
+import labelled._
 import shapeless.contrib.scalaz.instances._
 import shapeless.record._
 import ecat.util.RecordInstances._
 import ecat.model.ops.PricesOps._
+import shapeless.syntax.singleton._
+import shapeless.PolyDefns.->
+
 import scala.annotation.tailrec
 import scalaz.Scalaz._
 import scalaz._
@@ -60,11 +65,13 @@ object TariffOps {
       m(baseGrp.head.get('startDate), otherGrp, List.empty[Tariff])
     }
 
+
     def overalPrices(group: List[Tariff]):Prices = {
       group.map {tariff =>
         val days = ChronoUnit.DAYS.between(tariff.get('startDate), tariff.get('endDate))
-        (tariff.get('pricesPerDay)).toList.map(_ * days).toHList[Prices].get
-      }.reduce(_ |+| _)
+        object multByDays extends ->[Long,Long](_ * days)
+        tariff.get('pricesPerDay).take(3).mapValues(multByDays)
+      }.reduce(_ |+| _) + ('eci ->> group.head.get('pricesPerDay).get('eci))  +  ('lco ->>group.last.get('pricesPerDay).get('lco))
     }
 
 

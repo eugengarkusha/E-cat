@@ -22,6 +22,7 @@ object MiscFunctions {
     def multiMax(t:Set[List[Int]])=t.reduce(_.zip(_).map(t=>t._1.max(t._2)))
 
 
+    //this method calculates the limits of locked groups(ones where dataPoints size == input size). Returns limits and uncloked leftovers(subsequently covered by processOthers)
     def processLocked(m: Map[Set[Int], Set[Int]], locked: Set[Int] = Set(), limits: Map[Int, List[Int]] = Map()): (Map[Int, List[Int]], Map[Set[Int], Set[Int]]) ={
 
       //filter out locked data points and regroup data point
@@ -42,8 +43,10 @@ object MiscFunctions {
       }
     }
 
-
-    def processOthers(m: Map[Set[Int], Set[Int]], limits: Map[Int, List[Int]], usedDpIds: Set[Int]=Set()): Option[(Map[Int, List[Int]])] = {
+    //this method calculates the limits of non- locked groups(ones where dataPoints size > input size)
+    //m - coverage info sorted by  the size of covered group()
+    //small groups are covered first bcs otherwise big groops(cvoered by bigger group of dadaPoints) may pick dataPoints of smaller groups leaving off spare elements that are not fit for smaller groups.
+    def processOthers(m: Seq[(Set[Int], Set[Int])], limits: Map[Int, List[Int]], usedDpIds: Set[Int]=Set()): Option[(Map[Int, List[Int]])] = {
       if (m.isEmpty) Some(limits)
       else {
         val (dpIds, inpIds) = m.head
@@ -60,9 +63,9 @@ object MiscFunctions {
       }
     }
 
-    val (limits,mp)=processLocked(groupped)
+    val (limits,mp) = processLocked(groupped)
     //  println(s"limits=$limits, mp=$mp")
-    processOthers(mp,limits)
+    processOthers(mp.toSeq.sortBy(_._2.size),limits)
   }
 
 
