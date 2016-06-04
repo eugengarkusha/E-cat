@@ -81,4 +81,10 @@ class MiscFunctions extends  FunSuite {
     assert(limits(data, inp) == Some(Map(5 -> lim, 10 -> lim, 1 -> lim, 6 -> lim, 9 -> lim, 2 -> lim, 7 -> lim, 3 -> lim, 11 -> lim, 8 -> lim, 4 -> lim)))
   }
 
+  test("intersecting coverage (123, 234)"){
+    val dt = List(List(3,3,3,5,0), List(3,3,3,5,0),List(2,10,10,50,0),List(3,3,3,0,0))
+    val inp  = List(List(2,2,2,5,0),List(2,2,2,5,0),List(3,3,3,0,0),List(3,3,3,0,0)).zipWithIndex.map(_.swap).toMap
+    assert(limits(dt, inp) ==Some(Map(0 -> List(3, 10, 10, 50, 0), 1 -> List(3, 10, 10, 50, 0), 2 -> List(3, 3, 3, 5, 0), 3 -> List(3, 3, 3, 5, 0))))
+  }
+
 }
