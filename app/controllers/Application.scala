@@ -4,7 +4,9 @@ import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
 import javax.xml.ws.BindingProvider
 
 import async.client.ObmenSait
+import com.typesafe.config.ConfigFactory
 import ecat.model.ops.HotelOps
+import ecat.util.DateTime
 import play.api.cache.CacheApi
 import play.api.libs.json._
 import play.api.mvc._
@@ -19,7 +21,7 @@ import record._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import ecat.util.DateTime.interval
+import ecat.util.DateTime.{pertrovichDateTimeFormatter=>fmt,interval}
 import schema.RecordFilters.Filter
 import ecat.model.Schema._
 import ecat.model.ajax.catctrl.CategoryControlProtocol
@@ -28,29 +30,38 @@ import CategoryControlProtocol.{Gone=>CatGone,_}
 //TODO: clean this fucking mess!
 class Application (cache: CacheApi, env: play.api.Environment ) extends Controller {
 
+  val conf = ConfigFactory.defaultApplication()
+
   //replace with real proxy call
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
 
-    val (_fakeFrom, _fakeTo) = (LocalDateTime.of(2016,5,12,0,0,0),LocalDateTime.of(2016,6,12,0,0,0))//(from,to)//
+    val (_from, _to) = {
+      if(conf.getBoolean("fakedata"))(LocalDateTime.of(2016,5,12,0,0,0),LocalDateTime.of(2016,6,12,0,0,0))
+      else from->to
+    }
 
 
-    def lbl = "H:"+interval(_fakeFrom, _fakeTo)
+    def lbl = "H:"+interval(_from, _to)
 
-    def  load = Future(fetchData(_fakeFrom,_fakeTo)).map { s =>
-      val h = HotelOps.fromXml(scala.xml.XML.loadString(s), _fakeFrom, _fakeTo).fold(err => throw new Exception(err.toString), identity)
-      cache.set(lbl,h, 40.minutes)
-//      println("h="+h)
-      h
+
+    def  load = Future(fetchData(_from,_to)).map { s =>
+      HotelOps.fromXml(scala.xml.XML.loadString(s), _from, _to).fold(err => throw new Exception(err.toString), identity)
     }
 //
-    cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse(load)
-//    load
-//    Future.successful(hotels)
+    if(conf.getBoolean("cache.enabled")) {
+      cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse {
+        val hotels = load
+        cache.set(lbl, hotels, conf.getInt("cache.ttl").minutes)
+        hotels
+      }
+    }
+    else load
   }
 
-  private def fetchData(from: LocalDateTime, to: LocalDateTime):String= {//(String, String, String)={
-    //proxy.getNomSvobod(fmt.format(from), fmt.format(to))
-    scala.io.Source.fromFile(env.getFile("conf/xml20160512000000_20160612000000"))(scala.io.Codec.UTF8).mkString
+  private def fetchData(from: LocalDateTime, to: LocalDateTime):String= {
+    if(conf.getBoolean("fakedata")) {
+      scala.io.Source.fromFile(env.getFile("conf/xml20160512000000_20160612000000"))(scala.io.Codec.UTF8).mkString
+    }else  proxy.getNomSvobod(fmt.format(from), fmt.format(to))
   }
 
 // TODO: create and maintain proxy outside the controller
