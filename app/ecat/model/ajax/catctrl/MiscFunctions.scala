@@ -51,8 +51,8 @@ object MiscFunctions {
           }
 
           val newLimits = limits ++ inpsCoveredByDps.map(_-> multiMax(coveringDps.map(_data)))
-          //startring over with initial _inpIds filtered from previously blocked elems
-          processLocked(_inpIds.filterNot(inpsCoveredByDps), newDti, newItd, newLimits)
+          //startring over with initial _inpIds
+          processLocked(_inpIds, newDti, newItd, newLimits)
         } else processLocked(inpIds.tail, dti, itd, limits)
 
       }else processLocked(inpIds.tail, dti, itd, limits)
