@@ -87,4 +87,18 @@ class MiscFunctions extends  FunSuite {
     assert(limits(dt, inp) ==Some(Map(0 -> List(3, 10, 10, 50, 0), 1 -> List(3, 10, 10, 50, 0), 2 -> List(3, 3, 3, 5, 0), 3 -> List(3, 3, 3, 5, 0))))
   }
 
+  test("multi locked"){
+    val data = List(List(20,11,6),List(20,14,6),List(20,11,6),List(10,9,6),List(10,9,7),List(2,7,12) )
+    val inp = List(List(20,11,6),List(20,11,6),List(20,11,6),List(2,5,5),List(10,9,6),List(10,9,6)).zipWithIndex.map(_.swap).toMap
+    assert(limits(data, inp)==Some((Map(0 -> List(20, 14, 6), 5 -> List(10, 9, 7), 1 -> List(20, 14, 6), 2 -> List(20, 14, 6), 3 -> List(2, 7, 12), 4 -> List(10, 9, 7)))))
+  }
+
+  test("2-nd pass lock ") {
+    val data = List(List(22, 33), List(22, 22), List(5, 5), List(5, 5))
+    val inp = List(List(11, 22), List(22, 23), List(4, 5)).zipWithIndex.map(_.swap).toMap
+    assert(limits(data, inp) == Some(Map(1 -> List(22, 33), 0 -> List(22, 22), 2 -> List(5, 5))))
+  }
+
+  //todo add multilock test
+
 }
