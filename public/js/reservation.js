@@ -99,8 +99,8 @@ $(function () {
        id: +elem.dataset.tabviewid,
        guestsCnt: elemAndVal(elem, '[data-guestscnt]', 'number').value,
        addGuestsCnt: elemAndVal(elem, '[data-addguests]', 'number').value,
-       twin: elemAndVal(elem, '[data-twin]').value,
-       bkf: elemAndVal(elem, '[data-breakfast]').value
+       twin: !!elemAndVal(elem, '[data-twin]').value,
+       bkf: !!elemAndVal(elem, '[data-breakfast]').value
      }; 
     }).get();
 
@@ -233,9 +233,12 @@ $(function () {
       var tabView = $(cat).find('[data-tabviewid=' + elem.id + ']')[0];
       changeSelect(tabView, '[name="guest"]', limits.guestsCnt);
       changeSelect(tabView, '[name="addGuest"]', limits.addGuestsCnt);
-      (limits.twin) ? 
-      $(tabView).find('.option-twin').css('display', 'inline-block')
-      : $(tabView).find('.option-twin').css('display', 'none')
+      (!limits.twin) ? 
+      $(tabView).find('[data-twin]').attr({
+        'disabled': true,
+        'data-twin': false
+      })
+      : $(tabView).find('[data-twin]').removeAttr('disabled').attr('data-twin', true);
       for(var key in prices) {
         $(tabView).find('[data-tariff-name=' + key + ']').find('.tariff-price').text(prices[key] + ' грн');
       }
@@ -244,7 +247,7 @@ $(function () {
     console.timeEnd('setupOpt');
 
   };
-    
+      
   var createFiltersReqObj = function (opt) {
     
     var result  =  {
@@ -299,8 +302,12 @@ $(function () {
         
         (resp.ctrl.lco && e.target.name === 'timeOut') ? $(e.target).parent().find('.lco').show() : $(e.target).parent().find('.lco').hide();
         
-        $(cat).find('input').not('[name="timeIn"], [name="timeOut"]').
+        $(cat).find('input').not('[name="timeIn"], [name="timeOut"], [data-twin]').
         removeAttr('disabled');
+        if($(cat).find('[data-twin]').is('[data-twin=false]')) {
+          alert('DATA-TWIN FALSE');
+          $(cat).find('[data-twin=false]').attr('disabled', true);
+        }
       };
       
       if(resp.type === 'basic') {
@@ -312,8 +319,7 @@ $(function () {
       
       if(resp.type === 'tariffsRedraw') {
         console.log('tariffsRedraw');
-        $('.tariffs').empty().append(resp.html);
-        saveInitCatCtrl();
+        $(cat).find('.tariffs').empty().append(resp.html);
         setupOpt(resp, cat);
         addDays();
         return;
@@ -322,8 +328,8 @@ $(function () {
       if(resp.type === 'fullRedraw') {
         console.log('fullRedraw');
         $(cat).replaceWith(resp.html);
-        saveInitCatCtrl();
         var newCat = $('[data-catId=' + cat.dataset.catid +']');
+        saveInitCatCtrl(newCat);
         categoryGallery(newCat);
         beautySelect(newCat);
         categoryTimepicker();
@@ -333,7 +339,7 @@ $(function () {
       if(resp.type === 'gone') {
         console.log('gone');
         $(cat).remove();
-        saveInitCatCtrl();
+        delete catCtrl[cat.dataset.catid];
         return;
       }
       
@@ -350,6 +356,7 @@ $(function () {
       if(resp.type === 'basic' || resp.type === 'tariffsRedraw') {
         console.log('resp.type === basic || resp.type === tariffsRedraw');
         $(e.target).parent().find('.cico, .time-no-available').hide();
+        $(cat).find('.item-not-available').show();
         $(e.target).parent().find('.additional-days').show();
         
         return;
@@ -372,45 +379,46 @@ $(function () {
   };
   
   var tabs = function (cat, amount, tabsList, catSettingsList) {
-    console.log('tabs', amount);
     
     var catSettings     = catCtrl[cat.dataset.catid].clone();
         tabsList        = cat.querySelector(tabsList),
         catSettingsList = cat.querySelector(catSettingsList),
         amount          = amount,
         tabsLength      = tabsList.children.length;
+        
+    console.log('tabs', amount, tabsLength, catSettings[0]);
     
     var populatetabs = function () {
-      console.log('populatetabs', catSettings);
+      console.log('populatetabs');
       
-      tabsList.style.display = 'block';
-      if(tabsList.dataset.init === 'no') {
-        catSettingsList.innerHTML = '';
-        tabsList.dataset.init = ''
-      }
+      tabsList.style.display = 'block'; 
       
       if(amount > tabsLength) {
         var cnt = amount - tabsLength;
         
-        for(i = 1; i <= cnt; i++) {
+        for(var i = 1; i <= cnt; i++) {
           var id = tabsLength + i;
+          console.log('TAB STEP ' + i);
           
-          var tab = (function () {
-            var li = document.createElement('li');
-            li.className = 'tabs-item';
-            li.setAttribute('data-tabid', id);
-            var span = document.createElement('span');
-            span.textContent = 'Комната №' + (id);
-            li.appendChild(span);
-            return li; 
-          })();
+          var tab = $(tabsList)
+          .children()
+          .first()
+          .clone()
+          .attr('data-tabid', id)
+          .removeAttr('data-tabInit')
+          .removeClass('tabs-item--active');
+          tab.find('span').text('Комната №' + id);
           
-          tabsList.appendChild(tab);
+          console.log(tab[0]);
+          
+          $(tabsList).append(tab);
           
           var settings = catSettings.clone();
           settings.attr('data-tabviewid', id);
           settings.hide();
+          console.log('SETTINGS', settings[0]);
           catSettingsList.appendChild(settings[0]);
+          
         }
         
       } else {
@@ -422,9 +430,12 @@ $(function () {
         }
       }
       
+      console.log(tabsList);
+      
       if(!$(tabsList).children().is('.tabs-item--active')) {
-        tabsList.firstChild.classList.add('tabs-item--active');
+        $(tabsList).children().first().addClass('tabs-item--active');
       }
+      
       $(cat).find('.cat-settings-item').hide();
       $(cat).find('[data-tabviewid=' + $(cat).find('.tabs-item--active').data('tabid') + ']').show();
       beautySelect(cat);
@@ -440,10 +451,13 @@ $(function () {
     
     var cleartabs = function () {
       console.log('cleartabs', catSettings[0]);
-      tabsList.innerHTML = '';
+      $(tabsList).children().each(function (index, elem) {
+        if(index !== 0) $(elem).remove();  
+      });
       tabsList.style.display = 'none';
-      catSettingsList.innerHTML = '';
-      catSettingsList.appendChild(catSettings[0]);
+      $(catSettingsList).children().each(function (index, elem) {
+        (index !== 0) ? $(elem).remove() : $(elem).show();
+      });
       beautySelect(cat);
     };
     
@@ -530,12 +544,13 @@ $(function () {
   
   var catCtrl = {};  
     
-  var saveInitCatCtrl = function () {
-    $('.category').each(function (index, elem) {
+  var saveInitCatCtrl = function (category) {
+    var selector = category || '.category';
+    $(selector).each(function (index, elem) {
       var catSettings = $(elem).find('.cat-settings-item').clone();
       catCtrl[elem.dataset.catid] = catSettings;
     })
-  }
+  };
 
 //   ************************Starting dynamic****************************
 

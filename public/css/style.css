@@ -896,6 +896,7 @@ main {
   float: right; }
 
 .tabs {
+  display: none;
   margin: 0;
   padding-left: 20px;
   position: absolute;
@@ -905,6 +906,7 @@ main {
 
 .tabs-item {
   display: inline-block;
+  margin-right: 4px;
   border: 1px solid #000;
   cursor: pointer; }
   .tabs-item:hover {
@@ -913,19 +915,20 @@ main {
     display: inline-block;
     padding: 7px; }
 
+.tabs-item[data-tabInit] {
+  margin-right: 0; }
+
 .tabs-item--active {
   background: #b19261; }
   .tabs-item--active:hover {
     background: #b19261; }
-
-.tabs-item--init {
-  display: none; }
 
 .cat-settings {
   position: relative;
   top: 50px; }
 
 .cat-settings-item {
+  width: 100%;
   position: absolute; }
 
 .cat-settings-item--init {
@@ -941,6 +944,9 @@ main {
 
 .category-result-price {
   float: left; }
+  .category-result-price span {
+    font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+    font-size: 1.6rem; }
 
 .category-result-addToOrder {
   position: relative;

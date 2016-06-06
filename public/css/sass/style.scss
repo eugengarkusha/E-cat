@@ -1350,6 +1350,7 @@ main {
 }
 
 .tabs {
+  display: none;
   margin: 0;
   padding-left: 20px;
   position: absolute;
@@ -1360,6 +1361,7 @@ main {
 
 .tabs-item {
   display: inline-block;
+  margin-right: 4px;
   border: 1px solid #000;
   cursor: pointer;
   
@@ -1375,6 +1377,10 @@ main {
   
 }
 
+.tabs-item[data-tabInit] {
+  margin-right: 0;
+}
+
 .tabs-item--active {
   background: $color-primary;
   
@@ -1383,16 +1389,13 @@ main {
   }
 }
 
-.tabs-item--init {
-  display: none;
-}
-
 .cat-settings {
   position: relative;
   top: 50px;
 }
 
 .cat-settings-item {
+  width: 100%;
   position: absolute;
 }
 
@@ -1414,6 +1417,12 @@ main {
 
 .category-result-price {
   float: left;
+  
+  span {
+    @include droid-serif;
+    font-size: 1.6rem;
+  }
+  
 }
 
 .category-result-addToOrder {
