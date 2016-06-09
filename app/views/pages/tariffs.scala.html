@@ -15,10 +15,10 @@
 
     <div class="tariff-overall">
       <i class="flaticon-coin32"></i>
-      <span class="tariff-price">@{tg.get('overalPrices).get('room) / 100} грн</span>
+      <input type="number" name="tariff-price" readonly value=@{tg.get('overalPrices).get('room) / 100} class="tariff-price">
     </div>
 
-    <input class="tariff-radio" type="radio" name="tariff" value="one" @if(tg.get('name) == "ПРОЖИВАНИЕ") { checked }>
+    <input class="tariff-radio" type="radio" name="tariff-btn" @if(tg.get('name) == "ПРОЖИВАНИЕ") { checked }>
 
   </div>
       

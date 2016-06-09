@@ -716,6 +716,11 @@ main {
     color: #000;
     text-shadow: none;
   }
+
+  &:active {
+    text-decoration: none;
+  }
+
 }
 
 // ======================== end of makeOrder =======================
@@ -2405,6 +2410,18 @@ main {
       display: inline-block;
     }
 
+    .tariff-overall {
+      position: relative;
+    }
+
+    .tariff-price {
+      position: absolute;
+      bottom: 5px;
+      left: 24px;
+      border: none;
+      width: 80px;
+    }
+
     .tariff-heading {
       width: 50%;
 
@@ -2639,6 +2656,7 @@ main {
 @media screen and (min-width: 1200px) {
 
   .makeOrder {
+    width: 26%;
     margin: 0;
     float: left;
   }

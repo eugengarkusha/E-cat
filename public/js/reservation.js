@@ -26,19 +26,33 @@ $(function () {
     });
   };
 
-  var categoryTimepicker = function () {
+  var categoryTimepicker = function (from) {
+    var from = '' + from;
+    var time = moment.tz(from, 'Europe/Kiev').format('YYYYMMDD');
+    var today = moment.tz(new Date(), 'Europe/Kiev').format('YYYYMMDD');
+    console.log('FROM',from ,'TIME', time, 'TODAY', today);
     $('.timepicker').timepicker({
       timeFormat: 'H:i',
       disableTextInput: true
     });
-  };
-
-  var tariffsOpen = function () {
-    if ($('.tariffs-btn')[0]) {
-      $('.tariffs-btn').click(function (e) {
-        $(e.currentTarget).parent().addClass('tariffs-open');
+    if(time === today) {
+      console.log('BIngo');
+      var minTime = moment.tz(new Date(), 'Europe/Kiev');
+      var minutes = minTime.minutes();
+      var ci = $('.timepicker.ci') ;
+      if(minutes > 30) {
+        minTime.add(60 - minutes, 'm');
+      } else if(minutes < 30) {
+        minTime.add(30 - minutes, 'm');
+      }
+      ci.timepicker({
+        timeFormat: 'H:i',
+        disableTextInput: true,
+        'minTime': minTime.format('HH:mm'),
+        'maxTime': '23:30'
       });
-    }
+      ci.val(minTime.format('HH:mm'));
+    } 
   };
 
   var globalFilt = {
@@ -48,15 +62,13 @@ $(function () {
     room:  {},
     opt:   []
   };
-  
-  window.globalFilt = globalFilt;
-    
+      
   var stringToMinutes = function(time) {
     return moment.duration(time).asMinutes();
   };
 
   var elemAndVal = function (container, selector, valueType) {
-    console.time('elemAndVal');
+    // console.time('elemAndVal');
     var result = {};
     result.element = container.querySelector(selector);
     
@@ -85,7 +97,7 @@ $(function () {
       result.value = +result.value;
     }
 
-    console.timeEnd('elemAndVal');
+    // console.timeEnd('elemAndVal');
 
     return result;
 
@@ -175,7 +187,7 @@ $(function () {
     console.time('stringOpts');
 
     var opt = collectOpts(cat);
-    console.log(opt.roomReqs);
+    // console.log(opt.roomReqs);
 
     var data = JSON.stringify({
       'hotelId':          opt.hotelId,
@@ -190,6 +202,30 @@ $(function () {
     return data;
 
   };
+  
+  var tariffSum = function (category) {
+    console.log('tariffSum');
+    $(category).each(function (index, cat) {
+      var sum = 0;
+      $(cat).find('.tariff').each(function (index, tariff) {
+        if($(tariff).find('[name="tariff-btn"]')[0].hasAttribute('checked')) {
+          sum += +$(tariff).find('[name="tariff-price"]').val();
+        }
+      });
+    $(cat).find('[data-overall]').text(sum);
+    })
+  };
+
+  var switchTariff = function (cat, tariffBtn) {
+    var view = $(cat).find('.cat-settings-item').has(tariffBtn);
+    var radio = view.find('.tariff').find(tariffBtn).clone();
+    radio.attr('checked', 'checked');
+    view.find('.tariff .tariff-radio').removeAttr('checked');
+    view.find('.tariff').find(tariffBtn).replaceWith(radio);
+    tariffSum(cat);
+  };
+
+
   
   // ***************** Setup Options ***************************
 
@@ -240,9 +276,10 @@ $(function () {
       })
       : $(tabView).find('[data-twin]').removeAttr('disabled').attr('data-twin', true);
       for(var key in prices) {
-        $(tabView).find('[data-tariff-name=' + key + ']').find('.tariff-price').text(prices[key] + ' грн');
+        $(tabView).find('[data-tariff-name=' + key + ']').find('[name="tariff-price"]').val(prices[key]);
       }
     });
+    tariffSum(cat);
     
     console.timeEnd('setupOpt');
 
@@ -305,20 +342,19 @@ $(function () {
         $(cat).find('input').not('[name="timeIn"], [name="timeOut"], [data-twin]').
         removeAttr('disabled');
         if($(cat).find('[data-twin]').is('[data-twin=false]')) {
-          alert('DATA-TWIN FALSE');
           $(cat).find('[data-twin=false]').attr('disabled', true);
         }
       };
       
       if(resp.type === 'basic') {
-        console.log('basic');
+        // console.log('basic');
         setupOpt(resp, cat);
         addDays();
         return;
       }
       
       if(resp.type === 'tariffsRedraw') {
-        console.log('tariffsRedraw');
+        // console.log('tariffsRedraw');
         $(cat).find('.tariffs').empty().append(resp.html);
         setupOpt(resp, cat);
         addDays();
@@ -326,7 +362,7 @@ $(function () {
       }
       
       if(resp.type === 'fullRedraw') {
-        console.log('fullRedraw');
+        // console.log('fullRedraw');
         $(cat).replaceWith(resp.html);
         var newCat = $('[data-catId=' + cat.dataset.catid +']');
         saveInitCatCtrl(newCat);
@@ -337,7 +373,7 @@ $(function () {
       }
       
       if(resp.type === 'gone') {
-        console.log('gone');
+        // console.log('gone');
         $(cat).remove();
         delete catCtrl[cat.dataset.catid];
         return;
@@ -356,7 +392,6 @@ $(function () {
       if(resp.type === 'basic' || resp.type === 'tariffsRedraw') {
         console.log('resp.type === basic || resp.type === tariffsRedraw');
         $(e.target).parent().find('.cico, .time-no-available').hide();
-        $(cat).find('.item-not-available').show();
         $(e.target).parent().find('.additional-days').show();
         
         return;
@@ -369,7 +404,6 @@ $(function () {
         
         $(cat).find('input').not('[name="timeIn"], [name="timeOut"]').
         attr('disabled', 'true');
-        $(cat).find('.item-not-available').show();
         
         return;
       }
@@ -386,10 +420,7 @@ $(function () {
         amount          = amount,
         tabsLength      = tabsList.children.length;
         
-    console.log('tabs', amount, tabsLength, catSettings[0]);
-    
     var populatetabs = function () {
-      console.log('populatetabs');
       
       tabsList.style.display = 'block'; 
       
@@ -398,7 +429,6 @@ $(function () {
         
         for(var i = 1; i <= cnt; i++) {
           var id = tabsLength + i;
-          console.log('TAB STEP ' + i);
           
           var tab = $(tabsList)
           .children()
@@ -409,14 +439,11 @@ $(function () {
           .removeClass('tabs-item--active');
           tab.find('span').text('Комната №' + id);
           
-          console.log(tab[0]);
-          
           $(tabsList).append(tab);
           
           var settings = catSettings.clone();
           settings.attr('data-tabviewid', id);
           settings.hide();
-          console.log('SETTINGS', settings[0]);
           catSettingsList.appendChild(settings[0]);
           
         }
@@ -429,8 +456,6 @@ $(function () {
           $(catSettingsList).children().last().remove();
         }
       }
-      
-      console.log(tabsList);
       
       if(!$(tabsList).children().is('.tabs-item--active')) {
         $(tabsList).children().first().addClass('tabs-item--active');
@@ -450,7 +475,6 @@ $(function () {
     };
     
     var cleartabs = function () {
-      console.log('cleartabs', catSettings[0]);
       $(tabsList).children().each(function (index, elem) {
         if(index !== 0) $(elem).remove();  
       });
@@ -470,15 +494,21 @@ $(function () {
     cat = cat || '.category-list';
 
     $(cat).change(function(e) {
+      console.log('CHANGECAT', e.target);
       
       var cat  = $('.category').has(e.target)[0];
       
       if(e.target.name === 'room_count') {
-        console.log('ROOOOOOOOOOOOOOOOOMS');
         tabs(cat, e.target.value, '.tabs', '.cat-settings');
+        tariffSum(cat);
         return;
       }
-      
+
+      if(e.target.name === 'tariff-btn') {
+        switchTariff(cat, e.target);
+        return;
+      }
+
       var req  = stringOpts(cat),
           from = globalFilt.from;
           to   = globalFilt.to;
@@ -530,13 +560,14 @@ $(function () {
 
             categoryGallery('.category-list');
 
-            categoryTimepicker();
-
-            tariffsOpen();
+            categoryTimepicker(from);
 
             beautySelect('.category-list');
 
             changeCat();
+
+            tariffSum('.category-list .category');
+
             console.timeEnd('changeFilter');
           });
     });
@@ -568,12 +599,13 @@ $(function () {
       changeCat('.category-list');
 
       changeFilter($('.filtering')[0]);
+
+      tariffSum('.category-list .category');
       
       (function () {
         
         var min = $('#checkIn').val();
         var max = $('#checkOut').val();
-        console.log('checkIn value: ' + min);
         $('#checkOut').datetimepicker({
             format:'YYYY.MM.DD',
             formatDate:'YYYY.MM.DD',
@@ -597,9 +629,7 @@ $(function () {
 
         categoryGallery('.category-list');
 
-        categoryTimepicker();
-
-        tariffsOpen();
+        categoryTimepicker(from);
 
       })();
 

@@ -451,6 +451,8 @@ main {
     background: #fff;
     color: #000;
     text-shadow: none; }
+  .makeOrder__btn:active {
+    text-decoration: none; }
 
 .filtering {
   position: relative;
@@ -1482,6 +1484,14 @@ main {
     display: block; }
   .page-reservation .tariff-heading, .page-reservation .tariff-overall {
     display: inline-block; }
+  .page-reservation .tariff-overall {
+    position: relative; }
+  .page-reservation .tariff-price {
+    position: absolute;
+    bottom: 5px;
+    left: 24px;
+    border: none;
+    width: 80px; }
   .page-reservation .tariff-heading {
     width: 50%; }
     .page-reservation .tariff-heading h3 {
@@ -1603,6 +1613,7 @@ main {
     margin-top: 0; } }
 @media screen and (min-width: 1200px) {
   .makeOrder {
+    width: 26%;
     margin: 0;
     float: left; }
 
