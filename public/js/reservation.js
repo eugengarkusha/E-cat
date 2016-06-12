@@ -601,11 +601,18 @@ $(function () {
       changeFilter($('.filtering')[0]);
 
       tariffSum('.category-list .category');
+
+      categoryGallery('.category-list');
+
+      categoryTimepicker(from);
       
       (function () {
         
-        var min = $('#checkIn').val();
-        var max = $('#checkOut').val();
+        var min = moment($('#checkIn').val(), 'YYYYMMDD');
+        var max = moment($('#checkOut').val(), 'YYYYMMDD');
+
+        console.log(min.format('YYYY.MM.DD'), max.format('YYYY.MM.DD'));
+
         $('#checkOut').datetimepicker({
             format:'YYYY.MM.DD',
             formatDate:'YYYY.MM.DD',
@@ -613,7 +620,7 @@ $(function () {
             validateOnBlur: false,
             scrollMonth: false,
             scrollTime: false,
-            minDate: min
+            minDate: min.add(1, 'd').format('YYYY.MM.DD')
         });
 
         $('#checkIn').datetimepicker({
@@ -624,14 +631,12 @@ $(function () {
             scrollMonth: false,
             scrollTime: false,
             minDate: 0,
-            maxDate: max
+            maxDate: max.subtract(1, 'd').format('YYYY.MM.DD')
         });
 
-        categoryGallery('.category-list');
-
-        categoryTimepicker(from);
-
+        
       })();
 
   });
+
 });

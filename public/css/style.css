@@ -1455,6 +1455,9 @@ main {
   main .contact-box {
     background-color: rgba(255, 255, 255, 0.75); }
 
+  .image--welcome {
+    width: 49%; }
+
   .page-hotel-ekaterina h1 {
     font-size: 2.6rem; }
 
