@@ -9,7 +9,7 @@ object RoomOps {
   def fromXml(n: Node): Room = {
 
     Record(
-      number = n \@ "num" toInt,
+      number = n \@ "num" takeWhile(_.isDigit) toInt,
       guestsCnt = n \@ "guests" toInt,
       additionalGuestsCnt= n \@ "addguests" toInt,
       twin =  n \@ "twin" toBoolean,

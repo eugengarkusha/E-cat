@@ -26,7 +26,7 @@ object CategoryControlProtocol {
   type prices=Map[String, Double]
   type RoomLimits = Record.`'guestsCnt->Int, 'addGuestsCnt-> Int, 'twin->Boolean`.T
   type RoomCtrlResponse = Record.`'id-> Int, 'limits-> RoomLimits, 'prices->prices`.T
-  type CtrlResponse = Record.`'eci->Boolean, 'lco->Boolean, 'roomCtrls-> List[RoomCtrlResponse]`.T
+  type CtrlResponse = Record.`'eci->Boolean, 'lco->Boolean, 'maxRoomCnt->Int, 'roomCtrls-> List[RoomCtrlResponse]`.T
   type TariffsRedraw = Record.`'ctrl-> CtrlResponse, 'tg->List[TariffGroup]`.T
   type FullRedraw = Record.`'hotel-> Hotel, 'category-> Category`.T
   case object Gone
@@ -93,7 +93,7 @@ object CategoryControlProtocol {
           )
         }
 
-        def resp:CtrlResponse = Record(eci=eci,lco=lco,roomCtrls=roomCtrlResps)
+        def resp:CtrlResponse = Record(eci=eci, lco=lco, maxRoomCnt = rooms.size, roomCtrls=roomCtrlResps)
 
         if (tarGrps.hashCode == tariffGroupsHash) respCp(resp)
         else {

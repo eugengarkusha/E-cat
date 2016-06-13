@@ -12,7 +12,7 @@ object PricesOps {
     Record(
       room = (n \@"roomprice").toDouble * 100 toLong,
       bkf = (n \@"bkfprice").toDouble * 100 toLong,
-      twin = (n \@"twinPrice").toDouble * 100 toLong,
+      twin = (n \@"twinprice").toDouble * 100 toLong,
       eci = (n \@"eciprice").toDouble * 100 toLong,
       lco = (n \@"lcoprice").toDouble * 100 toLong
     )
