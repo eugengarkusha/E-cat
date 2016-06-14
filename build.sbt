@@ -17,7 +17,7 @@ libraryDependencies += "org.typelevel" %% "shapeless-scalaz" % "0.4"
 libraryDependencies += "sandbox" %% "schema" % "1.1"
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
 
-unmanagedJars in Compile += file("./lib/ecatWsClient.jar")
+unmanagedJars in Compile += file("./lib/ecat.jar")
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
