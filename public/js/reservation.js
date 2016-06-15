@@ -35,14 +35,14 @@ $(function () {
       timeFormat: 'H:i',
       disableTextInput: true
     });
-    if(time === today) {
+    if (time === today) {
       console.log('BIngo');
       var minTime = moment.tz(new Date(), 'Europe/Kiev');
       var minutes = minTime.minutes();
       var ci = $('.timepicker.ci') ;
-      if(minutes > 30) {
+      if (minutes > 30) {
         minTime.add(60 - minutes, 'm');
-      } else if(minutes < 30) {
+      } else if (minutes < 30) {
         minTime.add(30 - minutes, 'm');
       }
       ci.timepicker({
@@ -56,8 +56,8 @@ $(function () {
   };
 
   var globalFilt = {
-    from:  from,
-    to:    to,
+    from:  moment((from).toString()),
+    to:    moment((to).toString()),
     hotel: {},
     room:  {},
     opt:   []
@@ -83,7 +83,7 @@ $(function () {
         return result.element.checked ? true : false;
       }
 
-      if(result.element.tagName === "SELECT" || result.element.tagName === "INPUT") {
+      if (result.element.tagName === "SELECT" || result.element.tagName === "INPUT") {
         console.timeEnd('elemAndVal');
         return result.element.value;
       }
@@ -163,8 +163,8 @@ $(function () {
   var collectFilters = function (elem) {
     console.time('collectFilters');
     var filters = {
-      from: elemAndVal(elem, '#checkIn').value.replace(/\./g,'') + '000000',
-      to: elemAndVal(elem, '#checkOut').value.replace(/\./g,'') + '000000',
+      from: moment(elemAndVal(elem, '#checkIn'), 'YYYYMMDD'),
+      to: moment(elemAndVal(elem, '#checkOut'), 'YYYYMMDD'),
       hotel: {
         name: elemAndVal(elem, '#hotel').value
       },
@@ -176,8 +176,8 @@ $(function () {
     if (filters.hotel.name === '') delete filters.hotel.name;
     if (filters.room.twin === false) delete filters.room.twin;
     
-    globalFilt.from = +filters.from;
-    globalFilt.to = +filters.to;
+    globalFilt.from = filters.from;
+    globalFilt.to   = filters.to;
     
     console.timeEnd('collectFilters');
     return filters;
@@ -208,7 +208,7 @@ $(function () {
     $(category).each(function (index, cat) {
       var sum = 0;
       $(cat).find('.tariff').each(function (index, tariff) {
-        if($(tariff).find('[name="tariff-btn"]')[0].hasAttribute('checked')) {
+        if ($(tariff).find('[name="tariff-btn"]')[0].hasAttribute('checked')) {
           sum += +$(tariff).find('[name="tariff-price"]').val();
         }
       });
@@ -341,19 +341,19 @@ $(function () {
         
         $(cat).find('input').not('[name="timeIn"], [name="timeOut"], [data-twin]').
         removeAttr('disabled');
-        if($(cat).find('[data-twin]').is('[data-twin=false]')) {
+        if ($(cat).find('[data-twin]').is('[data-twin=false]')) {
           $(cat).find('[data-twin=false]').attr('disabled', true);
         }
       };
       
-      if(resp.type === 'basic') {
+      if (resp.type === 'basic') {
         // console.log('basic');
         setupOpt(resp, cat);
         addDays();
         return;
       }
       
-      if(resp.type === 'tariffsRedraw') {
+      if (resp.type === 'tariffsRedraw') {
         // console.log('tariffsRedraw');
         $(cat).find('.tariffs').empty().append(resp.html);
         setupOpt(resp, cat);
@@ -361,7 +361,7 @@ $(function () {
         return;
       }
       
-      if(resp.type === 'fullRedraw') {
+      if (resp.type === 'fullRedraw') {
         // console.log('fullRedraw');
         $(cat).replaceWith(resp.html);
         var newCat = $('[data-catId=' + cat.dataset.catid +']');
@@ -372,7 +372,7 @@ $(function () {
         return;
       }
       
-      if(resp.type === 'gone') {
+      if (resp.type === 'gone') {
         // console.log('gone');
         $(cat).remove();
         delete catCtrl[cat.dataset.catid];
@@ -389,15 +389,19 @@ $(function () {
       console.log('specialResponceHandling', resp);
       $(e.target).parent().find('.eci, .lco').hide();          
         
-      if(resp.type === 'basic' || resp.type === 'tariffsRedraw') {
+      if (resp.type === 'basic' || resp.type === 'tariffsRedraw') {
         console.log('resp.type === basic || resp.type === tariffsRedraw');
         $(e.target).parent().find('.cico, .time-no-available').hide();
         $(e.target).parent().find('.additional-days').show();
+
+        setupOpt(resp, cat);
+
+        
         
         return;
       }
     
-      if(resp.type === 'fullRedraw' || resp.type === 'gone') {
+      if (resp.type === 'fullRedraw' || resp.type === 'gone') {
         console.log('resp.type === fullRedraw || resp.type === gone');
         $(e.target).parent().find('.cico, .additional-days').hide();
         $(e.target).parent().find('.time-no-available').show();
@@ -424,7 +428,7 @@ $(function () {
       
       tabsList.style.display = 'block'; 
       
-      if(amount > tabsLength) {
+      if (amount > tabsLength) {
         var cnt = amount - tabsLength;
         
         for(var i = 1; i <= cnt; i++) {
@@ -457,7 +461,7 @@ $(function () {
         }
       }
       
-      if(!$(tabsList).children().is('.tabs-item--active')) {
+      if (!$(tabsList).children().is('.tabs-item--active')) {
         $(tabsList).children().first().addClass('tabs-item--active');
       }
       
@@ -476,7 +480,7 @@ $(function () {
     
     var cleartabs = function () {
       $(tabsList).children().each(function (index, elem) {
-        if(index !== 0) $(elem).remove();  
+        if (index !== 0) $(elem).remove();  
       });
       tabsList.style.display = 'none';
       $(catSettingsList).children().each(function (index, elem) {
@@ -486,6 +490,15 @@ $(function () {
     };
     
     (amount > 1) ? populatetabs() : cleartabs();
+
+    askFor(
+      globalFilt.from.format('YYYYMMDDHHmmss'), 
+      globalFilt.to.format('YYYYMMDDHHmmss'), 
+      stringOpts(cat))
+      .done(function (resp) {
+        setupOpt(resp, cat);
+        changeSelect(cat, '[name=room_count]', resp.ctrl.maxRoomCnt);
+      });
     
   };
 
@@ -498,24 +511,24 @@ $(function () {
       
       var cat  = $('.category').has(e.target)[0];
       
-      if(e.target.name === 'room_count') {
+      if (e.target.name === 'room_count') {
         tabs(cat, e.target.value, '.tabs', '.cat-settings');
         tariffSum(cat);
         return;
       }
 
-      if(e.target.name === 'tariff-btn') {
+      if (e.target.name === 'tariff-btn') {
         switchTariff(cat, e.target);
         return;
       }
 
       var req  = stringOpts(cat),
-          from = globalFilt.from;
-          to   = globalFilt.to;
+          from = globalFilt.from.format('YYYYMMDDHHmmss');
+          to   = globalFilt.to.format('YYYYMMDDHHmmss');
           
           console.log(req);
       
-      if(e.target.name === 'timeIn' || e.target.name === 'timeOut') {
+      if (e.target.name === 'timeIn' || e.target.name === 'timeOut') {
         
         var hotelCI = stringToMinutes($(cat).parent().data('eci')),
             hotelCO = stringToMinutes($(cat).parent().data('lco')),
@@ -528,7 +541,7 @@ $(function () {
               +moment(to, "YYYYMMDD").add(1, 'd').format("YYYYMMDD000000") :
               to;
               
-        if(e.target.name === 'timeIn' && catCI <= hotelCI || e.target.name === 'timeOut' && catCO >= hotelCO) {
+        if (e.target.name === 'timeIn' && catCI <= hotelCI || e.target.name === 'timeOut' && catCO >= hotelCO) {
           
           specialResponceHandling(askFor(from, to, req), cat, e);
           

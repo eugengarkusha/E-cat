@@ -62,11 +62,11 @@ $(function () {
 
   var setupDatepicker = function () {
 
-    if($('#checkIn')[0] && $('#checkOut')[0]) {
+    if ($('#checkIn')[0] && $('#checkOut')[0]) {
       $('#checkIn').change(function(e) {
         console.log('Click on #checkIn');
-        var min = document.querySelector('#checkIn').value;
-        var max = document.querySelector('#checkOut').value;
+        var min        = document.querySelector('#checkIn').value;
+        var max        = document.querySelector('#checkOut').value;
         var wrappedMin = moment(min, 'YYYYMMDD').add(1, 'd');
         $('#checkOut').datetimepicker({
           format:         'YYYY.MM.DD',
@@ -80,8 +80,8 @@ $(function () {
       });
 
       $('#checkOut').change(function(e) {
-        var min = document.querySelector('#checkIn').value;
-        var max = document.querySelector('#checkOut').value;
+        var min        = document.querySelector('#checkIn').value;
+        var max        = document.querySelector('#checkOut').value;
         var wrappedMax = moment(max, 'YYYYMMDD');
         console.log(wrappedMax.toDate());
         $('#checkIn').datetimepicker({
@@ -107,7 +107,7 @@ $(function () {
 
   (function () {
     
-    if($('.makeOrder')[0]) {
+    if ($('.makeOrder')[0]) {
       var link     = $('#makeOrder__btn'),
           fromInit = $('#checkIn').val(),
           toInit   = $('#checkOut').val();
@@ -118,13 +118,15 @@ $(function () {
             to   = moment($('#checkOut').val(), 'YYYYMMDD'),
             now  = moment().tz('Europe/Kiev');
 
-        if(fromInit === $('#checkIn').val() || toInit === $('#checkOut').val()) {
+        if (fromInit === $('#checkIn').val() 
+        || toInit === $('#checkOut').val()
+        || from === to) {
           return;
         }
 
-         if(from.format('YYYYMMDD') === now.format('YYYYMMDD')) {
-           if(moment().tz('Europe/Kiev').add(1, 'h').format('YYYYMMDD') === from.format('YYYYMMDD')) {
-             from = moment().tz('Europe/Kiev').format('YYYYMMDDHHmmss');
+         if (from.format('YYYYMMDD') === now.format('YYYYMMDD')) {
+           if (moment().tz('Europe/Kiev').add(1, 'h').format('YYYYMMDD') === from.format('YYYYMMDD')) {
+             from = moment().tz('Europe/Kiev').add(1, 'm').format('YYYYMMDDHHmmss');
              to   = to.format('YYYYMMDDHHmmss');
            } else {
              from = moment().tz( 'Europe/Kiev').add(1, 'd').format('YYYYMMDD000000');
@@ -160,7 +162,7 @@ $(function () {
     var map = new google.maps.Map(mapCanvas, mapOptions);
   }
 
-  if($('#imageGallery')[0]) {
+  if ($('#imageGallery')[0]) {
     $('#imageGallery').lightSlider({
       gallery: true,
       item: 1,
