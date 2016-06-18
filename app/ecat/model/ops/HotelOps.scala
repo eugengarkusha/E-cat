@@ -2,7 +2,7 @@ package ecat.model.ops
 
 import java.time.{LocalDateTime, LocalTime}
 
-import shapeless.record.Record
+import shapeless.record._
 import ecat.model.Schema._
 import scala.xml.Node
 import scalaz.{NonEmptyList, Category=>_,_} ,Scalaz._
@@ -30,5 +30,6 @@ object HotelOps {
     }.reduce(_ +++ _)
   }
 
+  def maxRoomCnt(hotels: Seq[Hotel]): Int = hotels.iterator.map(_.get('categories).iterator.map(_.get('rooms).size).max).max
 
 }
