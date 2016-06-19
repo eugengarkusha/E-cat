@@ -137,6 +137,8 @@ $(function () {
            to   = to.format('YYYYMMDDHHmmss');
          }
 
+         if (from === to) return;
+
         $(link)[0].href = 'reservation/' + from + '/' + to;
 
       };
