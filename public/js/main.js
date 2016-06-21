@@ -137,7 +137,7 @@ $(function () {
            to   = to.format('YYYYMMDDHHmmss');
          }
 
-         if (from === to) return;
+         if (from === to) return; // it's not working 
 
         $(link)[0].href = 'reservation/' + from + '/' + to;
 

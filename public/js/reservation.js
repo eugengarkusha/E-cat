@@ -55,6 +55,22 @@ $(function () {
     } 
   };
 
+  var setupFrom = function (from) {
+    var now = moment().tz('Europe/Kiev');
+    var from = from;
+    if (from.format('YYYYMMDD') === now.format('YYYYMMDD')) {
+      if (moment().tz('Europe/Kiev').add(1, 'h').format('YYYYMMDD') === from.format('YYYYMMDD')) {
+        from = moment().tz('Europe/Kiev').add(1, 'm').format('YYYYMMDDHHmmss');
+      } else {
+        from = moment().tz( 'Europe/Kiev').add(1, 'd').format('YYYYMMDD000000');
+      }
+    } else {
+      from = from.format('YYYYMMDDHHmmss');
+    }
+
+    return from;
+  };
+
   var globalFilt = {
     from:  moment((from).toString()),
     to:    moment((to).toString()),
@@ -576,64 +592,17 @@ $(function () {
           catCO     = stringToMinutes($(cat).find('[name="timeOut"]').val());
           
           console.log('REQUEST', req);
-      
-      // if (e.target.name === 'timeIn' || e.target.name === 'timeOut') {
-        
-      //   var hotelCI = stringToMinutes($(cat).parent().data('eci')),
-      //       hotelCO = stringToMinutes($(cat).parent().data('lco')),
-      //       catCI   = stringToMinutes($(cat).find('[name="timeIn"]').val()),
-      //       catCO   = stringToMinutes($(cat).find('[name="timeOut"]').val());
-      //       if (catCI <= hotelCI) {
-      //         var now = moment().tz('Europe/Kiev');
-      //         var tempFrom = moment(globalFilt.from.toDate());
-      //         var f = 'YYYYMMDD';
-      //         if (tempFrom.subtract(1, 'd').format(f) === now.format(f)) {
-      //           from = +now.add(1, 'm').format(formatStr);
-      //         }
-      //       } else {
-      //         from = +tempFrom.format(formatStr);
-      //       }
-      //      to = (catCO >= hotelCO) ?
-      //         +to.add(1, 'd').format(formatStr) :
-      //         +to.format(formatStr);
-              
-      //   if ((e.target.name === 'timeIn' && catCI <= hotelCI) 
-      //   || (e.target.name === 'timeOut' && catCO >= hotelCO)) {
-
-      //     specialResponceHandling(askFor(from, to, req), cat, e);
-          
-      //   } else { 
-      //     usualResponceHandling(askFor(from, to, req), cat, e);
-      //    }
-        
-      // } else { 
-      //   if ($(cat).find('[data-show="true"]')[0]) {
-      //     specialResponceHandling(askFor(
-      //       from.format(formatStr), 
-      //       to.format(formatStr), req), 
-      //       cat, 
-      //       e);
-      //   } else {
-      //   usualResponceHandling(askFor(
-      //     from.format(formatStr), 
-      //     to.format(formatStr), req), 
-      //     cat, 
-      //     e); 
-      //   }
-      // }
 
       if (catCI <= hotelCI || catCO >= hotelCO) {
         var tempFROM = moment(globalFilt.from.toDate());
         from = +from.format(formatStr);
 
         if (catCI <= hotelCI) {
-          console.log('BINGO');
           var now = moment().tz('Europe/Kiev');
           var f = 'YYYYMMDD';
           if (tempFROM.subtract(1, 'd').format(f) === now.format(f)) {
             from = +now.add(1, 'h').format(formatStr);
           } else {
-            console.log('BINGO ELSE');
             from = +tempFROM.format(formatStr);
           }
         } 
@@ -673,8 +642,10 @@ $(function () {
       // console.log(collectFilters(selector));
         var container = e.currentTarget,
               req  = createFiltersReqObj(collectFilters(selector)),
-              from = +collectFilters(selector).from.format('YYYYMMDDHHmmss'),
+              // from = +collectFilters(selector).from.format('YYYYMMDDHHmmss'),
+              from = setupFrom(collectFilters(selector).from),
               to   = +collectFilters(selector).to.format('YYYYMMDDHHmmss');
+              console.log(from);
               
           $.ajax(jsRoutes.controllers.Application.filter(from, to, JSON.stringify(req)))
           .done(function( response ) {
