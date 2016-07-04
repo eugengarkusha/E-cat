@@ -20,10 +20,14 @@ object HotelOps {
       def eci = LocalTime.of(hotelNode \@ "eci" toInt, 0)
       def lco = LocalTime.of(hotelNode \@ "lco" toInt, 0)
       def cats:ValidationNel[String, List[Category]] = {
-        (hotelNode \ "category").toList
+        val _cats = (hotelNode \ "category").toList
+        if (_cats.isEmpty) s"No categories in hotel name=$name id=$id".failureNel
+        else{
+          _cats
           .map(c=>CategoryOps.fromXml(c, from, to).map(_ :: Nil))
           .reduce(_ +++ _)
           .leftMap(errs => NonEmptyList(s"hotelId=$id:$errs"))
+        }
       }
       cats.map(c => Record(id = id, name = name, checkInTime = ci, checkOutTime = co ,eci = eci, lco= lco, categories = c) :: Nil)
 

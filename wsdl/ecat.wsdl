@@ -63,10 +63,10 @@
       <documentation>
         <wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" conformsTo="http://ws-i.org/profiles/basic/1.1"></wsi:Claim>
       </documentation>
-      <soapbind:address location="http://185.32.61.26:8082/gostproba/ws/ObmenSait_ws1.1cws"></soapbind:address>
+      <soapbind:address location="http://91.228.59.252:8082/gostproba/ws/ObmenSait_ws1.1cws"></soapbind:address>
     </port>
     <port binding="tns:ObmenSaitSoap12Binding" name="ObmenSaitSoap12">
-      <soap12bind:address location="http://185.32.61.26:8082/gostproba/ws/ObmenSait_ws1.1cws"></soap12bind:address>
+      <soap12bind:address location="http://91.228.59.252:8082/gostproba/ws/ObmenSait_ws1.1cws"></soap12bind:address>
     </port>
   </service>
 </definitions>
