@@ -73,6 +73,10 @@ class Application (cache: CacheApi, env: play.api.Environment ) extends Controll
     srv
   }
 
+  def block(r: JsObject) = Action{
+    Ok("true")
+  }
+
   def dumpXml(from:String, to:String)= Action.async{
       //Just forwarding XML from 1C
       Future(proxy.getNomSvobod(from, to)).map(Ok(_))

@@ -20,7 +20,8 @@ GET     /contacts                                 controllers.Application.contac
 GET     /comment                                  controllers.Application.comment
 GET     /post                                     controllers.Application.post
 GET     /event                                    controllers.Application.event
-#GET     /cat                                     controllers.Application.cat
+GET     /block                                    controllers.Application.block(r: JsObject)
+#GET    /cat                                     controllers.Application.cat
 
 #Ajax
 GET     /category/:from/:to                       controllers.Application.category(from:LocalDateTime,to:LocalDateTime, c: CatCtrlRequest, f: Filter[Hotel])
