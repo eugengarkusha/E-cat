@@ -31,7 +31,7 @@ object HotelOps {
       }
       cats.map(c => Record(id = id, name = name, checkInTime = ci, checkOutTime = co ,eci = eci, lco= lco, categories = c) :: Nil)
 
-    }.reduce(_ +++ _)
+    }.foldLeft(List.empty[Hotel].successNel[String])(_ +++ _)
   }
 
   def maxRoomCnt(hotels: Seq[Hotel]): Int = hotels.iterator.map(_.get('categories).iterator.map(_.get('rooms).size).max).max
