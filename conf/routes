@@ -21,16 +21,24 @@ GET     /comment                                  controllers.Application.commen
 GET     /post                                     controllers.Application.post
 GET     /event                                    controllers.Application.event
 GET     /block                                    controllers.Application.block(r: JsObject)
-#GET    /cat                                     controllers.Application.cat
+#GET    /cat                                      controllers.Application.cat
 
 #Ajax
 GET     /category/:from/:to                       controllers.Application.category(from:LocalDateTime,to:LocalDateTime, c: CatCtrlRequest, f: Filter[Hotel])
 #TODO: JsObjects in signature? Think of validation.
 GET     /filters/:from/:to                        controllers.Application.filter(from:LocalDateTime,to:LocalDateTime, f: Filter[Hotel])
 
-GET   /blockCancel                                       controllers.BlockApiTest.blockCancel(id)
-
 
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                             controllers.Assets.versioned(path="/public", file: Asset)
+
+
+GET   /blockCancel/:id                             controllers.BlockApiTest.blockCancel(id)
+GET   /blockContinue/:id                          controllers.BlockApiTest.blockContinue(id)
+GET   /blockPay/:id                                controllers.BlockApiTest.blockPay(id)
+GET   /paid/:id                                    controllers.BlockApiTest.paid(id)
+GET   /zayavka/:id                                 controllers.BlockApiTest.zayavka(id)
+//todo: urlparams/payload
+GET   /blockCategory/:DatN/:DatK/:idHotell/:idCategory/:idGost                           controllers.BlockApiTest.blockCategory(DatN, DatK, idHotell, idCategory, idGost, TimeBlock: BigInteger, Number: Zakaz, Summa: Float)
+
