@@ -28,6 +28,8 @@ GET     /category/:from/:to                       controllers.Application.catego
 #TODO: JsObjects in signature? Think of validation.
 GET     /filters/:from/:to                        controllers.Application.filter(from:LocalDateTime,to:LocalDateTime, f: Filter[Hotel])
 
+GET   /blockCancel                                       controllers.BlockApiTest.blockCancel(id)
+
 
 
 # Map static resources from the /public folder to the /assets URL path

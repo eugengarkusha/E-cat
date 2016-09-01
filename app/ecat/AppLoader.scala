@@ -1,8 +1,13 @@
 package ecat
 
-import play.api._,ApplicationLoader.Context
+import javax.xml.ws.BindingProvider
+
+import play.api._
+import ApplicationLoader.Context
 import router.Routes
-import _root_.controllers.{Assets, Application => AppController}
+import _root_.controllers.{Assets, Application => AppController, BlockApiTest}
+import async.client.ObmenSait
+import async.client.ObmenSaitPortType
 import play.api.cache.EhCacheComponents
 
 
@@ -11,5 +16,21 @@ class AppLoader extends ApplicationLoader {
 }
 
 class Components(context: Context) extends BuiltInComponentsFromContext(context) with EhCacheComponents{
-  lazy val router = new Routes(httpErrorHandler, new AppController(defaultCacheApi, context.environment), new Assets(httpErrorHandler) )
+
+  val proxy: ObmenSaitPortType ={
+    val srv = new ObmenSait().getObmenSaitSoap()
+    val req_ctx =  srv.asInstanceOf[BindingProvider].getRequestContext
+    req_ctx.put(BindingProvider.USERNAME_PROPERTY, "sait");
+    req_ctx.put(BindingProvider.PASSWORD_PROPERTY, "sait555");
+    srv
+  }
+
+  lazy val router = {
+    new Routes(
+      httpErrorHandler,
+      new AppController(defaultCacheApi, context.environment, proxy),
+      new BlockApiTest(proxy),
+      new Assets(httpErrorHandler)
+    )
+  }
 }

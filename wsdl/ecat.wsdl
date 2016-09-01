@@ -1,72 +1,428 @@
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:JAXWS="http://java.sun.com/xml/ns/jaxws" xmlns:soap12bind="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="OtelSait" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="OtelSait" name="ObmenSait" targetNamespace="OtelSait">
-  <JAXWS:bindings>
-    <package xmlns="http://java.sun.com/xml/ns/jaxws" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="async.client"></package>
-    <enableAsyncMapping xmlns="http://java.sun.com/xml/ns/jaxws" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">true</enableAsyncMapping>
-  </JAXWS:bindings>
-  <types>
-    <xs:schema xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xs1="OtelSait" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.0" targetNamespace="OtelSait">
-      <xs:element name="GetNomSvobod">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="DatN" type="xs:string"></xs:element>
-            <xs:element name="DatK" type="xs:string"></xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="GetNomSvobodResponse">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="return" type="xs:string"></xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:schema>
-  </types>
-  <message name="GetNomSvobodRequestMessage">
-    <part element="tns:GetNomSvobod" name="parameters"></part>
-  </message>
-  <message name="GetNomSvobodResponseMessage">
-    <part element="tns:GetNomSvobodResponse" name="parameters"></part>
-  </message>
-  <portType name="ObmenSaitPortType">
-    <operation name="GetNomSvobod">
-      <input message="tns:GetNomSvobodRequestMessage"></input>
-      <output message="tns:GetNomSvobodResponseMessage"></output>
-    </operation>
-  </portType>
-  <binding name="ObmenSaitSoapBinding" type="tns:ObmenSaitPortType">
-    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soapbind:binding>
-    <operation name="GetNomSvobod">
-      <soapbind:operation soapAction="OtelSait#ObmenSait:GetNomSvobod" style="document"></soapbind:operation>
-      <input>
-        <soapbind:body use="literal"></soapbind:body>
-      </input>
-      <output>
-        <soapbind:body use="literal"></soapbind:body>
-      </output>
-    </operation>
-  </binding>
-  <binding name="ObmenSaitSoap12Binding" type="tns:ObmenSaitPortType">
-    <soap12bind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap12bind:binding>
-    <operation name="GetNomSvobod">
-      <soap12bind:operation soapAction="OtelSait#ObmenSait:GetNomSvobod" style="document"></soap12bind:operation>
-      <input>
-        <soap12bind:body use="literal"></soap12bind:body>
-      </input>
-      <output>
-        <soap12bind:body use="literal"></soap12bind:body>
-      </output>
-    </operation>
-  </binding>
-  <service name="ObmenSait">
-    <port binding="tns:ObmenSaitSoapBinding" name="ObmenSaitSoap">
-      <documentation>
-        <wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" conformsTo="http://ws-i.org/profiles/basic/1.1"></wsi:Claim>
-      </documentation>
-      <soapbind:address location="http://91.228.59.252:8082/gostproba/ws/ObmenSait_ws1.1cws"></soapbind:address>
-    </port>
-    <port binding="tns:ObmenSaitSoap12Binding" name="ObmenSaitSoap12">
-      <soap12bind:address location="http://91.228.59.252:8082/gostproba/ws/ObmenSait_ws1.1cws"></soap12bind:address>
-    </port>
-  </service>
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+		xmlns:soap12bind="http://schemas.xmlsoap.org/wsdl/soap12/"
+		xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
+		xmlns:tns="OtelSait"
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		xmlns:xsd1="OtelSait"
+		name="ObmenSait"
+		targetNamespace="OtelSait">
+	<types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+				xmlns:xs1="OtelSait"
+				targetNamespace="OtelSait"
+				attributeFormDefault="unqualified"
+				elementFormDefault="qualified">
+			<xs:complexType name="Continue">
+				<xs:sequence>
+					<xs:element name="tip"
+							type="xs:boolean"/>
+					<xs:element name="timer"
+							type="xs:integer"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ReturnZakaz">
+				<xs:sequence>
+					<xs:element name="tip"
+							type="xs:boolean"/>
+					<xs:element name="idzakaza"
+							type="xs:string"/>
+					<xs:element name="timer"
+							type="xs:integer"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="zakaz">
+				<xs:sequence>
+					<xs:element name="idTarif"
+							type="xs:string"/>
+					<xs:element name="KvoOsn"
+							type="xs:integer"/>
+					<xs:element name="KvoDop"
+							type="xs:integer"/>
+					<xs:element name="Twin"
+							type="xs:boolean"/>
+					<xs:element name="Bracvest"
+							type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetNomSvobod">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DatN"
+								type="xs:string"/>
+						<xs:element name="DatK"
+								type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetNomSvobodResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlockCategory">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DatN"
+								type="xs:string"/>
+						<xs:element name="DatK"
+								type="xs:string"/>
+						<xs:element name="idHotell"
+								type="xs:string"/>
+						<xs:element name="idCategory"
+								type="xs:string"/>
+						<xs:element name="idGost"
+								type="xs:string"/>
+						<xs:element name="TimeBlock"
+								type="xs:integer"/>
+						<xs:element name="Number"
+								type="tns:zakaz"/>
+						<xs:element name="Summa"
+								type="xs:float"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlockCategoryResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="tns:ReturnZakaz"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlockCancel">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="id"
+								type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlockCancelResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Zayvka">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="id"
+								type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ZayvkaResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlockContinue">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="id"
+								type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlockContinueResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="tns:Continue"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlockPay">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="id"
+								type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlockPayResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="tns:Continue"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Paid">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="id"
+								type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PaidResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</types>
+	<message name="GetNomSvobodRequestMessage">
+		<part name="parameters"
+				element="tns:GetNomSvobod"/>
+	</message>
+	<message name="GetNomSvobodResponseMessage">
+		<part name="parameters"
+				element="tns:GetNomSvobodResponse"/>
+	</message>
+	<message name="BlockCategoryRequestMessage">
+		<part name="parameters"
+				element="tns:BlockCategory"/>
+	</message>
+	<message name="BlockCategoryResponseMessage">
+		<part name="parameters"
+				element="tns:BlockCategoryResponse"/>
+	</message>
+	<message name="BlockCancelRequestMessage">
+		<part name="parameters"
+				element="tns:BlockCancel"/>
+	</message>
+	<message name="BlockCancelResponseMessage">
+		<part name="parameters"
+				element="tns:BlockCancelResponse"/>
+	</message>
+	<message name="ZayvkaRequestMessage">
+		<part name="parameters"
+				element="tns:Zayvka"/>
+	</message>
+	<message name="ZayvkaResponseMessage">
+		<part name="parameters"
+				element="tns:ZayvkaResponse"/>
+	</message>
+	<message name="BlockContinueRequestMessage">
+		<part name="parameters"
+				element="tns:BlockContinue"/>
+	</message>
+	<message name="BlockContinueResponseMessage">
+		<part name="parameters"
+				element="tns:BlockContinueResponse"/>
+	</message>
+	<message name="BlockPayRequestMessage">
+		<part name="parameters"
+				element="tns:BlockPay"/>
+	</message>
+	<message name="BlockPayResponseMessage">
+		<part name="parameters"
+				element="tns:BlockPayResponse"/>
+	</message>
+	<message name="PaidRequestMessage">
+		<part name="parameters"
+				element="tns:Paid"/>
+	</message>
+	<message name="PaidResponseMessage">
+		<part name="parameters"
+				element="tns:PaidResponse"/>
+	</message>
+	<portType name="ObmenSaitPortType">
+		<operation name="GetNomSvobod">
+			<input message="tns:GetNomSvobodRequestMessage"/>
+			<output message="tns:GetNomSvobodResponseMessage"/>
+		</operation>
+		<operation name="BlockCategory">
+			<input message="tns:BlockCategoryRequestMessage"/>
+			<output message="tns:BlockCategoryResponseMessage"/>
+		</operation>
+		<operation name="BlockCancel">
+			<input message="tns:BlockCancelRequestMessage"/>
+			<output message="tns:BlockCancelResponseMessage"/>
+		</operation>
+		<operation name="Zayvka">
+			<input message="tns:ZayvkaRequestMessage"/>
+			<output message="tns:ZayvkaResponseMessage"/>
+		</operation>
+		<operation name="BlockContinue">
+			<input message="tns:BlockContinueRequestMessage"/>
+			<output message="tns:BlockContinueResponseMessage"/>
+		</operation>
+		<operation name="BlockPay">
+			<input message="tns:BlockPayRequestMessage"/>
+			<output message="tns:BlockPayResponseMessage"/>
+		</operation>
+		<operation name="Paid">
+			<input message="tns:PaidRequestMessage"/>
+			<output message="tns:PaidResponseMessage"/>
+		</operation>
+	</portType>
+	<binding name="ObmenSaitSoapBinding"
+			type="tns:ObmenSaitPortType">
+		<soapbind:binding style="document"
+				transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="GetNomSvobod">
+			<soapbind:operation style="document"
+					soapAction="OtelSait#ObmenSait:GetNomSvobod"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="BlockCategory">
+			<soapbind:operation style="document"
+					soapAction="OtelSait#ObmenSait:BlockCategory"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="BlockCancel">
+			<soapbind:operation style="document"
+					soapAction="OtelSait#ObmenSait:BlockCancel"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="Zayvka">
+			<soapbind:operation style="document"
+					soapAction="OtelSait#ObmenSait:Zayvka"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="BlockContinue">
+			<soapbind:operation style="document"
+					soapAction="OtelSait#ObmenSait:BlockContinue"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="BlockPay">
+			<soapbind:operation style="document"
+					soapAction="OtelSait#ObmenSait:BlockPay"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="Paid">
+			<soapbind:operation style="document"
+					soapAction="OtelSait#ObmenSait:Paid"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<binding name="ObmenSaitSoap12Binding"
+			type="tns:ObmenSaitPortType">
+		<soap12bind:binding style="document"
+				transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="GetNomSvobod">
+			<soap12bind:operation style="document"
+					soapAction="OtelSait#ObmenSait:GetNomSvobod"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="BlockCategory">
+			<soap12bind:operation style="document"
+					soapAction="OtelSait#ObmenSait:BlockCategory"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="BlockCancel">
+			<soap12bind:operation style="document"
+					soapAction="OtelSait#ObmenSait:BlockCancel"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="Zayvka">
+			<soap12bind:operation style="document"
+					soapAction="OtelSait#ObmenSait:Zayvka"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="BlockContinue">
+			<soap12bind:operation style="document"
+					soapAction="OtelSait#ObmenSait:BlockContinue"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="BlockPay">
+			<soap12bind:operation style="document"
+					soapAction="OtelSait#ObmenSait:BlockPay"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="Paid">
+			<soap12bind:operation style="document"
+					soapAction="OtelSait#ObmenSait:Paid"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="ObmenSait">
+		<port name="ObmenSaitSoap"
+				binding="tns:ObmenSaitSoapBinding">
+			<documentation> 
+				<wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/"
+						conformsTo="http://ws-i.org/profiles/basic/1.1"/>
+			</documentation>
+			<soapbind:address location="http://91.228.59.252:8082/gostproba/ws/ObmenSait_ws1.1cws"/>
+		</port>
+		<port name="ObmenSaitSoap12"
+				binding="tns:ObmenSaitSoap12Binding">
+			<soap12bind:address location="http://91.228.59.252:8082/gostproba/ws/ObmenSait_ws1.1cws"/>
+		</port>
+	</service>
 </definitions>
