@@ -1,32 +1,32 @@
 package controllers
 
-import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
-import javax.xml.ws.BindingProvider
+import java.time.LocalDateTime
 
-import async.client.ObmenSait
 import async.client.ObmenSaitPortType
 import com.typesafe.config.ConfigFactory
 import ecat.model.ops.HotelOps
-import ecat.util.DateTime
 import play.api.cache.CacheApi
 import play.api.libs.json._
 import play.api.mvc._
-//product writes has leads to an issue with Map setialization(conflicts with writes of traversable of tuples wich are products and writable by productwrites)
-import schema.RecordJsonFormats.{productWrites=>_,_}
-import ecat.util.JsonFormats._
-import views.html.pages.{tariffs, category => cat, _}
 
-import scala.concurrent.duration._
-import shapeless._
-import record._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-import ecat.util.DateTime.{pertrovichDateTimeFormatter=>fmt,interval}
-import schema.RecordFilters.Filter
 import ecat.model.Schema._
 import ecat.model.ajax.catctrl.CategoryControlProtocol
-import CategoryControlProtocol.{Gone=>CatGone,_}
+import ecat.model.ajax.catctrl.CategoryControlProtocol.{Gone => CatGone}
+import ecat.model.ajax.catctrl.CategoryControlProtocol._
+import ecat.util.DateTime.interval
+import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
+import schema.RecordFilters.Filter
+//product writes has leads to an issue with Map setialization(conflicts with writes of traversable of tuples wich are products and writable by productwrites)
+import schema.RecordJsonFormats.{productWrites => _, _}
+import shapeless._
+import views.html.pages.tariffs
+import views.html.pages.{category => cat}
+//RecordOps
+import record._
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.duration._
 
 //TODO: clean this fucking mess!
 class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitPortType) extends Controller {

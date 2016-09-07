@@ -29,8 +29,8 @@ class Components(context: Context) extends BuiltInComponentsFromContext(context)
     new Routes(
       httpErrorHandler,
       new AppController(defaultCacheApi, context.environment, proxy),
-      new BlockApiTest(proxy),
-      new Assets(httpErrorHandler)
+      new Assets(httpErrorHandler),
+      new BlockApiTest(proxy)
     )
   }
 }

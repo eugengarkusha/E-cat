@@ -39,6 +39,6 @@ GET   /blockContinue/:id                          controllers.BlockApiTest.block
 GET   /blockPay/:id                                controllers.BlockApiTest.blockPay(id)
 GET   /paid/:id                                    controllers.BlockApiTest.paid(id)
 GET   /zayavka/:id                                 controllers.BlockApiTest.zayavka(id)
-//todo: urlparams/payload
-GET   /blockCategory/:DatN/:DatK/:idHotell/:idCategory/:idGost                           controllers.BlockApiTest.blockCategory(DatN, DatK, idHotell, idCategory, idGost, TimeBlock: BigInteger, Number: Zakaz, Summa: Float)
+
+POST   /blockCategory/:DatN/:DatK/:TimeBlock/:Summa/:FIO       controllers.BlockApiTest.blockCategory(DatN: LocalDateTime, DatK: LocalDateTime, TimeBlock: BigInteger, Summa: Float, FIO: String)
 

@@ -31,7 +31,8 @@ routesImport ++= List("ecat.model.Bindables._",
                        "schema.RecordFilters.Filter",
                        "ecat.model.Schema._",
                        "ecat.model.Filters.hotelFilterReads",
-                       "ecat.model.ajax.catctrl.CategoryControlProtocol._")
+                       "ecat.model.ajax.catctrl.CategoryControlProtocol._",
+                       "java.math.BigInteger")
 
 TwirlKeys.templateImports ++= List("ecat.model.Schema._",
                                     "shapeless._",
