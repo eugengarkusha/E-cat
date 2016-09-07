@@ -54,6 +54,7 @@ class BlockApiTest(proxy: ObmenSaitPortType) extends Controller {
       val z = new Zakaz()
       z.setIdHotell(hotelId)
       z.setIdCategory(catId)
+      z.setIdTarif(idTarif)
       z.setKvoOsn(BigInteger.valueOf(guestsCnt))
       z.setKvoDop(BigInteger.valueOf(addGuestsCnt))
       z.setTwin(twin)
