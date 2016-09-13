@@ -34,11 +34,11 @@ GET     /filters/:from/:to                        controllers.Application.filter
 GET     /assets/*file                             controllers.Assets.versioned(path="/public", file: Asset)
 
 
-GET   /blockCancel/:id                             controllers.BlockApiTest.blockCancel(id)
-GET   /blockContinue/:id                          controllers.BlockApiTest.blockContinue(id)
-GET   /blockPay/:id                                controllers.BlockApiTest.blockPay(id)
-GET   /paid/:id                                    controllers.BlockApiTest.paid(id)
-GET   /zayavka/:id                                 controllers.BlockApiTest.zayavka(id)
+#GET   /blockCancel/:id                             controllers.BlockApiTest.blockCancel(id)
+#GET   /blockContinue/:id                          controllers.BlockApiTest.blockContinue(id)
+#GET   /blockPay/:id                                controllers.BlockApiTest.blockPay(id)
+#GET   /paid/:id                                    controllers.BlockApiTest.paid(id)
+#GET   /zayavka/:id                                 controllers.BlockApiTest.zayavka(id)
 
-POST   /blockCategory/:DatN/:DatK/:TimeBlock/:Summa/:FIO       controllers.BlockApiTest.blockCategory(DatN: LocalDateTime, DatK: LocalDateTime, TimeBlock: BigInteger, Summa: Float, FIO: String)
+#POST   /blockCategory/:DatN/:DatK/:TimeBlock/:Summa/:FIO       controllers.BlockApiTest.blockCategory(DatN: LocalDateTime, DatK: LocalDateTime, TimeBlock: BigInteger, Summa: Float, FIO: String)
 

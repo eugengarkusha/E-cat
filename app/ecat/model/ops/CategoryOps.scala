@@ -38,8 +38,8 @@ object CategoryOps {
     def rooms: ValidationNel[String, List[Room]] = Preprocessing.rooms((n \ "room").toList.map(RoomOps.fromXml))
     def tariffGroups: ValidationNel[String, List[TariffGroup]] = Preprocessing.tariffs((n \ "tarif").toList.map(TariffOps.fromXml), from, to, catId)
 
-    (rooms |@| tariffGroups) { (_rooms, _tariffGroups)=> Record(id = catId, name = name, rooms= _rooms , tariffGroups= _tariffGroups )}
-      .leftMap(err=>NonEmptyList(s"categoryId=$catId:" + err))
+    (rooms |@| tariffGroups) { (_rooms, _tariffGroups) => Record(id = catId, name = name, rooms = _rooms , tariffGroups = _tariffGroups )}
+    .leftMap(err => NonEmptyList(s"categoryId=$catId:" + err))
 
   }
 }

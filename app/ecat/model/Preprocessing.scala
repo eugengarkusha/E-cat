@@ -26,21 +26,21 @@ object Preprocessing {
     def edgesCheck(tarffs: List[Tariff]) = {
       val (first, last) = (tarffs.head, tarffs.last)
       If(first.get('startDate).compareTo(from) > 0 || last.get('endDate).compareTo(to) < 0)(
-         s"""Tariffs of type: ${first.get('name)} are not covering date interval.
+         s"""Tariffs of type: ${first.get('name)}, id: ${first.get('id)} are not covering date interval.
              | First tariff start date: ${first.get('startDate)}, last tariff end date: ${last.get('endDate)}.
              | Provided dates: from: $from , to: $to.""".stripMargin
       )
     }
 
-    def gapCheck(t1:Tariff, t2:Tariff)={
+    def gapCheck(t1: Tariff, t2: Tariff): List[String] = {
       If(t1.get('endDate).compareTo(t2.get('startDate)) < 0)(s"gap between tariffs: 1)$t1, 2)$t2")
     }
 
-    def overlapCheck(t1:Tariff, t2:Tariff)={
+    def overlapCheck(t1: Tariff, t2: Tariff): List[String] = {
       If(t1.get('endDate).compareTo(t2.get('startDate)) > 0)(s"overlap between tariffs: 1)$t1, 2)$t2")
     }
 
-    def startEndCheck(tariffs: List[Tariff]):List[String] = {
+    def startEndCheck(tariffs: List[Tariff]): List[String] = {
       tariffs.flatMap{t=>
         If(t.get('startDate).compareTo(t.get('endDate))>=0)("startDate >= endDate in tariff: :$t")
       }
@@ -52,11 +52,11 @@ object Preprocessing {
       cutPeriod(from, to, tariffs.sortBy(_.get('startDate)))
       .groupBy(_.get('name)).toList
       .traverseU {
-        case (name, rawGroup) =>{
+        case (name: String, rawGroup: List[Tariff]) =>{
 
-          def checks:List[List[Tariff]=>List[String]]={
-            if(name == baseGrpName) List(startEndCheck(_), edgesCheck(_),pairwiseCheck(_)(overlapCheck, gapCheck))
-            else List( startEndCheck(_), pairwiseCheck(_)(overlapCheck))
+          def checks: List[List[Tariff] => List[String]] = {
+            if(name == baseGrpName) List(startEndCheck(_), edgesCheck(_), pairwiseCheck(_)(overlapCheck, gapCheck))
+            else List(startEndCheck(_), pairwiseCheck(_)(overlapCheck))
           }
           validate(rawGroup)(checks:_*).map(name -> _)
         }
