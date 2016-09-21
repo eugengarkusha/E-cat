@@ -294,7 +294,8 @@ $(function () {
       : $(tabView).find('[data-twin]').removeAttr('disabled').attr('data-twin', true);
       for(var key in prices) {
         console.log(key);
-        $(tabView).find('[data-tariff-name=' + key + ']').find('[name="tariff-price"]').val(prices[key]);
+        //TODO: remove spaces from key in more general place!!
+        $(tabView).find('[data-tariff-name=' + key.replace(/\s/g, '') + ']').find('[name="tariff-price"]').val(prices[key]);
       }
     });
     tariffSum(cat);
