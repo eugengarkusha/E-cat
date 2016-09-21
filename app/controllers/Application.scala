@@ -37,7 +37,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
 
     val (_from, _to) = {
-      if(conf.getBoolean("fakedata"))(LocalDateTime.of(2016,5,12,0,0,0),LocalDateTime.of(2016,6,12,0,0,0))
+      if(conf.getBoolean("fakedata"))(LocalDateTime.of(2016,9,21,21,17,53),LocalDateTime.of(2016,9,22,0,0,0))
       else from->to
     }
 
@@ -61,7 +61,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
 
   private def fetchData(from: LocalDateTime, to: LocalDateTime): String= {
     if(conf.getBoolean("fakedata")) {
-      scala.io.Source.fromFile(env.getFile("conf/xml20160512000000_20160612000000"))(scala.io.Codec.UTF8).mkString
+      scala.io.Source.fromFile(env.getFile("conf/xml20160921211753_20160922000000"))(scala.io.Codec.UTF8).mkString
     }else  proxy.getNomSvobod(fmt.format(from), fmt.format(to))
   }
 

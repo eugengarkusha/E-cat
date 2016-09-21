@@ -22,8 +22,8 @@ object CategoryOps {
     c.get('tariffGroups).forall{tg=>
       val tariffs = tg.get('tariffs)
       val bkfNaCnt = tariffs.count(_.get('pricesPerDay).get('bkf) == -1)
-      val bkfAvlaiable = bkfNaCnt == 0
-      if (!bkfAvlaiable && bkfNaCnt<tariffs.size)println("tariff group has inconsistent breakfast availability\n"+tg)
+      val bkfAvlaiable = bkfNaCnt == 0//TODO: add validation for this!!
+      if (!bkfAvlaiable && bkfNaCnt < tariffs.size)println("tariff group has inconsistent breakfast availability\n"+tg)
       bkfAvlaiable
     }
 

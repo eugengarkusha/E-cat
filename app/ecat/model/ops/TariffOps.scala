@@ -63,10 +63,12 @@ object TariffOps {
       m(baseGrp.head.get('startDate), otherGrp, List.empty[Tariff])
     }
 
+    val secondsInDay: Double = ChronoUnit.DAYS.getDuration.getSeconds.toDouble
 
     def overalPrices(group: List[Tariff]): Prices = {
       group.map { tariff =>
-        val days = ChronoUnit.DAYS.between(tariff.get('startDate), tariff.get('endDate))
+        val seconds = ChronoUnit.SECONDS.between(tariff.get('startDate), tariff.get('endDate))
+        val days = Math.ceil(seconds / secondsInDay).toLong
         object multByDays extends ->[Long, Long](_ * days)
         tariff.get('pricesPerDay).take(3).mapValues(multByDays)
       }.reduce(_ |+| _) + ('eci ->> group.head.get('pricesPerDay).get('eci)) + ('lco ->> group.last.get('pricesPerDay).get('lco))

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<obmen>
+	<hotel id="000000001" name="Екатерина" eci="9" lco="20" ckeckin="13" checkout="12">
+		<category id="000000004" name="Полулюкс">
+			<tarif id="000000021" name="3 часа" dateN="20160921211753" dateK="20160922000000" roomprice="550" twinprice="-1" bkfprice="-1" eciprice="275" lcoprice="275"/>
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160921211753" dateK="20160922000000" roomprice="1250" twinprice="50" bkfprice="70" eciprice="625" lcoprice="625"/>
+			<room num="203" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="2"/>
+			<room num="210" guests="2" addguests="1" twin="true" bathroom="1=Душ" level="2"/>
+			<room num="202" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="2"/>
+			<room num="301" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+		<category id="000000029" name="Де Люкс">
+			<tarif id="000000021" name="3 часа" dateN="20160921211753" dateK="20160922000000" roomprice="650" twinprice="-1" bkfprice="-1" eciprice="325" lcoprice="325"/>
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160921211753" dateK="20160922000000" roomprice="1500" twinprice="50" bkfprice="70" eciprice="750" lcoprice="750"/>
+			<room num="206" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+			<room num="204" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000027" name="Стандарт">
+			<tarif id="000000021" name="3 часа" dateN="20160921211753" dateK="20160922000000" roomprice="500" twinprice="-1" bkfprice="-1" eciprice="250" lcoprice="250"/>
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160921211753" dateK="20160922000000" roomprice="1100" twinprice="50" bkfprice="70" eciprice="550" lcoprice="550"/>
+			<room num="211" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="2"/>
+			<room num="305" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+		<category id="000000001" name="Люкс">
+			<tarif id="000000021" name="3 часа" dateN="20160921211753" dateK="20160922000000" roomprice="600" twinprice="-1" bkfprice="-1" eciprice="300" lcoprice="300"/>
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160921211753" dateK="20160922000000" roomprice="1400" twinprice="50" bkfprice="70" eciprice="700" lcoprice="700"/>
+			<room num="205" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="2"/>
+			<room num="201" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="2"/>
+			<room num="303" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+			<room num="302" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+			<room num="306" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+		<category id="000000030" name="Де Люкс Апарт">
+			<tarif id="000000021" name="3 часа" dateN="20160921211753" dateK="20160922000000" roomprice="750" twinprice="-1" bkfprice="-1" eciprice="375" lcoprice="375"/>
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160921211753" dateK="20160922000000" roomprice="1600" twinprice="50" bkfprice="70" eciprice="800" lcoprice="800"/>
+			<room num="212" guests="2" addguests="1" twin="false" bathroom="2=Ванная" level="2"/>
+			<room num="208" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000028" name="VIP">
+			<tarif id="000000021" name="3 часа" dateN="20160921211753" dateK="20160922000000" roomprice="800" twinprice="-1" bkfprice="-1" eciprice="400" lcoprice="400"/>
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160921211753" dateK="20160922000000" roomprice="1700" twinprice="50" bkfprice="70" eciprice="850" lcoprice="850"/>
+			<room num="304" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="3"/>
+		</category>
+		<category id="000000002" name="VIP апарт">
+			<tarif id="000000021" name="3 часа" dateN="20160921211753" dateK="20160922000000" roomprice="800" twinprice="-1" bkfprice="-1" eciprice="400" lcoprice="400"/>
+			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160921211753" dateK="20160922000000" roomprice="1750" twinprice="50" bkfprice="70" eciprice="875" lcoprice="875"/>
+			<room num="209" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+	</hotel>
+</obmen>
