@@ -3,7 +3,10 @@
 	<hotel id="000000001" name="Екатерина" eci="9" lco="20" ckeckin="13" checkout="12">
 		<category id="000000006" name="Сакура">
 			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" twinprice="40" eciprice="0.5" lcoprice="0.5"/>
+			<tarif id="000000009" name="3 часа" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="80" twinprice="40" eciprice="0.5" lcoprice="0.5"/>
 			<room num="201" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="2"/>
+			<room num="202" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="2"/>
+			<room num="203" guests="1" addguests="4" twin="false" bathroom="90=Хуюш" level="2"/>
 		</category>
 		<category id="000000007" name="Пион">
 			<tarif id="000000008" name="ПРОЖИВАНИЕ" dateN="20160512000000" dateK="20160612000000" roomprice="1" bkfprice="70" eciprice="0.5" twinprice="40" lcoprice="0.5"/>
