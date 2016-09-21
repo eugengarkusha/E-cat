@@ -4,7 +4,7 @@
   
   @for(tg <- tgs) {
       
-  <div data-tariff-name=@tg.get('name) class="tariff" data-hash=@tgs.hashCode>
+  <div data-tariff-name=@{tg.get('name).replaceAll("\\s", "")} class="tariff" data-hash=@tgs.hashCode>
 
     <div class="tariff-heading">
       <h3>@tg.get('name)</h3>
