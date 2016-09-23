@@ -11,12 +11,12 @@ import shapeless.PolyDefns.->
 import shapeless.contrib.scalaz.instances._
 import shapeless.record._
 import shapeless.syntax.singleton._
+
 import scala.annotation.tailrec
 import scala.xml.Node
 import scalaz.Scalaz._
-
 import ecat.util.RecordInstances._
-
+import shapeless.Poly1
 
 import scala.xml.Node
 
@@ -69,7 +69,10 @@ object TariffOps {
       group.map { tariff =>
         val seconds = ChronoUnit.SECONDS.between(tariff.get('startDate), tariff.get('endDate))
         val days = Math.ceil(seconds / secondsInDay).toLong
-        object multByDays extends ->[Long, Long](_ * days)
+        object multByDays extends Poly1{
+          implicit def long = at[Long](_ * days)
+          implicit def opt = at[Option[Long]](_.map(_ * days))
+        }
         tariff.get('pricesPerDay).take(3).mapValues(multByDays)
       }.reduce(_ |+| _) + ('eci ->> group.head.get('pricesPerDay).get('eci)) + ('lco ->> group.last.get('pricesPerDay).get('lco))
     }
