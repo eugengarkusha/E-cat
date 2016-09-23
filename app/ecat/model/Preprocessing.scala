@@ -21,6 +21,7 @@ object Preprocessing {
       Success(r)
   }
 
+  //TODO: Add validation of negative values consistsncy in tariff group
   def tariffs( tariffs: List[Schema.Tariff], from: LocalDateTime, to: LocalDateTime, catId: String): ValidationNel[String, List[Schema.TariffGroup]] = {
 
     def edgesCheck(tarffs: List[Tariff]) = {
