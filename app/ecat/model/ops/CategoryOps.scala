@@ -18,14 +18,14 @@ object CategoryOps {
   def maxAddGuestCnt(c:Category):Int = c.get('rooms).iterator.map(_.get('additionalGuestsCnt)).max
 
   //TODO: add bkf availability control based on tariffs choice(so this method returns map[tarifid,boolean])
-  def isBkfAvailable(c:Category):Boolean = {
+  def isBkfAvailable(c: Category): Boolean = {
 
-    c.get('tariffGroups).exists{tg=>
+    c.get('tariffGroups).exists{ tg =>
       val tariffs = tg.get('tariffs)
       val bkfNaCnt = tariffs.count(_.get('pricesPerDay).get('bkf).isEmpty)
-      val bkfAvlaiable = bkfNaCnt == 0//TODO: add validation for this!!
-      if (!bkfAvlaiable && bkfNaCnt < tariffs.size)println("tariff group has inconsistent breakfast availability\n"+tg)
-      bkfAvlaiable
+      bkfNaCnt == 0
+      //covered by validation
+      //if (!bkfAvlaiable && bkfNaCnt < tariffs.size)println("tariff group has inconsistent breakfast availability\n"+tg)
     }
 
   }
