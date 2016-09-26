@@ -17,7 +17,7 @@ object CategoryOps {
 
   def maxAddGuestCnt(c:Category):Int = c.get('rooms).iterator.map(_.get('additionalGuestsCnt)).max
 
-  //TODO: add bkf availability control based on tariffs choice(so this method returns map[tarifid,boolean])
+  //TODO: remove this method, bkf availability is controlled by tariffs only
   def isBkfAvailable(c: Category): Boolean = {
 
     c.get('tariffGroups).exists{ tg =>
@@ -27,11 +27,11 @@ object CategoryOps {
       //covered by validation
       //if (!bkfAvlaiable && bkfNaCnt < tariffs.size)println("tariff group has inconsistent breakfast availability\n"+tg)
     }
-
   }
-  ///TODO: add twin availability control based on tariffs choice(so this method returns map[tarifid,boolean]). If twin price == -1 then it is not available in tariff
-  //twin may be available in room but blocked by tariff!!
-  def isTwinAvailable(c:Category):Boolean = c.get('rooms).find(_.get('twin)).isDefined
+
+  //twin may be available in room but blocked by tariff(see TariffOps.isTwinAvailable)!!
+  def isTwinAvailable(c:Category): Boolean = c.get('rooms).find(_.get('twin)).isDefined
+
 
   def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): ValidationNel[String, Category] = {
 

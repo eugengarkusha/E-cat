@@ -8,7 +8,7 @@ object MiscFunctions {
 
 
   // TODO: Change input keys type to Any
-  def limits(data: List[List[Int]], input: Map[Int, List[Int]])= {
+  def limits(data: List[List[Int]], input: Map[Int, List[Int]]): Option[Map[Int, List[Int]]] = {
 
     val _data: Map[Int, List[Int]] = data.iterator.zipWithIndex.map(_.swap).toMap
 

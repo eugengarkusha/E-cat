@@ -15,13 +15,16 @@ import shapeless.syntax.singleton._
 import scala.annotation.tailrec
 import scala.xml.Node
 import scalaz.Scalaz._
-import ecat.util.RecordInstances._
+import ecat.util.FieldTypeInstances._
 import shapeless.Poly1
 
 import scala.xml.Node
 
 object TariffOps {
   val baseGrpName = "ПРОЖИВАНИЕ"
+
+  def isTwinAvailable(tg: TariffGroup):Boolean = tg.get('overalPrices).get('twin).isDefined
+  def isBkfAvailable(tg: TariffGroup): Boolean = tg.get('overalPrices).get('bkf).isDefined
 
   def group(from: LocalDateTime, to: LocalDateTime, rawGroups: Map[String, List[Tariff]]): List[TariffGroup] = {
 
