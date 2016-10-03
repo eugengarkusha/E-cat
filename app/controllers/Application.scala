@@ -9,7 +9,7 @@ import play.api.cache.CacheApi
 import play.api.libs.json._
 import play.api.mvc._
 
-
+//for SHow derivation based on contrib Show[HList] instance
 import ecat.model.Schema._
 import ecat.model.ajax.catctrl.CategoryControlProtocol
 import ecat.model.ajax.catctrl.CategoryControlProtocol.{Gone => CatGone}
@@ -17,7 +17,10 @@ import ecat.model.ajax.catctrl.CategoryControlProtocol._
 import ecat.util.DateTime.interval
 import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
 import schema.RecordFilters.Filter
-//product writes has leads to an issue with Map setialization(conflicts with writes of traversable of tuples wich are products and writable by productwrites)
+import shapeless.contrib.scalaz.instances._
+
+import scalaz.Show
+//product writes leads to an issue with Map setialization(conflicts with writes of traversable of tuples wich are products and writable by productwrites)
 import schema.RecordJsonFormats.{productWrites => _, _}
 import shapeless._
 import views.html.pages.tariffs
@@ -38,7 +41,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
 
     val (_from, _to) = {
       if(conf.getBoolean("fakedata"))(LocalDateTime.of(2016,9,21,21,17,53),LocalDateTime.of(2016,9,22,0,0,0))
-      else from->to
+      else from -> to
     }
 
 
@@ -46,6 +49,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
 
 
     def  load = Future(fetchData(_from,_to)).map { s =>
+      //todo: Manage effects!!!
       HotelOps.fromXml(scala.xml.XML.loadString(s), _from, _to).fold(err => throw new Exception(err.toString), identity)
     }
 //
@@ -82,7 +86,11 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
   }
 
   def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action.async {  implicit req =>
-    getHotels(from,to).map(hotels=>Ok(views.html.pages.offers(hotels)))
+    getHotels(from,to).map{ hotels=>
+//    val s = implicitly[Show[Hotel]]
+//    println("hotels="+hotels.map(s.shows(_)).mkString("\n","\n","\n"))
+    Ok(views.html.pages.offers(hotels))
+    }
   }
 
   def main = Action{
@@ -126,14 +134,14 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
     Ok(views.html.pages.reservation(from, to))
   }
 
-
+  //hotelFilter is needed to ensure that only eiligable entities will be passed in CategoryControlProtocol.process
   def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest, hotelFilter: Filter[Hotel]) = Action.async{req =>
     // putting inside a function to have an access to req. TODO: implement updateWith on coproducts!!
-     object resp2Js extends Poly1{
-      implicit def _ctrl = at[CtrlResponse](ctrl=>Json.obj("type" -> "basic", "ctrl"->ctrl))
-      implicit def _tariffs = at[TariffsRedraw](tr=>Json.obj("type" -> "tariffsRedraw", "ctrl"->tr.get('ctrl), "html"-> tariffs(tr.get('tg)).toString))
-      implicit def full = at[FullRedraw](fr=>Json.obj("type" -> "fullRedraw", "html"->cat(fr.get('category),fr.get('hotel))(req).toString))
-      implicit def gone = at[CatGone.type](tr=>Json.obj("type" -> "gone"))
+    object resp2Js extends Poly1 {
+      implicit def _ctrl = at[CtrlResponse](ctrl => Json.obj("type" -> "basic", "ctrl" -> ctrl))
+      implicit def _tariffs = at[TariffsRedraw](tr => Json.obj("type" -> "tariffsRedraw", "ctrl" -> tr.get('ctrl), "html" -> tariffs(tr.get('tg)).toString))
+      implicit def full = at[FullRedraw](fr => Json.obj("type" -> "fullRedraw", "html" -> cat(fr.get('category), fr.get('hotel))(req).toString))
+      implicit def gone = at[CatGone.type](tr => Json.obj("type" -> "gone"))
     }
 
     getHotels(from, to).map { hotels =>Ok(CategoryControlProtocol.process(ctrl, hotels.flatMap(hotelFilter(_))).map(resp2Js).unify)}

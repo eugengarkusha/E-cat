@@ -8,92 +8,94 @@ import schema.RecordFilters.Filter
 import shapeless._
 import shapeless.record._
 import java.time.LocalTime
+import ecat.model.ops.HotelOps.{isEci, isLco}
+
+import shapeless.Coproduct.MkCoproduct
 
 object CategoryControlProtocol {
 
   type RoomCtrlRequest = Record.`'id -> Int,'guestsCnt -> Int,'addGuestsCnt -> Int,'twin -> Boolean,'bkf -> Boolean`.T
 
-  type CatCtrlRequest = Record.`'hotelId -> String,'catId -> String,'roomReqs -> List[RoomCtrlRequest],'tariffGroupsHash -> Int, 'ci -> LocalTime,'co -> LocalTime`.T
+  type CatCtrlRequest = Record.`'hotelId -> String,'catId -> String, 'roomReqs -> List[RoomCtrlRequest], 'tariffGroupsHash -> Int, 'ci -> LocalTime,'co -> LocalTime`.T
 
   //shapeless has a bug :" Malformed literal or standard type (Map[String" if map is put inline.(fails also with shapeless 2.3.1)TODO: fix in shapeless
   type prices = Map[String, Double]
   type RoomLimits = Record.`'guestsCnt -> Int, 'addGuestsCnt -> Int, 'twin -> Boolean`.T
   type RoomCtrlResponse = Record.`'id -> Int, 'limits -> RoomLimits, 'prices -> prices`.T
-  type CtrlResponse = Record.`'eci -> Boolean, 'lco -> Boolean, 'maxRoomCnt -> Int, 'roomCtrls -> List[RoomCtrlResponse]`.T
+  type CtrlResponse = Record.`'maxRoomCnt -> Int, 'roomCtrls -> List[RoomCtrlResponse]`.T
   type TariffsRedraw = Record.`'ctrl -> CtrlResponse, 'tg -> List[TariffGroup]`.T
+  //TODO: Hotel contains all needed info, remove category
   type FullRedraw = Record.`'hotel -> Hotel, 'category -> Category`.T
-
   case object Gone
 
   type Response = CtrlResponse :+: TariffsRedraw :+: FullRedraw :+: Gone.type :+: CNil
-  val respCp = Coproduct[Response]
+
+  val wrapCp = Coproduct[Response]
 
   def process(req: CatCtrlRequest, hotels: Seq[Hotel]): Response = {
 
-    //Yes, I know, I know. This runtime-omfg-shit will be eliminated after intodustion of Filters AST!!!
-    def filterByIds(hotelId: String, catId: String, hotels: Seq[Hotel]): Option[Hotel] = {
-      val f = Json.obj(
-        "id" -> Json.obj("op" -> "EQ", "v" -> hotelId),
-        "categories" -> Json.obj(
-          "elFilter" -> Json.obj(
-            "id" -> Json.obj("op" -> "EQ", "v" -> catId)
-          )
-        )
-      ).as[Filter[Hotel]]
-      hotels.flatMap(f(_)).headOption
-    }
-
-
-
     val hotelId :: catId :: roomReqs :: tariffGroupsHash :: ci :: co :: HNil = req
-    //TODO: refactor this the way that response cases become readable
-    filterByIds(hotelId, catId, hotels).fold[Response] {
-      println(s"category(id = $catId) has gone during booking process.")
-      respCp(Gone)
-    } { hotel =>
 
-      val category = hotel.get('categories).head
-      val rooms = category.get('rooms)
+    def filterByIds(hotelId: String, catId: String, hotels: Seq[Hotel]): Option[Hotel] = {
+      hotels.find(_.get('id) == hotelId)
+      .map(_.updateWith('categories)(_.filter(_.get('id) == catId)))
+      .filter(_.get('categories).nonEmpty)
+    }
 
-      val limsOpt: Option[Map[Int, RoomLimits]] = {
+    def getLims(rooms: List[Room]): Option[Map[Int, RoomLimits]] = {
+      def toInt(b: Boolean) = if (b) 1 else 0
 
-        def toInt(b: Boolean) = if (b) 1 else 0
+      MiscFunctions.limits(
+        data = rooms.map(r => List(r.get('guestsCnt), r.get('additionalGuestsCnt), toInt(r.get('twin)))),
+        input = roomReqs.map(rr => rr.get('id) -> List(rr.get('guestsCnt), rr.get('addGuestsCnt), toInt(rr.get('twin))))(collection.breakOut)
+      ).map(_.map { case (id, List(gc, addGc, _twin)) => id -> Record(guestsCnt = gc, addGuestsCnt = addGc, twin = _twin > 0) })
+    }
 
-        MiscFunctions.limits(
-          data = rooms.map(r => List(r.get('guestsCnt), r.get('additionalGuestsCnt), toInt(r.get('twin)))),
-          input = roomReqs.map(rr => rr.get('id) -> List(rr.get('guestsCnt), rr.get('addGuestsCnt), toInt(rr.get('twin))))(collection.breakOut)
-        ).map(_.map { case (id, lims) => id -> Record(guestsCnt = lims(0), addGuestsCnt = lims(1), twin = lims(2) > 0) })
+    def mkControlResponse(availRoomsCnt: Int, tarGrps: List[TariffGroup], roomReqs: List[RoomCtrlRequest], lims: Map[Int, RoomLimits], hotel: Hotel): CtrlResponse = {
+
+      def roomCtrlResps: List[RoomCtrlResponse] = roomReqs.map { rr =>
+        Record(
+          id = rr.get('id),
+          limits = lims(rr.get('id)),
+          prices = tarGrps.map { tg =>
+            def price = calcPrice(tg.get('overalPrices), rr.get('guestsCnt), rr.get('addGuestsCnt), rr.get('bkf), rr.get('twin), isEci(ci, hotel), isLco(co, hotel))
+            tg.get('name) -> price
+          }.toMap
+        )
       }
 
-      limsOpt.fold[Response] {
-        println(s"category has changed during booking process.Redrawing category: $catId")
-        respCp(Record(hotel = hotel, category = hotel.get('categories).head))
-      } { lims =>
+      Record(maxRoomCnt = availRoomsCnt, roomCtrls = roomCtrlResps)
+    }
 
-        val eci = ci.compareTo(hotel.get('checkInTime)) < 0 && ci.compareTo(hotel.get('eci)) > 0
-        val lco = co.compareTo(hotel.get('checkOutTime)) > 0 && co.compareTo(hotel.get('lco)) < 0
 
+
+    filterByIds(hotelId, catId, hotels) match {
+      case None =>
+        println(s"category(id = $catId) has gone during booking process.")
+        wrapCp(Gone)
+
+      case Some(hotel) =>{
+        assert(hotel.get('categories).size == 1)
+        val category = hotel.get('categories).head
         val tarGrps = category.get('tariffGroups)
+        val rooms = category.get('rooms)
 
-        def roomCtrlResps: List[RoomCtrlResponse] = roomReqs.map { rr =>
-          Record(
-            id = rr.get('id),
-            limits = lims(rr.get('id)),
-            prices = tarGrps.map { tg =>
-              def price = calcPrice(tg.get('overalPrices), rr.get('guestsCnt), rr.get('addGuestsCnt), rr.get('bkf), rr.get('twin), eci, lco)
-              tg.get('name) -> price
-            }.toMap
-          )
-        }
+        getLims(rooms) match {
 
-        def resp: CtrlResponse = Record(eci = eci, lco = lco, maxRoomCnt = rooms.size, roomCtrls = roomCtrlResps)
+          case None =>
+            println(s"category has changed during booking process.Redrawing category: $catId")
+            //TODO: Hotel contains all needed info, remove category
+            wrapCp(Record(hotel = hotel, category = hotel.get('categories).head))
 
-        if (tarGrps.hashCode == tariffGroupsHash) respCp(resp)
-        else {
-          println(s"Tariffs has changed during booking process. Redrawing Tariffs: $catId")
-          respCp(Record(ctrl = resp, tg = tarGrps))
+          case Some(lims) if tarGrps.hashCode != req.get('tariffGroupsHash) =>
+            println(s"Tariffs has changed during booking process. Redrawing Tariffs: $catId")
+            wrapCp(Record(ctrl = mkControlResponse(rooms.size, tarGrps, roomReqs, lims, hotel), tg = tarGrps))
+
+          case Some(lims) => wrapCp(mkControlResponse(rooms.size, tarGrps, roomReqs, lims, hotel))
+
         }
       }
     }
+
   }
 }

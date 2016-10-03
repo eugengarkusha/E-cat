@@ -36,4 +36,8 @@ object HotelOps {
 
   def maxRoomCnt(hotels: Seq[Hotel]): Int = hotels.iterator.map(_.get('categories).iterator.map(_.get('rooms).size).max).max
 
+  def isEci(t: LocalTime, hotel: Hotel) = t.compareTo(hotel.get('checkInTime)) < 0 && t.compareTo(hotel.get('eci)) > 0
+  def isLco(t: LocalTime, hotel: Hotel) = t.compareTo(hotel.get('checkOutTime)) > 0 && t.compareTo(hotel.get('lco)) < 0
+
+
 }
