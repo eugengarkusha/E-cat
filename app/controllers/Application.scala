@@ -151,9 +151,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
   def filter(from: LocalDateTime, to: LocalDateTime, filter: Filter[Hotel]) = Action.async{ implicit req =>
 
     getHotels(from, to).map{ hotels =>
-      val k = hotels.flatMap(filter(_))
-
-       Ok(views.html.pages.offers(hotels.flatMap(filter(_))))
+      Ok(views.html.pages.offers(hotels.flatMap(filter(_))))
     }
   }
 
