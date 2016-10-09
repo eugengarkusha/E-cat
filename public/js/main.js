@@ -51,9 +51,11 @@ $(function () {
 
     $.datetimepicker.setLocale('ru');
     $('#checkIn').datetimepicker({
-      format:         'YYYY.MM.DD',
-      formatDate:     'YYYY.MM.DD',
-      timepicker:     false,
+      format:         'YYYY.MM.DD  HH:mm',
+      formatDate:     'YYYY.MM.DD  HH:mm',
+      formatTime:     'HH.mm',
+      timepicker:     true,
+      step:           30,
       validateOnBlur: false,
       scrollMonth:    false,
       scrollTime:     false,
@@ -69,9 +71,11 @@ $(function () {
         var max        = document.querySelector('#checkOut').value;
         var wrappedMin = moment(min, 'YYYYMMDD').add(1, 'd');
         $('#checkOut').datetimepicker({
-          format:         'YYYY.MM.DD',
-          formatDate:     'YYYY.MM.DD',
-          timepicker:     false,
+          format:         'YYYY.MM.DD  HH:mm',
+          formatDate:     'YYYY.MM.DD  HH:mm',
+          formatTime:     'HH.mm',
+          timepicker:     true,
+          step:           30,
           validateOnBlur: false,
           scrollMonth:    false,
           scrollTime:     false,
@@ -85,9 +89,11 @@ $(function () {
         var wrappedMax = moment(max, 'YYYYMMDD');
         console.log(wrappedMax.toDate());
         $('#checkIn').datetimepicker({
-          format:         'YYYY.MM.DD',
-          formatDate:     'YYYY.MM.DD',
-          timepicker:     false,
+          format:         'YYYY.MM.DD  HH:mm',
+          formatDate:     'YYYY.MM.DD  HH:mm',
+          formatTime:     'HH.mm',
+          timepicker:     true,
+          step:           30,
           validateOnBlur: false,
           scrollMonth:    false,
           scrollTime:     false,
@@ -114,8 +120,8 @@ $(function () {
 
       var reservation = function () {
 
-        var from = moment($('#checkIn').val(), 'YYYYMMDD'),
-            to   = moment($('#checkOut').val(), 'YYYYMMDD'),
+        var from = moment($('#checkIn').val(), 'YYYYMMDDHHmmss'),
+            to   = moment($('#checkOut').val(), 'YYYYMMDDHHmmss'),
             now  = moment().tz('Europe/Kiev');
 
         if (fromInit === $('#checkIn').val() 
@@ -127,9 +133,6 @@ $(function () {
          if (from.format('YYYYMMDD') === now.format('YYYYMMDD')) {
            if (moment().tz('Europe/Kiev').add(1, 'h').format('YYYYMMDD') === from.format('YYYYMMDD')) {
              from = moment().tz('Europe/Kiev').add(1, 'm').format('YYYYMMDDHHmmss');
-             to   = to.format('YYYYMMDDHHmmss');
-           } else {
-             from = moment().tz( 'Europe/Kiev').add(1, 'd').format('YYYYMMDD000000');
              to   = to.format('YYYYMMDDHHmmss');
            }
          } else {

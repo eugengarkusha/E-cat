@@ -2837,3 +2837,17 @@ main {
   }
 
 }
+
+.option-data-eci, .option-data-lco {
+  display: none;
+}
+
+// custom styles for plugins
+
+.xdsoft_datetimepicker {
+  width: 360px;
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker {
+  width: 70px;
+}

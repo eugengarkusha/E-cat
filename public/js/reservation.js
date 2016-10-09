@@ -72,8 +72,8 @@ $(function () {
   };
 
   var globalFilt = {
-    from:  moment((from).toString()),
-    to:    moment((to).toString()),
+    from:  moment((from), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss'),
+    to:    moment((to), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss'),
     hotel: {},
     room:  {},
     opt:   []
@@ -180,8 +180,10 @@ $(function () {
     console.time('collectFilters');
     // console.log(moment(elemAndVal(elem, '#checkIn').value, 'YYYYMMDD'));
     var filters = {
-      from:     moment(elemAndVal(elem, '#checkIn').value, 'YYYYMMDD'),
-      to:       moment(elemAndVal(elem, '#checkOut').value, 'YYYYMMDD'),
+      from:     moment(elemAndVal(elem, '#checkIn').value, 'YYYYMMDDHHmmss'),
+      to:       moment(elemAndVal(elem, '#checkOut').value, 'YYYYMMDDHHmmss'),
+      ci:       moment(elemAndVal(elem, '#checkIn').value, 'YYYYMMDDHHmmss').format('HH:mm'),
+      co:       moment(elemAndVal(elem, '#checkOut').value, 'YYYYMMDDHHmmss').format('HH:mm'),
       hotel:    {
         name:   elemAndVal(elem, '#hotel').value
       },
@@ -195,6 +197,8 @@ $(function () {
     
     globalFilt.from = filters.from;
     globalFilt.to   = filters.to;
+    globalFilt.ci   = filters.ci;
+    globalFilt.co   = filters.co;
     
     console.timeEnd('collectFilters');
     return filters;
@@ -211,8 +215,8 @@ $(function () {
       'catId':            opt.catId,
       'roomReqs':         opt.roomReqs,
       'tariffGroupsHash': opt.hash,
-      'ci':               opt.eci.value,
-      'co':               opt.lco.value
+      'ci':               moment($('#checkIn').val(), 'YYYYMMDDHHmmss').format('HH:mm'),
+      'co':               moment($('#checkOut').val(), 'YYYYMMDDHHmmss').format('HH:mm')
     });
     
     console.timeEnd('stringOpts');
@@ -353,25 +357,29 @@ $(function () {
     ask.done(function(resp) {
       console.log('usualResponceHandling', resp);
       
-      var addDays = function () {
-        $(e.target).parent()
-        .find('.additional-days, .time-no-available').hide();
+      // var addDays = function () {
+      //   $(e.target).parent()
+      //   .find('.additional-days, .time-no-available').hide();
       
-        (resp.ctrl.eci && e.target.name === 'timeIn') ? $(e.target).parent().find('.eci').show() : $(e.target).parent().find('.eci').hide();
+      //   (resp.ctrl.eci && e.target.name === 'timeIn') ? $(e.target).parent().find('.eci').show() : $(e.target).parent().find('.eci').hide();
         
-        (resp.ctrl.lco && e.target.name === 'timeOut') ? $(e.target).parent().find('.lco').show() : $(e.target).parent().find('.lco').hide();
+      //   (resp.ctrl.lco && e.target.name === 'timeOut') ? $(e.target).parent().find('.lco').show() : $(e.target).parent().find('.lco').hide();
         
-        $(cat).find('input').not('[name="timeIn"], [name="timeOut"], [data-twin]').
-        removeAttr('disabled');
-        if ($(cat).find('[data-twin]').is('[data-twin=false]')) {
-          $(cat).find('[data-twin=false]').attr('disabled', true);
-        }
-      };
+      //   $(cat).find('input').not('[name="timeIn"], [name="timeOut"], [data-twin]').
+      //   removeAttr('disabled');
+      //   if ($(cat).find('[data-twin]').is('[data-twin=false]')) {
+      //     $(cat).find('[data-twin=false]').attr('disabled', true);
+      //   }
+      // };
+
+      if ($(cat).find('[data-twin]').is('[data-twin=false]')) {
+        $(cat).find('[data-twin=false]').attr('disabled', true);
+      }
       
       if (resp.type === 'basic') {
         // console.log('basic');
         setupOpt(resp, cat);
-        addDays();
+        // addDays();
         return;
       }
       
@@ -379,7 +387,7 @@ $(function () {
         // console.log('tariffsRedraw');
         $(cat).find('.tariffs').empty().append(resp.html);
         setupOpt(resp, cat);
-        addDays();
+        // addDays();
         return;
       }
       
@@ -412,23 +420,23 @@ $(function () {
     globalFilt.specialFROM = date.from;
     globalFilt.specialTO = date.to;
 
-    var $target = $(e.target),
-        hotelCI = stringToMinutes($(cat).parent().data('eci')),
-        hotelCO = stringToMinutes($(cat).parent().data('lco')),
-        catCI   = stringToMinutes($(cat).find('[name="timeIn"]').val()),
-        catCO   = stringToMinutes($(cat).find('[name="timeOut"]').val()),
-        early   = $(cat).find('.eci'),
-        late    = $(cat).find('.lco');
+    var $target = $(e.target);
+        // hotelCI = stringToMinutes($(cat).parent().data('eci')),
+        // hotelCO = stringToMinutes($(cat).parent().data('lco')),
+        // catCI   = stringToMinutes($(cat).find('[name="timeIn"]').val()),
+        // catCO   = stringToMinutes($(cat).find('[name="timeOut"]').val()),
+        // early   = $(cat).find('.eci'),
+        // late    = $(cat).find('.lco');
     
     ask.done(function(resp) {
       console.log('specialResponceHandling', resp, 'TARGET PARENT', $target.parent()[0]);
-      $target.parent().find('.eci, .lco').hide();          
+      // $target.parent().find('.eci, .lco').hide(); 
         
       if (resp.type === 'basic' || resp.type === 'tariffsRedraw') {
         console.log('resp.type === basic || resp.type === tariffsRedraw');
-        $target.parent().find('.cico, .time-no-available').hide();
+        // $target.parent().find('.cico, .time-no-available').hide();
 
-        if ( date.from == globalFilt.from.format('YYYYMMDDHHmmss') ) {
+        if ( date.from == globalFilt.from ) {
           console.log('HIDE EARLY DAY', $(cat).find('.option-early .additional-days')[0]);
           $(cat).find('.option-early .additional-days').hide();
           (resp.ctrl.eci) ? early.show() : early.hide();
@@ -437,7 +445,7 @@ $(function () {
           $(cat).find('.option-early .additional-days').show();
         }
 
-        if( date.to == globalFilt.to.format('YYYYMMDDHHmmss') ) {
+        if ( date.to == globalFilt.to ) {
           console.log('HIDE LATE DAY', $(cat).find('.option-late .additional-days')[0]);
           $(cat).find('.option-late .additional-days').hide();
           (resp.ctrl.lco) ? late.show() : late.hide();
@@ -547,8 +555,8 @@ $(function () {
       var from = globalFilt.specialFROM;
       var to = globalFilt.specialTO;
     } else {
-      var from = globalFilt.from.format('YYYYMMDDHHmmss');
-      var to = globalFilt.to.format('YYYYMMDDHHmmss');
+      var from = globalFilt.from;
+      var to = globalFilt.to;
     }
 
     askFor(
@@ -584,53 +592,55 @@ $(function () {
       }
 
       var req       = stringOpts(cat),
-          from      = moment(globalFilt.from.toDate()),
-          to        = moment(globalFilt.to.toDate()),
+          from      = globalFilt.from,
+          to        = globalFilt.to,
           formatStr = 'YYYYMMDDHHmmss',
           hotelCI   = stringToMinutes($(cat).parent().data('eci')),
           hotelCO   = stringToMinutes($(cat).parent().data('lco')),
-          catCI     = stringToMinutes($(cat).find('[name="timeIn"]').val()),
-          catCO     = stringToMinutes($(cat).find('[name="timeOut"]').val());
+          catCI     = stringToMinutes($('#checkIn').val()),
+          catCO     = stringToMinutes($('[name="timeOut"]').val());
           
           console.log('REQUEST', req);
+          console.log('FROM', from);
+          console.log('TO', to);
 
-      if (catCI <= hotelCI || catCO >= hotelCO) {
-        var tempFROM = moment(globalFilt.from.toDate());
-        from = +from.format(formatStr);
+      // if (catCI <= hotelCI || catCO >= hotelCO) {
+      //   var tempFROM = moment(globalFilt.from.toDate());
+      //   from = +from.format(formatStr);
 
-        if (catCI <= hotelCI) {
-          var now = moment().tz('Europe/Kiev');
-          var f = 'YYYYMMDD';
-          if (tempFROM.subtract(1, 'd').format(f) === now.format(f)) {
-            from = +now.add(1, 'h').format(formatStr);
-          } else {
-            from = +tempFROM.format(formatStr);
-          }
-        } 
+      //   if (catCI <= hotelCI) {
+      //     var now = moment().tz('Europe/Kiev');
+      //     var f = 'YYYYMMDD';
+      //     if (tempFROM.subtract(1, 'd').format(f) === now.format(f)) {
+      //       from = +now.add(1, 'h').format(formatStr);
+      //     } else {
+      //       from = +tempFROM.format(formatStr);
+      //     }
+      //   } 
 
-        console.log('CHANGECAT FROM', from);
+      //   console.log('CHANGECAT FROM', from);
 
-        if (catCO >= hotelCO) {
-          var tempTO = moment(globalFilt.to.toDate());
-          to = +tempTO.add(1, 'd').format(formatStr)
-        } else {
-          to = +to.format(formatStr);
-        }
+      //   if (catCO >= hotelCO) {
+      //     var tempTO = moment(globalFilt.to.toDate());
+      //     to = +tempTO.add(1, 'd').format(formatStr)
+      //   } else {
+      //     to = +to.format(formatStr);
+      //   }
 
-        specialResponceHandling(
-          askFor(from, to, req), 
-          cat, 
-          e, 
-          {from: from, to: to});
+        // specialResponceHandling(
+        //   askFor(from, to, req), 
+        //   cat, 
+        //   e, 
+        //   {from: from, to: to});
 
-      } else {
+      // } else {
 
-        from = +from.format(formatStr);
-        to   = +to.format(formatStr);
+      //   from = +from.format(formatStr);
+      //   to   = +to.format(formatStr);
 
-        usualResponceHandling(askFor(from, to, req), cat, e);
+      // }
 
-      }
+      usualResponceHandling(askFor(from, to, req), cat, e);
 
     });
 
@@ -647,6 +657,42 @@ $(function () {
               from = setupFrom(collectFilters(selector).from),
               to   = +collectFilters(selector).to.format('YYYYMMDDHHmmss');
               console.log(from);
+
+        var ci = stringToMinutes(moment($('#checkIn').val(), 'YYYYMMDDHHmmss').format('HH:mm'));
+        var co = stringToMinutes(moment($('#checkOut').val(), 'YYYYMMDDHHmmss').format('HH:mm'));
+        var eci = stringToMinutes("9:00");
+        var lco = stringToMinutes("20:00");
+        var hotelCheckIn = stringToMinutes("13:00");
+        var hotelCheckOut = stringToMinutes("12:00");
+        console.log(`ci ${ci}, co ${co}, eci ${eci}, lco ${lco}`);        
+
+        if (ci < eci) {
+          $('#checkIn').parent().find('.additional-days').show();
+          $('.eci, .time-no-available').hide();
+          var checkInDate = $('#checkIn').val();
+          $('#checkIn').val(moment(checkInDate, 'YYYYMMDD').subtract(1, 'd').format('YYYY.MM.DD  13:00'));
+          console.log(`CI < ECI, checkInDate: ${checkInDate}`);
+        }
+
+        if (co > lco) {
+          $('#checkOut').parent().find('.additional-days').show();
+          $('.lco, .time-no-available').hide();
+          var checkOutDate = $('#checkOut').val();
+          $('#checkOut').val(moment(checkOutDate, 'YYYYMMDD').add(1, 'd').format('YYYY.MM.DD  12:00'));
+          console.log(`CO > LCO, checkOutDate: ${checkOutDate}`);
+        }
+
+        // var addDays = function () {
+        //   $(e.target).parent()
+        //   .find('.additional-days, .time-no-available').hide();
+        
+        //   (resp.ctrl.eci && e.target.name === 'timeIn') ? $(e.target).parent().find('.eci').show() : $(e.target).parent().find('.eci').hide();
+          
+        //   (resp.ctrl.lco && e.target.name === 'timeOut') ? $(e.target).parent().find('.lco').show() : $(e.target).parent().find('.lco').hide();
+          
+        //   $(cat).find('input').not('[name="timeIn"], [name="timeOut"], [data-twin]').
+        //   removeAttr('disabled');
+        // };
               
           $.ajax(jsRoutes.controllers.Application.filter(from, to, JSON.stringify(req)))
           .done(function( response ) {
@@ -685,11 +731,14 @@ $(function () {
   $.ajax(jsRoutes.controllers.Application.getDummyOffers(from, to))
     .done(function( resp ) {
       $('.filtering').after(resp);
+      console.log(from, to);
+      window.from = from;
+      window.to = to;
       
       saveInitCatCtrl();
       
-      $('#checkIn').val(moment((from).toString().slice(0,-6)).format('YYYY.MM.DD'));
-      $('#checkOut').val(moment((to).toString().slice(0,-6)).format('YYYY.MM.DD'));
+      $('#checkIn').val(moment(from, 'YYYYMMDDHHmmss').format('YYYY.MM.DD  HH:mm'));
+      $('#checkOut').val(moment(from, 'YYYYMMDDHHmmss').format('YYYY.MM.DD  HH:mm'));
 
       beautySelect('.category-list, .filtering');
 
@@ -705,30 +754,34 @@ $(function () {
       
       (function () {
         
-        var min = moment($('#checkIn').val(), 'YYYYMMDD');
-        var max = moment($('#checkOut').val(), 'YYYYMMDD');
+        var min = moment($('#checkIn').val(), 'YYYYMMDDHHmmss');
+        var max = moment($('#checkOut').val(), 'YYYYMMDDHHmmss');
 
         // console.log(min.format('YYYY.MM.DD'), max.format('YYYY.MM.DD'));
 
         $('#checkOut').datetimepicker({
-            format:'YYYY.MM.DD',
-            formatDate:'YYYY.MM.DD',
-            timepicker:false,
+            format:         'YYYY.MM.DD  HH:mm',
+            formatDate:     'YYYY.MM.DD  HH:mm',
+            formatTime:     'HH.mm',
+            step:           30,
+            timepicker:     true,
             validateOnBlur: false,
-            scrollMonth: false,
-            scrollTime: false,
-            minDate: min.add(1, 'd').format('YYYY.MM.DD')
+            scrollMonth:    false,
+            scrollTime:     false,
+            minDate:        min.add(1, 'd').format('YYYY.MM.DD')
         });
 
         $('#checkIn').datetimepicker({
-            format:'YYYY.MM.DD',
-            formatDate:'YYYY.MM.DD',
-            timepicker:false,
+            format:         'YYYY.MM.DD  HH:mm',
+            formatDate:     'YYYY.MM.DD  HH:mm',
+            formatTime:     'HH.mm',
+            timepicker:     true,
+            step:           30,
             validateOnBlur: false,
-            scrollMonth: false,
-            scrollTime: false,
-            minDate: 0,
-            maxDate: max.subtract(1, 'd').format('YYYY.MM.DD')
+            scrollMonth:    false,
+            scrollTime:     false,
+            minDate:        0,
+            maxDate:        max.subtract(1, 'd').format('YYYY.MM.DD')
         });
 
         

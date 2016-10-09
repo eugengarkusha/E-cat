@@ -31,12 +31,22 @@
             <i class="flaticon-calendar-icons"></i>
             <span>Дата заселения:</span>
             <input type="text" name="checkIn" id="checkIn" value="Дата заселения" required readonly>
+            <div class="option-data option-data-eci" data-checkInTime=13>
+              <span class="eci">Ранний заезд</span>
+              <span class="time-no-available">Время недоступно</span>
+              <span class="additional-days" data-show="false">Дополнительные сутки</span>
+            </div>
           </div>
 
           <div class="filtering-checkOut">
             <i class="flaticon-calendar-icons"></i>
             <span>Дата выселения:</span>
             <input type="text" name="checkOut" id="checkOut" value="Дата выселения" required readonly>
+            <div class="option-data option-data-lco" data-checkOutTime=12>
+              <span class="lco">Поздний выезд</span>
+              <span class="time-no-available">Время недоступно</span>
+              <span class="additional-days" data-show="false">Дополнительные сутки</span>
+            </div>
           </div>
 
           <div class="filtering-people">

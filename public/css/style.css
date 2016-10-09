@@ -1709,5 +1709,13 @@ main {
     width: 2rem;
     height: 2rem;
     cursor: pointer; } }
+.option-data-eci, .option-data-lco {
+  display: none; }
+
+.xdsoft_datetimepicker {
+  width: 360px; }
+
+.xdsoft_datetimepicker .xdsoft_timepicker {
+  width: 70px; }
 
 /*# sourceMappingURL=style.css.map */
