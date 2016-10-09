@@ -803,6 +803,8 @@ $(function () {
         
       })();
 
+      $('#checkIn, #checkOut').trigger('change');
+
   });
 
 window.globalFilt = globalFilt;  
