@@ -682,19 +682,19 @@ $(function () {
           console.log(`CO > LCO, checkOutDate: ${checkOutDate}`);
         }
 
-        if (ci >= eci && ci <= hotelCheckIn) {
+        if (ci >= eci && ci < hotelCheckIn) {
           $('#checkIn').parent().find('.additional-days, .time-no-available').hide();
           $('#checkIn').parent().find('.eci, .option-data-eci').show();
           console.log(`ci >= eci && ci <= hotelCheckIn`);
-        } else if (ci > hotelCheckIn) {
+        } else if (ci >= hotelCheckIn) {
           $('#checkIn').parent().find('.eci, .additional-days, .time-no-available').hide();
         }
 
-        if (co >= hotelCheckOut && co <= lco) {
+        if (co > hotelCheckOut && co <= lco) {
           $('#checkOut').parent().find('.additional-days, .time-no-available').hide();
           $('#checkOut').parent().find('.lco, .option-data-lco').show();
           console.log(`co <= lco && co >= hotelCheckOut`);
-        } else if (co < hotelCheckOut) {
+        } else if (co <= hotelCheckOut) {
           $('#checkOut').parent().find('.lco, .time-no-available, .additional-days').hide();
         }
 

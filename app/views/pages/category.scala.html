@@ -1,6 +1,6 @@
 @import ecat.model.ops.CategoryOps._
 
-@(c: Category, h: Hotel)(implicit req: play.api.mvc.RequestHeader)
+@(c: Category, h: Hotel, eci: Boolean, lco: Boolean)(implicit req: play.api.mvc.RequestHeader)
 
 <div class="category clearfix" data-catId=@c.get('id) data-hotelId=@h.get('id)>
 
@@ -113,7 +113,7 @@
         
         <div class="tariffs">
 
-          @views.html.pages.tariffs.render(c.get('tariffGroups))
+          @views.html.pages.tariffs.render(c.get('tariffGroups), eci, lco)
 
         </div>
         

@@ -5,9 +5,12 @@ import java.time.LocalDateTime
 import async.client.ObmenSaitPortType
 import com.typesafe.config.ConfigFactory
 import ecat.model.ops.HotelOps
+import ecat.model.ops.HotelOps.{isEci, isLco}
 import play.api.cache.CacheApi
 import play.api.libs.json._
 import play.api.mvc._
+
+
 
 //for SHow derivation based on contrib Show[HList] instance
 import ecat.model.Schema._
@@ -89,7 +92,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
     getHotels(from,to).map{ hotels=>
 //    val s = implicitly[Show[Hotel]]
 //    println("hotels="+hotels.map(s.shows(_)).mkString("\n","\n","\n"))
-    Ok(views.html.pages.offers(hotels))
+    Ok(views.html.pages.offers(hotels, from, to))
     }
   }
 
@@ -136,22 +139,40 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
 
   //hotelFilter is needed to ensure that only eiligable entities will be passed in CategoryControlProtocol.process
   def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest, hotelFilter: Filter[Hotel]) = Action.async{req =>
+
+    val hotelsFut = getHotels(from, to).map(_.flatMap(hotelFilter(_)))
     // putting inside a function to have an access to req. TODO: implement updateWith on coproducts!!
-    object resp2Js extends Poly1 {
-      implicit def _ctrl = at[CtrlResponse](ctrl => Json.obj("type" -> "basic", "ctrl" -> ctrl))
-      implicit def _tariffs = at[TariffsRedraw](tr => Json.obj("type" -> "tariffsRedraw", "ctrl" -> tr.get('ctrl), "html" -> tariffs(tr.get('tg)).toString))
-      implicit def full = at[FullRedraw](fr => Json.obj("type" -> "fullRedraw", "html" -> cat(fr.get('category), fr.get('hotel))(req).toString))
-      implicit def gone = at[CatGone.type](tr => Json.obj("type" -> "gone"))
+    hotelsFut.map { hotels =>
+      val h = hotels.headOption
+      object resp2Js extends Poly1 {
+        implicit def _ctrl = at[CtrlResponse](ctrl => Json.obj("type" -> "basic", "ctrl" -> ctrl))
+        implicit def _tariffs = {
+          at[TariffsRedraw](tr => Json.obj(
+            "type" -> "tariffsRedraw",
+            "ctrl" -> tr.get('ctrl),
+            "html" -> tariffs(tr.get('tg), isEci(from.toLocalTime, h.get), isLco(to.toLocalTime, h.get)).toString)
+          )
+        }
+        implicit def full = {
+          at[FullRedraw](fr => Json.obj(
+            "type" -> "fullRedraw",
+            "html" -> cat(fr.get('category),
+            fr.get('hotel),isEci(from.toLocalTime, h.get), isLco(to.toLocalTime, h.get))(req).toString)
+          )
+        }
+        implicit def gone = at[CatGone.type](tr => Json.obj("type" -> "gone"))
+      }
+
+      Ok(CategoryControlProtocol.process(ctrl, hotels).map(resp2Js).unify)
     }
 
-    getHotels(from, to).map { hotels =>Ok(CategoryControlProtocol.process(ctrl, hotels.flatMap(hotelFilter(_))).map(resp2Js).unify)}
   }
 
 //
   def filter(from: LocalDateTime, to: LocalDateTime, filter: Filter[Hotel]) = Action.async{ implicit req =>
 
     getHotels(from, to).map{ hotels =>
-      Ok(views.html.pages.offers(hotels.flatMap(filter(_))))
+      Ok(views.html.pages.offers(hotels.flatMap(filter(_)),from, to))
     }
   }
 

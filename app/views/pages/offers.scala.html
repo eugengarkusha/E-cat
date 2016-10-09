@@ -1,6 +1,8 @@
 @import  ecat.model.Schema.Hotel
+@import  ecat.model.ops.HotelOps
+@import  java.time.LocalDateTime
 
-@(hotels: Seq[Hotel])(implicit req: play.api.mvc.RequestHeader)
+@(hotels: Seq[Hotel], from: LocalDateTime, to: LocalDateTime)(implicit req: play.api.mvc.RequestHeader)
 
 
 <div class="category-list">
@@ -12,7 +14,7 @@
 
       @for(c <- h.get('categories)) {
 
-        @views.html.pages.category.render(c, h, req)
+        @views.html.pages.category.render(c, h, HotelOps.isEci(from.toLocalTime, h), HotelOps.isLco(to.toLocalTime, h), req)
 
       }
     </div>
