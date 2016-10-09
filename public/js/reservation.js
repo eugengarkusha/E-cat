@@ -674,7 +674,7 @@ $(function () {
           console.log(`CI < ECI, checkInDate: ${checkInDate}`);
         }
 
-        if (co > lco) {
+        else if (co > lco) {
           $('#checkOut').parent().find('.additional-days, .option-data-lco').show();
           $('.lco, .time-no-available').hide();
           var checkOutDate = $('#checkOut').val();
@@ -754,7 +754,7 @@ $(function () {
       saveInitCatCtrl();
       
       $('#checkIn').val(moment(from, 'YYYYMMDDHHmmss').format('YYYY.MM.DD  HH:mm'));
-      $('#checkOut').val(moment(from, 'YYYYMMDDHHmmss').format('YYYY.MM.DD  HH:mm'));
+      $('#checkOut').val(moment(to, 'YYYYMMDDHHmmss').format('YYYY.MM.DD  HH:mm'));
 
       beautySelect('.category-list, .filtering');
 
