@@ -555,8 +555,8 @@ $(function () {
       var from = globalFilt.specialFROM;
       var to = globalFilt.specialTO;
     } else {
-      var from = globalFilt.from;
-      var to = globalFilt.to;
+      var from = moment($('#checkIn').val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
+      var to = moment($('#checkOut').val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
     }
 
     askFor(
@@ -592,8 +592,8 @@ $(function () {
       }
 
       var req       = stringOpts(cat),
-          from      = globalFilt.from,
-          to        = globalFilt.to,
+          from      = moment($('#checkIn').val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss'),
+          to        = moment($('#checkOut').val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss'),
           formatStr = 'YYYYMMDDHHmmss',
           hotelCI   = stringToMinutes($(cat).parent().data('eci')),
           hotelCO   = stringToMinutes($(cat).parent().data('lco')),
@@ -667,19 +667,35 @@ $(function () {
         console.log(`ci ${ci}, co ${co}, eci ${eci}, lco ${lco}`);        
 
         if (ci < eci) {
-          $('#checkIn').parent().find('.additional-days').show();
-          $('.eci, .time-no-available').hide();
+          $('#checkIn').parent().find('.additional-days, .option-data-eci').show();
+          $('#checkIn').parent().find('.eci, .time-no-available').hide();
           var checkInDate = $('#checkIn').val();
           $('#checkIn').val(moment(checkInDate, 'YYYYMMDD').subtract(1, 'd').format('YYYY.MM.DD  13:00'));
           console.log(`CI < ECI, checkInDate: ${checkInDate}`);
         }
 
         if (co > lco) {
-          $('#checkOut').parent().find('.additional-days').show();
+          $('#checkOut').parent().find('.additional-days, .option-data-lco').show();
           $('.lco, .time-no-available').hide();
           var checkOutDate = $('#checkOut').val();
           $('#checkOut').val(moment(checkOutDate, 'YYYYMMDD').add(1, 'd').format('YYYY.MM.DD  12:00'));
           console.log(`CO > LCO, checkOutDate: ${checkOutDate}`);
+        }
+
+        else if (ci >= eci && ci <= hotelCheckIn) {
+          $('#checkIn').parent().find('.additional-days, .time-no-available').hide();
+          $('#checkIn').parent().find('.eci, .option-data-eci').show();
+          console.log(`ci >= eci && ci <= hotelCheckIn`);
+        }
+
+        else if (co <= lco && co >= hotelCheckOut) {
+          $('#checkOut').parent().find('.additional-days, .time-no-available').hide();
+          $('#checkOut').parent().find('.lco, .option-data-lco').show();
+          console.log(`co <= lco && co >= hotelCheckOut`);
+        }
+
+        else {
+          $(e).parent().find('.option-data-eci, .option-data-lco').hide();
         }
 
         // var addDays = function () {
