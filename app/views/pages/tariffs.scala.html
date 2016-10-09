@@ -1,4 +1,6 @@
+@import ecat.model.ops.PricesOps.calcPrice
 @(tgs: Seq[TariffGroup], eci: Boolean , lco: Boolean)
+
 
 <form>
   
@@ -16,11 +18,15 @@
     <div class="tariff-overall">
       <i class="flaticon-coin32"></i>
       <input type="number" name="tariff-price" readonly value=@{
-        val prices = tg.get('overalPrices)
-        val roomPrice = prices.get('room)
-        val eciExtra = if(eci)prices.get('eci) else 0
-        val lcoExtra = if(lco)prices.get('lco) else 0
-        (roomPrice / 100) + (eciExtra / 100) + (lcoExtra / 100)
+        calcPrice(
+          p = tg.get('overalPrices),
+          guestCnt = 1,
+          addGuestsCnt = 1,
+          bkf = false,
+          twin = false,
+          eci = eci,
+          lco = lco
+        ).toLong
       } class="tariff-price">
     </div>
 
