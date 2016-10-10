@@ -787,11 +787,21 @@ $(function () {
             minDate:        min.add(1, 'd').format('YYYY.MM.DD')
         });
 
+        var minTime = false;
+        var defaultTime = false;   
+        if ( moment($('#checkIn').val(), 'YYYYMMDD').format('YYYYMMDD') === moment().format('YYYYMMDD') ) {
+          minTime = moment().add(20, 'm').format('HH:mm');
+        } else {
+          defaultTime = "13:00";
+        }
+
         $('#checkIn').datetimepicker({
             format:         'YYYY.MM.DD  HH:mm',
             formatDate:     'YYYY.MM.DD  HH:mm',
             formatTime:     'HH.mm',
             timepicker:     true,
+            minTime:        minTime,
+            defaultTime:    defaultTime,
             step:           30,
             validateOnBlur: false,
             scrollMonth:    false,
