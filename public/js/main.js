@@ -50,10 +50,11 @@ $(function () {
     };
 
     $.datetimepicker.setLocale('ru');
+
     $('#checkIn').datetimepicker({
       format:         'YYYY.MM.DD  HH:mm',
       formatDate:     'YYYY.MM.DD  HH:mm',
-      formatTime:     'HH.mm',
+      formatTime:     'HH:mm',
       timepicker:     true,
       step:           30,
       validateOnBlur: false,
@@ -66,15 +67,38 @@ $(function () {
 
     if ($('#checkIn')[0] && $('#checkOut')[0]) {
       $('#checkIn').change(function(e) {
+        var minTime = false;
+        var defaultTime = false;   
+        if ( moment($(e.target).val(), 'YYYYMMDD').format('YYYYMMDD') === moment().format('YYYYMMDD') ) {
+          minTime = moment().add(20, 'm').format('HH:mm');
+        } else {
+          defaultTime = "13:00";
+        }
         console.log('Click on #checkIn');
+
+        $('#checkIn').datetimepicker({
+          format:         'YYYY.MM.DD  HH:mm',
+          formatDate:     'YYYY.MM.DD  HH:mm',
+          formatTime:     'HH:mm',
+          timepicker:     true,
+          minTime:        minTime,
+          defaultTime:    defaultTime,
+          step:           30,
+          validateOnBlur: false,
+          scrollMonth:    false,
+          scrollTime:     false,
+          minDate:        0
+        });
+
         var min        = document.querySelector('#checkIn').value;
         var max        = document.querySelector('#checkOut').value;
         var wrappedMin = moment(min, 'YYYYMMDD').add(1, 'd');
         $('#checkOut').datetimepicker({
           format:         'YYYY.MM.DD  HH:mm',
           formatDate:     'YYYY.MM.DD  HH:mm',
-          formatTime:     'HH.mm',
+          formatTime:     'HH:mm',
           timepicker:     true,
+          defaultTime:    '12:00',
           step:           30,
           validateOnBlur: false,
           scrollMonth:    false,
