@@ -96,7 +96,7 @@ object tariff{
       def overlap: Option[String]  = pairwiseCheck(pricesGrp){ (p, n) =>
         val prevEnd = p.get('endDate)
         val nextStart = n.get('startDate)
-        _if(prevEnd >= nextStart)(s"overlap detected between : $prevEnd and $nextStart")
+        _if(prevEnd > nextStart)(s"overlap detected between : $prevEnd and $nextStart")
       }
 
       def empty: Option[String] = {
