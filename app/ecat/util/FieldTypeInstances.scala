@@ -20,7 +20,7 @@ object FieldTypeInstances {
 //  }
   implicit def FTMonoid[K, V](implicit m: Monoid[V]): Monoid[FieldType[K, V]] = new Monoid[FieldType[K, V]]{
     override def zero: FieldType[K, V] = field[K](m.zero)
-    override def append(f1: FieldType[K, V], f2: => FieldType[K, V]): FieldType[K, V] = field[K](append(f1, f2))
+    override def append(f1: FieldType[K, V], f2: => FieldType[K, V]): FieldType[K, V] = field[K](m.append(f1, f2))
   }
 
   implicit def fromTraversable[R <: HList, H <: HList](implicit v: Values.Aux[R, H], p: FromTraversable[H]): FromTraversable[R] = {

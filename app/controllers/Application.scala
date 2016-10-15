@@ -43,7 +43,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
 
     val (_from, _to) = {
-      if(conf.getBoolean("fakedata"))(LocalDateTime.of(2016,9,21,21,17,53),LocalDateTime.of(2016,9,22,0,0,0))
+      if(conf.getBoolean("fakedata"))(LocalDateTime.of(2016,10,13,20,51,0),LocalDateTime.of(2016,10,27,20,51,0))
       else from -> to
     }
 
@@ -53,7 +53,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
 
     def  load = Future(fetchData(_from,_to)).map { s =>
       //todo: Manage effects!!!
-      HotelOps.fromXml(scala.xml.XML.loadString(s), _from, _to).fold(err => throw new Exception(err.toString), identity)
+      HotelOps.fromXml(scala.xml.XML.loadString(s), _from.toLocalDate, _to.toLocalDate).fold(err => throw new Exception(err.toString), identity)
     }
 //
     if(conf.getBoolean("cache.enabled")) {
@@ -68,8 +68,8 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
 
   private def fetchData(from: LocalDateTime, to: LocalDateTime): String= {
     if(conf.getBoolean("fakedata")) {
-      scala.io.Source.fromFile(env.getFile("conf/xml20160921211753_20160922000000"))(scala.io.Codec.UTF8).mkString
-    }else  proxy.getNomSvobod(fmt.format(from), fmt.format(to))
+      scala.io.Source.fromFile(env.getFile("conf/xml20161013205100_20161027205100"))(scala.io.Codec.UTF8).mkString
+    } else proxy.getNomSvobod(fmt.format(from), fmt.format(to))
   }
 
 

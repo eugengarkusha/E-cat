@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<obmen>
+	<hotel id="000000001" name="Екатерина" eci="9" lco="20" ckeckin="13" checkout="12">
+		<category id="000000004" name="Полулюкс">
+			<tarif id="000000021" name="3 часа" description="">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="450" twinprice="-1" bkfprice="-1" eciprice="225" lcoprice="225"/>
+			</tarif>
+			<tarif id="000000008" name="стандартный тариф" description="при отмене бронирования стоимость первых суток не возвращается">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="900" twinprice="50" bkfprice="70" eciprice="450" lcoprice="450"/>
+			</tarif>
+			<room num="203" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="2"/>
+		</category>
+		<category id="000000002" name="VIP апарт">
+			<tarif id="000000021" name="3 часа" description="">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="700" twinprice="-1" bkfprice="-1" eciprice="350" lcoprice="350"/>
+			</tarif>
+			<tarif id="000000008" name="стандартный тариф" description="при отмене бронирования стоимость первых суток не возвращается">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="1350" twinprice="50" bkfprice="70" eciprice="675" lcoprice="675"/>
+			</tarif>
+			<room num="207" guests="2" addguests="1" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000029" name="Де Люкс">
+			<tarif id="000000021" name="3 часа" description="">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="550" twinprice="-1" bkfprice="-1" eciprice="275" lcoprice="275"/>
+			</tarif>
+			<tarif id="000000008" name="стандартный тариф" description="при отмене бронирования стоимость первых суток не возвращается">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="1100" twinprice="50" bkfprice="70" eciprice="550" lcoprice="550"/>
+			</tarif>
+			<room num="206" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+			<room num="204" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+		<category id="000000027" name="Стандарт">
+			<tarif id="000000021" name="3 часа" description="">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="400" twinprice="-1" bkfprice="-1" eciprice="200" lcoprice="200"/>
+			</tarif>
+			<tarif id="000000008" name="стандартный тариф" description="при отмене бронирования стоимость первых суток не возвращается">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="800" twinprice="50" bkfprice="70" eciprice="400" lcoprice="400"/>
+			</tarif>
+			<room num="211" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="2"/>
+			<room num="305" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+		<category id="000000001" name="Люкс">
+			<tarif id="000000021" name="3 часа" description="">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="500" twinprice="-1" bkfprice="-1" eciprice="250" lcoprice="250"/>
+			</tarif>
+			<tarif id="000000008" name="стандартный тариф" description="при отмене бронирования стоимость первых суток не возвращается">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="1000" twinprice="50" bkfprice="70" eciprice="500" lcoprice="500"/>
+			</tarif>
+			<room num="205" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="2"/>
+			<room num="303" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+			<room num="302" guests="2" addguests="1" twin="false" bathroom="1=Душ" level="3"/>
+			<room num="306" guests="2" addguests="2" twin="false" bathroom="1=Душ" level="3"/>
+		</category>
+		<category id="000000028" name="VIP">
+			<tarif id="000000021" name="3 часа" description="">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="700" twinprice="-1" bkfprice="-1" eciprice="350" lcoprice="350"/>
+			</tarif>
+			<tarif id="000000008" name="стандартный тариф" description="при отмене бронирования стоимость первых суток не возвращается">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="1300" twinprice="50" bkfprice="70" eciprice="650" lcoprice="650"/>
+			</tarif>
+			<room num="304" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="3"/>
+		</category>
+		<category id="000000030" name="Де Люкс Апарт">
+			<tarif id="000000021" name="3 часа" description="">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="650" twinprice="-1" bkfprice="-1" eciprice="325" lcoprice="325"/>
+			</tarif>
+			<tarif id="000000008" name="стандартный тариф" description="при отмене бронирования стоимость первых суток не возвращается">
+				<price dateN="20161013205100" dateK="20161027000000" roomprice="1200" twinprice="50" bkfprice="70" eciprice="600" lcoprice="600"/>
+			</tarif>
+			<room num="208" guests="2" addguests="2" twin="false" bathroom="2=Ванная" level="2"/>
+		</category>
+	</hotel>
+</obmen>

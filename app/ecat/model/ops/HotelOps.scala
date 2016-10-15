@@ -1,37 +1,40 @@
 package ecat.model.ops
 
-import java.time.{LocalDateTime, LocalTime}
-
+import java.time.LocalDate
+import java.time.LocalTime
 import shapeless.record._
 import ecat.model.Schema._
+import scalaz.syntax.bind.ToBindOps
 import scala.xml.Node
-import scalaz.{NonEmptyList, Category=>_,_} ,Scalaz._
+import scalaz.{Category => _, _}
+import Scalaz._
+import ValidationOps._catch
 
 object HotelOps {
 
-  def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): ValidationNel[String, List[Hotel]] = {
+  def fromXml(n: Node, from: LocalDate, to: LocalDate): \/[String, List[Hotel]] = {
 
-    (n \ "hotel").map { hotelNode =>
+    _catch("exception while parsing Hotels payload") {
+      (n \ "hotel").toList.traverseU{ hotelNode =>
 
-      val id = hotelNode \@ "id"
-      def name = hotelNode \@ "name"
-      def ci = LocalTime.of(hotelNode \@ "ckeckin" toInt, 0)
-      def co = LocalTime.of(hotelNode \@ "checkout" toInt, 0)
-      def eci = LocalTime.of(hotelNode \@ "eci" toInt, 0)
-      def lco = LocalTime.of(hotelNode \@ "lco" toInt, 0)
-      def cats:ValidationNel[String, List[Category]] = {
-        val _cats = (hotelNode \ "category").toList
-        if (_cats.isEmpty) s"No categories in hotel name=$name id=$id".failureNel
-        else{
-          _cats
-          .map(c => CategoryOps.fromXml(c, from, to).map(_ :: Nil))
-          .reduce(_ +++ _)
-          .leftMap(errs => NonEmptyList(s"hotelId=$id:$errs"))
-        }
+        val id = hotelNode \@ "id"
+        val name = hotelNode \@ "name"
+        val ci = LocalTime.of(hotelNode \@ "ckeckin" toInt, 0)
+        val co = LocalTime.of(hotelNode \@ "checkout" toInt, 0)
+        val eci = LocalTime.of(hotelNode \@ "eci" toInt, 0)
+        val lco = LocalTime.of(hotelNode \@ "lco" toInt, 0)
+        val catNodes = (hotelNode \ "category").toList
+
+        (if (catNodes.isEmpty) -\/(s"No categories in hotel name = $name id = $id") else \/-(catNodes))
+        .flatMap(_.traverseU(CategoryOps.fromXml(_, from, to)))
+        .bimap(
+          errs => s"hotelId = $id: $errs",
+          cats => Record(id = id, name = name, checkInTime = ci, checkOutTime = co, eci = eci, lco = lco, categories = cats)
+        )
+
       }
-      cats.map(c => Record(id = id, name = name, checkInTime = ci, checkOutTime = co ,eci = eci, lco = lco, categories = c) :: Nil)
+    }.join
 
-    }.foldLeft(List.empty[Hotel].successNel[String])(_ +++ _)
   }
 
   def maxRoomCnt(hotels: Seq[Hotel]): Int = hotels.iterator.map(_.get('categories).iterator.map(_.get('rooms).size).max).max

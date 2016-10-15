@@ -16,6 +16,7 @@ libraryDependencies += "com.chuusai" %% "shapeless" % "2.3.1"
 libraryDependencies += "org.typelevel" %% "shapeless-scalaz" % "0.4"
 libraryDependencies += "sandbox" %% "schema" % "1.1"
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.4"
 
 unmanagedJars in Compile += file("./project/lib/ecatSOAP.jar")
 

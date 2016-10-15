@@ -1,14 +1,16 @@
 package ecat.model.ops
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 
-import ecat.model.Preprocessing
 import ecat.model.Schema._
 import shapeless._
 import record._
-import ecat.model.ops._,RoomOps._,TariffOps._
+import ecat.model.ops._
 import scala.xml.Node
-import scalaz.{NonEmptyList, Category=>_,Ordering=>_,_}, Scalaz._
+import scalaz.{Category => _, Ordering => _, _}
+import Scalaz._
+import ecat.model.Validate
+import ValidationOps._catch
 
 object CategoryOps {
 
@@ -17,31 +19,27 @@ object CategoryOps {
 
   def maxAddGuestCnt(c:Category):Int = c.get('rooms).iterator.map(_.get('additionalGuestsCnt)).max
 
-  //TODO: remove this method, bkf availability is controlled by tariffs only
+  @deprecated("remove this method, bkf availability is controlled by tariffs only", "x")
   def isBkfAvailable(c: Category): Boolean = {
-
-    c.get('tariffGroups).exists{ tg =>
-      val tariffs = tg.get('tariffs)
-      val bkfNaCnt = tariffs.count(_.get('pricesPerDay).get('bkf).isEmpty)
-      bkfNaCnt == 0
-      //covered by validation
-      //if (!bkfAvlaiable && bkfNaCnt < tariffs.size)println("tariff group has inconsistent breakfast availability\n"+tg)
-    }
+    c.get('tariffs).exists(_.get('overallPrices).get('bkf).isDefined)
   }
 
-  //twin may be available in room but blocked by tariff(see TariffOps.isTwinAvailable)!!
-  def isTwinAvailable(c:Category): Boolean = c.get('rooms).find(_.get('twin)).isDefined
+  //twin may be available in room but disabled for particular tariff(see TariffOps.isTwinAvailable)!!
+  def isTwinAvailable(c: Category): Boolean = c.get('rooms).find(_.get('twin)).isDefined
 
 
-  def fromXml(n: Node, from: LocalDateTime, to: LocalDateTime): ValidationNel[String, Category] = {
-
-    val catId =  n \@ "id"
-    def name = n \@ "name"
-    def rooms: ValidationNel[String, List[Room]] = Preprocessing.rooms((n \ "room").toList.map(RoomOps.fromXml))
-    def tariffGroups: ValidationNel[String, List[TariffGroup]] = Preprocessing.tariffs((n \ "tarif").toList.map(TariffOps.fromXml), from, to, catId)
-
-    (rooms |@| tariffGroups) { (_rooms, _tariffGroups) => Record(id = catId, name = name, rooms = _rooms , tariffGroups = _tariffGroups )}
-    .leftMap(err => NonEmptyList(s"categoryId=$catId:" + err))
-
+  def fromXml(n: Node, from: LocalDate, to: LocalDate): \/[String, Category] = {
+    _catch("exception while parsing Category payload"){
+      val id =  n \@ "id"
+      val name = n \@ "name"
+      val roomNodes = (n \ "room").toList
+      val tariffNodes = (n \ "tarif").toList
+      (for{
+        rooms <- roomNodes.traverseU(RoomOps.fromXml)
+        _rawTariffs <- tariffNodes.traverseU(tn => TariffOps.rawFromXml(tn).flatMap(Validate.tariff(_, from, to))).flatMap(Validate.tariff.group)
+        tariffs = TariffOps.addOverallPrices(_rawTariffs,from, to)
+      } yield Record(id = id, name = name, rooms = rooms , tariffs = tariffs))
+      .leftMap(err => s"categoryId=$id: $err")
+    }.join
   }
 }

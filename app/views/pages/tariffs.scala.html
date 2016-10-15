@@ -1,5 +1,5 @@
 @import ecat.model.ops.PricesOps.calcPrice
-@(tgs: Seq[TariffGroup], eci: Boolean , lco: Boolean)
+@(tgs: Seq[Tariff], eci: Boolean , lco: Boolean)
 
 
 <form>
@@ -19,7 +19,7 @@
       <i class="flaticon-coin32"></i>
       <input type="number" name="tariff-price" readonly value=@{
         calcPrice(
-          p = tg.get('overalPrices),
+          p = tg.get('overallPrices),
           guestCnt = 1,
           addGuestsCnt = 1,
           bkf = false,
@@ -30,7 +30,7 @@
       } class="tariff-price">
     </div>
 
-    <input class="tariff-radio" type="radio" name="tariff-btn" @if(tg.get('name) == "ПРОЖИВАНИЕ") { checked }>
+    <input class="tariff-radio" type="radio" name="tariff-btn" @if(tg.get('base)) { checked }>
 
   </div>
       

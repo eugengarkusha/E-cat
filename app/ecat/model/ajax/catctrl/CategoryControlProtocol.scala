@@ -16,6 +16,7 @@ object CategoryControlProtocol {
 
   type RoomCtrlRequest = Record.`'id -> Int,'guestsCnt -> Int,'addGuestsCnt -> Int,'twin -> Boolean,'bkf -> Boolean`.T
 
+  //TODO: rename tariffGroupsHash to tariffsHash
   type CatCtrlRequest = Record.`'hotelId -> String,'catId -> String, 'roomReqs -> List[RoomCtrlRequest], 'tariffGroupsHash -> Int, 'ci -> LocalTime,'co -> LocalTime`.T
 
   //shapeless has a bug :" Malformed literal or standard type (Map[String" if map is put inline.(fails also with shapeless 2.3.1)TODO: fix in shapeless
@@ -23,7 +24,7 @@ object CategoryControlProtocol {
   type RoomLimits = Record.`'guestsCnt -> Int, 'addGuestsCnt -> Int, 'twin -> Boolean`.T
   type RoomCtrlResponse = Record.`'id -> Int, 'limits -> RoomLimits, 'prices -> prices`.T
   type CtrlResponse = Record.`'maxRoomCnt -> Int, 'roomCtrls -> List[RoomCtrlResponse]`.T
-  type TariffsRedraw = Record.`'ctrl -> CtrlResponse, 'tg -> List[TariffGroup]`.T
+  type TariffsRedraw = Record.`'ctrl -> CtrlResponse, 'tg -> List[Tariff]`.T
   //TODO: Hotel contains all needed info, remove category
   type FullRedraw = Record.`'hotel -> Hotel, 'category -> Category`.T
   case object Gone
@@ -34,7 +35,7 @@ object CategoryControlProtocol {
 
   def process(req: CatCtrlRequest, hotels: Seq[Hotel]): Response = {
 
-    val hotelId :: catId :: roomReqs :: tariffGroupsHash :: ci :: co :: HNil = req
+    val hotelId :: catId :: roomReqs :: tariffsHash :: ci :: co :: HNil = req
 
     def filterByIds(hotelId: String, catId: String, hotels: Seq[Hotel]): Option[Hotel] = {
       hotels.find(_.get('id) == hotelId)
@@ -51,15 +52,15 @@ object CategoryControlProtocol {
       ).map(_.map { case (id, List(gc, addGc, _twin)) => id -> Record(guestsCnt = gc, addGuestsCnt = addGc, twin = _twin > 0) })
     }
 
-    def mkControlResponse(availRoomsCnt: Int, tarGrps: List[TariffGroup], roomReqs: List[RoomCtrlRequest], lims: Map[Int, RoomLimits], hotel: Hotel): CtrlResponse = {
+    def mkControlResponse(availRoomsCnt: Int, tariffs: List[Tariff], roomReqs: List[RoomCtrlRequest], lims: Map[Int, RoomLimits], hotel: Hotel): CtrlResponse = {
 
       def roomCtrlResps: List[RoomCtrlResponse] = roomReqs.map { rr =>
         Record(
           id = rr.get('id),
           limits = lims(rr.get('id)),
-          prices = tarGrps.map { tg =>
-            def price = calcPrice(tg.get('overalPrices), rr.get('guestsCnt), rr.get('addGuestsCnt), rr.get('bkf), rr.get('twin), isEci(ci, hotel), isLco(co, hotel))
-            tg.get('name) -> price
+          prices = tariffs.map { t =>
+            def price = calcPrice(t.get('overallPrices), rr.get('guestsCnt), rr.get('addGuestsCnt), rr.get('bkf), rr.get('twin), isEci(ci, hotel), isLco(co, hotel))
+            t.get('name) -> price
           }.toMap
         )
       }
@@ -77,7 +78,7 @@ object CategoryControlProtocol {
       case Some(hotel) =>{
         assert(hotel.get('categories).size == 1)
         val category = hotel.get('categories).head
-        val tarGrps = category.get('tariffGroups)
+        val tariffs = category.get('tariffs)
         val rooms = category.get('rooms)
 
         getLims(rooms) match {
@@ -87,11 +88,11 @@ object CategoryControlProtocol {
             //TODO: Hotel contains all needed info, remove category
             wrapCp(Record(hotel = hotel, category = hotel.get('categories).head))
 
-          case Some(lims) if tarGrps.hashCode != req.get('tariffGroupsHash) =>
+          case Some(lims) if tariffs.hashCode != req.get('tariffGroupsHash) =>
             println(s"Tariffs has changed during booking process. Redrawing Tariffs: $catId")
-            wrapCp(Record(ctrl = mkControlResponse(rooms.size, tarGrps, roomReqs, lims, hotel), tg = tarGrps))
+            wrapCp(Record(ctrl = mkControlResponse(rooms.size, tariffs, roomReqs, lims, hotel), tg = tariffs))
 
-          case Some(lims) => wrapCp(mkControlResponse(rooms.size, tarGrps, roomReqs, lims, hotel))
+          case Some(lims) => wrapCp(mkControlResponse(rooms.size, tariffs, roomReqs, lims, hotel))
 
         }
       }
