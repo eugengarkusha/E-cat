@@ -43,7 +43,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
   private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
 
     val (_from, _to) = {
-      if(conf.getBoolean("fakedata"))(LocalDateTime.of(2016,10,13,20,51,0),LocalDateTime.of(2016,10,27,20,51,0))
+      if(conf.getBoolean("fakedata"))(LocalDateTime.of(2016,10,13,20,51,0), LocalDateTime.of(2016,10,27,20,51,0))
       else from -> to
     }
 

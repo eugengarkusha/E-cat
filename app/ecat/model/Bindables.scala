@@ -10,6 +10,7 @@ import play.api.mvc.PathBindable.{Parsing => PParsing}
 import play.api.mvc.QueryStringBindable.{Parsing => QParsing}
 import schema.RecordFilters.Filter
 import Filters.hotelFilterReads
+import controllers.BlockApi._
 import ecat.model.ajax.catctrl.CategoryControlProtocol.CatCtrlRequest
 import play.api.mvc.QueryStringBindable
 import ecat.util.JsonFormats.localTimeFormat
@@ -27,5 +28,7 @@ object Bindables {
   implicit val jsArray = new QParsing[JsArray](Json.parse(_).as[JsArray], _.toString, _ +":"+ _.getMessage)
   implicit val _filters = new QParsing[Filter[Schema.Hotel]](Json.parse(_).as[Filter[Schema.Hotel]], _.toString, _ +":"+ _.getMessage)
   implicit val categoryCtrl = new QParsing[CatCtrlRequest](Json.parse(_).as[CatCtrlRequest], Json.toJson(_).toString, _ +":"+ _.getMessage)
+  //todo: incorrect serialization of orderlist , do we care?
+  implicit val orderList = new QParsing[OrderList](Json.parse(_).as[OrderList], _.toString, _ +":"+ _.getMessage)
 
 }

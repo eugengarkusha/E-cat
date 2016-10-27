@@ -25,7 +25,7 @@ GET     /block                                    controllers.Application.block(
 
 #Ajax
 GET     /category/:from/:to                       controllers.Application.category(from:LocalDateTime,to:LocalDateTime, c: CatCtrlRequest, f: Filter[Hotel])
-#TODO: JsObjects in signature? Think of validation.
+
 GET     /filters/:from/:to                        controllers.Application.filter(from:LocalDateTime,to:LocalDateTime, f: Filter[Hotel])
 
 
@@ -34,11 +34,11 @@ GET     /filters/:from/:to                        controllers.Application.filter
 GET     /assets/*file                             controllers.Assets.versioned(path="/public", file: Asset)
 
 
-#GET   /blockCancel/:id                             controllers.BlockApiTest.blockCancel(id)
-#GET   /blockContinue/:id                          controllers.BlockApiTest.blockContinue(id)
-#GET   /blockPay/:id                                controllers.BlockApiTest.blockPay(id)
-#GET   /paid/:id                                    controllers.BlockApiTest.paid(id)
-#GET   /zayavka/:id                                 controllers.BlockApiTest.zayavka(id)
+#GET   /blockCancel/:id                             controllers.BlockApi.blockCancel(id)
+#GET   /blockContinue/:id                          controllers.BlockApi.blockContinue(id)
+#GET   /blockPay/:id                                controllers.BlockApi.blockPay(id)
+#GET   /paid/:id                                    controllers.BlockApi.paid(id)
+#GET   /zayavka/:id                                 controllers.BlockApi.zayavka(id)
 
-#POST   /blockCategory/:DatN/:DatK/:TimeBlock/:Summa/:FIO       controllers.BlockApiTest.blockCategory(DatN: LocalDateTime, DatK: LocalDateTime, TimeBlock: BigInteger, Summa: Float, FIO: String)
+POST   /blockCategory/:startDate/:endDate/:ttl/:sum   controllers.BlockApi.blockCategory(startDate: LocalDateTime, endDate: LocalDateTime, ttl: BigInteger, sum: Float, details: OrderList )
 
