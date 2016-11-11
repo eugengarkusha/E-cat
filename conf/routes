@@ -3,9 +3,9 @@
 # ~~~~
 
 # Home page
-GET      /tst                                      controllers.Application.tst
+
 GET     /                                         controllers.Application.main
-GET     /dumpxml/:from/:to                         controllers.Application.dumpXml(from,to)
+
 GET     /dummyoffers/:from/:to                    controllers.Application.getDummyOffers(from:LocalDateTime,to:LocalDateTime)
 #
 GET     /reservation/:from/:to                    controllers.Application.reservation(from, to)
@@ -20,7 +20,7 @@ GET     /contacts                                 controllers.Application.contac
 GET     /comment                                  controllers.Application.comment
 GET     /post                                     controllers.Application.post
 GET     /event                                    controllers.Application.event
-GET     /block                                    controllers.Application.block(r: JsObject)
+#GET     /block                                    controllers.Application.block(r: JsObject)
 #GET    /cat                                      controllers.Application.cat
 
 #Ajax
@@ -36,9 +36,16 @@ GET     /assets/*file                             controllers.Assets.versioned(p
 
 #GET   /blockCancel/:id                             controllers.BlockApi.blockCancel(id)
 #GET   /blockContinue/:id                          controllers.BlockApi.blockContinue(id)
-#GET   /blockPay/:id                                controllers.BlockApi.blockPay(id)
-#GET   /paid/:id                                    controllers.BlockApi.paid(id)
+#GET   /blockContinue/:id                          controllers.BlockApi.blockContinue(id)
+
+
 #GET   /zayavka/:id                                 controllers.BlockApi.zayavka(id)
 
-POST   /blockCategory/:startDate/:endDate/:ttl/:sum   controllers.BlockApi.blockCategory(startDate: LocalDateTime, endDate: LocalDateTime, ttl: BigInteger, sum: Float, details: OrderList )
+
+
+GET     /dumpxml/:from/:to                        controllers.Debug.dumpXml(from,to)
+
+GET   /blockCategory/:startDate/:endDate/:ttl/:sum   controllers.BlockApi.blockCategory(startDate: LocalDateTime, endDate: LocalDateTime, ttl: BigInteger, sum: Float, details: OrderList )
+GET   /blockPay/:id                                  controllers.BlockApi.blockPay(id, uci: UserContactInfo)
+GET   /paid/:id                                      controllers.BlockApi.paid(id)
 

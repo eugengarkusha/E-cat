@@ -3,12 +3,16 @@ package controllers
 import java.time.LocalDateTime
 
 import async.client.ObmenSaitPortType
+import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
+import ecat.dal.HotelsDal
 import ecat.model.ops.HotelOps
 import ecat.model.ops.HotelOps.{isEci, isLco}
 import play.api.cache.CacheApi
 import play.api.libs.json._
 import play.api.mvc._
+
+import scala.concurrent.ExecutionContext
 
 
 
@@ -18,7 +22,6 @@ import ecat.model.ajax.catctrl.CategoryControlProtocol
 import ecat.model.ajax.catctrl.CategoryControlProtocol.{Gone => CatGone}
 import ecat.model.ajax.catctrl.CategoryControlProtocol._
 import ecat.util.DateTime.interval
-import ecat.util.DateTime.{pertrovichDateTimeFormatter => fmt}
 import schema.RecordFilters.Filter
 import shapeless.contrib.scalaz.instances._
 
@@ -30,66 +33,14 @@ import views.html.pages.tariffs
 import views.html.pages.{category => cat}
 //RecordOps
 import record._
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
 //TODO: clean this fucking mess!
-class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitPortType) extends Controller {
-
-  val conf = ConfigFactory.defaultApplication()
-
-  //replace with real proxy call
-  private def getHotels(from: LocalDateTime, to: LocalDateTime): Future[Seq[Hotel]] ={
-
-    val (_from, _to) = {
-      if(conf.getBoolean("fakedata"))(LocalDateTime.of(2016,10,13,20,51,0), LocalDateTime.of(2016,10,27,20,51,0))
-      else from -> to
-    }
-
-
-    def lbl = "H:"+interval(_from, _to)
-
-
-    def  load = Future(fetchData(_from,_to)).map { s =>
-      //todo: Manage effects!!!
-      HotelOps.fromXml(scala.xml.XML.loadString(s), _from.toLocalDate, _to.toLocalDate).fold(err => throw new Exception(err.toString), identity)
-    }
-//
-    if(conf.getBoolean("cache.enabled")) {
-      cache.get[Seq[Hotel]](lbl).map(Future.successful(_)).getOrElse {
-        val hotels = load
-        cache.set(lbl, hotels, conf.getInt("cache.ttl").minutes)
-        hotels
-      }
-    }
-    else load
-  }
-
-  private def fetchData(from: LocalDateTime, to: LocalDateTime): String= {
-    if(conf.getBoolean("fakedata")) {
-      scala.io.Source.fromFile(env.getFile("conf/xml20161013205100_20161027205100"))(scala.io.Codec.UTF8).mkString
-    } else proxy.getNomSvobod(fmt.format(from), fmt.format(to))
-  }
-
-
-
-  def block(r: JsObject) = Action{
-    Ok("true")
-  }
-
-  def dumpXml(from:String, to:String)= Action.async{
-      //Just forwarding XML from 1C
-      Future(proxy.getNomSvobod(from, to)).map(Ok(_))
-  }
-
-  def tst= Action.async{
-    getHotels(null,null).map(r=>Ok(r.toString))
-
-  }
+class Application (dal: HotelsDal)(implicit ec: ExecutionContext) extends Controller {
 
   def getDummyOffers(from: LocalDateTime, to: LocalDateTime) = Action.async {  implicit req =>
-    getHotels(from,to).map{ hotels=>
+    dal.getHotels(from,to).map{ hotels=>
 //    val s = implicitly[Show[Hotel]]
 //    println("hotels="+hotels.map(s.shows(_)).mkString("\n","\n","\n"))
     Ok(views.html.pages.offers(hotels, from, to))
@@ -140,7 +91,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
   //hotelFilter is needed to ensure that only eiligable entities will be passed in CategoryControlProtocol.process
   def category(from: LocalDateTime, to: LocalDateTime, ctrl: CatCtrlRequest, hotelFilter: Filter[Hotel]) = Action.async{req =>
 
-    val hotelsFut = getHotels(from, to).map(_.flatMap(hotelFilter(_)))
+    val hotelsFut = dal.getHotels(from, to).map(_.flatMap(hotelFilter(_)))
     // putting inside a function to have an access to req. TODO: implement updateWith on coproducts!!
     hotelsFut.map { hotels =>
       val h = hotels.headOption
@@ -171,7 +122,7 @@ class Application (cache: CacheApi, env: play.api.Environment, proxy: ObmenSaitP
 //
   def filter(from: LocalDateTime, to: LocalDateTime, filter: Filter[Hotel]) = Action.async{ implicit req =>
 
-    getHotels(from, to).map{ hotels =>
+    dal.getHotels(from, to).map{ hotels =>
       Ok(views.html.pages.offers(hotels.flatMap(filter(_)),from, to))
     }
   }

@@ -27,7 +27,7 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 routesGenerator := InjectedRoutesGenerator
 //
 routesImport ++= List("ecat.model.Bindables._",
-                      "controllers.BlockApi.OrderList",
+                      "ecat.dal.BlockDal.{OrderList, UserContactInfo}",
                        "java.time.LocalDateTime",
                        "play.api.libs.json._",
                        "schema.RecordFilters.Filter",
