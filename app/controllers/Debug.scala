@@ -14,4 +14,19 @@ class Debug(proxy: ObmenSaitPortType)(implicit ec: ExecutionContext) extends Con
     Future(proxy.getNomSvobod(from, to)).map(Ok(_))
   }
 
+
+  def testPayment = Action{req =>
+    println("reqbody="+req.body)
+    println("reqbodyFormUrl="+req.body.asFormUrlEncoded)
+    println("reqbodyMultipart="+req.body.asMultipartFormData)
+    println("reqbodyText="+req.body.asText)
+
+    Ok("whoops")
+  }
+
+  def tst = Action{
+
+    Ok(views.html.tst.render())
+  }
+
 }

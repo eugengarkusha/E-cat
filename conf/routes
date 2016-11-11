@@ -49,3 +49,7 @@ GET   /blockCategory/:startDate/:endDate/:ttl/:sum   controllers.BlockApi.blockC
 GET   /blockPay/:id                                  controllers.BlockApi.blockPay(id, uci: UserContactInfo)
 GET   /paid/:id                                      controllers.BlockApi.paid(id)
 
+POST /notify_url                                     controllers.Debug.testPayment
+
+GET   /tst1                                        controllers.Debug.tst
+
